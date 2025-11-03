@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/mnmodel.h"
+#include "qt/ammocoin/mnmodel.h"
 
 #include "coincontrol.h"
 #include "masternode.h"
@@ -11,7 +11,7 @@
 #include "primitives/transaction.h"
 #include "qt/bitcoinunits.h"
 #include "qt/optionsmodel.h"
-#include "qt/pivx/guitransactionsutils.h"
+#include "qt/ammocoin/guitransactionsutils.h"
 #include "qt/walletmodel.h"
 #include "qt/walletmodeltransaction.h"
 #include "tiertwo/tiertwo_sync_state.h"

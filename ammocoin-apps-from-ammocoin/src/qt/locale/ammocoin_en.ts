@@ -4,7 +4,7 @@
 <context>
     <name>AddNewContactDialog</name>
     <message>
-        <location filename="../pivx/forms/addnewcontactdialog.ui" line="+254"/>
+        <location filename="../ammocoin/forms/addnewcontactdialog.ui" line="+254"/>
         <source>CANCEL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29,7 +29,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/addnewcontactdialog.cpp" line="+48"/>
+        <location filename="../ammocoin/addnewcontactdialog.cpp" line="+48"/>
         <source>Edit label for the selected address:
 %1</source>
         <translation type="unfinished"></translation>
@@ -66,7 +66,7 @@
 <context>
     <name>AddressesWidget</name>
     <message>
-        <location filename="../pivx/forms/addresseswidget.ui" line="+356"/>
+        <location filename="../ammocoin/forms/addresseswidget.ui" line="+356"/>
         <source>Contact name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -96,7 +96,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/addresseswidget.cpp" line="+88"/>
+        <location filename="../ammocoin/addresseswidget.cpp" line="+88"/>
         <source>Add new contact</source>
         <translation type="unfinished"></translation>
     </message>
@@ -340,7 +340,7 @@ for staking</source>
 <context>
     <name>BalanceBubble</name>
     <message>
-        <location filename="../pivx/forms/balancebubble.ui" line="+75"/>
+        <location filename="../ammocoin/forms/balancebubble.ui" line="+75"/>
         <source>Transparent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -366,7 +366,7 @@ for staking</source>
 <context>
     <name>CSRow</name>
     <message>
-        <location filename="../pivx/forms/csrow.ui" line="+85"/>
+        <location filename="../ammocoin/forms/csrow.ui" line="+85"/>
         <source>Savings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -381,7 +381,7 @@ for staking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/csrow.cpp" line="+27"/>
+        <location filename="../ammocoin/csrow.cpp" line="+27"/>
         <source>Own delegation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -635,7 +635,7 @@ for staking</source>
 <context>
     <name>ColdStakingWidget</name>
     <message>
-        <location filename="../pivx/forms/coldstakingwidget.ui" line="+355"/>
+        <location filename="../ammocoin/forms/coldstakingwidget.ui" line="+355"/>
         <source>Owner address (optional, if empty a new address will be created)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -685,7 +685,7 @@ for staking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/coldstakingwidget.cpp" line="+806"/>
+        <location filename="../ammocoin/coldstakingwidget.cpp" line="+806"/>
         <source>Total Staking: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -695,7 +695,7 @@ for staking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/forms/coldstakingwidget.ui" line="-603"/>
+        <location filename="../ammocoin/forms/coldstakingwidget.ui" line="-603"/>
         <source>You can delegate your PIVs, letting a hot node (24/7 online node)
 stake on your behalf, while you keep the keys securely offline.</source>
         <translation type="unfinished"></translation>
@@ -716,7 +716,7 @@ stake on your behalf, while you keep the keys securely offline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/coldstakingwidget.cpp" line="+18"/>
+        <location filename="../ammocoin/coldstakingwidget.cpp" line="+18"/>
         <source>No receive addresses available, you can go to the receive screen and create some there!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -917,7 +917,7 @@ address</source>
 <context>
     <name>CreateProposalDialog</name>
     <message>
-        <location filename="../pivx/forms/createproposaldialog.ui" line="+520"/>
+        <location filename="../ammocoin/forms/createproposaldialog.ui" line="+520"/>
         <location line="+608"/>
         <source>Name</source>
         <translation type="unfinished">Name</translation>
@@ -997,7 +997,7 @@ address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/createproposaldialog.cpp" line="+61"/>
+        <location filename="../ammocoin/createproposaldialog.cpp" line="+61"/>
         <source>GENERATE ADDRESS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1050,7 +1050,7 @@ address</source>
 <context>
     <name>DashboardWidget</name>
     <message>
-        <location filename="../pivx/forms/dashboardwidget.ui" line="+93"/>
+        <location filename="../ammocoin/forms/dashboardwidget.ui" line="+93"/>
         <source>Transactions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1090,12 +1090,12 @@ address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/dashboardwidget.cpp" line="+114"/>
+        <location filename="../ammocoin/dashboardwidget.cpp" line="+114"/>
         <source>Please wait until the wallet is fully synced to see your correct balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/forms/dashboardwidget.ui" line="-658"/>
+        <location filename="../ammocoin/forms/dashboardwidget.ui" line="-658"/>
         <source>No transactions yet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1126,7 +1126,7 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/dashboardwidget.cpp" line="+36"/>
+        <location filename="../ammocoin/dashboardwidget.cpp" line="+36"/>
         <location line="+274"/>
         <source>You have no staking rewards</source>
         <translation type="unfinished"></translation>
@@ -1172,7 +1172,7 @@ It will start automatically as soon as the wallet has enough confirmations on an
 <context>
     <name>DefaultDialog</name>
     <message>
-        <location filename="../pivx/forms/defaultdialog.ui" line="+242"/>
+        <location filename="../ammocoin/forms/defaultdialog.ui" line="+242"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1231,7 +1231,7 @@ It will start automatically as soon as the wallet has enough confirmations on an
     </message>
     <message>
         <location line="+67"/>
-        <source>The entered address &quot;%1&quot; is not a valid PIVX address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid AMMOcoin address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1281,7 +1281,7 @@ It will start automatically as soon as the wallet has enough confirmations on an
 <context>
     <name>GovernanceWidget</name>
     <message>
-        <location filename="../pivx/governancewidget.cpp" line="+49"/>
+        <location filename="../ammocoin/governancewidget.cpp" line="+49"/>
         <source>Governance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1479,7 +1479,7 @@ Be part of the DAO.</source>
     </message>
     <message>
         <location line="+18"/>
-        <source>%1 will download and store a copy of the PIVX block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <source>%1 will download and store a copy of the AMMOcoin block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1526,7 +1526,7 @@ Be part of the DAO.</source>
 <context>
     <name>LoadingDialog</name>
     <message>
-        <location filename="../pivx/forms/loadingdialog.ui" line="+127"/>
+        <location filename="../ammocoin/forms/loadingdialog.ui" line="+127"/>
         <source>Loading</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1534,7 +1534,7 @@ Be part of the DAO.</source>
 <context>
     <name>LockUnlock</name>
     <message>
-        <location filename="../pivx/forms/lockunlock.ui" line="+104"/>
+        <location filename="../ammocoin/forms/lockunlock.ui" line="+104"/>
         <source>Unlock Wallet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1552,7 +1552,7 @@ Be part of the DAO.</source>
 <context>
     <name>MNModel</name>
     <message>
-        <location filename="../pivx/mnmodel.cpp" line="+226"/>
+        <location filename="../ammocoin/mnmodel.cpp" line="+226"/>
         <source>Unknown error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1603,7 +1603,7 @@ Be part of the DAO.</source>
 <context>
     <name>MNRow</name>
     <message>
-        <location filename="../pivx/mnrow.cpp" line="+25"/>
+        <location filename="../ammocoin/mnrow.cpp" line="+25"/>
         <source>Collateral tx not found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1616,7 +1616,7 @@ Be part of the DAO.</source>
 <context>
     <name>MasterNodeWizardDialog</name>
     <message>
-        <location filename="../pivx/forms/masternodewizarddialog.ui" line="+196"/>
+        <location filename="../ammocoin/forms/masternodewizarddialog.ui" line="+196"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1691,7 +1691,7 @@ Be part of the DAO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/masternodewizarddialog.cpp" line="+183"/>
+        <location filename="../ammocoin/masternodewizarddialog.cpp" line="+183"/>
         <source>address label cannot be empty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1707,7 +1707,7 @@ Be part of the DAO.</source>
     </message>
     <message>
         <location line="-123"/>
-        <source>To create a PIVX Masternode you must dedicate %1 (the unit of PIVX) to the network (however, these coins are still yours and will never leave your possession).</source>
+        <source>To create a AMMOcoin Masternode you must dedicate %1 (the unit of AMMOcoin) to the network (however, these coins are still yours and will never leave your possession).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1744,7 +1744,7 @@ Be part of the DAO.</source>
 <context>
     <name>MasterNodesWidget</name>
     <message>
-        <location filename="../pivx/forms/masternodeswidget.ui" line="+295"/>
+        <location filename="../ammocoin/forms/masternodeswidget.ui" line="+295"/>
         <source>Start All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1775,7 +1775,7 @@ and vote on the treasury system receiving a periodic reward.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/masternodeswidget.cpp" line="+167"/>
+        <location filename="../ammocoin/masternodeswidget.cpp" line="+167"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1898,7 +1898,7 @@ Error: %1</source>
 on a remote server to your clipboard.
 
 
-You will only have to paste the data in the pivx.conf file
+You will only have to paste the data in the ammocoin.conf file
 of your remote server and start it, then start the Masternode using
 this controller wallet (select the Masternode in the list and press &quot;start&quot;).
 </source>
@@ -1946,7 +1946,7 @@ Are you sure?</source>
 <context>
     <name>MnInfoDialog</name>
     <message>
-        <location filename="../pivx/forms/mninfodialog.ui" line="+104"/>
+        <location filename="../ammocoin/forms/mninfodialog.ui" line="+104"/>
         <source>Masternode Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1986,7 +1986,7 @@ Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/mninfodialog.cpp" line="+25"/>
+        <location filename="../ammocoin/mninfodialog.cpp" line="+25"/>
         <source>Masternode public key copied</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1999,7 +1999,7 @@ Are you sure?</source>
 <context>
     <name>MnSelectionDialog</name>
     <message>
-        <location filename="../pivx/forms/mnselectiondialog.ui" line="+117"/>
+        <location filename="../ammocoin/forms/mnselectiondialog.ui" line="+117"/>
         <source>Select Masternodes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2015,7 +2015,7 @@ Are you sure?</source>
     </message>
     <message>
         <location line="+45"/>
-        <location filename="../pivx/mnselectiondialog.cpp" line="+104"/>
+        <location filename="../ammocoin/mnselectiondialog.cpp" line="+104"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2045,7 +2045,7 @@ Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/mnselectiondialog.cpp" line="+0"/>
+        <location filename="../ammocoin/mnselectiondialog.cpp" line="+0"/>
         <source>Unselect All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2078,7 +2078,7 @@ Are you sure?</source>
 <context>
     <name>NavMenuWidget</name>
     <message>
-        <location filename="../pivx/forms/navmenuwidget.ui" line="+170"/>
+        <location filename="../ammocoin/forms/navmenuwidget.ui" line="+170"/>
         <source>HOME
 </source>
         <translation type="unfinished"></translation>
@@ -2125,7 +2125,7 @@ STAKING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/navmenuwidget.cpp" line="+22"/>
+        <location filename="../ammocoin/navmenuwidget.cpp" line="+22"/>
         <source>v%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2139,7 +2139,7 @@ STAKING</source>
     </message>
     <message>
         <location line="+45"/>
-        <source>Open PIVX URI</source>
+        <source>Open AMMOcoin URI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2154,9 +2154,9 @@ STAKING</source>
     </message>
 </context>
 <context>
-    <name>PIVXGUI</name>
+    <name>AMMOcoinGUI</name>
     <message>
-        <location filename="../pivx/pivxgui.cpp" line="+69"/>
+        <location filename="../ammocoin/ammocoingui.cpp" line="+69"/>
         <source>Wallet</source>
         <translation type="unfinished">Wallet</translation>
     </message>
@@ -2259,12 +2259,12 @@ Address: %4
     </message>
     <message>
         <location line="-54"/>
-        <source>Cannot start pivx: click-to-pay handler</source>
+        <source>Cannot start ammocoin: click-to-pay handler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+60"/>
-        <source>URI cannot be parsed! This can be caused by an invalid PIVX address or malformed URI parameters.</source>
+        <source>URI cannot be parsed! This can be caused by an invalid AMMOcoin address or malformed URI parameters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2294,12 +2294,12 @@ Address: %4
 <context>
     <name>ProposalCard</name>
     <message>
-        <location filename="../pivx/forms/proposalcard.ui" line="+355"/>
+        <location filename="../ammocoin/forms/proposalcard.ui" line="+355"/>
         <source>Vote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/proposalcard.cpp" line="+43"/>
+        <location filename="../ammocoin/proposalcard.cpp" line="+43"/>
         <source>Inactive proposal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2357,7 +2357,7 @@ Address: %4
 <context>
     <name>ProposalInfoDialog</name>
     <message>
-        <location filename="../pivx/forms/proposalinfodialog.ui" line="+116"/>
+        <location filename="../ammocoin/forms/proposalinfodialog.ui" line="+116"/>
         <source>Proposal Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2412,7 +2412,7 @@ Address: %4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/proposalinfodialog.cpp" line="+30"/>
+        <location filename="../ammocoin/proposalinfodialog.cpp" line="+30"/>
         <source>ID copied to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2441,7 +2441,7 @@ Address: %4
     </message>
     <message>
         <location filename="../guiutil.cpp" line="+136"/>
-        <source>Enter PIVX address (e.g. %1)</source>
+        <source>Enter AMMOcoin address (e.g. %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2496,8 +2496,8 @@ Address: %4
         <translation>%1 ms</translation>
     </message>
     <message>
-        <location filename="../pivx.cpp" line="+540"/>
-        <source>A fatal error occurred. PIVX can no longer continue safely and will quit.</source>
+        <location filename="../ammocoin.cpp" line="+540"/>
+        <source>A fatal error occurred. AMMOcoin can no longer continue safely and will quit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2527,25 +2527,25 @@ Address: %4
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../pivx/qtutils.cpp" line="+135"/>
+        <location filename="../ammocoin/qtutils.cpp" line="+135"/>
         <source>Receiving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../pivx/qtutils.cpp" line="+3"/>
+        <location filename="../ammocoin/qtutils.cpp" line="+3"/>
         <source>Delegator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../pivx/qtutils.cpp" line="+1"/>
+        <location filename="../ammocoin/qtutils.cpp" line="+1"/>
         <source>Delegable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../pivx/qtutils.cpp" line="-2"/>
+        <location filename="../ammocoin/qtutils.cpp" line="-2"/>
         <source>Cold Staking</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2575,7 +2575,7 @@ Address: %4
         <translation type="unfinished">Unknown</translation>
     </message>
     <message>
-        <location filename="../pivx/qtutils.cpp" line="-3"/>
+        <location filename="../ammocoin/qtutils.cpp" line="-3"/>
         <location line="+24"/>
         <source>All</source>
         <translation type="unfinished">All</translation>
@@ -2696,7 +2696,7 @@ Address: %4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/dashboardwidget.cpp" line="-536"/>
+        <location filename="../ammocoin/dashboardwidget.cpp" line="-536"/>
         <source>Jan</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2756,12 +2756,12 @@ Address: %4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/coldstakingwidget.cpp" line="-716"/>
+        <location filename="../ammocoin/coldstakingwidget.cpp" line="-716"/>
         <source>Address with no label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/guitransactionsutils.cpp" line="+22"/>
+        <location filename="../ammocoin/guitransactionsutils.cpp" line="+22"/>
         <source>The recipient address is not valid, please recheck.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2890,7 +2890,7 @@ Address: %4
     </message>
     <message>
         <location line="+93"/>
-        <source>Open the PIVX debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the AMMOcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3152,7 +3152,7 @@ Address: %4
     </message>
     <message>
         <location line="-42"/>
-        <source>Welcome to the PIVX RPC console.</source>
+        <source>Welcome to the AMMOcoin RPC console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3310,7 +3310,7 @@ Address: %4
 <context>
     <name>ReceiveDialog</name>
     <message>
-        <location filename="../pivx/forms/receivedialog.ui" line="+95"/>
+        <location filename="../ammocoin/forms/receivedialog.ui" line="+95"/>
         <source>My Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3328,7 +3328,7 @@ Address: %4
 <context>
     <name>ReceiveWidget</name>
     <message>
-        <location filename="../pivx/forms/receivewidget.ui" line="+81"/>
+        <location filename="../ammocoin/forms/receivewidget.ui" line="+81"/>
         <source>Scan the QR code or copy the address to receive PIV</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3349,7 +3349,7 @@ Address: %4
     </message>
     <message>
         <location line="+179"/>
-        <location filename="../pivx/receivewidget.cpp" line="+185"/>
+        <location filename="../ammocoin/receivewidget.cpp" line="+185"/>
         <source>Add Label</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3374,7 +3374,7 @@ Address: %4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/receivewidget.cpp" line="-127"/>
+        <location filename="../ammocoin/receivewidget.cpp" line="-127"/>
         <source>My Addresses</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3460,13 +3460,13 @@ try unlocking the wallet</source>
 <context>
     <name>RequestDialog</name>
     <message>
-        <location filename="../pivx/forms/requestdialog.ui" line="+256"/>
+        <location filename="../ammocoin/forms/requestdialog.ui" line="+256"/>
         <source>Amount</source>
         <translation type="unfinished">Amount</translation>
     </message>
     <message>
         <location line="-43"/>
-        <source>Instead of sharing only a PIVX address, you can create a payment request, bundling up more information</source>
+        <source>Instead of sharing only a AMMOcoin address, you can create a payment request, bundling up more information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3510,17 +3510,17 @@ try unlocking the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/requestdialog.cpp" line="+47"/>
+        <location filename="../ammocoin/requestdialog.cpp" line="+47"/>
         <source>Error</source>
         <translation type="unfinished">Error</translation>
     </message>
     <message>
-        <location filename="../pivx/forms/requestdialog.ui" line="+222"/>
+        <location filename="../ammocoin/forms/requestdialog.ui" line="+222"/>
         <source>GENERATE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/requestdialog.cpp" line="+28"/>
+        <location filename="../ammocoin/requestdialog.cpp" line="+28"/>
         <source>Creates an address to receive coin delegations and be able to stake them.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3558,8 +3558,8 @@ try unlocking the wallet</source>
 <context>
     <name>SendChangeAddressDialog</name>
     <message>
-        <location filename="../pivx/forms/sendchangeaddressdialog.ui" line="+252"/>
-        <location filename="../pivx/sendchangeaddressdialog.cpp" line="+63"/>
+        <location filename="../ammocoin/forms/sendchangeaddressdialog.ui" line="+252"/>
+        <location filename="../ammocoin/sendchangeaddressdialog.cpp" line="+63"/>
         <source>CANCEL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3570,7 +3570,7 @@ try unlocking the wallet</source>
     </message>
     <message>
         <location line="+72"/>
-        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the &quot;change&quot; PIVX address</source>
+        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the &quot;change&quot; AMMOcoin address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3579,7 +3579,7 @@ try unlocking the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/sendchangeaddressdialog.cpp" line="-17"/>
+        <location filename="../ammocoin/sendchangeaddressdialog.cpp" line="-17"/>
         <source>RESET</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3602,7 +3602,7 @@ try unlocking the wallet</source>
 <context>
     <name>SendCustomFeeDialog</name>
     <message>
-        <location filename="../pivx/forms/sendcustomfeedialog.ui" line="+204"/>
+        <location filename="../ammocoin/forms/sendcustomfeedialog.ui" line="+204"/>
         <source>Recommended</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3627,7 +3627,7 @@ try unlocking the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/sendcustomfeedialog.cpp" line="+36"/>
+        <location filename="../ammocoin/sendcustomfeedialog.cpp" line="+36"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3647,12 +3647,12 @@ try unlocking the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/forms/sendcustomfeedialog.ui" line="+260"/>
+        <location filename="../ammocoin/forms/sendcustomfeedialog.ui" line="+260"/>
         <source>SAVE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/sendcustomfeedialog.cpp" line="-32"/>
+        <location filename="../ammocoin/sendcustomfeedialog.cpp" line="-32"/>
         <source>Fee too high. Must be below: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3665,7 +3665,7 @@ try unlocking the wallet</source>
 <context>
     <name>SendMemoDialog</name>
     <message>
-        <location filename="../pivx/forms/sendmemodialog.ui" line="+151"/>
+        <location filename="../ammocoin/forms/sendmemodialog.ui" line="+151"/>
         <source>Private message only visible for the recipient(s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3675,7 +3675,7 @@ try unlocking the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/sendmemodialog.cpp" line="+49"/>
+        <location filename="../ammocoin/sendmemodialog.cpp" line="+49"/>
         <source>RESET</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3688,7 +3688,7 @@ try unlocking the wallet</source>
 <context>
     <name>SendMultiRow</name>
     <message>
-        <location filename="../pivx/forms/sendmultirow.ui" line="+144"/>
+        <location filename="../ammocoin/forms/sendmultirow.ui" line="+144"/>
         <source>Enter address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3713,7 +3713,7 @@ try unlocking the wallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/sendmultirow.cpp" line="+93"/>
+        <location filename="../ammocoin/sendmultirow.cpp" line="+93"/>
         <source>Update memo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3731,7 +3731,7 @@ try unlocking the wallet</source>
 <context>
     <name>SendWidget</name>
     <message>
-        <location filename="../pivx/send.cpp" line="+164"/>
+        <location filename="../ammocoin/send.cpp" line="+164"/>
         <source>Total remaining from the selected UTXO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3760,7 +3760,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <location line="-227"/>
-        <source>Parse a PIVX URI</source>
+        <source>Parse a AMMOcoin URI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3985,7 +3985,7 @@ Do you want to continue?
 <context>
     <name>SettingsBackupWallet</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsbackupwallet.ui" line="+161"/>
+        <location filename="../ammocoin/settings/forms/settingsbackupwallet.ui" line="+161"/>
         <source>Change Wallet Passphrase</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4002,7 +4002,7 @@ This option creates a wallet.dat file that can be used to recover your whole bal
     </message>
     <message>
         <location line="+53"/>
-        <location filename="../pivx/settings/settingsbackupwallet.cpp" line="+57"/>
+        <location filename="../ammocoin/settings/settingsbackupwallet.cpp" line="+57"/>
         <source>Select folder...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4019,12 +4019,12 @@ Remember to write it down and store it safely, otherwise you might lose access t
     </message>
     <message>
         <location line="-172"/>
-        <location filename="../pivx/settings/settingsbackupwallet.cpp" line="-7"/>
+        <location filename="../ammocoin/settings/settingsbackupwallet.cpp" line="-7"/>
         <source>Backup Wallet</source>
         <translation type="unfinished">Backup Wallet</translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsbackupwallet.cpp" line="+1"/>
+        <location filename="../ammocoin/settings/settingsbackupwallet.cpp" line="+1"/>
         <source>Wallet Data (*.dat)</source>
         <translation type="unfinished">Wallet Data (*.dat)</translation>
     </message>
@@ -4047,7 +4047,7 @@ Remember to write it down and store it safely, otherwise you might lose access t
 <context>
     <name>SettingsBitToolWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsbittoolwidget.ui" line="+473"/>
+        <location filename="../ammocoin/settings/forms/settingsbittoolwidget.ui" line="+473"/>
         <source>Import Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4058,7 +4058,7 @@ Remember to write it down and store it safely, otherwise you might lose access t
     </message>
     <message>
         <location line="+7"/>
-        <source>Encrypt your PIVX addresses (key pair actually) using BIP38 encryption.
+        <source>Encrypt your AMMOcoin addresses (key pair actually) using BIP38 encryption.
 Using this mechanism you can share your keys without middle-man risk, only need to store your passphrase safely</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4105,7 +4105,7 @@ Using this mechanism you can share your keys without middle-man risk, only need 
     </message>
     <message>
         <location line="+77"/>
-        <source>PIVX address</source>
+        <source>AMMOcoin address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4145,7 +4145,7 @@ Using this mechanism you can share your keys without middle-man risk, only need 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsbittoolwidget.cpp" line="+141"/>
+        <location filename="../ammocoin/settings/settingsbittoolwidget.cpp" line="+141"/>
         <source>The entered passphrase is invalid. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4240,17 +4240,17 @@ Using this mechanism you can share your keys without middle-man risk, only need 
 <context>
     <name>SettingsConsoleWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsconsolewidget.ui" line="+60"/>
+        <location filename="../ammocoin/settings/forms/settingsconsolewidget.ui" line="+60"/>
         <source>Console</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsconsolewidget.cpp" line="+72"/>
+        <location filename="../ammocoin/settings/settingsconsolewidget.cpp" line="+72"/>
         <source>Console input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/forms/settingsconsolewidget.ui" line="+29"/>
+        <location filename="../ammocoin/settings/forms/settingsconsolewidget.ui" line="+29"/>
         <source>Open Debug File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4265,14 +4265,14 @@ Using this mechanism you can share your keys without middle-man risk, only need 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsconsolewidget.cpp" line="+13"/>
+        <location filename="../ammocoin/settings/settingsconsolewidget.cpp" line="+13"/>
         <source>Cannot open debug file.
 Verify that you have installed a predetermined text editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+138"/>
-        <source>Welcome to the PIVX RPC console.</source>
+        <source>Welcome to the AMMOcoin RPC console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4299,13 +4299,13 @@ Verify that you have installed a predetermined text editor.</source>
 <context>
     <name>SettingsDisplayOptionsWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsdisplayoptionswidget.ui" line="+208"/>
+        <location filename="../ammocoin/settings/forms/settingsdisplayoptionswidget.ui" line="+208"/>
         <source>Hide stake charts in the dashboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+91"/>
-        <location filename="../pivx/settings/settingsdisplayoptionswidget.cpp" line="+92"/>
+        <location filename="../ammocoin/settings/settingsdisplayoptionswidget.cpp" line="+92"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4350,7 +4350,7 @@ Verify that you have installed a predetermined text editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsdisplayoptionswidget.cpp" line="-1"/>
+        <location filename="../ammocoin/settings/settingsdisplayoptionswidget.cpp" line="-1"/>
         <source>SAVE</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4368,7 +4368,7 @@ Verify that you have installed a predetermined text editor.</source>
 <context>
     <name>SettingsExportCSV</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsexportcsv.ui" line="+55"/>
+        <location filename="../ammocoin/settings/forms/settingsexportcsv.ui" line="+55"/>
         <source>Export Accounting</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4379,26 +4379,26 @@ Verify that you have installed a predetermined text editor.</source>
     </message>
     <message>
         <location line="+35"/>
-        <location filename="../pivx/settings/settingsexportcsv.cpp" line="+61"/>
+        <location filename="../ammocoin/settings/settingsexportcsv.cpp" line="+61"/>
         <source>Export Transaction History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+58"/>
         <location line="+115"/>
-        <location filename="../pivx/settings/settingsexportcsv.cpp" line="+8"/>
+        <location filename="../ammocoin/settings/settingsexportcsv.cpp" line="+8"/>
         <location line="+7"/>
         <source>Select folder...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-48"/>
-        <location filename="../pivx/settings/settingsexportcsv.cpp" line="-15"/>
+        <location filename="../ammocoin/settings/settingsexportcsv.cpp" line="-15"/>
         <source>Export Address Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsexportcsv.cpp" line="+1"/>
+        <location filename="../ammocoin/settings/settingsexportcsv.cpp" line="+1"/>
         <source>Comma separated file (*.csv)</source>
         <translation type="unfinished">Comma separated file (*.csv)</translation>
     </message>
@@ -4476,8 +4476,8 @@ There was an error trying to save the address list to %1. Please try again.</sou
 <context>
     <name>SettingsFaqWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsfaqwidget.ui" line="+166"/>
-        <source>1) What is PIVX?</source>
+        <location filename="../ammocoin/settings/forms/settingsfaqwidget.ui" line="+166"/>
+        <source>1) What is AMMOcoin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4492,7 +4492,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+18"/>
-        <source>What is PIVX?</source>
+        <source>What is AMMOcoin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4581,23 +4581,23 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsfaqwidget.cpp" line="+77"/>
-        <source>PIVX is a form of digital online money using blockchain technology that can be easily transferred globally, instantly, and with near zero fees. PIVX incorporates market leading security &amp; privacy and is also the first PoS (Proof of Stake) Cryptocurrency to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.</source>
+        <location filename="../ammocoin/settings/settingsfaqwidget.cpp" line="+77"/>
+        <source>AMMOcoin is a form of digital online money using blockchain technology that can be easily transferred globally, instantly, and with near zero fees. AMMOcoin incorporates market leading security &amp; privacy and is also the first PoS (Proof of Stake) Cryptocurrency to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>PIVX utilizes a Proof of Stake (PoS) consensus system algorithm, allowing all owners of PIVX to participate in earning block rewards while securing the network with full node wallets, as well as to run Masternodes to create and vote on proposals.</source>
+        <source>AMMOcoin utilizes a Proof of Stake (PoS) consensus system algorithm, allowing all owners of AMMOcoin to participate in earning block rewards while securing the network with full node wallets, as well as to run Masternodes to create and vote on proposals.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Newly received PIVX requires 6 confirmations on the network to become eligible for spending which can take ~6 minutes.</source>
+        <source>Newly received AMMOcoin requires 6 confirmations on the network to become eligible for spending which can take ~6 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Your PIVX wallet also needs to be completely synchronized to see and spend balances on the network.</source>
+        <source>Your AMMOcoin wallet also needs to be completely synchronized to see and spend balances on the network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4607,7 +4607,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+1"/>
-        <source>You must have a balance of PIVX with a minimum of 600 confirmations.</source>
+        <source>You must have a balance of AMMOcoin with a minimum of 600 confirmations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4682,7 +4682,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+2"/>
-        <source>Participate in PIVX Governance</source>
+        <source>Participate in AMMOcoin Governance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4697,7 +4697,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+1"/>
-        <source>Help secure the PIVX network</source>
+        <source>Help secure the AMMOcoin network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4724,7 +4724,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
 <context>
     <name>SettingsInformationWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsinformationwidget.ui" line="+116"/>
+        <location filename="../ammocoin/settings/forms/settingsinformationwidget.ui" line="+116"/>
         <source>Network Monitor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4814,12 +4814,12 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsinformationwidget.cpp" line="+74"/>
+        <location filename="../ammocoin/settings/settingsinformationwidget.cpp" line="+74"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/forms/settingsinformationwidget.ui" line="-587"/>
+        <location filename="../ammocoin/settings/forms/settingsinformationwidget.ui" line="-587"/>
         <source>Wallet Conf</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4829,7 +4829,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsinformationwidget.cpp" line="+21"/>
+        <location filename="../ammocoin/settings/settingsinformationwidget.cpp" line="+21"/>
         <source>No information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4840,7 +4840,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+4"/>
-        <source>Unable to open pivx.conf with default application</source>
+        <source>Unable to open ammocoin.conf with default application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4868,7 +4868,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
 <context>
     <name>SettingsMainOptionsWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingsmainoptionswidget.ui" line="+292"/>
+        <location filename="../ammocoin/settings/forms/settingsmainoptionswidget.ui" line="+292"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4923,7 +4923,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingsmainoptionswidget.cpp" line="+54"/>
+        <location filename="../ammocoin/settings/settingsmainoptionswidget.cpp" line="+54"/>
         <source>Start %1 on system login</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4949,7 +4949,7 @@ Are you sure?
 <context>
     <name>SettingsSignMessageWidgets</name>
     <message>
-        <location filename="../pivx/settings/forms/settingssignmessagewidgets.ui" line="+78"/>
+        <location filename="../ammocoin/settings/forms/settingssignmessagewidgets.ui" line="+78"/>
         <source>Sign/Verify Message</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4969,18 +4969,18 @@ Are you sure?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingssignmessagewidgets.cpp" line="+45"/>
+        <location filename="../ammocoin/settings/settingssignmessagewidgets.cpp" line="+45"/>
         <source>Select mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/forms/settingssignmessagewidgets.ui" line="-19"/>
+        <location filename="../ammocoin/settings/forms/settingssignmessagewidgets.ui" line="-19"/>
         <source>Message</source>
         <translation type="unfinished">Message</translation>
     </message>
     <message>
         <location line="-62"/>
-        <source>PIVX address or contact label</source>
+        <source>AMMOcoin address or contact label</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4996,7 +4996,7 @@ Are you sure?
     </message>
     <message>
         <location line="+88"/>
-        <location filename="../pivx/settings/settingssignmessagewidgets.cpp" line="+64"/>
+        <location filename="../ammocoin/settings/settingssignmessagewidgets.cpp" line="+64"/>
         <source>SIGN</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5006,7 +5006,7 @@ Are you sure?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingssignmessagewidgets.cpp" line="-1"/>
+        <location filename="../ammocoin/settings/settingssignmessagewidgets.cpp" line="-1"/>
         <source>You can sign messages with your addresses to prove you own them. Be careful not to sign anything vague, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
         <translation type="unfinished">You can sign messages with your addresses to prove you own them. Be careful not to sign anything vague, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</translation>
     </message>
@@ -5089,7 +5089,7 @@ Are you sure?
 <context>
     <name>SettingsWalletOptionsWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingswalletoptionswidget.ui" line="+612"/>
+        <location filename="../ammocoin/settings/forms/settingswalletoptionswidget.ui" line="+612"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5120,7 +5120,7 @@ Are you sure?
     </message>
     <message>
         <location line="+71"/>
-        <location filename="../pivx/settings/settingswalletoptionswidget.cpp" line="+48"/>
+        <location filename="../ammocoin/settings/settingswalletoptionswidget.cpp" line="+48"/>
         <source>Network</source>
         <translation type="unfinished">Network</translation>
     </message>
@@ -5146,7 +5146,7 @@ Are you sure?
     </message>
     <message>
         <location line="+62"/>
-        <source>Automatically open the PIVX client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
+        <source>Automatically open the AMMOcoin client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5195,7 +5195,7 @@ Are you sure?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingswalletoptionswidget.cpp" line="+30"/>
+        <location filename="../ammocoin/settings/settingswalletoptionswidget.cpp" line="+30"/>
         <source>Options reset succeed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5218,8 +5218,8 @@ Are you sure?
 <context>
     <name>SettingsWalletRepairWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingswalletrepairwidget.ui" line="+108"/>
-        <location filename="../pivx/settings/settingswalletrepairwidget.cpp" line="+22"/>
+        <location filename="../ammocoin/settings/forms/settingswalletrepairwidget.ui" line="+108"/>
+        <location filename="../ammocoin/settings/settingswalletrepairwidget.cpp" line="+22"/>
         <source>Wallet Repair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5299,7 +5299,7 @@ Are you sure?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingswalletrepairwidget.cpp" line="+63"/>
+        <location filename="../ammocoin/settings/settingswalletrepairwidget.cpp" line="+63"/>
         <source>This will delete your local blockchain folders and the wallet will synchronize the complete Blockchain from scratch.&lt;br /&gt;&lt;br /&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5327,7 +5327,7 @@ Are you sure?
 <context>
     <name>SettingsWidget</name>
     <message>
-        <location filename="../pivx/settings/forms/settingswidget.ui" line="+269"/>
+        <location filename="../ammocoin/settings/forms/settingswidget.ui" line="+269"/>
         <source>Wallet Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5404,7 +5404,7 @@ Are you sure?
     </message>
     <message>
         <location line="+31"/>
-        <source>About PIVX</source>
+        <source>About AMMOcoin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5413,7 +5413,7 @@ Are you sure?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/settings/settingswidget.cpp" line="+211"/>
+        <location filename="../ammocoin/settings/settingswidget.cpp" line="+211"/>
         <source>Confirm options reset</source>
         <translation type="unfinished">Confirm options reset</translation>
     </message>
@@ -5493,7 +5493,7 @@ Are you sure?
 <context>
     <name>Splash</name>
     <message>
-        <location filename="../pivx/forms/splash.ui" line="+169"/>
+        <location filename="../ammocoin/forms/splash.ui" line="+169"/>
         <source>Loading…</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5509,7 +5509,7 @@ Are you sure?
 <context>
     <name>TooltipMenu</name>
     <message>
-        <location filename="../pivx/forms/tooltipmenu.ui" line="+86"/>
+        <location filename="../ammocoin/forms/tooltipmenu.ui" line="+86"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5532,7 +5532,7 @@ Are you sure?
 <context>
     <name>TopBar</name>
     <message>
-        <location filename="../pivx/forms/topbar.ui" line="+129"/>
+        <location filename="../ammocoin/forms/topbar.ui" line="+129"/>
         <source>transparent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5543,7 +5543,7 @@ Are you sure?
     </message>
     <message>
         <location line="+213"/>
-        <location filename="../pivx/topbar.cpp" line="+682"/>
+        <location filename="../ammocoin/topbar.cpp" line="+682"/>
         <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5558,7 +5558,7 @@ Are you sure?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/topbar.cpp" line="-384"/>
+        <location filename="../ammocoin/topbar.cpp" line="-384"/>
         <location line="+356"/>
         <source>Wallet Unlocked for staking</source>
         <translation type="unfinished"></translation>
@@ -6066,8 +6066,8 @@ backup will be created.
 <context>
     <name>TxDetailDialog</name>
     <message>
-        <location filename="../pivx/forms/sendconfirmdialog.ui" line="+116"/>
-        <location filename="../pivx/sendconfirmdialog.cpp" line="+75"/>
+        <location filename="../ammocoin/forms/sendconfirmdialog.ui" line="+116"/>
+        <location filename="../ammocoin/sendconfirmdialog.cpp" line="+75"/>
         <source>Transaction Details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6078,13 +6078,13 @@ backup will be created.
     </message>
     <message>
         <location line="+117"/>
-        <location filename="../pivx/sendconfirmdialog.cpp" line="+12"/>
+        <location filename="../ammocoin/sendconfirmdialog.cpp" line="+12"/>
         <source>Previous Transaction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-16"/>
-        <location filename="../pivx/sendconfirmdialog.cpp" line="+1"/>
+        <location filename="../ammocoin/sendconfirmdialog.cpp" line="+1"/>
         <source>Output Index</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6154,7 +6154,7 @@ backup will be created.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/sendconfirmdialog.cpp" line="-34"/>
+        <location filename="../ammocoin/sendconfirmdialog.cpp" line="-34"/>
         <source>Confirm Your Transaction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6202,7 +6202,7 @@ backup will be created.
 <context>
     <name>VoteDialog</name>
     <message>
-        <location filename="../pivx/forms/votedialog.ui" line="+92"/>
+        <location filename="../ammocoin/forms/votedialog.ui" line="+92"/>
         <source>Vote For Proposal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6213,7 +6213,7 @@ backup will be created.
     </message>
     <message>
         <location line="+276"/>
-        <location filename="../pivx/votedialog.cpp" line="+170"/>
+        <location filename="../ammocoin/votedialog.cpp" line="+170"/>
         <source>Select Voting Masternodes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6233,7 +6233,7 @@ backup will be created.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/votedialog.cpp" line="-110"/>
+        <location filename="../ammocoin/votedialog.cpp" line="-110"/>
         <source>%1 months remaining</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6297,7 +6297,7 @@ Select fewer inputs with coin control.</source>
 <context>
     <name>WelcomeContentWidget</name>
     <message>
-        <location filename="../pivx/forms/welcomecontentwidget.ui" line="+244"/>
+        <location filename="../ammocoin/forms/welcomecontentwidget.ui" line="+244"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6343,22 +6343,22 @@ Select fewer inputs with coin control.</source>
     </message>
     <message>
         <location line="+116"/>
-        <source>PIVX is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
+        <source>AMMOcoin is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+93"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - PIVX believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - AMMOcoin believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+83"/>
-        <source>The masternode network is PIVX&apos;s second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
+        <source>The masternode network is AMMOcoin&apos;s second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-103"/>
-        <source>How PIVX respects your privacy?</source>
+        <source>How AMMOcoin respects your privacy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6373,7 +6373,7 @@ Select fewer inputs with coin control.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pivx/welcomecontentwidget.cpp" line="+183"/>
+        <location filename="../ammocoin/welcomecontentwidget.cpp" line="+183"/>
         <source>default</source>
         <translation type="unfinished">default</translation>
     </message>
@@ -6381,7 +6381,7 @@ Select fewer inputs with coin control.</source>
 <context>
     <name>governancewidget</name>
     <message>
-        <location filename="../pivx/forms/governancewidget.ui" line="+436"/>
+        <location filename="../ammocoin/forms/governancewidget.ui" line="+436"/>
         <source>No active proposals yet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6407,9 +6407,9 @@ Select fewer inputs with coin control.</source>
     </message>
 </context>
 <context>
-    <name>pivx-core</name>
+    <name>ammocoin-core</name>
     <message>
-        <location filename="../pivxstrings.cpp" line="+26"/>
+        <location filename="../ammocoinstrings.cpp" line="+26"/>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
         <translation type="unfinished">Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</translation>
     </message>
@@ -7290,7 +7290,7 @@ Select fewer inputs with coin control.</source>
 <context>
     <name>send</name>
     <message>
-        <location filename="../pivx/forms/send.ui" line="+74"/>
+        <location filename="../ammocoin/forms/send.ui" line="+74"/>
         <location line="+629"/>
         <source>Send</source>
         <translation type="unfinished"></translation>

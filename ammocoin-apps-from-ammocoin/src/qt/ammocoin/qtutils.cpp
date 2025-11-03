@@ -1,12 +1,12 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/qtutils.h"
 
 #include "guiconstants.h"
 #include "qrencode.h"
-#include "qt/pivx/snackbar.h"
+#include "qt/ammocoin/snackbar.h"
 
 #include <QFile>
 #include <QGraphicsDropShadowEffect>
@@ -35,7 +35,7 @@ bool openDialog(QDialog* widget, QWidget* gui)
     return widget->exec();
 }
 
-void closeDialog(QDialog* widget, PIVXGUI* gui)
+void closeDialog(QDialog* widget, AMMOCOINGUI* gui)
 {
     widget->setWindowFlags(Qt::CustomizeWindowHint);
     widget->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -56,7 +56,7 @@ void openDialogFullScreen(QWidget* parent, QWidget* dialog)
     dialog->resize(parent->width(), parent->height());
 }
 
-bool openDialogWithOpaqueBackgroundY(QDialog* widget, PIVXGUI* gui, double posX, int posY, bool hideOpaqueBackground)
+bool openDialogWithOpaqueBackgroundY(QDialog* widget, AMMOCOINGUI* gui, double posX, int posY, bool hideOpaqueBackground)
 {
     widget->setWindowFlags(Qt::CustomizeWindowHint);
     widget->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -73,12 +73,12 @@ bool openDialogWithOpaqueBackgroundY(QDialog* widget, PIVXGUI* gui, double posX,
     return res;
 }
 
-bool openDialogWithOpaqueBackground(QDialog* widget, PIVXGUI* gui, double posX)
+bool openDialogWithOpaqueBackground(QDialog* widget, AMMOCOINGUI* gui, double posX)
 {
     return openDialogWithOpaqueBackgroundY(widget, gui, posX, 5);
 }
 
-bool openDialogWithOpaqueBackgroundFullScreen(QDialog* widget, PIVXGUI* gui)
+bool openDialogWithOpaqueBackgroundFullScreen(QDialog* widget, AMMOCOINGUI* gui)
 {
     widget->setWindowFlags(Qt::CustomizeWindowHint);
     widget->setAttribute(Qt::WA_TranslucentBackground, true);

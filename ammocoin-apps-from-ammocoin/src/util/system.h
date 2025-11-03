@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2022 The PIVX Core developers
+// Copyright (c) 2015-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
@@ -52,7 +52,7 @@ extern const char * const AMMOCOIN_PID_FILENAME;
 extern const char * const AMMOCOIN_MASTERNODE_CONF_FILENAME;
 extern const char * const DEFAULT_DEBUGLOGFILE;
 
-//PIVX only features
+//AMMOcoin only features
 
 extern std::atomic<bool> fMasterNode;
 
@@ -269,7 +269,7 @@ void SetThreadPriority(int nPriority);
 template <typename Callable>
 void TraceThread(const std::string name, Callable func)
 {
-    std::string s = "pivx-" + name;
+    std::string s = "ammocoin-" + name;
     util::ThreadRename(s.c_str());
     try {
         LogPrintf("%s thread start\n", name);

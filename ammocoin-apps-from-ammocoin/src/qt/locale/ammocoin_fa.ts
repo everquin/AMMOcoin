@@ -92,12 +92,12 @@
         <translation>ادرس های دریافتی </translation>
     </message>
     <message>
-        <source>These are your PIVX addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>این ها آدرس های PIVX شما برای ارسال پرداختی هاست. همیشه مقدار و آدرس دریافتی را قبل از ارسال کوین ها بازنگری کنید. </translation>
+        <source>These are your AMMOcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>این ها آدرس های AMMOcoin شما برای ارسال پرداختی هاست. همیشه مقدار و آدرس دریافتی را قبل از ارسال کوین ها بازنگری کنید. </translation>
     </message>
     <message>
-        <source>These are your PIVX addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>این ها آدرس های PIVX شما برای دریافت پرداختی هاست. پیشنهاد می‌شود که برای هر تراکنش یک آدرس دریافتی جدید استفاده کنید. </translation>
+        <source>These are your AMMOcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>این ها آدرس های AMMOcoin شما برای دریافت پرداختی هاست. پیشنهاد می‌شود که برای هر تراکنش یک آدرس دریافتی جدید استفاده کنید. </translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -1060,7 +1060,7 @@ It will start automatically as soon as the wallet has enough confirmations on an
         <translation>آدرس ارسالی را ویرایش کنید</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid PIVX address.</source>
+        <source>The entered address "%1" is not a valid AMMOcoin address.</source>
         <translation>آدرس وارد شده "%1" یک PIV آدرس معتبر نیست. </translation>
     </message>
     <message>
@@ -1262,8 +1262,8 @@ Be part of the DAO.</source>
         <translation>از آن رو که بار اول است این برنامه به راه انداخته می‌شود، شما می‌توانید محل ذخیره سازی داده توسط %1 را انتخاب کنید. </translation>
     </message>
     <message>
-        <source>%1 will download and store a copy of the PIVX block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>%1 یک نسخه از بلاکچن PIVX را دانلود و ذخیره خواهد کرد. حداقل %2 گیگابایت داده درین دایرکتوری ذخیره شده، در طول زمان بر حجم آن اضافه خواهد شد. کیف پول نیز درین دایرکتوری ذخیره خواهد گردید. </translation>
+        <source>%1 will download and store a copy of the AMMOcoin block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>%1 یک نسخه از بلاکچن AMMOcoin را دانلود و ذخیره خواهد کرد. حداقل %2 گیگابایت داده درین دایرکتوری ذخیره شده، در طول زمان بر حجم آن اضافه خواهد شد. کیف پول نیز درین دایرکتوری ذخیره خواهد گردید. </translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1394,8 +1394,8 @@ Be part of the DAO.</source>
         <translation>آی پی آدرس نامعتبر</translation>
     </message>
     <message>
-        <source>To create a PIVX Masternode you must dedicate %1 (the unit of PIVX) to the network (however, these coins are still yours and will never leave your possession).</source>
-        <translation>برای ایجاد یک مسترنود PIVX، شما باید %1 (واحد PIVX) را به شبکه ( با این حال هم، این کوین ها هنوز از شماست و هیچ گاه از دارایی شما کاسته نمیشوند) اختصاص دهید. </translation>
+        <source>To create a AMMOcoin Masternode you must dedicate %1 (the unit of AMMOcoin) to the network (however, these coins are still yours and will never leave your possession).</source>
+        <translation>برای ایجاد یک مسترنود AMMOcoin، شما باید %1 (واحد AMMOcoin) را به شبکه ( با این حال هم، این کوین ها هنوز از شماست و هیچ گاه از دارایی شما کاسته نمیشوند) اختصاص دهید. </translation>
     </message>
     <message>
         <source>You can deactivate the node and unlock the coins at any time.</source>
@@ -1539,14 +1539,14 @@ Please wait few more minutes (masternode collaterals require %1 confirmations).<
 on a remote server to your clipboard.
 
 
-You will only have to paste the data in the pivx.conf file
+You will only have to paste the data in the ammocoin.conf file
 of your remote server and start it, then start the Masternode using
 this controller wallet (select the Masternode in the list and press "start").
 </source>
         <translation>شما قرار است داده‌های لازم برای اجرای یک مسترنود روی سرویر راه دور را در کلیپبورد خود صادر کنید.
 
 
-تنها باید داده‌ها را در فایل پیکربندی pivx.conf سرویر راه دور تان پِست کرده آن را راه اندازی کنید، بعد با استفاده از این کیف پول کنترل‌کننده، مسترنود را شروع کنید( مسترنود را در لیست انتخاب کرده و "شروع" را فشار دهید).
+تنها باید داده‌ها را در فایل پیکربندی ammocoin.conf سرویر راه دور تان پِست کرده آن را راه اندازی کنید، بعد با استفاده از این کیف پول کنترل‌کننده، مسترنود را شروع کنید( مسترنود را در لیست انتخاب کرده و "شروع" را فشار دهید).
 </translation>
     </message>
     <message>
@@ -1742,8 +1742,8 @@ STAKING</source>
         <translation>آدرس انترنتی URI را باز کنید </translation>
     </message>
     <message>
-        <source>Open PIVX URI</source>
-        <translation>آدرس انترنتی URI PIVX را باز کنید </translation>
+        <source>Open AMMOcoin URI</source>
+        <translation>آدرس انترنتی URI AMMOcoin را باز کنید </translation>
     </message>
     <message>
         <source>CANCEL</source>
@@ -1755,7 +1755,7 @@ STAKING</source>
     </message>
 </context>
 <context>
-    <name>PIVXGUI</name>
+    <name>AMMOcoinGUI</name>
     <message>
         <source>Wallet</source>
         <translation>کیف پول </translation>
@@ -1840,12 +1840,12 @@ Address: %4
         <translation>آدرس پرداختی %1 نامعتبر</translation>
     </message>
     <message>
-        <source>Cannot start pivx: click-to-pay handler</source>
-        <translation>امکان راه اندازی pivx نیست، کنترول کننده کلیک-برای-پرداخت</translation>
+        <source>Cannot start ammocoin: click-to-pay handler</source>
+        <translation>امکان راه اندازی ammocoin نیست، کنترول کننده کلیک-برای-پرداخت</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid PIVX address or malformed URI parameters.</source>
-        <translation>امکان خوانش و تجزیه آدرس اینترنتی URI نیست! این می تواند ناشی از آدرس PIVX نامعتبر یا پارامترهای URI نادرست باشد.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid AMMOcoin address or malformed URI parameters.</source>
+        <translation>امکان خوانش و تجزیه آدرس اینترنتی URI نیست! این می تواند ناشی از آدرس AMMOcoin نامعتبر یا پارامترهای URI نادرست باشد.</translation>
     </message>
 </context>
 <context>
@@ -1968,8 +1968,8 @@ Address: %4
         <translation>مقدار</translation>
     </message>
     <message>
-        <source>Enter PIVX address (e.g. %1)</source>
-        <translation>آدرس PIVX را وارد کنید (برای مثال، %1)</translation>
+        <source>Enter AMMOcoin address (e.g. %1)</source>
+        <translation>آدرس AMMOcoin را وارد کنید (برای مثال، %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2004,8 +2004,8 @@ Address: %4
         <translation>هیچ کدام </translation>
     </message>
     <message>
-        <source>A fatal error occurred. PIVX can no longer continue safely and will quit.</source>
-        <translation>خطای جدی رخ داد. PIVX دیگر نمیتواند بطور امن ادامه دهد و خارج می‌شود. </translation>
+        <source>A fatal error occurred. AMMOcoin can no longer continue safely and will quit.</source>
+        <translation>خطای جدی رخ داد. AMMOcoin دیگر نمیتواند بطور امن ادامه دهد و خارج می‌شود. </translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -2271,8 +2271,8 @@ Address: %4
         <translation>بلاکچن </translation>
     </message>
     <message>
-        <source>Open the PIVX debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>فایل اشکال زدایی جدول ثبت PIVX را از داده دایرکتوری فعلی باز کنید. این عمل برای فایل جدول ثبت بزرگتر میتواند چند ثانیه زمان بر باشد. </translation>
+        <source>Open the AMMOcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>فایل اشکال زدایی جدول ثبت AMMOcoin را از داده دایرکتوری فعلی باز کنید. این عمل برای فایل جدول ثبت بزرگتر میتواند چند ثانیه زمان بر باشد. </translation>
     </message>
     <message>
         <source>Number of Masternodes</source>
@@ -2479,8 +2479,8 @@ Address: %4
         <translation>خروج:</translation>
     </message>
     <message>
-        <source>Welcome to the PIVX RPC console.</source>
-        <translation>به کنسول PIVX RPC خوش آمدید. </translation>
+        <source>Welcome to the AMMOcoin RPC console.</source>
+        <translation>به کنسول AMMOcoin RPC خوش آمدید. </translation>
     </message>
     <message>
         <source>&amp;Disconnect Node</source>
@@ -2722,8 +2722,8 @@ try unlocking the wallet</source>
         <translation>مقدار</translation>
     </message>
     <message>
-        <source>Instead of sharing only a PIVX address, you can create a payment request, bundling up more information</source>
-        <translation>بجای به اشتراک گذاری تنها یک آدرس PIVX، شما می‌توانید یک درخواست پرداخت ایجاد کرده، اطلاعات بیشتر جمع آوری کنید</translation>
+        <source>Instead of sharing only a AMMOcoin address, you can create a payment request, bundling up more information</source>
+        <translation>بجای به اشتراک گذاری تنها یک آدرس AMMOcoin، شما می‌توانید یک درخواست پرداخت ایجاد کرده، اطلاعات بیشتر جمع آوری کنید</translation>
     </message>
     <message>
         <source>COPY ADDRESS</source>
@@ -2805,8 +2805,8 @@ try unlocking the wallet</source>
         <translation>شخصی سازی آدرس </translation>
     </message>
     <message>
-        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" PIVX address</source>
-        <translation> باقیمانده مقدار حاصل از ورودی ها منهای مقدار خروجی به آدرس PIVX "تغییر" می رود.</translation>
+        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" AMMOcoin address</source>
+        <translation> باقیمانده مقدار حاصل از ورودی ها منهای مقدار خروجی به آدرس AMMOcoin "تغییر" می رود.</translation>
     </message>
     <message>
         <source>SAVE</source>
@@ -2957,8 +2957,8 @@ Do you want to continue?</source>
         <translation>به حداکثر مقدار خروجی رسیده شده است</translation>
     </message>
     <message>
-        <source>Parse a PIVX URI</source>
-        <translation>خوانش و تجزیه آدرس انترنتی PIVX URI </translation>
+        <source>Parse a AMMOcoin URI</source>
+        <translation>خوانش و تجزیه آدرس انترنتی AMMOcoin URI </translation>
     </message>
     <message>
         <source>Invalid entry, previous entries must be valid before add a new one</source>
@@ -3211,9 +3211,9 @@ Remember to write it down and store it safely, otherwise you might lose access t
         <translation>ابزار BIP38</translation>
     </message>
     <message>
-        <source>Encrypt your PIVX addresses (key pair actually) using BIP38 encryption.
+        <source>Encrypt your AMMOcoin addresses (key pair actually) using BIP38 encryption.
 Using this mechanism you can share your keys without middle-man risk, only need to store your passphrase safely</source>
-        <translation> با استفاده از رمزگذاری BIP38، آدرس‌های PIVX خود را رمزگذاری کنید (جفت کلید).
+        <translation> با استفاده از رمزگذاری BIP38، آدرس‌های AMMOcoin خود را رمزگذاری کنید (جفت کلید).
 با بکارگیری این مکانیسم می توانید کلیدهای خود را بدون خطر فرد وسط به اشتراک بگذارید، فقط باید رمز عبور خود را بطور ایمن ذخیره کنید</translation>
     </message>
     <message>
@@ -3249,8 +3249,8 @@ Using this mechanism you can share your keys without middle-man risk, only need 
         <translation>کلید را رمزگشایی کنید </translation>
     </message>
     <message>
-        <source>PIVX address</source>
-        <translation>آدرس PIVX </translation>
+        <source>AMMOcoin address</source>
+        <translation>آدرس AMMOcoin </translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -3382,8 +3382,8 @@ Verify that you have installed a predetermined text editor.</source>
 برسی کنید که یک ویرایشگر متن از پیش تعیین شده را نصب کرده اید.</translation>
     </message>
     <message>
-        <source>Welcome to the PIVX RPC console.</source>
-        <translation>به کنسول PIVX RPC خوش آمدید. </translation>
+        <source>Welcome to the AMMOcoin RPC console.</source>
+        <translation>به کنسول AMMOcoin RPC خوش آمدید. </translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
@@ -3547,16 +3547,16 @@ There was an error trying to save the address list to %1. Please try again.</sou
 <context>
     <name>SettingsFaqWidget</name>
     <message>
-        <source>1) What is PIVX?</source>
-        <translation>1) PIVX چیست؟</translation>
+        <source>1) What is AMMOcoin?</source>
+        <translation>1) AMMOcoin چیست؟</translation>
     </message>
     <message>
         <source>2) Why are my PIV unspendable?</source>
         <translation>2) چرا PIV من غیر قابل مصرف است؟ </translation>
     </message>
     <message>
-        <source>What is PIVX?</source>
-        <translation>PIVX چیست؟</translation>
+        <source>What is AMMOcoin?</source>
+        <translation>AMMOcoin چیست؟</translation>
     </message>
     <message>
         <source>Why are my PIV unspendable?</source>
@@ -3607,28 +3607,28 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation>در اینجا می توانید بیشتر بخوانید</translation>
     </message>
     <message>
-        <source>PIVX is a form of digital online money using blockchain technology that can be easily transferred globally, instantly, and with near zero fees. PIVX incorporates market leading security &amp; privacy and is also the first PoS (Proof of Stake) Cryptocurrency to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.</source>
-        <translation>PIVX شکلی از پول آنلاین دیجیتال با استفاده از فناوری بلاک چین است که می تواند به راحتی به صورت جهانی، فوری و با هزینه تقریباً صفر منتقل شود. PIVX دارای امنیت و حریم خصوصی پیشتاز در بازار است و همچنین اولین ارز رمزنگاری PoS (اثبات سهام) است که Sapling (SHIELD)، یک پروتکل حریم خصوصی مبتنی بر zk-SNARKs را پیاده‌سازی می‌کند.</translation>
+        <source>AMMOcoin is a form of digital online money using blockchain technology that can be easily transferred globally, instantly, and with near zero fees. AMMOcoin incorporates market leading security &amp; privacy and is also the first PoS (Proof of Stake) Cryptocurrency to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.</source>
+        <translation>AMMOcoin شکلی از پول آنلاین دیجیتال با استفاده از فناوری بلاک چین است که می تواند به راحتی به صورت جهانی، فوری و با هزینه تقریباً صفر منتقل شود. AMMOcoin دارای امنیت و حریم خصوصی پیشتاز در بازار است و همچنین اولین ارز رمزنگاری PoS (اثبات سهام) است که Sapling (SHIELD)، یک پروتکل حریم خصوصی مبتنی بر zk-SNARKs را پیاده‌سازی می‌کند.</translation>
     </message>
     <message>
-        <source>PIVX utilizes a Proof of Stake (PoS) consensus system algorithm, allowing all owners of PIVX to participate in earning block rewards while securing the network with full node wallets, as well as to run Masternodes to create and vote on proposals.</source>
-        <translation>با استفاده از الگوریتم سیستم اجماع اثبات سهام (PoS)، PIVX به همه دارندگان اجازه می‌دهد تا در کسب پاداش‌های بلاک شرکت کنند و در عین حال شبکه را با کیف پول‌های نود کامل ایمن سازند و همچنین Masternodes را برای ایجاد و رای دادن به پیشنهادات پیش ببرند. </translation>
+        <source>AMMOcoin utilizes a Proof of Stake (PoS) consensus system algorithm, allowing all owners of AMMOcoin to participate in earning block rewards while securing the network with full node wallets, as well as to run Masternodes to create and vote on proposals.</source>
+        <translation>با استفاده از الگوریتم سیستم اجماع اثبات سهام (PoS)، AMMOcoin به همه دارندگان اجازه می‌دهد تا در کسب پاداش‌های بلاک شرکت کنند و در عین حال شبکه را با کیف پول‌های نود کامل ایمن سازند و همچنین Masternodes را برای ایجاد و رای دادن به پیشنهادات پیش ببرند. </translation>
     </message>
     <message>
-        <source>Newly received PIVX requires 6 confirmations on the network to become eligible for spending which can take ~6 minutes.</source>
-        <translation>PIVX جدیداً دریافت شده به 6 تأییدیه برای واجدشرایط مصرف شدن نیاز دارد که این عمل می‌تواند 6~ دقیقه طول بکشد. </translation>
+        <source>Newly received AMMOcoin requires 6 confirmations on the network to become eligible for spending which can take ~6 minutes.</source>
+        <translation>AMMOcoin جدیداً دریافت شده به 6 تأییدیه برای واجدشرایط مصرف شدن نیاز دارد که این عمل می‌تواند 6~ دقیقه طول بکشد. </translation>
     </message>
     <message>
-        <source>Your PIVX wallet also needs to be completely synchronized to see and spend balances on the network.</source>
-        <translation>برای دیدن و خرج نمودن بالانس ها در شبکه، کیف پول PIVX شما نیاز دارد تا کاملا همگام شود. </translation>
+        <source>Your AMMOcoin wallet also needs to be completely synchronized to see and spend balances on the network.</source>
+        <translation>برای دیدن و خرج نمودن بالانس ها در شبکه، کیف پول AMMOcoin شما نیاز دارد تا کاملا همگام شود. </translation>
     </message>
     <message>
         <source>Make sure your wallet is completely synchronized and you are using the latest release.</source>
         <translation>اطمینان حاصل کنید که کیف پول شما کاملاً همگام شده است و از آخرین نسخه استفاده می کنید. </translation>
     </message>
     <message>
-        <source>You must have a balance of PIVX with a minimum of 600 confirmations.</source>
-        <translation>شما باید یک بالانس PIVX با حداقل 600 تأییدیه داشته باشید. </translation>
+        <source>You must have a balance of AMMOcoin with a minimum of 600 confirmations.</source>
+        <translation>شما باید یک بالانس AMMOcoin با حداقل 600 تأییدیه داشته باشید. </translation>
     </message>
     <message>
         <source>Your wallet must stay online and be unlocked for staking purposes.</source>
@@ -3687,8 +3687,8 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation>مزایای اضافی مسترنود:</translation>
     </message>
     <message>
-        <source>Participate in PIVX Governance</source>
-        <translation>در اداره کل PIVX اشتراک کنید</translation>
+        <source>Participate in AMMOcoin Governance</source>
+        <translation>در اداره کل AMMOcoin اشتراک کنید</translation>
     </message>
     <message>
         <source>Earn Masternode Rewards</source>
@@ -3699,8 +3699,8 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation>گزینه کالا برای فروش آینده</translation>
     </message>
     <message>
-        <source>Help secure the PIVX network</source>
-        <translation>کمک در ایمن سازی شبکه PIVX </translation>
+        <source>Help secure the AMMOcoin network</source>
+        <translation>کمک در ایمن سازی شبکه AMMOcoin </translation>
     </message>
     <message>
         <source>Requirements:</source>
@@ -3814,8 +3814,8 @@ There was an error trying to save the address list to %1. Please try again.</sou
         <translation>پوشه پشتیبان باز نمی شود</translation>
     </message>
     <message>
-        <source>Unable to open pivx.conf with default application</source>
-        <translation>امکان باز کردن pivx.conf توسط برنامه پیش فرض نیست</translation>
+        <source>Unable to open ammocoin.conf with default application</source>
+        <translation>امکان باز کردن ammocoin.conf توسط برنامه پیش فرض نیست</translation>
     </message>
     <message>
         <source>In:</source>
@@ -3926,8 +3926,8 @@ Are you sure?
         <translation>پیام</translation>
     </message>
     <message>
-        <source>PIVX address or contact label</source>
-        <translation>برچسب مخاطب یا آدرس PIVX </translation>
+        <source>AMMOcoin address or contact label</source>
+        <translation>برچسب مخاطب یا آدرس AMMOcoin </translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -4041,8 +4041,8 @@ Are you sure?
         <translation>شخصی سازی گزینه های شبکه نود </translation>
     </message>
     <message>
-        <source>Automatically open the PIVX client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
-        <translation>پورت کاربر PIVX را به صورت خودکار روی روتر باز کنید. این تنها زمانی کار می کند که روتر شما از NAT-PMP پشتیبانی کند و فعال باشد. پورت خارجی می تواند تصادفی باشد.</translation>
+        <source>Automatically open the AMMOcoin client port on the router. This only works when your router supports NAT-PMP and it is enabled. The external port could be random.</source>
+        <translation>پورت کاربر AMMOcoin را به صورت خودکار روی روتر باز کنید. این تنها زمانی کار می کند که روتر شما از NAT-PMP پشتیبانی کند و فعال باشد. پورت خارجی می تواند تصادفی باشد.</translation>
     </message>
     <message>
         <source>Map port using NAT-PMP</source>
@@ -4239,8 +4239,8 @@ Are you sure?
         <translation>سوالات متداول </translation>
     </message>
     <message>
-        <source>About PIVX</source>
-        <translation>درباره PIVX </translation>
+        <source>About AMMOcoin</source>
+        <translation>درباره AMMOcoin </translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4963,20 +4963,20 @@ Select fewer inputs with coin control.</source>
         <translation>زبان خود را انتخاب کنید</translation>
     </message>
     <message>
-        <source>PIVX is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
-        <translation>PIVX ابتکاریترین فناوری مبتنی بر بلاکچن اثبات سهام، Proof of Stake، در جهان استک که وسط تیمی از توسعه دهندگان و رمزنگاران بسیار با تجربه طراحی شده است.</translation>
+        <source>AMMOcoin is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
+        <translation>AMMOcoin ابتکاریترین فناوری مبتنی بر بلاکچن اثبات سهام، Proof of Stake، در جهان استک که وسط تیمی از توسعه دهندگان و رمزنگاران بسیار با تجربه طراحی شده است.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - PIVX believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;همانطور که مانیفست ما می گوید: حریم خصوصی یک حق اساسی و غیرقابل مذاکره بشر است. این به کاربران این امکان را می دهد که داده های خود را در هر زمان و با هرکسی که می خواهند به اشتراک بگذارند - PIVX به حاکمیت خود معتقد است.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - AMMOcoin believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;همانطور که مانیفست ما می گوید: حریم خصوصی یک حق اساسی و غیرقابل مذاکره بشر است. این به کاربران این امکان را می دهد که داده های خود را در هر زمان و با هرکسی که می خواهند به اشتراک بگذارند - AMMOcoin به حاکمیت خود معتقد است.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>The masternode network is PIVX's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
-        <translation>شبکه مسترنود، لایه دوم شبکه PIVX در بالای بلاک چین است که سازمان خودگردان غیرمتمرکز DAO ما را قادر می‌سازد تا حاکمیت غیرمتمرکز و خزانه‌داری را ارائه دهد.</translation>
+        <source>The masternode network is AMMOcoin's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
+        <translation>شبکه مسترنود، لایه دوم شبکه AMMOcoin در بالای بلاک چین است که سازمان خودگردان غیرمتمرکز DAO ما را قادر می‌سازد تا حاکمیت غیرمتمرکز و خزانه‌داری را ارائه دهد.</translation>
     </message>
     <message>
-        <source>How PIVX respects your privacy?</source>
-        <translation>چگونه PIVX به حریم خصوصی شما احترام می گذارد؟</translation>
+        <source>How AMMOcoin respects your privacy?</source>
+        <translation>چگونه AMMOcoin به حریم خصوصی شما احترام می گذارد؟</translation>
     </message>
     <message>
         <source>Welcome to
@@ -5017,7 +5017,7 @@ Select fewer inputs with coin control.</source>
     </message>
 </context>
 <context>
-    <name>pivx-core</name>
+    <name>ammocoin-core</name>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
         <translation>توزیع شده تحت مجوز نرم افزار MIT،  فایل همراه COPYING یا &lt;http://www.opensource.org/licenses/mit-license.php&gt; را ببینید.</translation>

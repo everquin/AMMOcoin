@@ -1,10 +1,10 @@
-// Copyright (c) 2019-2020 The PIVX Core developers
+// Copyright (c) 2019-2020 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/sendchangeaddressdialog.h"
-#include "qt/pivx/forms/ui_sendchangeaddressdialog.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/sendchangeaddressdialog.h"
+#include "qt/ammocoin/forms/ui_sendchangeaddressdialog.h"
+#include "qt/ammocoin/qtutils.h"
 
 SendChangeAddressDialog::SendChangeAddressDialog(QWidget* parent, WalletModel* model, bool isTransparent) : FocusedDialog(parent),
                                                                                                             walletModel(model),

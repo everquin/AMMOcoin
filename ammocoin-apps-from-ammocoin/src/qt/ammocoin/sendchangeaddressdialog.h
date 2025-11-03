@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 The PIVX Core developers
+// Copyright (c) 2019-2020 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,8 +6,8 @@
 #define SENDCHANGEADDRESSDIALOG_H
 
 #include "destination_io.h"
-#include "qt/pivx/focuseddialog.h"
-#include "qt/pivx/snackbar.h"
+#include "qt/ammocoin/focuseddialog.h"
+#include "qt/ammocoin/snackbar.h"
 #include "script/standard.h"
 
 class WalletModel;

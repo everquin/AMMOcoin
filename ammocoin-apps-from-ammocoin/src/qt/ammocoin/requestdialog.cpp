@@ -1,12 +1,12 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/requestdialog.h"
-#include "qt/pivx/forms/ui_requestdialog.h"
+#include "qt/ammocoin/requestdialog.h"
+#include "qt/ammocoin/forms/ui_requestdialog.h"
 #include <QListView>
 
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/qtutils.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
 

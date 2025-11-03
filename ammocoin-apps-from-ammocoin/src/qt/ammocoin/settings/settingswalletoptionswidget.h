@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,7 +7,7 @@
 
 #include <QWidget>
 #include <QDataWidgetMapper>
-#include "qt/pivx/pwidget.h"
+#include "qt/ammocoin/pwidget.h"
 namespace Ui {
 class SettingsWalletOptionsWidget;
 }
@@ -17,7 +17,7 @@ class SettingsWalletOptionsWidget : public PWidget
     Q_OBJECT
 
 public:
-    explicit SettingsWalletOptionsWidget(PIVXGUI* _window, QWidget *parent = nullptr);
+    explicit SettingsWalletOptionsWidget(AMMOCOINGUI* _window, QWidget *parent = nullptr);
     ~SettingsWalletOptionsWidget();
 
     void setMapper(QDataWidgetMapper *mapper);

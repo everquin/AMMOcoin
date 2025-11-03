@@ -1,0 +1,72 @@
+# Ubuntu-based Linux build environment for AMMOcoin v1.1.0
+FROM ubuntu:22.04
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install essential build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    autoconf \
+    automake \
+    libtool \
+    pkg-config \
+    git \
+    curl \
+    wget \
+    libssl-dev \
+    libboost-all-dev \
+    libdb-dev \
+    libdb++-dev \
+    libevent-dev \
+    libzmq3-dev \
+    libminiupnpc-dev \
+    libnatpmp-dev \
+    libgmp-dev \
+    libsodium-dev \
+    python3 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Rust for Sapling support
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Verify Rust installation
+RUN rustc --version && cargo --version
+
+# Set working directory
+WORKDIR /build
+
+# Copy source code
+COPY ammocoin-source/ /build/ammocoin-source/
+COPY ammocoin-apps-from-ammocoin/ /build/ammocoin-apps-from-ammocoin/
+
+# Set build directory
+WORKDIR /build/ammocoin-apps-from-ammocoin
+
+# Configure build for Linux
+RUN ./autogen.sh && \
+    ./configure \
+    --disable-tests \
+    --disable-bench \
+    --without-gui \
+    --enable-wallet \
+    --with-incompatible-bdb \
+    --with-boost \
+    CXXFLAGS="-O2 -g" \
+    LDFLAGS="-static-libgcc -static-libstdc++"
+
+# Build all binaries (limit parallel jobs to avoid memory issues)
+RUN make -j2 CARGO=/root/.cargo/bin/cargo RUSTC=/root/.cargo/bin/rustc
+
+# Create output directory for binaries
+RUN mkdir -p /output && \
+    cp src/ammocoind /output/ && \
+    cp src/ammocoin-cli /output/ && \
+    cp src/ammocoin-tx /output/ && \
+    strip /output/ammocoin* && \
+    ls -la /output/
+
+# Default command
+CMD ["/bin/bash"]

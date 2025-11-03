@@ -1,11 +1,11 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef QTUTILS_H
 #define QTUTILS_H
 
-#include "qt/pivx/pivxgui.h"
+#include "qt/ammocoin/ammocoingui.h"
 
 #include <QAbstractAnimation>
 #include <QColor>
@@ -33,11 +33,11 @@ const QString RESYNC("-resync");
 extern Qt::Modifier SHORT_KEY;
 
 bool openDialog(QDialog* widget, QWidget* gui);
-void closeDialog(QDialog* widget, PIVXGUI* gui);
+void closeDialog(QDialog* widget, AMMOCOINGUI* gui);
 void openDialogFullScreen(QWidget* parent, QWidget* dialog);
-bool openDialogWithOpaqueBackgroundY(QDialog* widget, PIVXGUI* gui, double posX = 3, int posY = 5, bool hideOpaqueBackground = true);
-bool openDialogWithOpaqueBackground(QDialog* widget, PIVXGUI* gui, double posX = 3);
-bool openDialogWithOpaqueBackgroundFullScreen(QDialog* widget, PIVXGUI* gui);
+bool openDialogWithOpaqueBackgroundY(QDialog* widget, AMMOCOINGUI* gui, double posX = 3, int posY = 5, bool hideOpaqueBackground = true);
+bool openDialogWithOpaqueBackground(QDialog* widget, AMMOCOINGUI* gui, double posX = 3);
+bool openDialogWithOpaqueBackgroundFullScreen(QDialog* widget, AMMOCOINGUI* gui);
 
 //
 QPixmap encodeToQr(const QString& str, QString& errorStr, const QColor& qrColor = Qt::black);

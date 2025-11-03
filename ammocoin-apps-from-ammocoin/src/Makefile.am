@@ -24,7 +24,7 @@ BITCOIN_INCLUDES=-I$(builddir) -I$(builddir)/obj $(BDB_CPPFLAGS) $(BOOST_CPPFLAG
 
 BITCOIN_INCLUDES += -I$(srcdir)/rust/include
 BITCOIN_INCLUDES += -I$(srcdir)/secp256k1/include
-# Real chiabls library headers (not stubs)
+# BLS stub headers (library disabled but headers enabled for stub compatibility)
 BITCOIN_INCLUDES += -I$(srcdir)/chiabls/src
 BITCOIN_INCLUDES += -I$(srcdir)/chiabls/contrib/relic/include
 BITCOIN_INCLUDES += $(UNIVALUE_CFLAGS)
@@ -69,7 +69,7 @@ $(CARGO_CONFIGURED):
 
 else
 # Enable dependency vendoring
-RUST_BUILD_OPTS += --locked --offline
+RUST_BUILD_OPTS += --locked
 if HAVE_RUST_TARGET
 RUST_BUILD_OPTS += --target $(RUST_TARGET)
 endif
@@ -139,7 +139,7 @@ LIBSAPLING_H = \
   sapling/sapling_operation.h
 
 .PHONY: FORCE cargo-build check-symbols check-security
-# pivx core #
+# ammocoin core #
 BITCOIN_CORE_H = \
   activemasternode.h \
   addrdb.h \
@@ -350,10 +350,14 @@ obj/build.h: FORCE
 	  "$(abs_top_srcdir)"
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between pivxd and pivx-qt
+# server: shared between ammocoind and ammocoin-qt
 libbitcoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(NATPMP_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
+  bls/bls_ies.cpp \
+  bls/bls_worker.cpp \
+  bls/bls_wrapper.cpp \
+  bls/key_io.cpp \
   addrdb.cpp \
   addrman.cpp \
   bloom.cpp \
@@ -364,15 +368,33 @@ libbitcoin_server_a_SOURCES = \
   consensus/tx_verify.cpp \
   flatfile.cpp \
   consensus/zerocoin_verify.cpp \
+  legacy/validation_zerocoin_legacy.cpp \
+  evo/deterministicmns.cpp \
+  evo/evodb.cpp \
+  evo/evonotificationinterface.cpp \
   evo/mnauth.cpp \
   evo/providertx.cpp \
   evo/specialtx_validation.cpp \
+  llmq/quorums.cpp \
+  llmq/quorums_blockprocessor.cpp \
+  llmq/quorums_chainlocks.cpp \
+  llmq/quorums_commitment.cpp \
+  llmq/quorums_connections.cpp \
+  llmq/quorums_debug.cpp \
+  llmq/quorums_dkgsession.cpp \
+  llmq/quorums_dkgsessionhandler.cpp \
+  llmq/quorums_dkgsessionmgr.cpp \
+  llmq/quorums_init.cpp \
+  llmq/quorums_signing.cpp \
+  llmq/quorums_signing_shares.cpp \
+  llmq/quorums_utils.cpp \
+  tiertwo/masternode_meta_manager.cpp \
+  tiertwo/net_masternodes.cpp \
   httprpc.cpp \
   httpserver.cpp \
   init.cpp \
   tiertwo/init.cpp \
   dbwrapper.cpp \
-  # legacy/validation_zerocoin_legacy.cpp \
   sapling/sapling_validation.cpp \
   merkleblock.cpp \
   blockassembler.cpp \
@@ -418,7 +440,7 @@ libbitcoin_zmq_a_SOURCES = \
   zmq/zmqpublishnotifier.cpp
 endif
 
-# wallet: shared between pivxd and pivx-qt, but only linked
+# wallet: shared between ammocoind and ammocoin-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -513,7 +535,7 @@ libzerocoin_libbitcoin_zerocoin_a_SOURCES = \
   libzerocoin/Params.cpp \
   zpiv/zpivmodule.cpp
 
-# common: shared between pivxd, and pivx-qt and non-server tools
+# common: shared between ammocoind, and ammocoin-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -526,7 +548,7 @@ libbitcoin_common_a_SOURCES = \
   budget/budgetvote.cpp \
   budget/finalizedbudget.cpp \
   budget/finalizedbudgetvote.cpp \
-  # budget/budgetutil.cpp \
+  budget/budgetutil.cpp \
   chainparams.cpp \
   consensus/upgrades.cpp \
   coins.cpp \
@@ -632,7 +654,7 @@ libsapling_a_SOURCES += compat/glibc_compat.cpp
 AM_LDFLAGS += $(COMPAT_LDFLAGS)
 endif
 
-# cli: shared between pivx-cli and pivx-qt
+# cli: shared between ammocoin-cli and ammocoin-qt
 libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_cli_a_SOURCES = \
@@ -652,6 +674,7 @@ ammocoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 if TARGET_WINDOWS
 ammocoind_SOURCES += ammocoind-res.rc
 endif
+
 ammocoind_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
@@ -669,7 +692,7 @@ ammocoind_LDADD = \
   $(LIBRUSTZCASH) \
   $(LIBZCASH_LIBS)
 
-ammocoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(BLS_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+ammocoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(BLS_LIBS)
 
 # ammocoin-cli binary #
 ammocoin_cli_SOURCES = ammocoin-cli.cpp
@@ -690,7 +713,7 @@ ammocoin_cli_LDADD = \
   $(LIBRUSTZCASH) \
   $(LIBZCASH_LIBS)
 
-ammocoin_cli_LDADD += $(BOOST_LIBS) $(BLS_LIBS) $(EVENT_LIBS)
+ammocoin_cli_LDADD += $(BOOST_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
 #
 
 # ammocoin-tx binary #
@@ -714,7 +737,7 @@ ammocoin_tx_LDADD = \
   $(LIBRUSTZCASH) \
   $(LIBZCASH_LIBS)
 
-ammocoin_tx_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(BLS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+ammocoin_tx_LDADD += $(BOOST_LIBS) $(BLS_LIBS)
 #
 
 # bitcoinconsensus library #
@@ -790,17 +813,16 @@ EXTRA_DIST = $(CTAES_DIST) rust
 EXTRA_DIST += $(IMMER_DIST)
 
 
-config/pivx-config.h: config/stamp-h1
+config/ammocoin-config.h: config/stamp-h1
 	@$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-config/stamp-h1: $(top_srcdir)/$(subdir)/config/pivx-config.h.in $(top_builddir)/config.status
+config/stamp-h1: $(top_srcdir)/$(subdir)/config/ammocoin-config.h.in $(top_builddir)/config.status
 	$(AM_V_at)$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-$(top_srcdir)/$(subdir)/config/pivx-config.h.in:  $(am__configure_deps)
-	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/pivx-config.h.in
+$(top_srcdir)/$(subdir)/config/ammocoin-config.h.in:  $(am__configure_deps)
+	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/ammocoin-config.h.in
 
 clean-local:
 	-$(MAKE) -C secp256k1 clean
 	-$(MAKE) -C univalue clean
-	-$(MAKE) -C chiabls clean
 	-rm -f leveldb/*/*.gcda leveldb/*/*.gcno leveldb/helpers/memenv/*.gcda leveldb/helpers/memenv/*.gcno
 	-rm -f config.h
 	-rm -rf test/__pycache__

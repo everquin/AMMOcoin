@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,14 +7,14 @@
 
 #include <QWidget>
 #include "qt/askpassphrasedialog.h"
-#include "qt/pivx/pwidget.h"
-#include "qt/pivx/lockunlock.h"
+#include "qt/ammocoin/pwidget.h"
+#include "qt/ammocoin/lockunlock.h"
 #include "amount.h"
 #include <QTimer>
 #include <QProgressBar>
 
 class BalanceBubble;
-class PIVXGUI;
+class AMMOCOINGUI;
 class WalletModel;
 class ClientModel;
 
@@ -27,7 +27,7 @@ class TopBar : public PWidget
     Q_OBJECT
 
 public:
-    explicit TopBar(PIVXGUI* _mainWindow, QWidget *parent = nullptr);
+    explicit TopBar(AMMOCOINGUI* _mainWindow, QWidget *parent = nullptr);
     ~TopBar();
 
     void showTop();

@@ -1,0 +1,358 @@
+==============================================
+AMMOcoin v1.1.0 Windows Build
+==============================================
+
+✓ MinGW found: x86_64-w64-mingw32-g++ (GCC) 13-win32
+
+Step 1: Building Windows dependencies (15-20 minutes)...
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_qt_pkgconfig.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/mac-qmake.conf: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_configure_mac.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_no_printer.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_rcc_determinism.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_riscv64_arch.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_s390x_powerpc_mips_mipsel_architectures.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/xkb-default.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/no-xlib.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/qt/fix_qpainter_non_determinism.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/miniupnpc/dont_leak_info.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/zeromq/0001-fix-build-with-older-mingw64.patch: No such file or directory
+sha256sum: /media/psf/CRUCIAL_2TB/: Is a directory
+sha256sum: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/patches/zeromq/0002-disable-pthread_set_name_np.patch: No such file or directory
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/.stamp_postprocessed'
+funcs.mk:256: warning: ignoring old recipe for target '_GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/.stamp_postprocessed'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+Makefile:167: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+funcs.mk:256: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+Makefile:181: warning: overriding recipe for target '/media/psf/CRUCIAL_2TB/'
+Makefile:167: warning: ignoring old recipe for target '/media/psf/CRUCIAL_2TB/'
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+rm: cannot remove '/media/psf/CRUCIAL_2TB/': Is a directory
+make: Circular /media/psf/CRUCIAL_2TB/ <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular native_rust <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/built/x86_64-w64-mingw32/native_rust/native_rust-1.69.0-391f1937fc4.tar.gz.hash <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/built/x86_64-w64-mingw32/native_rust/native_rust-1.69.0-391f1937fc4.tar.gz <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/staging/x86_64-w64-mingw32/native_rust/1.69.0-391f1937fc4/media/psf/CRUCIAL_2TB/ <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/staging/x86_64-w64-mingw32/native_rust/1.69.0-391f1937fc4/.stamp_staged <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_rust/1.69.0-391f1937fc4/buildos/.stamp_built <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_rust/1.69.0-391f1937fc4/buildos/.stamp_configured <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_rust/1.69.0-391f1937fc4/.stamp_preprocessed <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_rust/1.69.0-391f1937fc4/.stamp_extracted <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/.stamp_postprocessed <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/staging/x86_64-w64-mingw32/native_b2/1_71_0-932aa8ee512/.stamp_staged <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_b2/1_71_0-932aa8ee512/tools/build/src/engine/.stamp_built <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_b2/1_71_0-932aa8ee512/tools/build/src/engine/.stamp_configured <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_b2/1_71_0-932aa8ee512/.stamp_preprocessed <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/build/x86_64-w64-mingw32/native_b2/1_71_0-932aa8ee512/.stamp_extracted <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+make: Circular _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/.stamp_postprocessed <- /media/psf/CRUCIAL_2TB/ dependency dropped.
+mkdir -p _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/download-stamps /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources
+rm -f _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/download-stamps/.stamp_fetched-native_rust-rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash
+touch _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/download-stamps/.stamp_fetched-native_rust-rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash
+cd _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/download-stamps;     ( test -f /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz || (     ( mkdir -p /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 && echo Fetching rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz from https://static.rust-lang.org/dist && curl --location --fail --connect-timeout 30 --retry 3 -o "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp" "https://static.rust-lang.org/dist/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz" && echo "aa1d30f2f66d0198ea304047262f9142c406618a35acc466c7ad2b2c1469435d  /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp" > /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash && sha256sum -c /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash && mv /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz && rm -rf /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 ) ||     ( mkdir -p /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 && echo Fetching rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz from https://depends.pivx.org && curl --location --fail --connect-timeout 30 --retry 3 -o "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp" "https://depends.pivx.org/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz" && echo "aa1d30f2f66d0198ea304047262f9142c406618a35acc466c7ad2b2c1469435d  /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp" > /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash && sha256sum -c /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash && mv /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz && rm -rf /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 ))) &&     ( test -f /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz || (     ( mkdir -p /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 && echo Fetching rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz from https://static.rust-lang.org/dist && curl --location --fail --connect-timeout 30 --retry 3 -o "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.temp" "https://static.rust-lang.org/dist/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz" && echo "1d92fc3dd807c0182d0f87b90a9d5dac8be4164d3096634e2da23cc2a6c39792  /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.temp" > /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.hash && sha256sum -c /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.hash && mv /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.temp /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz && rm -rf /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 ) ||     ( mkdir -p /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 && echo Fetching rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz from https://depends.pivx.org && curl --location --fail --connect-timeout 30 --retry 3 -o "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.temp" "https://depends.pivx.org/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz" && echo "1d92fc3dd807c0182d0f87b90a9d5dac8be4164d3096634e2da23cc2a6c39792  /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.temp" > /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.hash && sha256sum -c /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/.rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.hash && mv /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz.temp /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/rust-1.69.0-aarch64-unknown-linux-gnu.tar.xz && rm -rf /media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/native_rust-1.69.0 )))
+/bin/sh: 1: test: /media/psf/CRUCIAL_2TB/: unexpected operator
+Fetching rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz from https://static.rust-lang.org/dist
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0Warning: Failed to open the file /media/psf/CRUCIAL_2TB/  
+Warning: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/nat
+Warning: ive_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp: No 
+Warning: such file or directory
+  0 25.3M    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (23) Failure writing output to destination
+Fetching rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz from https://depends.pivx.org
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0Warning: Failed to open the file /media/psf/CRUCIAL_2TB/  
+Warning: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/work/download/nat
+Warning: ive_rust-1.69.0/rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.temp: No 
+Warning: such file or directory
+  0 25.3M    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (23) Failure writing output to destination
+make: *** [funcs.mk:259: _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/depends/sources/download-stamps/.stamp_fetched-native_rust-rust-std-1.69.0-x86_64-pc-windows-gnu.tar.xz.hash] Error 23

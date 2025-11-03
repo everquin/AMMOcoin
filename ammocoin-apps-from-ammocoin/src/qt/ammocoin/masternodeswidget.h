@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,16 +6,16 @@
 #define MASTERNODESWIDGET_H
 
 #include "coincontroldialog.h"
-#include "qt/pivx/furabstractlistitemdelegate.h"
-#include "qt/pivx/pwidget.h"
-#include "qt/pivx/tooltipmenu.h"
+#include "qt/ammocoin/furabstractlistitemdelegate.h"
+#include "qt/ammocoin/pwidget.h"
+#include "qt/ammocoin/tooltipmenu.h"
 
 #include <atomic>
 
 #include <QTimer>
 #include <QWidget>
 
-class PIVXGUI;
+class AMMOCOINGUI;
 class MNModel;
 
 namespace Ui {
@@ -32,7 +32,7 @@ class MasterNodesWidget : public PWidget
 
 public:
 
-    explicit MasterNodesWidget(PIVXGUI *parent = nullptr);
+    explicit MasterNodesWidget(AMMOCOINGUI *parent = nullptr);
     ~MasterNodesWidget();
     void resetCoinControl();
     void setMNModel(MNModel* _mnModel);

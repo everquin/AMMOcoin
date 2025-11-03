@@ -1,18 +1,18 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="/translations">
-        <file alias="bn">locale/pivx_bn.qm</file>
-        <file alias="de">locale/pivx_de.qm</file>
-        <file alias="en">locale/pivx_en.qm</file>
-        <file alias="es">locale/pivx_es.qm</file>
-        <file alias="es_ES">locale/pivx_es_ES.qm</file>
-        <file alias="fa">locale/pivx_fa.qm</file>
-        <file alias="fr_FR">locale/pivx_fr_FR.qm</file>
-        <file alias="hr_HR">locale/pivx_hr_HR.qm</file>
-        <file alias="ko_KR">locale/pivx_ko_KR.qm</file>
-        <file alias="nl">locale/pivx_nl.qm</file>
-        <file alias="pl">locale/pivx_pl.qm</file>
-        <file alias="pt">locale/pivx_pt.qm</file>
-        <file alias="pt_BR">locale/pivx_pt_BR.qm</file>
-        <file alias="sv">locale/pivx_sv.qm</file>
+        <file alias="bn">locale/ammocoin_bn.qm</file>
+        <file alias="de">locale/ammocoin_de.qm</file>
+        <file alias="en">locale/ammocoin_en.qm</file>
+        <file alias="es">locale/ammocoin_es.qm</file>
+        <file alias="es_ES">locale/ammocoin_es_ES.qm</file>
+        <file alias="fa">locale/ammocoin_fa.qm</file>
+        <file alias="fr_FR">locale/ammocoin_fr_FR.qm</file>
+        <file alias="hr_HR">locale/ammocoin_hr_HR.qm</file>
+        <file alias="ko_KR">locale/ammocoin_ko_KR.qm</file>
+        <file alias="nl">locale/ammocoin_nl.qm</file>
+        <file alias="pl">locale/ammocoin_pl.qm</file>
+        <file alias="pt">locale/ammocoin_pt.qm</file>
+        <file alias="pt_BR">locale/ammocoin_pt_BR.qm</file>
+        <file alias="sv">locale/ammocoin_sv.qm</file>
     </qresource>
 </RCC>

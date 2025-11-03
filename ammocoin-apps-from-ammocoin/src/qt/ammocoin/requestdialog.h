@@ -1,18 +1,18 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef REQUESTDIALOG_H
 #define REQUESTDIALOG_H
 
-#include "qt/pivx/focuseddialog.h"
-#include "qt/pivx/snackbar.h"
+#include "qt/ammocoin/focuseddialog.h"
+#include "qt/ammocoin/snackbar.h"
 #include "walletmodel.h"
 
 #include <QPixmap>
 
 class WalletModel;
-class PIVXGUI;
+class AMMOCOINGUI;
 
 namespace Ui {
 class RequestDialog;

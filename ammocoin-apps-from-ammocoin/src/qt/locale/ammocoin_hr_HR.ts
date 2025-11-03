@@ -91,12 +91,12 @@
         <translation>Adrese za primanje</translation>
     </message>
     <message>
-        <source>These are your PIVX addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>To su vaše PIVX adrese za slanje plaćanja. Uvijek provjerite iznos i adresu primatelja prije slanja novca.</translation>
+        <source>These are your AMMOcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>To su vaše AMMOcoin adrese za slanje plaćanja. Uvijek provjerite iznos i adresu primatelja prije slanja novca.</translation>
     </message>
     <message>
-        <source>These are your PIVX addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>To su vaše PIVX adrese za primanje uplata. Preporuča se upotreba nove adrese primatelja za svaku transakciju.</translation>
+        <source>These are your AMMOcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>To su vaše AMMOcoin adrese za primanje uplata. Preporuča se upotreba nove adrese primatelja za svaku transakciju.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -1023,8 +1023,8 @@ Staking će se automatski pokrenuti čim novčanik dobije dovoljno potvrda o nep
         <translation>Uredi adresu pošiljatelja</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid PIVX address.</source>
-        <translation>Unesena adresa "%1" nije ispravna PIVX adresa.</translation>
+        <source>The entered address "%1" is not a valid AMMOcoin address.</source>
+        <translation>Unesena adresa "%1" nije ispravna AMMOcoin adresa.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1217,8 +1217,8 @@ Budite dio DAO-a. </translation>
         <translation>Budući da je ovo prvi put da se program pokreće, možete odabrati gdje će %1 pohraniti svoje podatke.</translation>
     </message>
     <message>
-        <source>%1 will download and store a copy of the PIVX block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>%1 će preuzeti i pohraniti kopiju lanca blokova PIVX-a. Najmanje %2 GB podataka bit će pohranjeno u ovaj direktorij i s vremenom će rasti. Novčanik će također biti pohranjen u ovom direktoriju.</translation>
+        <source>%1 will download and store a copy of the AMMOcoin block chain. At least %2GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>%1 će preuzeti i pohraniti kopiju lanca blokova AMMOcoin-a. Najmanje %2 GB podataka bit će pohranjeno u ovaj direktorij i s vremenom će rasti. Novčanik će također biti pohranjen u ovom direktoriju.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1341,8 +1341,8 @@ Budite dio DAO-a. </translation>
         <translation>Neispravna IP adresa</translation>
     </message>
     <message>
-        <source>To create a PIVX Masternode you must dedicate %1 (the unit of PIVX) to the network (however, these coins are still yours and will never leave your possession).</source>
-        <translation>Da biste stvorili PIVX Masternode, morate posvetiti %1 (jedinicu PIVX-a) mreži (međutim, ti su novčići i dalje Vaši i nikada neće napustiti vaš posjed).</translation>
+        <source>To create a AMMOcoin Masternode you must dedicate %1 (the unit of AMMOcoin) to the network (however, these coins are still yours and will never leave your possession).</source>
+        <translation>Da biste stvorili AMMOcoin Masternode, morate posvetiti %1 (jedinicu AMMOcoin-a) mreži (međutim, ti su novčići i dalje Vaši i nikada neće napustiti vaš posjed).</translation>
     </message>
     <message>
         <source>You can deactivate the node and unlock the coins at any time.</source>
@@ -1486,7 +1486,7 @@ Molimo pričekajte nekoliko minuta (zalog za Masternode zahtjeva %1 potvrda).</t
 on a remote server to your clipboard.
 
 
-You will only have to paste the data in the pivx.conf file
+You will only have to paste the data in the ammocoin.conf file
 of your remote server and start it, then start the Masternode using
 this controller wallet (select the Masternode in the list and press "start").
 </source>
@@ -1494,7 +1494,7 @@ this controller wallet (select the Masternode in the list and press "start").
 na udaljenom poslužitelju u medjuspremnik.
 
 
-Podatke ćete morati zalijepiti u datoteku pivx.conf
+Podatke ćete morati zalijepiti u datoteku ammocoin.conf
 na udaljenom poslužitelju i pokrenuti ga, a zatim pokrenite Masternode
 koristeći ovaj controller novčanik (na popisu odaberite Masternode i pritisnite "start").
 </translation>
@@ -1670,8 +1670,8 @@ NODEOVI</translation>
         <translation>Otvori URI</translation>
     </message>
     <message>
-        <source>Open PIVX URI</source>
-        <translation>Otvorite PIVX URI </translation>
+        <source>Open AMMOcoin URI</source>
+        <translation>Otvorite AMMOcoin URI </translation>
     </message>
     <message>
         <source>CANCEL</source>
@@ -1679,7 +1679,7 @@ NODEOVI</translation>
     </message>
     </context>
 <context>
-    <name>PIVXGUI</name>
+    <name>AMMOcoinGUI</name>
     <message>
         <source>Wallet</source>
         <translation>Novčanik</translation>
@@ -1756,12 +1756,12 @@ Adresa: %4
         <translation>Nevažeća adresa za plaćanje %1</translation>
     </message>
     <message>
-        <source>Cannot start pivx: click-to-pay handler</source>
-        <translation>Ne može se pokrenuti pivx: clik-to-pay handler</translation>
+        <source>Cannot start ammocoin: click-to-pay handler</source>
+        <translation>Ne može se pokrenuti ammocoin: clik-to-pay handler</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid PIVX address or malformed URI parameters.</source>
-        <translation>URI se ne može analizirati! To može biti uzrokovana nevažećom PIVX adresom ili nepravilnim URI parametrima.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid AMMOcoin address or malformed URI parameters.</source>
+        <translation>URI se ne može analizirati! To može biti uzrokovana nevažećom AMMOcoin adresom ili nepravilnim URI parametrima.</translation>
     </message>
 </context>
 <context>
@@ -1860,8 +1860,8 @@ Adresa: %4
         <translation>Iznos</translation>
     </message>
     <message>
-        <source>Enter PIVX address (e.g. %1)</source>
-        <translation>Upišite PIVX adresu (npr. %1)</translation>
+        <source>Enter AMMOcoin address (e.g. %1)</source>
+        <translation>Upišite AMMOcoin adresu (npr. %1)</translation>
     </message>
     <message>
         <source>NETWORK</source>
@@ -1880,8 +1880,8 @@ Adresa: %4
         <translation>Ništa</translation>
     </message>
     <message>
-        <source>A fatal error occurred. PIVX can no longer continue safely and will quit.</source>
-        <translation>Dogodila se fatalna pogreška. PIVX ne može sigurno nastaviti i izaći će.</translation>
+        <source>A fatal error occurred. AMMOcoin can no longer continue safely and will quit.</source>
+        <translation>Dogodila se fatalna pogreška. AMMOcoin ne može sigurno nastaviti i izaći će.</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -2131,8 +2131,8 @@ Adresa: %4
         <translation>Upotreba verzije BerkeleyDB</translation>
     </message>
     <message>
-        <source>Open the PIVX debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Otvorite PIVX debug log datoteku iz aktualnog direktorija podataka. To može potrajati nekoliko sekundi za velike datoteke zapisnika.</translation>
+        <source>Open the AMMOcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Otvorite AMMOcoin debug log datoteku iz aktualnog direktorija podataka. To može potrajati nekoliko sekundi za velike datoteke zapisnika.</translation>
     </message>
     <message>
         <source>Number of Masternodes</source>
@@ -2335,8 +2335,8 @@ Adresa: %4
         <translation>Iz:</translation>
     </message>
     <message>
-        <source>Welcome to the PIVX RPC console.</source>
-        <translation>Dobrodošli na PIVX RPC konzolu.</translation>
+        <source>Welcome to the AMMOcoin RPC console.</source>
+        <translation>Dobrodošli na AMMOcoin RPC konzolu.</translation>
     </message>
     <message>
         <source>&amp;Disconnect Node</source>
@@ -2542,8 +2542,8 @@ pokušajte otključati novčanik</translation>
         <translation>Iznos</translation>
     </message>
     <message>
-        <source>Instead of sharing only a PIVX address, you can create a payment request, bundling up more information</source>
-        <translation>Umjesto da dijelite samo PIVX adresu, možete stvoriti zahtjev za plaćanjem, skupljajući više informacija</translation>
+        <source>Instead of sharing only a AMMOcoin address, you can create a payment request, bundling up more information</source>
+        <translation>Umjesto da dijelite samo AMMOcoin adresu, možete stvoriti zahtjev za plaćanjem, skupljajući više informacija</translation>
     </message>
     <message>
         <source>COPY ADDRESS</source>
@@ -2625,8 +2625,8 @@ pokušajte otključati novčanik</translation>
         <translation>Prilagođjena adresa za ostatak</translation>
     </message>
     <message>
-        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" PIVX address</source>
-        <translation>Ostatak vrijednosti koja proizlazi iz ulaza umanjen za izlaznu vrijednost ide na PIVX adresu za "ostatak"</translation>
+        <source>The remainder of the value resultant from the inputs minus the outputs value goes to the "change" AMMOcoin address</source>
+        <translation>Ostatak vrijednosti koja proizlazi iz ulaza umanjen za izlaznu vrijednost ide na AMMOcoin adresu za "ostatak"</translation>
     </message>
     <message>
         <source>SAVE</source>
@@ -2773,8 +2773,8 @@ Do you want to continue?</source>
         <translation>Maksimalni iznos rezultata dosegnut</translation>
     </message>
     <message>
-        <source>Parse a PIVX URI</source>
-        <translation>Raščlani PIVX URI</translation>
+        <source>Parse a AMMOcoin URI</source>
+        <translation>Raščlani AMMOcoin URI</translation>
     </message>
     <message>
         <source>Invalid entry, previous entries must be valid before add a new one</source>
@@ -3030,9 +3030,9 @@ Ne zaboravite zapisati i sigurno pohraniti novu lozinku, jer u protivnom ćete i
         <translation>BIP38 alat</translation>
     </message>
     <message>
-        <source>Encrypt your PIVX addresses (key pair actually) using BIP38 encryption.
+        <source>Encrypt your AMMOcoin addresses (key pair actually) using BIP38 encryption.
 Using this mechanism you can share your keys without middle-man risk, only need to store your passphrase safely</source>
-        <translation>Kriptirajte vašu PIVX adresu (odnosno par ključeva) koristeći BIP38 enkripciju.
+        <translation>Kriptirajte vašu AMMOcoin adresu (odnosno par ključeva) koristeći BIP38 enkripciju.
 Korištenjem ovog mehanizma možete dijeliti vaše ključeve bez rizika posredništva, samo trebate sigurno pohraniti lozinku</translation>
     </message>
     <message>
@@ -3068,8 +3068,8 @@ Korištenjem ovog mehanizma možete dijeliti vaše ključeve bez rizika posredni
         <translation>DEŠIFRIRAJ KLJUČ</translation>
     </message>
     <message>
-        <source>PIVX address</source>
-        <translation>PIVX adresa</translation>
+        <source>AMMOcoin address</source>
+        <translation>AMMOcoin adresa</translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -3201,8 +3201,8 @@ Verify that you have installed a predetermined text editor.</source>
 Provjerite jeste li instalirali unaprijed određjeni uređjivač teksta.</translation>
     </message>
     <message>
-        <source>Welcome to the PIVX RPC console.</source>
-        <translation>Dobrodošli na PIVX RPC konzolu.</translation>
+        <source>Welcome to the AMMOcoin RPC console.</source>
+        <translation>Dobrodošli na AMMOcoin RPC konzolu.</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
@@ -3355,16 +3355,16 @@ Došlo je do greške prilikom spremanja popisa adresa u %1. Molimo pokušajte po
 <context>
     <name>SettingsFaqWidget</name>
     <message>
-        <source>1) What is PIVX?</source>
-        <translation>1) Što je PIVX?</translation>
+        <source>1) What is AMMOcoin?</source>
+        <translation>1) Što je AMMOcoin?</translation>
     </message>
     <message>
         <source>2) Why are my PIV unspendable?</source>
         <translation>2) Zašto se moji PIV ne mogu potrošiti?</translation>
     </message>
     <message>
-        <source>What is PIVX?</source>
-        <translation>Što je PIVX?</translation>
+        <source>What is AMMOcoin?</source>
+        <translation>Što je AMMOcoin?</translation>
     </message>
     <message>
         <source>Why are my PIV unspendable?</source>
@@ -3416,28 +3416,28 @@ pitanja</translation>
         <translation>Možete pročitati o više ovdje</translation>
     </message>
     <message>
-        <source>PIVX is a form of digital online money using blockchain technology that can be easily transferred globally, instantly, and with near zero fees. PIVX incorporates market leading security &amp; privacy and is also the first PoS (Proof of Stake) Cryptocurrency to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.</source>
-        <translation>PIVX je oblik digitalnog internetskog novca koji koristi blockchain tehnologiju koji se može lako prenositi globalno, odmah i gotovo bez naknade. PIVX uključuje vodeću sigurnost i privatnost na tržištu, a ujedno je i prva PoS (Proof of Stake) kriptovaluta koja je implementirala Sapling (SHIELD), protokol privatnosti zasnovan na zk-SNARKs tehnologiji.</translation>
+        <source>AMMOcoin is a form of digital online money using blockchain technology that can be easily transferred globally, instantly, and with near zero fees. AMMOcoin incorporates market leading security &amp; privacy and is also the first PoS (Proof of Stake) Cryptocurrency to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.</source>
+        <translation>AMMOcoin je oblik digitalnog internetskog novca koji koristi blockchain tehnologiju koji se može lako prenositi globalno, odmah i gotovo bez naknade. AMMOcoin uključuje vodeću sigurnost i privatnost na tržištu, a ujedno je i prva PoS (Proof of Stake) kriptovaluta koja je implementirala Sapling (SHIELD), protokol privatnosti zasnovan na zk-SNARKs tehnologiji.</translation>
     </message>
     <message>
-        <source>PIVX utilizes a Proof of Stake (PoS) consensus system algorithm, allowing all owners of PIVX to participate in earning block rewards while securing the network with full node wallets, as well as to run Masternodes to create and vote on proposals.</source>
-        <translation>PIVX koristi algoritam sustava konsenzusa Proof of Stake (PoS), koji svim vlasnicima PIVX-a omogućuje sudjelovanje u zarađjivanju nagrada za blokove dok osiguravaju mrežu sa vlastitim čvorovima, kao i da pokreću Masternode za kreiranje i glasanje o prijedlozima. </translation>
+        <source>AMMOcoin utilizes a Proof of Stake (PoS) consensus system algorithm, allowing all owners of AMMOcoin to participate in earning block rewards while securing the network with full node wallets, as well as to run Masternodes to create and vote on proposals.</source>
+        <translation>AMMOcoin koristi algoritam sustava konsenzusa Proof of Stake (PoS), koji svim vlasnicima AMMOcoin-a omogućuje sudjelovanje u zarađjivanju nagrada za blokove dok osiguravaju mrežu sa vlastitim čvorovima, kao i da pokreću Masternode za kreiranje i glasanje o prijedlozima. </translation>
     </message>
     <message>
-        <source>Newly received PIVX requires 6 confirmations on the network to become eligible for spending which can take ~6 minutes.</source>
-        <translation>Za novoprimljeni PIVX potrebno je 6 potvrda na mreži da bi postao prihvatljiv za potrošnju što može potrajati ~6 minuta.</translation>
+        <source>Newly received AMMOcoin requires 6 confirmations on the network to become eligible for spending which can take ~6 minutes.</source>
+        <translation>Za novoprimljeni AMMOcoin potrebno je 6 potvrda na mreži da bi postao prihvatljiv za potrošnju što može potrajati ~6 minuta.</translation>
     </message>
     <message>
-        <source>Your PIVX wallet also needs to be completely synchronized to see and spend balances on the network.</source>
-        <translation>Vaš PIVX novčanik također mora biti potpuno sinkroniziran da biste mogli vidjeti i trošiti sredstva na mreži.</translation>
+        <source>Your AMMOcoin wallet also needs to be completely synchronized to see and spend balances on the network.</source>
+        <translation>Vaš AMMOcoin novčanik također mora biti potpuno sinkroniziran da biste mogli vidjeti i trošiti sredstva na mreži.</translation>
     </message>
     <message>
         <source>Make sure your wallet is completely synchronized and you are using the latest release.</source>
         <translation>Provjerite je li vaš novčanik potpuno sinkroniziran i koristite li najnovije izdanje. </translation>
     </message>
     <message>
-        <source>You must have a balance of PIVX with a minimum of 600 confirmations.</source>
-        <translation>Morate imati saldo PIVX-a s barem 600 potvrda na blockchainu.</translation>
+        <source>You must have a balance of AMMOcoin with a minimum of 600 confirmations.</source>
+        <translation>Morate imati saldo AMMOcoin-a s barem 600 potvrda na blockchainu.</translation>
     </message>
     <message>
         <source>Your wallet must stay online and be unlocked for staking purposes.</source>
@@ -3484,8 +3484,8 @@ pitanja</translation>
         <translation>Prednosti Masternodea:</translation>
     </message>
     <message>
-        <source>Participate in PIVX Governance</source>
-        <translation>Sudjeluj u upravljanju PIVX-om</translation>
+        <source>Participate in AMMOcoin Governance</source>
+        <translation>Sudjeluj u upravljanju AMMOcoin-om</translation>
     </message>
     <message>
         <source>Earn Masternode Rewards</source>
@@ -3496,8 +3496,8 @@ pitanja</translation>
         <translation>Robna opcija za buduću prodaju</translation>
     </message>
     <message>
-        <source>Help secure the PIVX network</source>
-        <translation>Pomozite osigurati PIVX mrežu</translation>
+        <source>Help secure the AMMOcoin network</source>
+        <translation>Pomozite osigurati AMMOcoin mrežu</translation>
     </message>
     <message>
         <source>Requirements:</source>
@@ -3603,8 +3603,8 @@ pitanja</translation>
         <translation>Ne može se otvoriti mapa sigurnosne kopije</translation>
     </message>
     <message>
-        <source>Unable to open pivx.conf with default application</source>
-        <translation>Nije moguće otvoriti pivx.conf sa zadanom aplikacijom</translation>
+        <source>Unable to open ammocoin.conf with default application</source>
+        <translation>Nije moguće otvoriti ammocoin.conf sa zadanom aplikacijom</translation>
     </message>
     <message>
         <source>In:</source>
@@ -3711,8 +3711,8 @@ Jeste li sigurni?
         <translation>Poruka</translation>
     </message>
     <message>
-        <source>PIVX address or contact label</source>
-        <translation>PIVX adresa ili naziv kontakta</translation>
+        <source>AMMOcoin address or contact label</source>
+        <translation>AMMOcoin adresa ili naziv kontakta</translation>
     </message>
     <message>
         <source>Enter address</source>
@@ -4013,8 +4013,8 @@ podatke</translation>
         <translation>Najčešće postavljena pitanja</translation>
     </message>
     <message>
-        <source>About PIVX</source>
-        <translation>O PIVX-u</translation>
+        <source>About AMMOcoin</source>
+        <translation>O AMMOcoin-u</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4693,20 +4693,20 @@ Odaberite manje ulaza pomoću Upravljanja novčićima.</translation>
         <translation>Odaberite jezik</translation>
     </message>
     <message>
-        <source>PIVX is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
-        <translation>PIVX je najinovativnija blockchain tehnologija na svijetu bazirana na Proof of Stake tehnologiji. Razvijena je od strane vrlo iskusnih programera i kriptografa.</translation>
+        <source>AMMOcoin is the world’s most innovative Proof of Stake blockchain based technology. Developed by a team of highly experienced developers and cryptographers.</source>
+        <translation>AMMOcoin je najinovativnija blockchain tehnologija na svijetu bazirana na Proof of Stake tehnologiji. Razvijena je od strane vrlo iskusnih programera i kriptografa.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - PIVX believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kao što naš manifest kaže: Privatnost je osnovno ljudsko pravo o kojemu se ne pregovara; korisnicima daje slobodu dijeljenja svojih podataka kad god i s kim god žele - PIVX vjeruje u suverenitet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;As our manifesto says: Privacy is a non-negotiable basic human right; it grants users the freedom to share their data whenever and with whomever they want - AMMOcoin believes in self sovereignty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kao što naš manifest kaže: Privatnost je osnovno ljudsko pravo o kojemu se ne pregovara; korisnicima daje slobodu dijeljenja svojih podataka kad god i s kim god žele - AMMOcoin vjeruje u suverenitet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>The masternode network is PIVX's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
-        <translation>Masternode mreža je mreža drugog sloja PIVX-a na vrhu blockchaina koja omogućuje našem DAO-u pružanje decentraliziranog upravljanja i riznice.</translation>
+        <source>The masternode network is AMMOcoin's second layer network on top of the blockchain that enables our DAO to provide decentralized governance and a treasury.</source>
+        <translation>Masternode mreža je mreža drugog sloja AMMOcoin-a na vrhu blockchaina koja omogućuje našem DAO-u pružanje decentraliziranog upravljanja i riznice.</translation>
     </message>
     <message>
-        <source>How PIVX respects your privacy?</source>
-        <translation>Kako PIVX poštuje Vašu privatnost?</translation>
+        <source>How AMMOcoin respects your privacy?</source>
+        <translation>Kako AMMOcoin poštuje Vašu privatnost?</translation>
     </message>
     <message>
         <source>Welcome to
@@ -4743,7 +4743,7 @@ Odaberite manje ulaza pomoću Upravljanja novčićima.</translation>
     </message>
 </context>
 <context>
-    <name>pivx-core</name>
+    <name>ammocoin-core</name>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
         <translation>Distribuirano pod MIT softverskom licencom, pogledajte priloženu datoteku COPYING ili &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</translation>

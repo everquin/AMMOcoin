@@ -1,12 +1,12 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef FURSZY_PIVX_GUITRANSACTIONSUTILS_H
-#define FURSZY_PIVX_GUITRANSACTIONSUTILS_H
+#ifndef FURSZY_AMMOCOIN_GUITRANSACTIONSUTILS_H
+#define FURSZY_AMMOCOIN_GUITRANSACTIONSUTILS_H
 
 #include "walletmodel.h"
-#include "qt/pivx/pwidget.h"
+#include "qt/ammocoin/pwidget.h"
 
 
 namespace GuiTransactionsUtils {
@@ -33,4 +33,4 @@ namespace GuiTransactionsUtils {
 }
 
 
-#endif //FURSZY_PIVX_GUITRANSACTIONSUTILS_H
+#endif //FURSZY_AMMOCOIN_GUITRANSACTIONSUTILS_H

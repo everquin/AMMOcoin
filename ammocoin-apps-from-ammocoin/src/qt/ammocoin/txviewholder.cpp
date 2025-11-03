@@ -1,9 +1,9 @@
-// Copyright (c) 2019-2020 The PIVX Core developers
+// Copyright (c) 2019-2020 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/txviewholder.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/txviewholder.h"
+#include "qt/ammocoin/qtutils.h"
 #include "transactiontablemodel.h"
 #include <QModelIndex>
 

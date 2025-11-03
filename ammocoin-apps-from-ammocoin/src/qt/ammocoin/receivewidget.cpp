@@ -1,14 +1,14 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/receivewidget.h"
-#include "qt/pivx/forms/ui_receivewidget.h"
-#include "qt/pivx/requestdialog.h"
-#include "qt/pivx/addnewcontactdialog.h"
-#include "qt/pivx/qtutils.h"
-#include "qt/pivx/myaddressrow.h"
-#include "qt/pivx/addressholder.h"
+#include "qt/ammocoin/receivewidget.h"
+#include "qt/ammocoin/forms/ui_receivewidget.h"
+#include "qt/ammocoin/requestdialog.h"
+#include "qt/ammocoin/addnewcontactdialog.h"
+#include "qt/ammocoin/qtutils.h"
+#include "qt/ammocoin/myaddressrow.h"
+#include "qt/ammocoin/addressholder.h"
 #include "walletmodel.h"
 #include "guiutil.h"
 
@@ -19,7 +19,7 @@
 #define DECORATION_SIZE 70
 #define NUM_ITEMS 3
 
-ReceiveWidget::ReceiveWidget(PIVXGUI* parent) :
+ReceiveWidget::ReceiveWidget(AMMOCOINGUI* parent) :
     PWidget(parent),
     ui(new Ui::ReceiveWidget)
 {

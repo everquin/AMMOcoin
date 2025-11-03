@@ -1,11 +1,11 @@
-// Copyright (c) 2019-2020 The PIVX Core developers
+// Copyright (c) 2019-2020 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef ADDNEWCONTACTDIALOG_H
 #define ADDNEWCONTACTDIALOG_H
 
-#include "qt/pivx/focuseddialog.h"
+#include "qt/ammocoin/focuseddialog.h"
 
 namespace Ui {
 class AddNewContactDialog;

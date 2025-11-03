@@ -1,15 +1,15 @@
-// Copyright (c) 2021 The PIVX Core developers
+// Copyright (c) 2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/createproposaldialog.h"
-#include "qt/pivx/forms/ui_createproposaldialog.h"
+#include "qt/ammocoin/createproposaldialog.h"
+#include "qt/ammocoin/forms/ui_createproposaldialog.h"
 
-#include "qt/pivx/contactsdropdown.h"
-#include "qt/pivx/governancemodel.h"
-#include "qt/pivx/pwidget.h"
-#include "qt/pivx/qtutils.h"
-#include "qt/pivx/snackbar.h"
+#include "qt/ammocoin/contactsdropdown.h"
+#include "qt/ammocoin/governancemodel.h"
+#include "qt/ammocoin/pwidget.h"
+#include "qt/ammocoin/qtutils.h"
+#include "qt/ammocoin/snackbar.h"
 
 void initPageIndexBtn(QPushButton* btn)
 {
@@ -23,7 +23,7 @@ void initPageIndexBtn(QPushButton* btn)
     btn->setVisible(false);
 }
 
-CreateProposalDialog::CreateProposalDialog(PIVXGUI* parent, GovernanceModel* _govModel, WalletModel* _walletModel) :
+CreateProposalDialog::CreateProposalDialog(AMMOCOINGUI* parent, GovernanceModel* _govModel, WalletModel* _walletModel) :
     QDialog(parent),
     ui(new Ui::CreateProposalDialog),
     govModel(_govModel),
@@ -85,7 +85,7 @@ void CreateProposalDialog::setupPageOne()
     setCssProperty(ui->labelTitle1, "text-title-dialog");
     setCssProperty(ui->labelMessage1b, "dialog-proposal-message");
     setEditBoxStyle(ui->labelName, ui->lineEditPropName, "e.g Best proposal ever!");
-    setEditBoxStyle(ui->labelURL, ui->lineEditURL, "e.g https://forum.pivx/proposals/best_proposal_ever");
+    setEditBoxStyle(ui->labelURL, ui->lineEditURL, "e.g https://forum.ammocoin/proposals/best_proposal_ever");
 
     connect(ui->lineEditPropName, &QLineEdit::textChanged, this, &CreateProposalDialog::propNameChanged);
     connect(ui->lineEditURL, &QLineEdit::textChanged, this, &CreateProposalDialog::propUrlChanged);
@@ -347,7 +347,7 @@ void CreateProposalDialog::onAddrListClicked()
         menuContacts = new ContactsDropdown(
                 width,
                 height,
-                dynamic_cast<PIVXGUI*>(parent()),
+                dynamic_cast<AMMOCOINGUI*>(parent()),
                 this
         );
         menuContacts->setWalletModel(walletModel, {AddressTableModel::Send, AddressTableModel::Receive});

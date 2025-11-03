@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2020 The Bitcoin Core developers
-// Copyright (c) 2021 The PIVX Core developers
+// Copyright (c) 2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -155,6 +155,7 @@ static bool ProcessUpnp()
     const char* minissdpdpath = nullptr;
     struct UPNPDev* devlist = nullptr;
     char lanaddr[64];
+    char wanaddr[64];
 
     int error = 0;
 #if MINIUPNPC_API_VERSION < 14
@@ -167,7 +168,7 @@ static bool ProcessUpnp()
     struct IGDdatas data{};
     int r;
 
-    r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
+    r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr), wanaddr, sizeof(wanaddr));
     if (r == 1) {
         if (fDiscover) {
             char externalIPAddress[40];

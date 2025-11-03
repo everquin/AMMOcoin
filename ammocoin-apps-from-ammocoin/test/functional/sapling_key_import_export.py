@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # Copyright (c) 2017 The Zcash developers
-# Copyright (c) 2020-2021 The PIVX Core developers
+# Copyright (c) 2020-2021 The AMMOcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://www.opensource.org/licenses/mit-license.php .
 
 from decimal import Decimal
 from functools import reduce
 
-from test_framework.test_framework import PivxTestFramework
+from test_framework.test_framework import AMMOcoinTestFramework
 from test_framework.util import assert_equal, assert_greater_than
 
-class SaplingkeyImportExportTest(PivxTestFramework):
+class SaplingkeyImportExportTest(AMMOcoinTestFramework):
 
     def set_test_params(self):
         self.num_nodes = 5

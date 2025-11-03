@@ -1,9 +1,9 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIVX_CORE_NEW_GUI_PIVXGUI_H
-#define PIVX_CORE_NEW_GUI_PIVXGUI_H
+#ifndef AMMOCOIN_CORE_NEW_GUI_AMMOCOINGUI_H
+#define AMMOCOIN_CORE_NEW_GUI_AMMOCOINGUI_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/ammocoin-config.h"
@@ -14,18 +14,18 @@
 #include <QSystemTrayIcon>
 #include <QLabel>
 
-#include "qt/pivx/navmenuwidget.h"
-#include "qt/pivx/topbar.h"
-#include "qt/pivx/dashboardwidget.h"
-#include "qt/pivx/send.h"
-#include "qt/pivx/receivewidget.h"
-#include "qt/pivx/addresseswidget.h"
-#include "qt/pivx/coldstakingwidget.h"
-#include "qt/pivx/governancewidget.h"
-#include "qt/pivx/masternodeswidget.h"
-#include "qt/pivx/snackbar.h"
-#include "qt/pivx/settings/settingswidget.h"
-#include "qt/pivx/settings/settingsfaqwidget.h"
+#include "qt/ammocoin/navmenuwidget.h"
+#include "qt/ammocoin/topbar.h"
+#include "qt/ammocoin/dashboardwidget.h"
+#include "qt/ammocoin/send.h"
+#include "qt/ammocoin/receivewidget.h"
+#include "qt/ammocoin/addresseswidget.h"
+#include "qt/ammocoin/coldstakingwidget.h"
+#include "qt/ammocoin/governancewidget.h"
+#include "qt/ammocoin/masternodeswidget.h"
+#include "qt/ammocoin/snackbar.h"
+#include "qt/ammocoin/settings/settingswidget.h"
+#include "qt/ammocoin/settings/settingsfaqwidget.h"
 #include "qt/rpcconsole.h"
 
 namespace interfaces {
@@ -39,18 +39,18 @@ class WalletModel;
 
 
 /**
-  PIVX GUI main class. This class represents the main window of the PIVX UI. It communicates with both the client and
+  AMMOcoin GUI main class. This class represents the main window of the AMMOcoin UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
-class PIVXGUI : public QMainWindow
+class AMMOCOINGUI : public QMainWindow
 {
     Q_OBJECT
 
 public:
     static const QString DEFAULT_WALLET;
 
-    explicit PIVXGUI(const NetworkStyle* networkStyle, QWidget* parent = 0);
-    ~PIVXGUI();
+    explicit AMMOCOINGUI(const NetworkStyle* networkStyle, QWidget* parent = 0);
+    ~AMMOCOINGUI();
 
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
@@ -201,4 +201,4 @@ Q_SIGNALS:
 };
 
 
-#endif //PIVX_CORE_NEW_GUI_PIVXGUI_H
+#endif //AMMOCOIN_CORE_NEW_GUI_AMMOCOINGUI_H

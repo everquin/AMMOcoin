@@ -1,11 +1,11 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef ADDRESSESWIDGET_H
 #define ADDRESSESWIDGET_H
 
-#include "qt/pivx/pwidget.h"
+#include "qt/ammocoin/pwidget.h"
 #include "addresstablemodel.h"
 #include "furabstractlistitemdelegate.h"
 
@@ -13,7 +13,7 @@
 
 class AddressFilterProxyModel;
 class TooltipMenu;
-class PIVXGUI;
+class AMMOCOINGUI;
 class WalletModel;
 
 namespace Ui {
@@ -29,7 +29,7 @@ class AddressesWidget : public PWidget
     Q_OBJECT
 
 public:
-    explicit AddressesWidget(PIVXGUI* parent);
+    explicit AddressesWidget(AMMOCOINGUI* parent);
     ~AddressesWidget();
 
     void loadWalletModel() override;

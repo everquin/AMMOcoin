@@ -1,11 +1,11 @@
-// Copyright (c) 2019-2020 The PIVX Core developers
+// Copyright (c) 2019-2020 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef FURABSTRACTLISTITEMDELEGATE_H
 #define FURABSTRACTLISTITEMDELEGATE_H
 
-#include "qt/pivx/furlistrow.h"
+#include "qt/ammocoin/furlistrow.h"
 
 #include <QAbstractItemDelegate>
 #include <QColor>

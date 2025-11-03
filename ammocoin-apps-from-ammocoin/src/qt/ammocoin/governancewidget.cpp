@@ -1,16 +1,16 @@
-// Copyright (c) 2021-2022 The PIVX Core developers
+// Copyright (c) 2021-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/governancewidget.h"
-#include "qt/pivx/forms/ui_governancewidget.h"
+#include "qt/ammocoin/governancewidget.h"
+#include "qt/ammocoin/forms/ui_governancewidget.h"
 
-#include "qt/pivx/createproposaldialog.h"
-#include "qt/pivx/governancemodel.h"
-#include "qt/pivx/mnmodel.h"
-#include "qt/pivx/proposalinfodialog.h"
-#include "qt/pivx/qtutils.h"
-#include "qt/pivx/votedialog.h"
+#include "qt/ammocoin/createproposaldialog.h"
+#include "qt/ammocoin/governancemodel.h"
+#include "qt/ammocoin/mnmodel.h"
+#include "qt/ammocoin/proposalinfodialog.h"
+#include "qt/ammocoin/qtutils.h"
+#include "qt/ammocoin/votedialog.h"
 
 #include <QDesktopServices>
 #include <QGraphicsDropShadowEffect>
@@ -32,7 +32,7 @@ void initComboView(PWidget* parent, QComboBox* comboBox, const QString& filterHi
     comboBox->setCurrentIndex(0);
 }
 
-GovernanceWidget::GovernanceWidget(PIVXGUI* parent) :
+GovernanceWidget::GovernanceWidget(AMMOCOINGUI* parent) :
         PWidget(parent),
         ui(new Ui::governancewidget)
 {

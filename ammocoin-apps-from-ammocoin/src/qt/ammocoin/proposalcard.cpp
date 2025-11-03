@@ -1,11 +1,11 @@
-// Copyright (c) 2021-2022 The PIVX Core developers
+// Copyright (c) 2021-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/proposalcard.h"
-#include "qt/pivx/forms/ui_proposalcard.h"
+#include "qt/ammocoin/proposalcard.h"
+#include "qt/ammocoin/forms/ui_proposalcard.h"
 
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/qtutils.h"
 
 ProposalCard::ProposalCard(QWidget *parent) :
     QWidget(parent),

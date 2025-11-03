@@ -1,13 +1,13 @@
-// Copyright (c) 2021 The PIVX Core developers
+// Copyright (c) 2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/votedialog.h"
-#include "qt/pivx/forms/ui_votedialog.h"
+#include "qt/ammocoin/votedialog.h"
+#include "qt/ammocoin/forms/ui_votedialog.h"
 
-#include "qt/pivx/mnmodel.h"
-#include "qt/pivx/mnselectiondialog.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/mnmodel.h"
+#include "qt/ammocoin/mnselectiondialog.h"
+#include "qt/ammocoin/qtutils.h"
 
 VoteDialog::VoteDialog(QWidget *parent, GovernanceModel* _govModel, MNModel* _mnModel) :
     QDialog(parent),
@@ -113,7 +113,7 @@ void VoteDialog::showEvent(QShowEvent *event)
 
 void VoteDialog::onMnSelectionClicked()
 {
-    PIVXGUI* window = dynamic_cast<PIVXGUI*>(parent());
+    AMMOCOINGUI* window = dynamic_cast<AMMOCOINGUI*>(parent());
     if (!mnSelectionDialog) {
         mnSelectionDialog = new MnSelectionDialog(window);
         mnSelectionDialog->setModel(mnModel, govModel->getProposalVoteUpdateMinTime());

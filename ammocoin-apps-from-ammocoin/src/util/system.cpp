@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2022 The PIVX Core developers
+// Copyright (c) 2015-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -82,7 +82,7 @@ const char * const AMMOCOIN_CONF_FILENAME = "ammocoin.conf";
 const char * const AMMOCOIN_MASTERNODE_CONF_FILENAME = "masternode.conf";
 
 
-// PIVX only features
+// AMMOcoin only features
 // Masternode
 std::atomic<bool> fMasterNode{false};
 
@@ -230,7 +230,7 @@ public:
         std::pair<bool,std::string> found_result(false, std::string());
 
         // We pass "true" to GetArgHelper in order to return the last
-        // argument value seen from the command line (so "pivxd -foo=bar
+        // argument value seen from the command line (so "ammocoind -foo=bar
         // -foo=baz" gives GetArg(am,"foo")=={true,"baz"}
         found_result = GetArgHelper(am.m_override_args, arg, true);
         if (found_result.first) {
@@ -513,7 +513,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(nullptr, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "pivx";
+    const char* pszModule = "ammocoin";
 #endif
     if (pex)
         return strprintf(
@@ -532,10 +532,10 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\PIVX
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\PIVX
-// Mac: ~/Library/Application Support/PIVX
-// Unix: ~/.pivx
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\AMMOcoin
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\AMMOcoin
+// Mac: ~/Library/Application Support/AMMOcoin
+// Unix: ~/.ammocoin
 #ifdef WIN32
     // Windows
     return GetSpecialFolderPath(CSIDL_APPDATA) / "AMMOcoin";
@@ -553,7 +553,7 @@ fs::path GetDefaultDataDir()
     return pathRet / "AMMOcoin";
 #else
     // Unix
-    return pathRet / ".pivx";
+    return pathRet / ".ammocoin";
 #endif
 #endif
 }
@@ -567,13 +567,13 @@ static RecursiveMutex csPathCached;
 static fs::path ZC_GetBaseParamsDir()
 {
     // Copied from GetDefaultDataDir and adapter for zcash params.
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\PIVXParams
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\PIVXParams
-    // Mac: ~/Library/Application Support/PIVXParams
-    // Unix: ~/.pivx-params
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\AMMOcoinParams
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\AMMOcoinParams
+    // Mac: ~/Library/Application Support/AMMOcoinParams
+    // Unix: ~/.ammocoin-params
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "PIVXParams";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AMMOcoinParams";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -585,10 +585,10 @@ static fs::path ZC_GetBaseParamsDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectories(pathRet);
-    return pathRet / "PIVXParams";
+    return pathRet / "AMMOcoinParams";
 #else
     // Unix
-    return pathRet / ".pivx-params";
+    return pathRet / ".ammocoin-params";
 #endif
 #endif
 }
@@ -654,14 +654,14 @@ void initZKSNARKS()
         CFRelease(mainBundle);
 #else
         // Linux fallback path for debuild/ppa based installs
-        sapling_spend = "/usr/share/pivx/sapling-spend.params";
-        sapling_output = "/usr/share/pivx/sapling-output.params";
+        sapling_spend = "/usr/share/ammocoin/sapling-spend.params";
+        sapling_output = "/usr/share/ammocoin/sapling-output.params";
         if (fs::exists(sapling_spend) && fs::exists(sapling_output)) {
             fParamsFound = true;
         } else {
             // Linux fallback for local installs
-            sapling_spend = "/usr/local/share/pivx/sapling-spend.params";
-            sapling_output = "/usr/local/share/pivx/sapling-output.params";
+            sapling_spend = "/usr/local/share/ammocoin/sapling-spend.params";
+            sapling_output = "/usr/local/share/ammocoin/sapling-output.params";
         }
 #endif
         if (fs::exists(sapling_spend) && fs::exists(sapling_output))

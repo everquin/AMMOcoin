@@ -1861,9 +1861,9 @@ Optional Packages:
   --with-system-univalue  Build with system UniValue (default is no)
   --with-sanitizers       comma separated list of extra sanitizers to build
                           with (default is none enabled)
-  --with-utils            build pivx-cli pivx-tx (default=yes)
+  --with-utils            build ammocoin-cli ammocoin-tx (default=yes)
   --with-libs             build libraries (default=no)
-  --with-daemon           build pivxd daemon (default=yes)
+  --with-daemon           build ammocoind daemon (default=yes)
   --with-gui[=no|qt5|auto]
                           build pivx-qt GUI (default=auto)
   --with-qt-incdir=INC_DIR
@@ -26526,7 +26526,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 
-# The following macro will add the necessary defines to pivx-config.h, but
+# The following macro will add the necessary defines to ammocoin-config.h, but
 # they also need to be passed down to any subprojects. Pull the results out of
 # the cache and add them to CPPFLAGS.
 # Check whether --enable-largefile was given.
@@ -37355,8 +37355,8 @@ fi
 
 LIBZCASH_LIBS="$BOOST_SYSTEM_LIB $SODIUM_LIBS $RUST_LIBS"
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build pivxd" >&5
-printf %s "checking whether to build pivxd... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build ammocoind" >&5
+printf %s "checking whether to build ammocoind... " >&6; }
  if test x$build_bitcoind = xyes; then
   BUILD_BITCOIND_TRUE=
   BUILD_BITCOIND_FALSE='#'
@@ -37368,8 +37368,8 @@ fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $build_bitcoind" >&5
 printf "%s\n" "$build_bitcoind" >&6; }
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build utils (pivx-cli pivx-tx)" >&5
-printf %s "checking whether to build utils (pivx-cli pivx-tx)... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build utils (ammocoin-cli ammocoin-tx)" >&5
+printf %s "checking whether to build utils (ammocoin-cli ammocoin-tx)... " >&6; }
  if test x$build_bitcoin_utils = xyes; then
   BUILD_BITCOIN_UTILS_TRUE=
   BUILD_BITCOIN_UTILS_FALSE='#'
@@ -37607,8 +37607,8 @@ printf "%s\n" "no" >&6; }
 printf "%s\n" "$as_me: WARNING: \"xgettext is required to update qt translations\"" >&2;}
   fi
 
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build test_pivx-qt" >&5
-printf %s "checking whether to build test_pivx-qt... " >&6; }
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build test_ammocoin-qt" >&5
+printf %s "checking whether to build test_ammocoin-qt... " >&6; }
   if test x$use_gui_tests$bitcoin_enable_qt_test = xyesyes; then
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 printf "%s\n" "yes" >&6; }
@@ -37628,8 +37628,8 @@ else
 fi
 
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build test_pivx" >&5
-printf %s "checking whether to build test_pivx... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build test_ammocoin" >&5
+printf %s "checking whether to build test_ammocoin... " >&6; }
 if test x$use_tests = xyes; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 printf "%s\n" "yes" >&6; }

@@ -1,13 +1,13 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/masternodewizarddialog.h"
-#include "qt/pivx/forms/ui_masternodewizarddialog.h"
+#include "qt/ammocoin/masternodewizarddialog.h"
+#include "qt/ammocoin/forms/ui_masternodewizarddialog.h"
 
 #include "key_io.h"
-#include "qt/pivx/mnmodel.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/mnmodel.h"
+#include "qt/ammocoin/qtutils.h"
 #include "qt/walletmodel.h"
 
 #include <QIntValidator>
@@ -68,7 +68,7 @@ MasterNodeWizardDialog::MasterNodeWizardDialog(WalletModel* model, MNModel* _mnM
 
     QString collateralAmountStr = GUIUtil::formatBalance(mnModel->getMNCollateralRequiredAmount());
     ui->labelMessage1a->setText(formatHtmlContent(
-                formatParagraph(tr("To create a PIVX Masternode you must dedicate %1 (the unit of PIVX) "
+                formatParagraph(tr("To create a AMMOcoin Masternode you must dedicate %1 (the unit of AMMOcoin) "
                         "to the network (however, these coins are still yours and will never leave your possession).").arg(collateralAmountStr)) +
                 formatParagraph(tr("You can deactivate the node and unlock the coins at any time."))));
 

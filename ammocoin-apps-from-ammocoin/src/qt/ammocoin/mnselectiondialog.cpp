@@ -1,11 +1,11 @@
-// Copyright (c) 2021 The PIVX Core developers
+// Copyright (c) 2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/mnselectiondialog.h"
-#include "qt/pivx/forms/ui_mnselectiondialog.h"
-#include "qt/pivx/mnmodel.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/mnselectiondialog.h"
+#include "qt/ammocoin/forms/ui_mnselectiondialog.h"
+#include "qt/ammocoin/mnmodel.h"
+#include "qt/ammocoin/qtutils.h"
 
 MnSelectionDialog::MnSelectionDialog(QWidget *parent) :
         QDialog(parent),

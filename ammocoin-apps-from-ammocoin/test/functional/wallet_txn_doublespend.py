@@ -6,10 +6,10 @@
 
 from decimal import Decimal
 
-from test_framework.test_framework import PivxTestFramework
+from test_framework.test_framework import AMMOcoinTestFramework
 from test_framework.util import assert_equal, connect_nodes, disconnect_nodes, find_output
 
-class TxnMallTest(PivxTestFramework):
+class TxnMallTest(AMMOcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 4
 

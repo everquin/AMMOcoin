@@ -1,10 +1,10 @@
 // Copyright (c) 2018 The Dash Core developers
-// Copyright (c) 2021-2022 The PIVX Core developers
+// Copyright (c) 2021-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIVX_CRYPTO_BLS_H
-#define PIVX_CRYPTO_BLS_H
+#ifndef AMMOCOIN_CRYPTO_BLS_H
+#define AMMOCOIN_CRYPTO_BLS_H
 
 #include "hash.h"
 #include "serialize.h"
@@ -14,11 +14,8 @@
 // chiabls uses relic, which may define DEBUG and ERROR, which leads to many warnings in some build setups
 #undef ERROR
 #undef DEBUG
+// BLS stub includes
 #include <bls.hpp>
-#include <privatekey.hpp>
-#include <elements.hpp>
-#include <schemes.hpp>
-#include <threshold.hpp>
 #undef DOUBLE
 
 #include <array>
@@ -104,7 +101,8 @@ public:
             Reset();
         } else {
             try {
-                impl = ImplType::FromBytes(vecBytes);
+                // Pass std::vector<uint8_t> directly to Bytes constructor
+                impl = ImplType::FromBytes(bls::Bytes(vecBytes));
                 fValid = true;
             } catch (...) {
                 Reset();
@@ -419,4 +417,4 @@ typedef std::shared_ptr<BLSSignatureVector> BLSSignatureVectorPtr;
 
 bool BLSInit();
 
-#endif // PIVX_CRYPTO_BLS_H
+#endif // AMMOCOIN_CRYPTO_BLS_H

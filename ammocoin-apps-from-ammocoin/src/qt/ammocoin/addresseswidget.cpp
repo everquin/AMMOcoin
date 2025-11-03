@@ -1,16 +1,16 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/addresseswidget.h"
-#include "qt/pivx/forms/ui_addresseswidget.h"
-#include "qt/pivx/addressfilterproxymodel.h"
-#include "qt/pivx/addresslabelrow.h"
-#include "qt/pivx/tooltipmenu.h"
+#include "qt/ammocoin/addresseswidget.h"
+#include "qt/ammocoin/forms/ui_addresseswidget.h"
+#include "qt/ammocoin/addressfilterproxymodel.h"
+#include "qt/ammocoin/addresslabelrow.h"
+#include "qt/ammocoin/tooltipmenu.h"
 
-#include "qt/pivx/addnewcontactdialog.h"
+#include "qt/ammocoin/addnewcontactdialog.h"
 #include "guiutil.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/qtutils.h"
 #include "walletmodel.h"
 
 #include <QModelIndex>
@@ -59,7 +59,7 @@ public:
 };
 
 
-AddressesWidget::AddressesWidget(PIVXGUI* parent) :
+AddressesWidget::AddressesWidget(AMMOCOINGUI* parent) :
     PWidget(parent),
     ui(new Ui::AddressesWidget)
 {

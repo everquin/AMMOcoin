@@ -39,7 +39,7 @@
 /* #undef ENABLE_SSE41 */
 
 /* Define to 1 to enable wallet functions */
-#define ENABLE_WALLET 1
+/* #undef ENABLE_WALLET */
 
 /* Define to 1 to enable ZMQ functions */
 #define ENABLE_ZMQ 1
@@ -54,7 +54,7 @@
 #define HAVE_BOOST_FILESYSTEM /**/
 
 /* define if the Boost::System library is available */
-/* #undef HAVE_BOOST_SYSTEM */
+#define HAVE_BOOST_SYSTEM /**/
 
 /* define if the Boost::Thread library is available */
 #define HAVE_BOOST_THREAD /**/

@@ -1,8 +1,8 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/send.h"
+#include "qt/ammocoin/send.h"
 #include "addresstablemodel.h"
 #include "clientmodel.h"
 #include "coincontrol.h"
@@ -11,14 +11,14 @@
 #include "openuridialog.h"
 #include "operationresult.h"
 #include "optionsmodel.h"
-#include "qt/pivx/addnewcontactdialog.h"
-#include "qt/pivx/forms/ui_send.h"
-#include "qt/pivx/guitransactionsutils.h"
-#include "qt/pivx/loadingdialog.h"
-#include "qt/pivx/optionbutton.h"
-#include "qt/pivx/qtutils.h"
-#include "qt/pivx/sendchangeaddressdialog.h"
-#include "qt/pivx/sendconfirmdialog.h"
+#include "qt/ammocoin/addnewcontactdialog.h"
+#include "qt/ammocoin/forms/ui_send.h"
+#include "qt/ammocoin/guitransactionsutils.h"
+#include "qt/ammocoin/loadingdialog.h"
+#include "qt/ammocoin/optionbutton.h"
+#include "qt/ammocoin/qtutils.h"
+#include "qt/ammocoin/sendchangeaddressdialog.h"
+#include "qt/ammocoin/sendconfirmdialog.h"
 #include "qt/walletmodel.h"
 #include "sapling/address.h"
 #include "sapling/key_io_sapling.h"
@@ -27,7 +27,7 @@
 #define REQUEST_PREPARE_TX 1
 #define REQUEST_REFRESH_BALANCE 2
 
-SendWidget::SendWidget(PIVXGUI* parent) :
+SendWidget::SendWidget(AMMOCOINGUI* parent) :
     PWidget(parent),
     ui(new Ui::send),
     coinIcon(new QPushButton())
@@ -78,7 +78,7 @@ SendWidget::SendWidget(PIVXGUI* parent) :
 
     // Uri
     ui->btnUri->setTitleClassAndText("btn-title-grey", tr("Open URI"));
-    ui->btnUri->setSubTitleClassAndText("text-subtitle", tr("Parse a PIVX URI"));
+    ui->btnUri->setSubTitleClassAndText("text-subtitle", tr("Parse a AMMOcoin URI"));
 
     // Shield coins
     ui->btnShieldCoins->setTitleClassAndText("btn-title-grey", tr("Shield Coins"));

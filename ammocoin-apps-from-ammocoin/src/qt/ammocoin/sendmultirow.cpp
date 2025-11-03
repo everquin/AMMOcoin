@@ -1,18 +1,18 @@
-// Copyright (c) 2019-2021 The PIVX Core developers
+// Copyright (c) 2019-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/sendmultirow.h"
-#include "qt/pivx/forms/ui_sendmultirow.h"
+#include "qt/ammocoin/sendmultirow.h"
+#include "qt/ammocoin/forms/ui_sendmultirow.h"
 
 #include "optionsmodel.h"
 #include "addresstablemodel.h"
 #include "guiutil.h"
 #include "bitcoinunits.h"
-#include "qt/pivx/sendmemodialog.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/sendmemodialog.h"
+#include "qt/ammocoin/qtutils.h"
 
-SendMultiRow::SendMultiRow(PIVXGUI* _window, PWidget *parent) :
+SendMultiRow::SendMultiRow(AMMOCOINGUI* _window, PWidget *parent) :
     PWidget(_window, parent),
     ui(new Ui::SendMultiRow),
     iconNumber(new QPushButton())

@@ -1,12 +1,12 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/dashboardwidget.h"
-#include "qt/pivx/forms/ui_dashboardwidget.h"
-#include "qt/pivx/sendconfirmdialog.h"
-#include "qt/pivx/txrow.h"
-#include "qt/pivx/qtutils.h"
+#include "qt/ammocoin/dashboardwidget.h"
+#include "qt/ammocoin/forms/ui_dashboardwidget.h"
+#include "qt/ammocoin/sendconfirmdialog.h"
+#include "qt/ammocoin/txrow.h"
+#include "qt/ammocoin/qtutils.h"
 #include "guiutil.h"
 #include "clientmodel.h"
 #include "optionsmodel.h"
@@ -22,7 +22,7 @@
 #define REQUEST_LOAD_TASK 1
 #define CHART_LOAD_MIN_TIME_INTERVAL 15
 
-DashboardWidget::DashboardWidget(PIVXGUI* parent) :
+DashboardWidget::DashboardWidget(AMMOCOINGUI* parent) :
     PWidget(parent),
     ui(new Ui::DashboardWidget)
 {
@@ -143,7 +143,7 @@ bool hasCharts = false;
     connect(ui->pushButtonMonth, &QPushButton::clicked, [this](){setChartShow(MONTH);});
     connect(ui->pushButtonAll, &QPushButton::clicked, [this](){setChartShow(ALL);});
     if (window)
-        connect(window, &PIVXGUI::windowResizeEvent, this, &DashboardWidget::windowResizeEvent);
+        connect(window, &AMMOCOINGUI::windowResizeEvent, this, &DashboardWidget::windowResizeEvent);
 #endif
 
     if (hasCharts) {

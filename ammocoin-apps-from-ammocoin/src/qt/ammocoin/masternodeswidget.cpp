@@ -1,20 +1,20 @@
-// Copyright (c) 2019-2022 The PIVX Core developers
+// Copyright (c) 2019-2022 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "qt/pivx/masternodeswidget.h"
+#include "qt/ammocoin/masternodeswidget.h"
 #include "coincontrol.h"
-#include "qt/pivx/forms/ui_masternodeswidget.h"
+#include "qt/ammocoin/forms/ui_masternodeswidget.h"
 
-#include "qt/pivx/qtutils.h"
-#include "qt/pivx/mnrow.h"
-#include "qt/pivx/mninfodialog.h"
-#include "qt/pivx/masternodewizarddialog.h"
+#include "qt/ammocoin/qtutils.h"
+#include "qt/ammocoin/mnrow.h"
+#include "qt/ammocoin/mninfodialog.h"
+#include "qt/ammocoin/masternodewizarddialog.h"
 
 #include "clientmodel.h"
 #include "guiutil.h"
-#include "qt/pivx/mnmodel.h"
-#include "qt/pivx/optionbutton.h"
+#include "qt/ammocoin/mnmodel.h"
+#include "qt/ammocoin/optionbutton.h"
 #include "qt/walletmodel.h"
 
 #define DECORATION_SIZE 65
@@ -54,7 +54,7 @@ public:
     MNRow* cachedRow = nullptr;
 };
 
-MasterNodesWidget::MasterNodesWidget(PIVXGUI *parent) :
+MasterNodesWidget::MasterNodesWidget(AMMOCOINGUI *parent) :
     PWidget(parent),
     ui(new Ui::MasterNodesWidget),
     isLoading(false)

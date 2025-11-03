@@ -154,9 +154,9 @@ import pdb; pdb.set_trace()
 ```
 
 anywhere in the test. You will then be able to inspect variables, as well as
-call methods that interact with the pivxd nodes-under-test.
+call methods that interact with the ammocoind nodes-under-test.
 
-If further introspection of the pivxd instances themselves becomes
+If further introspection of the ammocoind instances themselves becomes
 necessary, this can be accomplished by first setting a pdb breakpoint
 at an appropriate location, running the test to that point, then using
 `gdb` to attach to the process and debug.
@@ -170,8 +170,8 @@ For instance, to attach to `self.node[1]` during a run:
 use the directory path to get the pid from the pid file:
 
 ```bash
-cat /tmp/user/1000/testo9vsdjo3/node1/regtest/pivxd.pid
-gdb /home/example/pivxd <pid>
+cat /tmp/user/1000/testo9vsdjo3/node1/regtest/ammocoind.pid
+gdb /home/example/ammocoind <pid>
 ```
 
 Note: gdb attach step may require `sudo`

@@ -1,9 +1,9 @@
-// Copyright (c) 2020-2021 The PIVX Core developers
+// Copyright (c) 2020-2021 The AMMOcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIVX_HDCHAIN_H
-#define PIVX_HDCHAIN_H
+#ifndef AMMOCOIN_HDCHAIN_H
+#define AMMOCOIN_HDCHAIN_H
 
 #include "key.h"
 
@@ -65,4 +65,4 @@ public:
     }
 };
 
-#endif // PIVX_HDCHAIN_H
+#endif // AMMOCOIN_HDCHAIN_H
