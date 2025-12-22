@@ -17,6 +17,22 @@ This is a **complete network replacement**. v1.0 and v1.1.0 are **incompatible**
 
 ---
 
+## 🔍 Ubuntu 18.04 Users - READ THIS!
+
+**If you are running Ubuntu 18.04.6 LTS**, please see the dedicated guide:
+**`UBUNTU_18.04_MIGRATION_NOTES.md`**
+
+Ubuntu 18.04 requires additional steps:
+- Installing newer dependencies (libnatpmp, Rust, possibly GCC 9)
+- Special build configuration flags
+- Performance tuning for older systems
+
+**Recommendation:** Upgrade to Ubuntu 20.04 or 22.04 LTS before migrating for easier setup.
+
+If you're on Ubuntu 20.04 or 22.04, continue with this guide below.
+
+---
+
 ## STEP 1: BACKUP YOUR v1.0 WALLET (CRITICAL!)
 
 ```bash
