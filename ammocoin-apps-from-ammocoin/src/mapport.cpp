@@ -168,7 +168,7 @@ static bool ProcessUpnp()
     struct IGDdatas data{};
     int r;
 
-    r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr), wanaddr, sizeof(wanaddr));
+    r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
     if (r == 1) {
         if (fDiscover) {
             char externalIPAddress[40];
