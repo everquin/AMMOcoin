@@ -1,4 +1,9 @@
+# Binary directories (distributed via GitHub Releases)
+binaries-linux-v1.1.0/
+binaries-macos-arm64/
+binaries-windows/
 linux-binaries-v1.1.0/
+
 *.log
 
 # Build artifacts
@@ -50,11 +55,17 @@ ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/
 .idea/
 *.swp
 
-# Distribution packages (keep in releases/ with tracking)
+# Distribution packages (distributed via GitHub Releases, not committed)
 *.dmg
 *.tar.gz
 *.zip
 AMMOcoin.app/
+releases/*.tar.gz
+releases/*.zip
+releases/*.dmg
+
+# Allow only checksum files in releases/
+!releases/CHECKSUMS*.txt
 
 # Blockchain data directories
 .ammocoin/
