@@ -10,7 +10,7 @@ echo "=============================================="
 echo ""
 
 # Navigate to source directory
-cd "/Volumes/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
 
 # Check if Homebrew is installed
 if ! command -v brew &> /dev/null; then
@@ -74,7 +74,7 @@ make deploy
 
 echo ""
 echo "Step 7: Packaging binaries..."
-OUTPUT_DIR="/Volumes/CRUCIAL_2TB/  _GITHUB/AMMOcoin/macos-binaries-v1.1.0"
+OUTPUT_DIR="/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/macos-binaries-v1.1.0"
 mkdir -p "$OUTPUT_DIR"
 
 # Copy command-line binaries

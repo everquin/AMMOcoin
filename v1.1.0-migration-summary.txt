@@ -1,0 +1,28 @@
+======================================================================
+AMMOcoin v1.0 → v1.1.0 Migration Balance Summary
+======================================================================
+
+Snapshot Info:
+  Timestamp: 2025-12-22T03:42:05.126051Z
+  Block Height: 434881
+  Block Hash: c23bdb63ff149251b4cdcf401d579118342cf3ca4af1df0e34f4ecbdce2067d9
+  Network: unknown
+
+Balance Statistics:
+  Total Addresses: 10080
+  Total Supply: 232397748.45021523 AMMO
+  Average Balance: 23055.33218752 AMMO
+  Largest Balance: 36952699.99980000 AMMO
+  Smallest Balance: 0.01245611 AMMO
+
+Top 10 Holders:
+   1. ANj3fDwDYTjf1Mb7Xvgj...6aSKeKXakL :    36952699.99980000 AMMO ( 15.90%)
+   2. AYdWeryG24AR6VzWAGEE...mubxDuMoVA :    14915500.00000000 AMMO (  6.42%)
+   3. AZuE2SixrvwwEn7dVmJP...hztXwB7g24 :    13008000.00000000 AMMO (  5.60%)
+   4. AWhtZPWBCMs4fUt7nhqP...zgssHHbQze :    10682700.00000000 AMMO (  4.60%)
+   5. AdzyWnDzqCSHPxPB6KN3...EPt1uwH4SR :    10217100.00000000 AMMO (  4.40%)
+   6. AcbDmc15qunTh6VSJ3Di...11MQ321iPq :     9758400.00000000 AMMO (  4.20%)
+   7. ATcs6iwoZQk6mgmQ9mBF...saAeNw6tQ4 :     9668985.53000000 AMMO (  4.16%)
+   8. ANEgk4D9g39BHNcNKwuq...BEwoune7wT :     9646000.00000000 AMMO (  4.15%)
+   9. APRRL8UV3QPUzBEhBUB5...8ovBqxQ9wn :     9458800.00000000 AMMO (  4.07%)
+  10. AavFTu96nBj1F47gRw3e...yP3XVhuqRa :     9207700.00000000 AMMO (  3.96%)

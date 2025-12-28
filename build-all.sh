@@ -10,8 +10,9 @@ echo ""
 
 START_TIME=$(date +%s)
 
-# Navigate to project root
-cd "/Volumes/CRUCIAL_2TB/  _GITHUB/AMMOcoin"
+# Navigate to project root (use script's directory)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 
 echo "🚀 Starting comprehensive multi-platform build..."
 echo "Platforms: Linux x86_64, Windows x64, ARM64/Raspberry Pi, macOS ARM64"
@@ -62,42 +63,49 @@ if ! ./build-arm64.sh; then
 fi
 echo ""
 
-# Build macOS ARM64 (native)
-echo "🍎 === Building macOS ARM64 Binaries ==="
-echo "Building macOS native binaries..."
-mkdir -p macos-binaries-v1.1.0
+# Build macOS ARM64 (native) - Skip on non-macOS platforms
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "🍎 === Building macOS ARM64 Binaries ==="
+    echo "Building macOS native binaries..."
+    mkdir -p macos-binaries-v1.1.0
 
-cd ammocoin-apps-from-ammocoin
+    cd ammocoin-apps-from-ammocoin
 
-# Clean previous build
-make clean > /dev/null 2>&1 || true
+    # Clean previous build
+    make clean > /dev/null 2>&1 || true
 
-# Configure for macOS
-export LDFLAGS="-L/opt/homebrew/opt/berkeley-db@4/lib -L/opt/homebrew/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/berkeley-db@4/include -I/opt/homebrew/include"
+    # Configure for macOS
+    export LDFLAGS="-L/opt/homebrew/opt/berkeley-db@4/lib -L/opt/homebrew/lib"
+    export CPPFLAGS="-I/opt/homebrew/opt/berkeley-db@4/include -I/opt/homebrew/include"
 
-if ! ./configure --disable-tests --disable-bench --without-gui --enable-wallet --with-incompatible-bdb > /dev/null 2>&1; then
-    echo "❌ macOS configure failed"
+    if ! ./configure --disable-tests --disable-bench --without-gui --enable-wallet --with-incompatible-bdb > /dev/null 2>&1; then
+        echo "❌ macOS configure failed"
+        cd ..
+        exit 1
+    fi
+
+    # Build macOS binaries
+    if ! make -j$(sysctl -n hw.ncpu) > /dev/null 2>&1; then
+        echo "❌ macOS build failed"
+        cd ..
+        exit 1
+    fi
+
+    # Copy binaries
+    cp src/ammocoind ../macos-binaries-v1.1.0/
+    cp src/ammocoin-cli ../macos-binaries-v1.1.0/
+    cp src/ammocoin-tx ../macos-binaries-v1.1.0/
+
     cd ..
-    exit 1
+
+    echo "✅ macOS ARM64 build completed successfully!"
+    echo ""
+else
+    echo "🍎 === Skipping macOS Build (not on macOS) ==="
+    echo "⚠️  Native macOS binaries can only be built on macOS"
+    echo "ℹ️  Use Docker-based cross-compilation or build on a Mac"
+    echo ""
 fi
-
-# Build macOS binaries
-if ! make -j$(sysctl -n hw.ncpu) > /dev/null 2>&1; then
-    echo "❌ macOS build failed"
-    cd ..
-    exit 1
-fi
-
-# Copy binaries
-cp src/ammocoind ../macos-binaries-v1.1.0/
-cp src/ammocoin-cli ../macos-binaries-v1.1.0/
-cp src/ammocoin-tx ../macos-binaries-v1.1.0/
-
-cd ..
-
-echo "✅ macOS ARM64 build completed successfully!"
-echo ""
 
 # Summary
 END_TIME=$(date +%s)

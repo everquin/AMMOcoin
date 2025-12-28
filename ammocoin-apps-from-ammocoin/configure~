@@ -795,7 +795,6 @@ MOC_DEFS
 QT_SELECT
 QT_TEST_INCLUDES
 QT_DBUS_INCLUDES
-QT_SVG_INCLUDES
 QT_LDFLAGS
 QT_LIBS
 QT_INCLUDES
@@ -813,6 +812,8 @@ QTCLIPBOARD_LIBS
 QTCLIPBOARD_CFLAGS
 QTXCBQPA_LIBS
 QTXCBQPA_CFLAGS
+X11XCB_LIBS
+X11XCB_CFLAGS
 QTFB_LIBS
 QTFB_CFLAGS
 QTACCESSIBILITY_LIBS
@@ -831,10 +832,6 @@ QT_DBUS_LIBS
 QT_DBUS_CFLAGS
 QT_TEST_LIBS
 QT_TEST_CFLAGS
-QT_CONCURRENT_LIBS
-QT_CONCURRENT_CFLAGS
-QT_SVG_LIBS
-QT_SVG_CFLAGS
 QT5_LIBS
 QT5_CFLAGS
 QT_TRANSLATION_DIR
@@ -1072,7 +1069,6 @@ with_qt_incdir
 with_qt_libdir
 with_qt_plugindir
 with_qt_translationdir
-with_qt_svgdir
 with_qt_bindir
 with_qtdbus
 with_incompatible_bdb
@@ -1108,10 +1104,6 @@ PKG_CONFIG_LIBDIR
 CPP
 QT5_CFLAGS
 QT5_LIBS
-QT_SVG_CFLAGS
-QT_SVG_LIBS
-QT_CONCURRENT_CFLAGS
-QT_CONCURRENT_LIBS
 QT_TEST_CFLAGS
 QT_TEST_LIBS
 QT_DBUS_CFLAGS
@@ -1130,6 +1122,8 @@ QTACCESSIBILITY_CFLAGS
 QTACCESSIBILITY_LIBS
 QTFB_CFLAGS
 QTFB_LIBS
+X11XCB_CFLAGS
+X11XCB_LIBS
 QTXCBQPA_CFLAGS
 QTXCBQPA_LIBS
 QTCLIPBOARD_CFLAGS
@@ -1865,21 +1859,19 @@ Optional Packages:
   --with-libs             build libraries (default=no)
   --with-daemon           build ammocoind daemon (default=yes)
   --with-gui[=no|qt5|auto]
-                          build pivx-qt GUI (default=auto)
+                          build ammocoin-qt GUI (default=auto)
   --with-qt-incdir=INC_DIR
-                          specify Qt include path (overridden by pkgconfig)
+                          specify qt include path (overridden by pkgconfig)
   --with-qt-libdir=LIB_DIR
-                          specify Qt lib path (overridden by pkgconfig)
+                          specify qt lib path (overridden by pkgconfig)
   --with-qt-plugindir=PLUGIN_DIR
-                          specify Qt plugin path (overridden by pkgconfig)
+                          specify qt plugin path (overridden by pkgconfig)
   --with-qt-translationdir=PLUGIN_DIR
-                          specify Qt translation path (overridden by
+                          specify qt translation path (overridden by
                           pkgconfig)
-  --with-qt-svgdir=PLUGIN_DIR
-                          specify Qt svg path (overridden by pkgconfig)
   --with-qt-bindir=BIN_DIR
-                          specify Qt bin path
-  --with-qtdbus           enable DBus support (default is yes if Qt is enabled
+                          specify qt bin path
+  --with-qtdbus           enable DBus support (default is yes if qt is enabled
                           and QtDBus is found)
   --with-incompatible-bdb allow using a bdb version other than 4.8
   --with-boost[=ARG]      use Boost library from a standard location
@@ -1938,13 +1930,6 @@ Some influential environment variables:
   CPP         C preprocessor
   QT5_CFLAGS  C compiler flags for QT5, overriding pkg-config
   QT5_LIBS    linker flags for QT5, overriding pkg-config
-  QT_SVG_CFLAGS
-              C compiler flags for QT_SVG, overriding pkg-config
-  QT_SVG_LIBS linker flags for QT_SVG, overriding pkg-config
-  QT_CONCURRENT_CFLAGS
-              C compiler flags for QT_CONCURRENT, overriding pkg-config
-  QT_CONCURRENT_LIBS
-              linker flags for QT_CONCURRENT, overriding pkg-config
   QT_TEST_CFLAGS
               C compiler flags for QT_TEST, overriding pkg-config
   QT_TEST_LIBS
@@ -1979,6 +1964,9 @@ Some influential environment variables:
               linker flags for QTACCESSIBILITY, overriding pkg-config
   QTFB_CFLAGS C compiler flags for QTFB, overriding pkg-config
   QTFB_LIBS   linker flags for QTFB, overriding pkg-config
+  X11XCB_CFLAGS
+              C compiler flags for X11XCB, overriding pkg-config
+  X11XCB_LIBS linker flags for X11XCB, overriding pkg-config
   QTXCBQPA_CFLAGS
               C compiler flags for QTXCBQPA, overriding pkg-config
   QTXCBQPA_LIBS
@@ -6012,17 +6000,8 @@ printf %s "checking whether std::atomic can be used without link library... " >&
 
   #include <atomic>
   #include <cstdint>
-  #include <chrono>
-
-  using namespace std::chrono_literals;
 
   int main() {
-    std::atomic<bool> lock{true};
-    std::atomic_exchange(&lock, false);
-
-    std::atomic<std::chrono::seconds> t{0s};
-    t.store(2s);
-
     std::atomic<int64_t> a{};
 
     int64_t v = 5;
@@ -6049,17 +6028,8 @@ printf %s "checking whether std::atomic needs -latomic... " >&6; }
 
   #include <atomic>
   #include <cstdint>
-  #include <chrono>
-
-  using namespace std::chrono_literals;
 
   int main() {
-    std::atomic<bool> lock{true};
-    std::atomic_exchange(&lock, false);
-
-    std::atomic<std::chrono::seconds> t{0s};
-    t.store(2s);
-
     std::atomic<int64_t> a{};
 
     int64_t v = 5;
@@ -28080,89 +28050,7 @@ fi
 printf "%s\n" "#define HAVE_DECL_GETIFADDRS $ac_have_decl" >>confdefs.h
 if test $ac_have_decl = 1
 then :
-
-
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ifaddrs funcs can be used without link library" >&5
-printf %s "checking whether ifaddrs funcs can be used without link library... " >&6; }
-
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-  #include <sys/types.h>
-  #include <ifaddrs.h>
-
-  int main() {
-    struct ifaddrs *ifaddr;
-    getifaddrs(&ifaddr);
-    freeifaddrs(ifaddr);
-  }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-
-else case e in #(
-  e)
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-      LIBS="$LIBS -lsocket"
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether getifaddrs needs -lsocket" >&5
-printf %s "checking whether getifaddrs needs -lsocket... " >&6; }
-      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-  #include <sys/types.h>
-  #include <ifaddrs.h>
-
-  int main() {
-    struct ifaddrs *ifaddr;
-    getifaddrs(&ifaddr);
-    freeifaddrs(ifaddr);
-  }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-
-          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-
-else case e in #(
-  e)
-          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-          { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
-printf "%s\n" "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "cannot figure out how to use getifaddrs
-See 'config.log' for more details" "$LINENO" 5; }
-         ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-     ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-
+  CHECK_SOCKET
 fi
 ac_fn_check_decl "$LINENO" "freeifaddrs" "ac_cv_have_decl_freeifaddrs" "#include <sys/types.h>
     #include <ifaddrs.h>
@@ -28178,89 +28066,7 @@ fi
 printf "%s\n" "#define HAVE_DECL_FREEIFADDRS $ac_have_decl" >>confdefs.h
 if test $ac_have_decl = 1
 then :
-
-
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether ifaddrs funcs can be used without link library" >&5
-printf %s "checking whether ifaddrs funcs can be used without link library... " >&6; }
-
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-  #include <sys/types.h>
-  #include <ifaddrs.h>
-
-  int main() {
-    struct ifaddrs *ifaddr;
-    getifaddrs(&ifaddr);
-    freeifaddrs(ifaddr);
-  }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-
-else case e in #(
-  e)
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-      LIBS="$LIBS -lsocket"
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether getifaddrs needs -lsocket" >&5
-printf %s "checking whether getifaddrs needs -lsocket... " >&6; }
-      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-  #include <sys/types.h>
-  #include <ifaddrs.h>
-
-  int main() {
-    struct ifaddrs *ifaddr;
-    getifaddrs(&ifaddr);
-    freeifaddrs(ifaddr);
-  }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-
-          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-
-else case e in #(
-  e)
-          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-          { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
-printf "%s\n" "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "cannot figure out how to use getifaddrs
-See 'config.log' for more details" "$LINENO" 5; }
-         ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-     ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-
+  CHECK_SOCKET
 fi
 
 ac_fn_check_decl "$LINENO" "strnlen" "ac_cv_have_decl_strnlen" "$ac_includes_default" "$ac_cxx_undeclared_builtin_options" "CXXFLAGS"
@@ -29233,13 +29039,6 @@ then :
 fi
 
 
-# Check whether --with-qt-svgdir was given.
-if test ${with_qt_svgdir+y}
-then :
-  withval=$with_qt_svgdir; qt_svg_path=$withval
-fi
-
-
 # Check whether --with-qt-bindir was given.
 if test ${with_qt_bindir+y}
 then :
@@ -29358,8 +29157,8 @@ fi
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Qt dependencies not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Qt dependencies not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Qt dependencies not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: Qt dependencies not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -29368,208 +29167,6 @@ printf "%s\n" "$as_me: WARNING: Qt dependencies not found; pivx-qt frontend will
   fi
 
       fi
-
-  else
-    true
-
-  fi
-
-
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-
-
-pkg_failed=no
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${QT_LIB_PREFIX}Svg" >&5
-printf %s "checking for ${QT_LIB_PREFIX}Svg... " >&6; }
-
-if test -n "$QT_SVG_CFLAGS"; then
-    pkg_cv_QT_SVG_CFLAGS="$QT_SVG_CFLAGS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\${QT_LIB_PREFIX}Svg\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "${QT_LIB_PREFIX}Svg") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_QT_SVG_CFLAGS=`$PKG_CONFIG --cflags "${QT_LIB_PREFIX}Svg" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-if test -n "$QT_SVG_LIBS"; then
-    pkg_cv_QT_SVG_LIBS="$QT_SVG_LIBS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\${QT_LIB_PREFIX}Svg\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "${QT_LIB_PREFIX}Svg") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_QT_SVG_LIBS=`$PKG_CONFIG --libs "${QT_LIB_PREFIX}Svg" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-                QT_SVG_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "${QT_LIB_PREFIX}Svg" 2>&1`
-        else
-                QT_SVG_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "${QT_LIB_PREFIX}Svg" 2>&1`
-        fi
-        # Put the nasty error message in config.log where it belongs
-        echo "$QT_SVG_PKG_ERRORS" >&5
-
-        as_fn_error $? "Package requirements (${QT_LIB_PREFIX}Svg) were not met:
-
-$QT_SVG_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-Alternatively, you may set the environment variables QT_SVG_CFLAGS
-and QT_SVG_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details." "$LINENO" 5
-elif test $pkg_failed = untried; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-        { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
-printf "%s\n" "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-Alternatively, you may set the environment variables QT_SVG_CFLAGS
-and QT_SVG_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
-See 'config.log' for more details" "$LINENO" 5; }
-else
-        QT_SVG_CFLAGS=$pkg_cv_QT_SVG_CFLAGS
-        QT_SVG_LIBS=$pkg_cv_QT_SVG_LIBS
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-        QT_SVG_INCLUDES="$QT_SVG_CFLAGS"; QT_LIBS="$QT_LIBS $QT_SVG_LIBS"
-fi
-
-  else
-    true
-
-  fi
-
-
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-
-
-pkg_failed=no
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ${QT_LIB_PREFIX}Concurrent" >&5
-printf %s "checking for ${QT_LIB_PREFIX}Concurrent... " >&6; }
-
-if test -n "$QT_CONCURRENT_CFLAGS"; then
-    pkg_cv_QT_CONCURRENT_CFLAGS="$QT_CONCURRENT_CFLAGS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\${QT_LIB_PREFIX}Concurrent\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "${QT_LIB_PREFIX}Concurrent") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_QT_CONCURRENT_CFLAGS=`$PKG_CONFIG --cflags "${QT_LIB_PREFIX}Concurrent" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-if test -n "$QT_CONCURRENT_LIBS"; then
-    pkg_cv_QT_CONCURRENT_LIBS="$QT_CONCURRENT_LIBS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\${QT_LIB_PREFIX}Concurrent\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "${QT_LIB_PREFIX}Concurrent") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_QT_CONCURRENT_LIBS=`$PKG_CONFIG --libs "${QT_LIB_PREFIX}Concurrent" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-                QT_CONCURRENT_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "${QT_LIB_PREFIX}Concurrent" 2>&1`
-        else
-                QT_CONCURRENT_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "${QT_LIB_PREFIX}Concurrent" 2>&1`
-        fi
-        # Put the nasty error message in config.log where it belongs
-        echo "$QT_CONCURRENT_PKG_ERRORS" >&5
-
-        as_fn_error $? "Package requirements (${QT_LIB_PREFIX}Concurrent) were not met:
-
-$QT_CONCURRENT_PKG_ERRORS
-
-Consider adjusting the PKG_CONFIG_PATH environment variable if you
-installed software in a non-standard prefix.
-
-Alternatively, you may set the environment variables QT_CONCURRENT_CFLAGS
-and QT_CONCURRENT_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details." "$LINENO" 5
-elif test $pkg_failed = untried; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-        { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
-printf "%s\n" "$as_me: error: in '$ac_pwd':" >&2;}
-as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
-is in your PATH or set the PKG_CONFIG environment variable to the full
-path to pkg-config.
-
-Alternatively, you may set the environment variables QT_CONCURRENT_CFLAGS
-and QT_CONCURRENT_LIBS to avoid the need to call pkg-config.
-See the pkg-config man page for more details.
-
-To get pkg-config, see <http://pkg-config.freedesktop.org/>.
-See 'config.log' for more details" "$LINENO" 5; }
-else
-        QT_CONCURRENT_CFLAGS=$pkg_cv_QT_CONCURRENT_CFLAGS
-        QT_CONCURRENT_LIBS=$pkg_cv_QT_CONCURRENT_LIBS
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-        QT_INCLUDES="$QT_INCLUDES $QT_CONCURRENT_CFLAGS"; QT_LIBS="$QT_LIBS $QT_CONCURRENT_LIBS"
-fi
 
   else
     true
@@ -29731,68 +29328,6 @@ fi
   fi
 
 
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt >= 5.5.1" >&5
-printf %s "checking for Qt >= 5.5.1... " >&6; }
-if test ${bitcoin_cv_qt_minimumrequired+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"Qt5Core < 5.5.1\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "Qt5Core < 5.5.1") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  bitcoin_cv_qt_minimumrequired=no
-else
-  bitcoin_cv_qt_minimumrequired=yes
-fi
-       ;;
-esac
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_cv_qt_minimumrequired" >&5
-printf "%s\n" "$bitcoin_cv_qt_minimumrequired" >&6; }
-
-  else
-    true
-
-  fi
-
-
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt >= 5.8.0" >&5
-printf %s "checking for Qt >= 5.8.0... " >&6; }
-if test ${bitcoin_cv_qt58+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"Qt5Core < 5.8.0\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "Qt5Core < 5.8.0") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  bitcoin_cv_qt58=no
-else
-  bitcoin_cv_qt58=yes
-fi
-       ;;
-esac
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_cv_qt58" >&5
-printf "%s\n" "$bitcoin_cv_qt58" >&6; }
-
-  else
-    true
-
-  fi
-
-
   true;
   else
     true
@@ -29813,7 +29348,7 @@ printf "%s\n" "$bitcoin_cv_qt58" >&6; }
     true
 
     if test "x$qt_include_path" != x; then
-      QT_INCLUDES="-I$qt_include_path -I$qt_include_path/QtCore -I$qt_include_path/QtGui -I$qt_include_path/QtWidgets -I$qt_include_path/QtNetwork -I$qt_include_path/QtTest -I$qt_include_path/QtDBus -I$qt_include_path/QtConcurrent -I$qt_include_path/QtSvg -I$qt_include_path/QtCharts"
+      QT_INCLUDES="-I$qt_include_path -I$qt_include_path/QtCore -I$qt_include_path/QtGui -I$qt_include_path/QtWidgets -I$qt_include_path/QtNetwork -I$qt_include_path/QtTest -I$qt_include_path/QtDBus"
       CPPFLAGS="$QT_INCLUDES $CPPFLAGS"
     fi
 
@@ -29834,8 +29369,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtCore headers missing; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: QtCore headers missing; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtCore headers missing; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: QtCore headers missing; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -29862,8 +29397,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtGui headers missing; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: QtGui headers missing; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtGui headers missing; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: QtGui headers missing; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -29890,41 +29425,13 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtNetwork headers missing; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: QtNetwork headers missing; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtNetwork headers missing; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: QtNetwork headers missing; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
   else
     as_fn_error $? "QtNetwork headers missing" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-
-  else
-    true
-
-  fi
-
-
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-    ac_fn_cxx_check_header_compile "$LINENO" "QtConcurrent" "ac_cv_header_QtConcurrent" "$ac_includes_default"
-if test "x$ac_cv_header_QtConcurrent" = xyes
-then :
-
-else case e in #(
-  e)
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: QtConcurrent headers missing; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: QtConcurrent headers missing; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "QtConcurrent headers missing" "$LINENO" 5
   fi
  ;;
 esac
@@ -29942,9 +29449,9 @@ fi
 
     if test "x$bitcoin_qt_want_version" = xauto; then
 
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt >= 5.5.1" >&5
-printf %s "checking for Qt >= 5.5.1... " >&6; }
-if test ${bitcoin_cv_qt_minimumrequired+y}
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt 5" >&5
+printf %s "checking for Qt 5... " >&6; }
+if test ${bitcoin_cv_qt5+y}
 then :
   printf %s "(cached) " >&6
 else case e in #(
@@ -29952,38 +29459,39 @@ else case e in #(
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-
-    #include <QtGlobal>
+      #include <QtCore/qconfig.h>
+      #ifndef QT_VERSION
+      #  include <QtCore/qglobal.h>
+      #endif
 
 int
 main (void)
 {
 
-    #if (QT_VERSION < QT_VERSION_CHECK(5, 5, 1))
-    choke
-    #endif
+      #if QT_VERSION < 0x050000 || QT_VERSION_MAJOR < 5
+      choke
+      #endif
 
   ;
   return 0;
 }
-
 _ACEOF
 if ac_fn_cxx_try_compile "$LINENO"
 then :
-  bitcoin_cv_qt_minimumrequired=yes
+  bitcoin_cv_qt5=yes
 else case e in #(
-  e) bitcoin_cv_qt_minimumrequired=no ;;
+  e) bitcoin_cv_qt5=no ;;
 esac
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
  ;;
 esac
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_cv_qt_minimumrequired" >&5
-printf "%s\n" "$bitcoin_cv_qt_minimumrequired" >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_cv_qt5" >&5
+printf "%s\n" "$bitcoin_cv_qt5" >&6; }
 
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt >= 5.8" >&5
-printf %s "checking for Qt >= 5.8... " >&6; }
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for > Qt 5.7" >&5
+printf %s "checking for > Qt 5.7... " >&6; }
 if test ${bitcoin_cv_qt58+y}
 then :
   printf %s "(cached) " >&6
@@ -29992,21 +29500,22 @@ else case e in #(
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-
-    #include <QtGlobal>
+      #include <QtCore/qconfig.h>
+      #ifndef QT_VERSION
+      #  include <QtCore/qglobal.h>
+      #endif
 
 int
 main (void)
 {
 
-    #if (QT_VERSION < QT_VERSION_CHECK(5, 8, 0))
-    choke
-    #endif
+      #if QT_VERSION_MINOR < 8
+      choke
+      #endif
 
   ;
   return 0;
 }
-
 _ACEOF
 if ac_fn_cxx_try_compile "$LINENO"
 then :
@@ -30086,8 +29595,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libimm32 not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: libimm32 not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libimm32 not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: libimm32 not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -30154,8 +29663,8 @@ then :
   LIBS="-lz  $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: zlib not found. Assuming Qt has it built-in" >&5
-printf "%s\n" "$as_me: WARNING: zlib not found. Assuming Qt has it built-in" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: zlib not found. Assuming qt has it built-in" >&5
+printf "%s\n" "$as_me: WARNING: zlib not found. Assuming qt has it built-in" >&2;} ;;
 esac
 fi
 
@@ -30226,8 +29735,8 @@ then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libjpeg not found. Assuming Qt has it built-in" >&5
-printf "%s\n" "$as_me: WARNING: libjpeg not found. Assuming Qt has it built-in" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libjpeg not found. Assuming qt has it built-in" >&5
+printf "%s\n" "$as_me: WARNING: libjpeg not found. Assuming qt has it built-in" >&2;} ;;
 esac
 fi
 
@@ -30299,8 +29808,8 @@ then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libpng not found. Assuming Qt has it built-in" >&5
-printf "%s\n" "$as_me: WARNING: libpng not found. Assuming Qt has it built-in" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libpng not found. Assuming qt has it built-in" >&5
+printf "%s\n" "$as_me: WARNING: libpng not found. Assuming qt has it built-in" >&2;} ;;
 esac
 fi
 
@@ -30371,8 +29880,8 @@ then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libpcre16 not found. Assuming Qt has it built-in" >&5
-printf "%s\n" "$as_me: WARNING: libpcre16 not found. Assuming Qt has it built-in" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libpcre16 not found. Assuming qt has it built-in" >&5
+printf "%s\n" "$as_me: WARNING: libpcre16 not found. Assuming qt has it built-in" >&2;} ;;
 esac
 fi
 
@@ -30444,8 +29953,8 @@ then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libpng not found. Assuming Qt has it built-in" >&5
-printf "%s\n" "$as_me: WARNING: libpng not found. Assuming Qt has it built-in" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libpng not found. Assuming qt has it built-in" >&5
+printf "%s\n" "$as_me: WARNING: libpng not found. Assuming qt has it built-in" >&2;} ;;
 esac
 fi
 
@@ -30516,8 +30025,8 @@ then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqtpcre2 not found. Assuming Qt has it built-in" >&5
-printf "%s\n" "$as_me: WARNING: libqtpcre2 not found. Assuming Qt has it built-in" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqtpcre2 not found. Assuming qt has it built-in" >&5
+printf "%s\n" "$as_me: WARNING: libqtpcre2 not found. Assuming qt has it built-in" >&2;} ;;
 esac
 fi
 
@@ -30589,8 +30098,8 @@ then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libharfbuzz not found. Assuming Qt has it built-in or support is disabled" >&5
-printf "%s\n" "$as_me: WARNING: libharfbuzz not found. Assuming Qt has it built-in or support is disabled" >&2;} ;;
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libharfbuzz not found. Assuming qt has it built-in or support is disabled" >&5
+printf "%s\n" "$as_me: WARNING: libharfbuzz not found. Assuming qt has it built-in or support is disabled" >&2;} ;;
 esac
 fi
 
@@ -30652,8 +30161,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Core not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Core not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Core not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Core not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -30722,8 +30231,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Gui not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Gui not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Gui not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Gui not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -30792,8 +30301,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Network not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Network not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Network not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Network not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -30862,83 +30371,13 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Widgets not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Widgets not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Widgets not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Widgets not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
   else
     as_fn_error $? "lib${QT_LIB_PREFIX}Widgets not found" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-
-  else
-    true
-
-  fi
-
-
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-    as_ac_Lib=`printf "%s\n" "ac_cv_lib_${QT_LIB_PREFIX}Concurrent""_main" | sed "$as_sed_sh"`
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for main in -l${QT_LIB_PREFIX}Concurrent" >&5
-printf %s "checking for main in -l${QT_LIB_PREFIX}Concurrent... " >&6; }
-if eval test \${$as_ac_Lib+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) ac_check_lib_save_LIBS=$LIBS
-LIBS="-l${QT_LIB_PREFIX}Concurrent  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-namespace conftest {
-  extern "C" int main ();
-}
-int
-main (void)
-{
-return conftest::main ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  eval "$as_ac_Lib=yes"
-else case e in #(
-  e) eval "$as_ac_Lib=no" ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS ;;
-esac
-fi
-eval ac_res=\$$as_ac_Lib
-	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-printf "%s\n" "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_Lib"\" = x"yes"
-then :
-  cat >>confdefs.h <<_ACEOF
-#define `printf "%s\n" "HAVE_LIB${QT_LIB_PREFIX}Concurrent" | sed "$as_sed_cpp"` 1
-_ACEOF
-
-  LIBS="-l${QT_LIB_PREFIX}Concurrent $LIBS"
-
-else case e in #(
-  e)
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Concurrent not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Concurrent not found; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "lib${QT_LIB_PREFIX}Concurrent not found" "$LINENO" 5
   fi
  ;;
 esac
@@ -30956,94 +30395,6 @@ fi
   if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
     true
 
-    LIBS=
-    if test "x$qt_lib_path" != x; then
-      LIBS="-L$qt_lib_path"
-    fi
-    as_ac_Lib=`printf "%s\n" "ac_cv_lib_${QT_LIB_PREFIX}Svg""_main" | sed "$as_sed_sh"`
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for main in -l${QT_LIB_PREFIX}Svg" >&5
-printf %s "checking for main in -l${QT_LIB_PREFIX}Svg... " >&6; }
-if eval test \${$as_ac_Lib+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) ac_check_lib_save_LIBS=$LIBS
-LIBS="-l${QT_LIB_PREFIX}Svg  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-namespace conftest {
-  extern "C" int main ();
-}
-int
-main (void)
-{
-return conftest::main ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  eval "$as_ac_Lib=yes"
-else case e in #(
-  e) eval "$as_ac_Lib=no" ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS ;;
-esac
-fi
-eval ac_res=\$$as_ac_Lib
-	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-printf "%s\n" "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_Lib"\" = x"yes"
-then :
-  cat >>confdefs.h <<_ACEOF
-#define `printf "%s\n" "HAVE_LIB${QT_LIB_PREFIX}Svg" | sed "$as_sed_cpp"` 1
-_ACEOF
-
-  LIBS="-l${QT_LIB_PREFIX}Svg $LIBS"
-
-else case e in #(
-  e)
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Svg not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Svg not found; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "lib${QT_LIB_PREFIX}Svg not found" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-
-    ac_fn_cxx_check_header_compile "$LINENO" "QtSvg" "ac_cv_header_QtSvg" "$ac_includes_default"
-if test "x$ac_cv_header_QtSvg" = xyes
-then :
-
-else case e in #(
-  e)
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib${QT_LIB_PREFIX}Svg not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib${QT_LIB_PREFIX}Svg not found; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "lib${QT_LIB_PREFIX}Svg not found" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-
-    QT_LIBS="$QT_LIBS $LIBS"
-    QT_SVG_LIBS="$LIBS"
     LIBS=
     if test "x$qt_lib_path" != x; then
       LIBS="-L$qt_lib_path"
@@ -31197,34 +30548,9 @@ fi
   if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
     true
 
-    if test "x$bitcoin_cv_qt_minimumrequired" != xyes; then
-
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Qt version not supported; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Qt version not supported; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "Qt version not supported" "$LINENO" 5
-  fi
-
-    fi
-
-  else
-    true
-
-  fi
-
-
-
-  if test "x$bitcoin_enable_qt" != xno && test "x$bitcoin_qt_want_version" != xno; then
-    true
-
   TEMP_CPPFLAGS=$CPPFLAGS
   TEMP_CXXFLAGS=$CXXFLAGS
-  CPPFLAGS="$QT_INCLUDES $QT_SVG_INCLUDES $CPPFLAGS"
+  CPPFLAGS="$QT_INCLUDES $CPPFLAGS"
   CXXFLAGS="$PIC_FLAGS $CXXFLAGS"
 
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt" >&5
@@ -31238,7 +30564,7 @@ else case e in #(
 /* end confdefs.h.  */
 
         #include <QtCore/qconfig.h>
-        #ifndef QT_VERSION
+        #ifndef QT_VERSION OR QT_VERSION_STR
         #  include <QtCore/qglobal.h>
         #endif
 
@@ -31267,11 +30593,16 @@ esac
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_cv_static_qt" >&5
 printf "%s\n" "$bitcoin_cv_static_qt" >&6; }
+  if test "x$bitcoin_cv_static_qt" = xyes; then
+
+printf "%s\n" "#define QT_STATICPLUGIN 1" >>confdefs.h
+
+  fi
 
   if test "x$bitcoin_cv_static_qt" = xyes; then
 
     if test "x$qt_plugin_path" != x; then
-      QT_LIBS="$QT_LIBS -L$qt_plugin_path/platforms -L$qt_plugin_path/imageformats -L$qt_plugin_path/iconengines"
+      QT_LIBS="$QT_LIBS -L$qt_plugin_path/platforms"
       if test -d "$qt_plugin_path/accessible"; then
         QT_LIBS="$QT_LIBS -L$qt_plugin_path/accessible"
       fi
@@ -31920,6 +31251,98 @@ fi
        if test "x$TARGET_OS" = xlinux; then
 
 pkg_failed=no
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for x11-xcb" >&5
+printf %s "checking for x11-xcb... " >&6; }
+
+if test -n "$X11XCB_CFLAGS"; then
+    pkg_cv_X11XCB_CFLAGS="$X11XCB_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"x11-xcb\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "x11-xcb") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_X11XCB_CFLAGS=`$PKG_CONFIG --cflags "x11-xcb" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$X11XCB_LIBS"; then
+    pkg_cv_X11XCB_LIBS="$X11XCB_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"x11-xcb\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "x11-xcb") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_X11XCB_LIBS=`$PKG_CONFIG --libs "x11-xcb" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+                X11XCB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "x11-xcb" 2>&1`
+        else
+                X11XCB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "x11-xcb" 2>&1`
+        fi
+        # Put the nasty error message in config.log where it belongs
+        echo "$X11XCB_PKG_ERRORS" >&5
+
+        as_fn_error $? "Package requirements (x11-xcb) were not met:
+
+$X11XCB_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables X11XCB_CFLAGS
+and X11XCB_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details." "$LINENO" 5
+elif test $pkg_failed = untried; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+        { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
+printf "%s\n" "$as_me: error: in '$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables X11XCB_CFLAGS
+and X11XCB_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See 'config.log' for more details" "$LINENO" 5; }
+else
+        X11XCB_CFLAGS=$pkg_cv_X11XCB_CFLAGS
+        X11XCB_LIBS=$pkg_cv_X11XCB_LIBS
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+        QT_LIBS="$X11XCB_LIBS $QT_LIBS"
+fi
+         if ${PKG_CONFIG} --exists "Qt5Core >= 5.5" 2>/dev/null; then
+
+pkg_failed=no
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt5XcbQpa" >&5
 printf %s "checking for Qt5XcbQpa... " >&6; }
 
@@ -32009,6 +31432,7 @@ else
 printf "%s\n" "yes" >&6; }
         QT_LIBS="$QTXCBQPA_LIBS $QT_LIBS"
 fi
+         fi
        elif test "x$TARGET_OS" = xdarwin; then
 
 pkg_failed=no
@@ -32297,21 +31721,22 @@ else case e in #(
            cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-
-    #include <QtGlobal>
+               #include <QtCore/qconfig.h>
+               #ifndef QT_VERSION
+               #  include <QtCore/qglobal.h>
+               #endif
 
 int
 main (void)
 {
 
-    #if (QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
-    choke
-    #endif
+               #if QT_VERSION < 0x050600 || QT_VERSION_MINOR < 6
+               choke
+               #endif
 
   ;
   return 0;
 }
-
 _ACEOF
 if ac_fn_cxx_try_compile "$LINENO"
 then :
@@ -32381,8 +31806,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXPlatformSupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXPlatformSupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXPlatformSupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXPlatformSupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32452,8 +31877,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXFontDatabaseSupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXFontDatabaseSupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXFontDatabaseSupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXFontDatabaseSupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32522,8 +31947,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXEventDispatcherSupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXEventDispatcherSupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXEventDispatcherSupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXEventDispatcherSupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32592,8 +32017,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXThemeSupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXThemeSupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXThemeSupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXThemeSupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32662,8 +32087,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXFbSupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXFbSupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXFbSupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXFbSupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32732,8 +32157,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXDeviceDiscoverySupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXDeviceDiscoverySupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXDeviceDiscoverySupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXDeviceDiscoverySupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32802,8 +32227,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXAccessibilitySupport not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXAccessibilitySupport not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lib$QT_LIB_PREFIXAccessibilitySupport not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: lib$QT_LIB_PREFIXAccessibilitySupport not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32829,6 +32254,91 @@ fi
 
 printf "%s\n" "#define QT_STATICPLUGIN 1" >>confdefs.h
 
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Qt < 5.4" >&5
+printf %s "checking for Qt < 5.4... " >&6; }
+if test ${bitcoin_cv_need_acc_widget+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e)
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+          #include <QtCore/qconfig.h>
+          #ifndef QT_VERSION
+          #  include <QtCore/qglobal.h>
+          #endif
+
+int
+main (void)
+{
+
+          #if QT_VERSION >= 0x050400
+          choke
+          #endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"
+then :
+  bitcoin_cv_need_acc_widget=yes
+else case e in #(
+  e) bitcoin_cv_need_acc_widget=no ;;
+esac
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+     ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_cv_need_acc_widget" >&5
+printf "%s\n" "$bitcoin_cv_need_acc_widget" >&6; }
+    if test "x$bitcoin_cv_need_acc_widget" = xyes; then
+
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt plugins: -lqtaccessiblewidgets" >&5
+printf %s "checking for static Qt plugins: -lqtaccessiblewidgets... " >&6; }
+  CHECK_STATIC_PLUGINS_TEMP_LIBS="$LIBS"
+  LIBS="-lqtaccessiblewidgets $QT_LIBS $LIBS"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+    #define QT_STATICPLUGIN
+    #include <QtPlugin>
+    Q_IMPORT_PLUGIN(AccessibleFactory)
+int
+main (void)
+{
+return 0;
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"
+then :
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }; QT_LIBS="-lqtaccessiblewidgets $QT_LIBS"
+else case e in #(
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; };
+  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
+    if test "x$bitcoin_enable_qt" != xno; then
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqtaccessiblewidgets; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: Could not resolve: -lqtaccessiblewidgets; ammocoin-qt frontend will not be built" >&2;}
+    fi
+    bitcoin_enable_qt=no
+    bitcoin_enable_qt_test=no
+  else
+    as_fn_error $? "Could not resolve: -lqtaccessiblewidgets" "$LINENO" 5
+  fi
+ ;;
+esac
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+  LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
+
+    fi
 
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt plugins: -lqminimal" >&5
 printf %s "checking for static Qt plugins: -lqminimal... " >&6; }
@@ -32857,8 +32367,8 @@ else case e in #(
 printf "%s\n" "no" >&6; };
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqminimal; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqminimal; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqminimal; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: Could not resolve: -lqminimal; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -32874,135 +32384,6 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam \
 
 
 printf "%s\n" "#define QT_QPA_PLATFORM_MINIMAL 1" >>confdefs.h
-
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt plugins: -lqsvg" >&5
-printf %s "checking for static Qt plugins: -lqsvg... " >&6; }
-  CHECK_STATIC_PLUGINS_TEMP_LIBS="$LIBS"
-  LIBS="-lqsvg $QT_LIBS $LIBS"
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-    #define QT_STATICPLUGIN
-    #include <QtPlugin>
-    Q_IMPORT_PLUGIN(QSvgPlugin)
-int
-main (void)
-{
-return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }; QT_LIBS="-lqsvg $QT_LIBS"
-else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; };
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqsvg; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqsvg; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "Could not resolve: -lqsvg" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-  LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
-
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt plugins: -lqgif" >&5
-printf %s "checking for static Qt plugins: -lqgif... " >&6; }
-  CHECK_STATIC_PLUGINS_TEMP_LIBS="$LIBS"
-  LIBS="-lqgif $QT_LIBS $LIBS"
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-    #define QT_STATICPLUGIN
-    #include <QtPlugin>
-    Q_IMPORT_PLUGIN(QGifPlugin)
-int
-main (void)
-{
-return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }; QT_LIBS="-lqgif $QT_LIBS"
-else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; };
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqgif; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqgif; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "Could not resolve: -lqgif" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-  LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
-
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt plugins: -lqsvgicon" >&5
-printf %s "checking for static Qt plugins: -lqsvgicon... " >&6; }
-  CHECK_STATIC_PLUGINS_TEMP_LIBS="$LIBS"
-  LIBS="-lqsvgicon $QT_LIBS $LIBS"
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-    #define QT_STATICPLUGIN
-    #include <QtPlugin>
-    Q_IMPORT_PLUGIN(QSvgIconPlugin)
-int
-main (void)
-{
-return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }; QT_LIBS="-lqsvgicon $QT_LIBS"
-else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; };
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqsvgicon; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqsvgicon; pivx-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "Could not resolve: -lqsvgicon" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-  LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
 
     if test "x$TARGET_OS" = xwindows; then
 
@@ -33033,8 +32414,8 @@ else case e in #(
 printf "%s\n" "no" >&6; };
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqwindows; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqwindows; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqwindows; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: Could not resolve: -lqwindows; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33080,8 +32461,8 @@ else case e in #(
 printf "%s\n" "no" >&6; };
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqxcb -lxcb-static; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqxcb -lxcb-static; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqxcb -lxcb-static; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: Could not resolve: -lqxcb -lxcb-static; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33169,8 +32550,8 @@ else case e in #(
 printf "%s\n" "no" >&6; };
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqcocoa; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqcocoa; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqcocoa; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: Could not resolve: -lqcocoa; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33415,8 +32796,8 @@ done
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: MOC not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: MOC not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: MOC not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: MOC not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33546,8 +32927,8 @@ done
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: UIC not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: UIC not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: UIC not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: UIC not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33677,8 +33058,8 @@ done
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: RCC not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: RCC not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: RCC not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: RCC not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33808,8 +33189,8 @@ done
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: LRELEASE not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: LRELEASE not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: LRELEASE not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: LRELEASE not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -33939,8 +33320,8 @@ done
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: LUPDATE not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: LUPDATE not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: LUPDATE not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: LUPDATE not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -34073,6 +33454,7 @@ fi
 
   esac
 
+
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to build AMMOcoin Core GUI" >&5
 printf %s "checking whether to build AMMOcoin Core GUI... " >&6; }
 
@@ -34092,8 +33474,8 @@ printf %s "checking whether to build AMMOcoin Core GUI... " >&6; }
       as_fn_error $? "libQtDBus not found. Install libQtDBus or remove --with-qtdbus." "$LINENO" 5
     fi
     if test "x$LUPDATE" = x; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lupdate is required to update Qt translations" >&5
-printf "%s\n" "$as_me: WARNING: lupdate is required to update Qt translations" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: lupdate is required to update qt translations" >&5
+printf "%s\n" "$as_me: WARNING: lupdate is required to update qt translations" >&2;}
     fi
 
   else
@@ -34105,8 +33487,6 @@ printf "%s\n" "$as_me: WARNING: lupdate is required to update Qt translations" >
 
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $bitcoin_enable_qt (Qt5)" >&5
 printf "%s\n" "$bitcoin_enable_qt (Qt5)" >&6; }
-
-
 
 
 
@@ -34571,7 +33951,7 @@ printf %s "checking for boostlib >= $boost_lib_version_req... " >&6; }
                 fi
         done
     elif test "$cross_compiling" != yes; then
-        for ac_boost_path_tmp in /usr /usr/local /opt /opt/local /opt/homebrew ; do
+        for ac_boost_path_tmp in /usr /usr/local /opt /opt/local ; do
             if test -d "$ac_boost_path_tmp/include/boost" && test -r "$ac_boost_path_tmp/include/boost"; then
                 for libsubdir in $libsubdirs ; do
                     if ls "$ac_boost_path_tmp/$libsubdir/libboost_"* >/dev/null 2>&1 ; then break; fi
@@ -34665,7 +34045,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
             fi
         else
             if test "$cross_compiling" != yes; then
-                for ac_boost_path in /usr /usr/local /opt /opt/local /opt/homebrew ; do
+                for ac_boost_path in /usr /usr/local /opt /opt/local ; do
                     if test -d "$ac_boost_path" && test -r "$ac_boost_path"; then
                         for i in `ls -d $ac_boost_path/include/boost-* 2>/dev/null`; do
                             _version_tmp=`echo $i | sed "s#$ac_boost_path##" | sed 's/\/include\/boost-//' | sed 's/_/./'`
@@ -36184,8 +35564,8 @@ fi
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -36199,8 +35579,8 @@ printf "%s\n" "no" >&6; }
 
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -36894,8 +36274,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -36922,8 +36302,8 @@ else case e in #(
   e)
   if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
     if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: libqrencode not found; pivx-qt frontend will not be built" >&2;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&5
+printf "%s\n" "$as_me: WARNING: libqrencode not found; ammocoin-qt frontend will not be built" >&2;}
     fi
     bitcoin_enable_qt=no
     bitcoin_enable_qt_test=no
@@ -37059,6 +36439,9 @@ then :
 
       has_gmp=yes;
       LIBS="$LIBS -lgmp";
+
+printf "%s\n" "#define HAVE_LIBGMP 1" >>confdefs.h
+
 
 fi
 

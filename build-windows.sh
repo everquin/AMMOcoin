@@ -7,8 +7,9 @@ set -e  # Exit on any error
 echo "🏢 AMMOcoin v1.1.0 Windows x64 Build"
 echo "====================================="
 
-# Navigate to project root
-cd "/Volumes/CRUCIAL_2TB/  _GITHUB/AMMOcoin"
+# Navigate to project root (use script's directory)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 
 # Check if source directories exist
 if [ ! -d "ammocoin-source" ] || [ ! -d "ammocoin-apps-from-ammocoin" ]; then

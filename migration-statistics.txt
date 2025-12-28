@@ -1,0 +1,19 @@
+======================================================================
+AMMOcoin v1.1.0 Migration Fund Statistics
+======================================================================
+
+Top Holders (in genesis):
+  Addresses: 61
+  Supply: 218,707,052.19975480 AMMO
+  Percentage: 94.11%
+
+Migration Fund (claim required):
+  Addresses: 10,019
+  Supply: 13,690,696.25046043 AMMO
+  Percentage: 5.89%
+
+Migration Fund Distribution:
+  Largest claim: 7,601.00000000 AMMO
+  Median claim: 1,400.00000000 AMMO
+  Smallest claim: 0.01245611 AMMO
+  Average claim: 1,366.47332573 AMMO

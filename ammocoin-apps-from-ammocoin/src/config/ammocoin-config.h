@@ -39,25 +39,25 @@
 /* #undef ENABLE_SSE41 */
 
 /* Define to 1 to enable wallet functions */
-/* #undef ENABLE_WALLET */
+#define ENABLE_WALLET 1
 
 /* Define to 1 to enable ZMQ functions */
 #define ENABLE_ZMQ 1
 
 /* define if the Boost library is available */
-#define HAVE_BOOST /**/
+/* #undef HAVE_BOOST */
 
 /* define if the Boost::Chrono library is available */
-#define HAVE_BOOST_CHRONO /**/
+/* #undef HAVE_BOOST_CHRONO */
 
 /* define if the Boost::Filesystem library is available */
-#define HAVE_BOOST_FILESYSTEM /**/
+/* #undef HAVE_BOOST_FILESYSTEM */
 
 /* define if the Boost::System library is available */
-#define HAVE_BOOST_SYSTEM /**/
+/* #undef HAVE_BOOST_SYSTEM */
 
 /* define if the Boost::Thread library is available */
-#define HAVE_BOOST_THREAD /**/
+/* #undef HAVE_BOOST_THREAD */
 
 /* define if the Boost::Unit_Test_Framework library is available */
 /* #undef HAVE_BOOST_UNIT_TEST_FRAMEWORK */
@@ -208,6 +208,9 @@
 
 /* Define to 1 if you have the 'gdi32' library (-lgdi32). */
 /* #undef HAVE_LIBGDI32 */
+
+/* Define this symbol if libgmp is installed */
+#define HAVE_LIBGMP 1
 
 /* Define to 1 if you have the 'imm32' library (-limm32). */
 /* #undef HAVE_LIBIMM32 */
@@ -384,19 +387,19 @@
    your system. */
 /* #undef PTHREAD_CREATE_JOINABLE */
 
-/* Define this symbol if the Qt platform is Cocoa */
+/* Define this symbol if the qt platform is cocoa */
 /* #undef QT_QPA_PLATFORM_COCOA */
 
-/* Define this symbol if the minimal Qt platform exists */
+/* Define this symbol if the minimal qt platform exists */
 /* #undef QT_QPA_PLATFORM_MINIMAL */
 
-/* Define this symbol if the Qt platform is Windows */
+/* Define this symbol if the qt platform is windows */
 /* #undef QT_QPA_PLATFORM_WINDOWS */
 
-/* Define this symbol if the Qt platform is XCB */
+/* Define this symbol if the qt platform is xcb */
 /* #undef QT_QPA_PLATFORM_XCB */
 
-/* Define this symbol if Qt plugins are static */
+/* Define this symbol if qt plugins are static */
 /* #undef QT_STATICPLUGIN */
 
 /* Define to 1 if all of the C89 standard headers exist (not just the ones

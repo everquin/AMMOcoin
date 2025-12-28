@@ -1,2 +1,60 @@
 linux-binaries-v1.1.0/
 *.log
+
+# Build artifacts
+*.o
+*.lo
+*.la
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+Makefile
+Makefile.in
+.deps/
+.dirstamp
+.libs/
+autom4te.cache/
+build-aux/
+config.status
+configure
+libtool
+aclocal.m4
+
+# macOS
+.DS_Store
+._*
+*.app/
+
+# Compiled binaries (keep in releases/)
+ammocoin-apps-from-ammocoin/src/ammocoind
+ammocoin-apps-from-ammocoin/src/ammocoin-cli
+ammocoin-apps-from-ammocoin/src/ammocoin-tx
+
+# Build directories
+build/
+ammocoin-apps-from-ammocoin/depends/built/
+ammocoin-apps-from-ammocoin/depends/work/
+ammocoin-apps-from-ammocoin/depends/sources/
+ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/
+
+# Backup files
+*.backup
+*.backup.*
+*.broken
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Distribution packages (keep in releases/ with tracking)
+*.dmg
+*.tar.gz
+*.zip
+AMMOcoin.app/
+
+# Blockchain data directories
+.ammocoin/

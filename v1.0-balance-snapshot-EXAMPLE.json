@@ -1,0 +1,17 @@
+{
+  "snapshot_info": {
+    "timestamp": "2025-12-01T12:00:00",
+    "block_height": 450000,
+    "block_hash": "0x000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845",
+    "network": "mainnet",
+    "total_addresses": 5,
+    "total_supply": "2000000.00000000"
+  },
+  "balances": {
+    "A1234567890abcdefghijklmnopqrstuvwxy": "800000.00000000",
+    "A2bcdefghijklmnopqrstuvwxyz123456789": "600000.00000000",
+    "A3defghijklmnopqrstuvwxyz123456789ab": "350000.00000000",
+    "A4fghijklmnopqrstuvwxyz123456789abcd": "150000.00000000",
+    "A5hijklmnopqrstuvwxyz123456789abcdef": "100000.00000000"
+  }
+}
