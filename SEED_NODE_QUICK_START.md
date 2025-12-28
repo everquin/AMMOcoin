@@ -6,6 +6,22 @@
 
 ---
 
+## ⚠️ CRITICAL: Existing v1.0 Node Operators
+
+**If you have an existing AMMOcoin v1.0 installation with wallet balances:**
+
+🔴 **STOP! Read this first:** `V1.0_TO_V1.1.0_NODE_MIGRATION.md`
+
+v1.1.0 is a **completely new blockchain**. Your v1.0 wallet contains private keys needed to claim v1.1.0 balances. The automated setup script will:
+- ✅ Detect existing v1.0 installation
+- ✅ Automatically backup v1.0 wallet and data
+- ✅ Create separate v1.1.0 data directory
+- ✅ Preserve v1.0 data untouched
+
+**For fresh installs (no existing v1.0):** Continue below.
+
+---
+
 ## Method 1: Automated Setup (Recommended)
 
 ### On your Vultr Ubuntu VM:
@@ -60,6 +76,8 @@ cd db-4.8.30.NC/build_unix
 make -j$(nproc)
 sudo make install
 ```
+
+**Note:** If you encounter `__atomic_compare_exchange` errors on modern Ubuntu with GCC 9+, you need to apply the atomic.h patch. See `V1.0_TO_V1.1.0_NODE_MIGRATION.md` for details. The automated setup script (Method 1) includes this patch automatically.
 
 ### Step 4: Clone Repository
 ```bash

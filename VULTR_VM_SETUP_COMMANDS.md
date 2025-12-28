@@ -4,6 +4,25 @@
 
 ---
 
+## ⚠️ CRITICAL: Existing v1.0 Installations
+
+**If this VM has AMMOcoin v1.0 installed with wallet balances:**
+
+🔴 **DO NOT PROCEED!** Read `V1.0_TO_V1.1.0_NODE_MIGRATION.md` first.
+
+Use the automated migration script instead:
+```bash
+git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ~/ammocoin
+cd ~/ammocoin
+sudo bash scripts/setup-seed-node.sh
+```
+
+The automated script will safely backup v1.0 data and install v1.1.0 separately.
+
+**For fresh installations (no v1.0):** Continue below.
+
+---
+
 ## Step 1: Update System (2 minutes)
 
 ```bash
@@ -37,6 +56,22 @@ make -j$(nproc)
 sudo make install
 cd ~
 ```
+
+**⚠️ Important:** On Ubuntu 20.04+ with GCC 9+, you may encounter:
+```
+error: '__atomic_compare_exchange' was not declared in this scope
+```
+
+**Fix:** Apply the atomic.h patch before `make`:
+```bash
+cd /tmp/db-4.8.30.NC
+sed -i 's/__atomic_compare_exchange((p), (o), (n))/__atomic_compare_exchange_db((p), (o), (n))/' dbinc/atomic.h
+cd build_unix
+make -j$(nproc)
+sudo make install
+```
+
+See `V1.0_TO_V1.1.0_NODE_MIGRATION.md` for detailed explanation. This patch is standard for modern GCC compatibility.
 
 ---
 
