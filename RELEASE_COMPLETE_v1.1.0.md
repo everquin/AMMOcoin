@@ -187,7 +187,7 @@ sha256sum -c CHECKSUMS-Linux.txt --ignore-missing
 
 ### Genesis Block (Path A):
 ```
-0x0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58
+0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
 ```
 
 ### Network Parameters:

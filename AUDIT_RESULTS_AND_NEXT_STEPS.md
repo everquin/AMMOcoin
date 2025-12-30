@@ -67,7 +67,7 @@ ammocoin-apps-from-ammocoin/src/chainparams.cpp
 #### ❌ INCORRECT (Needs Update or Deletion)
 ```
 ammocoin-source/src/chainparams.cpp
-  Genesis: 000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845 ❌
+  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ❌
   Status: OLD v1.0 genesis
   Action: UPDATE or DELETE entire ammocoin-source directory (appears to be backup)
 ```
@@ -77,12 +77,12 @@ ammocoin-source/src/chainparams.cpp
 #### ❌ INVALID (Must Delete and Rebuild)
 ```
 releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-  Genesis: 000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845 ❌
+  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ❌
   Status: Contains OLD v1.0 genesis
   Action: DELETE immediately, REBUILD from corrected source
 
 releases/AMMOcoin-v1.1.0-Linux-x86_64.zip
-  Genesis: 000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845 ❌
+  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ❌
   Status: Contains OLD v1.0 genesis
   Action: DELETE immediately, REBUILD from corrected source
 
@@ -165,8 +165,8 @@ Create automated search-and-replace script:
 #!/bin/bash
 # update-all-docs.sh
 
-OLD_V10="000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845"
-OLD_BROKEN="0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58"
+OLD_V10="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+OLD_BROKEN="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
 NEW_CORRECT="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
 
 # Update all .md files

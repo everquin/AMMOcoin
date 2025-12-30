@@ -153,7 +153,7 @@ echo ""
 echo "Genesis Block: $GENESIS"
 
 # Check if it matches Path A
-if [ "$GENESIS" = "0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58" ]; then
+if [ "$GENESIS" = "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434" ]; then
     echo "✅ CORRECT GENESIS BLOCK (Path A)"
 else
     echo "❌ WRONG GENESIS BLOCK!"

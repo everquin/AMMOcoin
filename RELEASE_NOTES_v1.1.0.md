@@ -11,7 +11,7 @@
 **This is a completely new blockchain, NOT a fork of v1.0!**
 
 - **v1.0 Genesis Block:** `0x000001c4271a6e733011fbb7bde9f727b67e294413e89e89c525e169bda50795`
-- **v1.1.0 Genesis Block:** `0x0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58`
+- **v1.1.0 Genesis Block:** `0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434`
 
 **Your v1.0 wallet is required to claim v1.1.0 balances.**
 
@@ -202,7 +202,7 @@ ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getinfo
 
 # Verify correct genesis block
 ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getblockhash 0
-# Should show: 0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58
+# Should show: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
 ```
 
 ---
@@ -317,7 +317,7 @@ See detailed guides:
 - **Staking Minimum:** Varies by tier
 - **P2P Port:** 37020
 - **RPC Port:** 8332
-- **Genesis Block:** `0x0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58`
+- **Genesis Block:** `0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434`
 - **Genesis Nonce:** 1299334
 
 ### Privacy Features:

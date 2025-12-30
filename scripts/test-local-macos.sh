@@ -186,7 +186,7 @@ fi
 echo "Verifying genesis block..."
 GENESIS=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getblockhash 0 2>/dev/null || echo "error")
 
-EXPECTED_GENESIS="0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58"
+EXPECTED_GENESIS="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
 
 if [ "$GENESIS" = "$EXPECTED_GENESIS" ]; then
     echo -e "${GREEN}✓ CORRECT GENESIS BLOCK (Path A)${NC}"

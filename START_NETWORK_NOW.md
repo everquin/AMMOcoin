@@ -108,7 +108,7 @@ ammocoin-cli -datadir=/root/.ammocoin-v1.1.0 getinfo
 
 # Verify genesis block
 ammocoin-cli -datadir=/root/.ammocoin-v1.1.0 getblockhash 0
-# Should be: 0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58
+# Should be: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
 ```
 
 ### Step 5: Generate Initial Supply
@@ -249,7 +249,7 @@ pkill -f ammocoind
 
 ```bash
 # Verify binary
-strings /usr/local/bin/ammocoind | grep "0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58"
+strings /usr/local/bin/ammocoind | grep "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
 
 # If wrong, reinstall binaries from GitHub Release
 ```
