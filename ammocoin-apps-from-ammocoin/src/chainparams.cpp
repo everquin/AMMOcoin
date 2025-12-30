@@ -11,6 +11,7 @@
 #include "consensus/merkle.h"
 #include "tinyformat.h"
 #include "utilstrencodings.h"
+#include "arith_uint256.h"
 
 #include <assert.h>
 
@@ -156,7 +157,7 @@ static Consensus::LLMQParams llmq400_85 = {
  * + Contains no strange transactions
  */
 static MapCheckpoints mapCheckpoints = {
-    { 0, uint256S("000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845")}, //!< AMMOcoin genesis block
+    { 0, uint256S("00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434")}, //!< AMMOcoin v1.1.0 genesis block
 };
 
 static const CCheckpointData data = {
@@ -192,13 +193,10 @@ public:
     {
         strNetworkID = "main";
 
-        genesis = CreateGenesisBlock(1623089845, 1299334, 0x1e0ffff0, 1, 1000 * COIN);
-        consensus.hashGenesisBlock = uint256S("0x0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58");
-
-        // Genesis block verification using original AMMOcoin private key
-        assert(consensus.hashGenesisBlock == uint256S("0x0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58"));
-        // Temporarily comment out merkle root assertion to debug
-        // assert(genesis.hashMerkleRoot == uint256S("0x5a81ca998866f10edd5a0c5aff4380f8272dbf56d68fa150d461861fb139faba"));
+        genesis = CreateGenesisBlock(1623089845, 511628, 0x1e0ffff0, 1, 1000 * COIN);
+        consensus.hashGenesisBlock = genesis.GetHash();
+        assert(consensus.hashGenesisBlock == uint256S("0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"));
+        assert(genesis.hashMerkleRoot == uint256S("0xee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec"));
 
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
