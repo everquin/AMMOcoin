@@ -1,3 +1,0 @@
-usr/local/bin/ammocoind usr/bin
-usr/local/bin/ammocoin-cli usr/bin
-debian/examples/ammocoin.conf etc/ammocoin
