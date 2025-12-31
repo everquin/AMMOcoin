@@ -75,7 +75,7 @@ QDialog#AboutDialog QLabel#label_2 { /* Margin for About Pivx text */
 ```cpp
 - Network ID: "main"
 - Default Port: 37020
-- Genesis Block Hash: 0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+- Genesis Block Hash: 0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 - Genesis Timestamp: 1623089845 (June 7, 2021)
 - Genesis Message: "AMMOcoin Genesis Block - June 7 2021 - New Era of Privacy"
 - Masternode Collateral: 10,000 AMMO

@@ -227,7 +227,7 @@ fi
 echo "Verifying genesis block..."
 GENESIS=$(ammocoin-cli -datadir="$DATA_DIR" getblockhash 0 2>/dev/null || echo "error")
 
-EXPECTED_GENESIS="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+EXPECTED_GENESIS="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
 
 if [ "$GENESIS" = "$EXPECTED_GENESIS" ]; then
     success "Correct genesis block (Path A)"

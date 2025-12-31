@@ -1,0 +1,165 @@
+========================================
+INSTRUCTIONS FOR CLAUDE CODE ON LINUX VM
+seed1.ammocoin.org
+========================================
+
+OBJECTIVE: Build clean AMMOcoin v1.1.0 binaries with CORRECT genesis block
+
+CRITICAL: This node will be the first peer - MUST have correct genesis!
+Expected genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+
+========================================
+
+STEP 1: Download Complete Instructions
+
+SSH to seed1.ammocoin.org and run:
+
+cd /tmp
+curl -L -O https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/main/SEED1_AMMOCOIN_ORG_REBUILD.md
+
+# View the instructions
+cat SEED1_AMMOCOIN_ORG_REBUILD.md | less
+
+========================================
+
+STEP 2: Follow Instructions Exactly
+
+The downloaded file (SEED1_AMMOCOIN_ORG_REBUILD.md) contains:
+
+Phase 1: Pre-Build Preparation
+- Stop old node
+- Backup old installation
+- Clean system
+
+Phase 2: Install Build Dependencies
+- Update system
+- Install build tools
+- Install Berkeley DB 4.8
+- Install/Update Rust
+
+Phase 3: Clone and Build from Source
+- Clone repository
+- Checkout v1.1.0-genesis-final tag
+- Run autogen.sh
+- Configure build
+- Make (15-30 minutes)
+
+Phase 4: CRITICAL - Genesis Verification (DO NOT SKIP!)
+- Static check: strings command
+- Check for old genesis
+- Runtime test
+
+Phase 5: Install Verified Binaries
+- Strip debug symbols
+- Install to /usr/local/bin
+- Final verification
+
+Phase 6: Configure Production Node
+- Create fresh data directory
+- Create configuration file
+- Set secure RPC password
+
+Phase 7: Start Production Node
+- Open firewall
+- Start daemon
+- Verify genesis (CRITICAL!)
+- Check blockchain info
+
+Phase 8: Ongoing Monitoring
+- Create monitoring script
+- Set up systemd service
+
+Phase 9: Final Verification Checklist
+- Complete checklist before announcing live
+
+========================================
+
+STEP 3: Critical Verification Points
+
+Throughout the process, MUST verify:
+
+1. Building from correct tag:
+   git describe --tags
+   # MUST show: v1.1.0-genesis-final
+
+2. Genesis in binary:
+   strings src/ammocoind | grep "00000f14"
+   # MUST return matches
+
+3. No old genesis:
+   strings src/ammocoind | grep -E "000001c4|0000075a"
+   # MUST return NOTHING
+
+4. Runtime verification:
+   ammocoin-cli getblockhash 0
+   # MUST return: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+
+IF ANY VERIFICATION FAILS: DO NOT PROCEED!
+
+========================================
+
+ESTIMATED TIME:
+- Dependency installation: 10-15 minutes
+- Build compilation: 15-30 minutes
+- Configuration & testing: 10-15 minutes
+Total: 45-90 minutes
+
+========================================
+
+KEY COMMANDS SUMMARY:
+
+# Clone repo
+git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
+cd AMMOcoin-v1.1.0
+git checkout v1.1.0-genesis-final
+
+# Build
+cd ammocoin-apps-from-ammocoin
+./autogen.sh
+./configure --prefix=/usr/local --disable-tests --disable-bench --without-gui --with-incompatible-bdb
+make -j$(nproc)
+
+# Verify genesis (CRITICAL!)
+strings src/ammocoind | grep "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+# MUST return matches!
+
+# Install
+sudo cp src/ammocoind src/ammocoin-cli src/ammocoin-tx /usr/local/bin/
+sudo chmod +x /usr/local/bin/ammocoin*
+
+# Configure
+mkdir -p ~/.ammocoin
+# Create ammocoin.conf (see full instructions)
+
+# Start
+ammocoind -daemon
+
+# Verify genesis at runtime
+ammocoin-cli getblockhash 0
+# MUST return: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+
+========================================
+
+WHAT TO TELL CLAUDE CODE:
+
+"Please follow the instructions in SEED1_AMMOCOIN_ORG_REBUILD.md to:
+1. Build clean AMMOcoin v1.1.0 binaries from tag v1.1.0-genesis-final
+2. Verify genesis block is correct (00000f14...) at multiple checkpoints
+3. Install and configure the production node
+4. Verify everything before starting
+
+This is the first peer node - genesis verification is CRITICAL!
+Do not skip any verification steps."
+
+========================================
+
+REPOSITORY: https://github.com/everquin/AMMOcoin-v1.1.0
+TAG: v1.1.0-genesis-final
+AUTHORITY: V1.1.0_GENESIS_BLOCK_AUTHORITY.md
+
+CORRECT GENESIS:
+00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+
+IF THIS HASH DOESN'T MATCH AT ANY POINT: STOP AND INVESTIGATE!
+
+========================================

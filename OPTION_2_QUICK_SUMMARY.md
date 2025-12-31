@@ -74,7 +74,7 @@ Why? Because you need 232M AMMO to distribute. Mining would take months/years. Y
 
 **Current v1.1.0:**
 - ❌ GitHub release v1.1.0-genesis-final
-- ❌ Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+- ❌ Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 - ❌ macOS binaries with old genesis
 - ❌ All current documentation with 00000f14...
 

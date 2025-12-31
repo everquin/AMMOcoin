@@ -36,7 +36,7 @@ The AMMOcoin v1.1.0 repository has been comprehensively audited for code quality
 #### Current Genesis Block Configuration
 ```cpp
 genesis = CreateGenesisBlock(1623089845, 1299334, 0x1e0ffff0, 1, 1000 * COIN);
-consensus.hashGenesisBlock = uint256S("0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434");
+consensus.hashGenesisBlock = uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329");
 ```
 
 **Status:** ✅ Correct for Path A deployment strategy

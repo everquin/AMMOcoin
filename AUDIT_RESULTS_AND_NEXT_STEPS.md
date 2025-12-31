@@ -27,7 +27,7 @@ The codebase contains **THREE DIFFERENT GENESIS BLOCKS** across various files:
 
 1. **Mined Correct Genesis Block**
    - nNonce: 511628
-   - Hash: `00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434`
+   - Hash: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
    - Uses paper wallet public key from: `Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs`
 
 2. **Updated Primary Source Code**
@@ -58,7 +58,7 @@ The codebase contains **THREE DIFFERENT GENESIS BLOCKS** across various files:
 #### ✅ CORRECT (Ready to Build)
 ```
 ammocoin-apps-from-ammocoin/src/chainparams.cpp
-  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ✅
+  Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ✅
   nNonce: 511628 ✅
   Public Key: 049f0878...752 ✅ (Paper wallet)
   Status: PRODUCTION READY
@@ -67,7 +67,7 @@ ammocoin-apps-from-ammocoin/src/chainparams.cpp
 #### ❌ INCORRECT (Needs Update or Deletion)
 ```
 ammocoin-source/src/chainparams.cpp
-  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ❌
+  Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ❌
   Status: OLD v1.0 genesis
   Action: UPDATE or DELETE entire ammocoin-source directory (appears to be backup)
 ```
@@ -77,12 +77,12 @@ ammocoin-source/src/chainparams.cpp
 #### ❌ INVALID (Must Delete and Rebuild)
 ```
 releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ❌
+  Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ❌
   Status: Contains OLD v1.0 genesis
   Action: DELETE immediately, REBUILD from corrected source
 
 releases/AMMOcoin-v1.1.0-Linux-x86_64.zip
-  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ❌
+  Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ❌
   Status: Contains OLD v1.0 genesis
   Action: DELETE immediately, REBUILD from corrected source
 
@@ -95,12 +95,12 @@ releases/CHECKSUMS-Linux.txt
 ```
 ammocoin-apps-from-ammocoin/src/ammocoind (macOS ARM64)
   Size: 11M
-  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ✅
+  Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ✅
   Status: TESTED AND WORKING
 
 ammocoin-apps-from-ammocoin/src/ammocoin-cli (macOS ARM64)
   Size: 382K
-  Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434 ✅
+  Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ✅
   Status: TESTED AND WORKING
 ```
 
@@ -139,7 +139,7 @@ git commit -m "AUDIT: Add genesis authority docs and delete obsolete files
 - Deleted obsolete genesis files that contained incorrect information
 - Updated ammocoin-apps-from-ammocoin/src/chainparams.cpp with correct genesis
 
-CORRECT v1.1.0 Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+CORRECT v1.1.0 Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 nNonce: 511628
 Paper Wallet Key: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs"
 ```
@@ -165,9 +165,9 @@ Create automated search-and-replace script:
 #!/bin/bash
 # update-all-docs.sh
 
-OLD_V10="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
-OLD_BROKEN="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
-NEW_CORRECT="00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+OLD_V10="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+OLD_BROKEN="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+NEW_CORRECT="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
 
 # Update all .md files
 find . -name "*.md" -type f -exec sed -i '' "s/$OLD_V10/$NEW_CORRECT/g" {} \;
@@ -190,7 +190,7 @@ cd ammocoin-apps-from-ammocoin
 make -j$(nproc)
 
 # Verify genesis BEFORE distribution
-strings src/ammocoind | grep "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+strings src/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
 # Should return matches!
 
 # Package
@@ -207,7 +207,7 @@ sha256sum AMMOcoin-v1.1.0-Linux-x86_64.* > CHECKSUMS-Linux.txt
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin
 
 # Verify genesis
-strings src/ammocoind | grep "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+strings src/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
 # Should return matches!
 
 # Create release package
@@ -233,7 +233,7 @@ git add -A
 git commit -m "RELEASE: v1.1.0 with correct genesis block
 
 All platforms now use:
-Genesis: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 nNonce: 511628
 Paper Wallet: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
 
@@ -267,7 +267,7 @@ cp ammocoind ammocoin-cli ammocoin-tx /usr/local/bin/
 chmod +x /usr/local/bin/ammocoin*
 
 # Verify genesis
-strings /usr/local/bin/ammocoind | grep "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+strings /usr/local/bin/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
 
 # Start fresh
 ammocoind -daemon
@@ -275,7 +275,7 @@ ammocoind -daemon
 # Verify
 sleep 10
 ammocoin-cli getblockhash 0
-# Expected: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+# Expected: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 
 ammocoin-cli getblockchaininfo
 # Expected: "blocks": 0, "bestblockhash": "00000f14..."

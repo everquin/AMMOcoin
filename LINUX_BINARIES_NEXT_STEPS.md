@@ -134,7 +134,7 @@ EOF
 /opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-cli \
   -datadir=/root/.ammocoin-v1.1.0 \
   getblockhash 0
-# Should show: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+# Should show: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 ```
 
 ---

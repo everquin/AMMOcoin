@@ -195,7 +195,7 @@ fa3ff53 CRITICAL: Remove invalid Linux binaries
 **SINGLE SOURCE OF TRUTH:**
 
 ```
-Hash:        00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+Hash:        000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 Merkle Root: ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
 nNonce:      511628
 nTime:       1623089845 (June 7, 2021 - 23:04:05 UTC)
@@ -430,7 +430,7 @@ This execution successfully established a **single source of truth** for AMMOcoi
 
 **Repository:** https://github.com/everquin/AMMOcoin-v1.1.0
 **Build Tag:** v1.1.0-genesis-final
-**Genesis Hash:** 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+**Genesis Hash:** 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 
 **For questions or issues, review:**
 1. V1.1.0_GENESIS_BLOCK_AUTHORITY.md

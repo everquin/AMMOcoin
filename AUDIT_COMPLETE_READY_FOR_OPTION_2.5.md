@@ -39,7 +39,7 @@ nBits:    0x1e0ffff0
 nVersion: 1
 Reward:   1000 * COIN
 
-Genesis Hash:  00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+Genesis Hash:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 Merkle Root:   ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
 
 PubKey: 049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
@@ -71,13 +71,13 @@ Address: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
 ### ✅ Authority Document (V1.1.0_GENESIS_BLOCK_AUTHORITY.md)
 
 **Current Correct Genesis:**
-- ✅ Documented: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+- ✅ Documented: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 - ✅ All parameters match source code
 - ✅ Paper wallet address documented correctly
 
 **Deprecated Genesis (Correctly Documented):**
-- ✅ OLD v1.0: 000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845
-- ✅ BROKEN v1.1.0: 0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58
+- ✅ OLD v1.0: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+- ✅ BROKEN v1.1.0: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 
 **Status:** ✅ FIXED - No longer contains backwards information
 
@@ -127,11 +127,11 @@ Replaced with correct deprecated hashes:
 
 **Verification:**
 ```bash
-grep "000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
-# Returns: Hash: 000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845
+grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
+# Returns: Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 
-grep "0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
-# Returns: Hash: 0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58
+grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
+# Returns: Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 ```
 
 **Result:** ✅ Fixed and committed

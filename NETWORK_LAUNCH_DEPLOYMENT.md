@@ -220,7 +220,7 @@ ammocoin-cli -datadir=/root/.ammocoin-v1.1.0 getblockchaininfo
 
 # Verify genesis block (CRITICAL!)
 ammocoin-cli -datadir=/root/.ammocoin-v1.1.0 getblockhash 0
-# Should show: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+# Should show: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 ```
 
 **Expected Output:**
@@ -263,7 +263,7 @@ Using data directory /root/.ammocoin-v1.1.0
 Using config file /root/.ammocoin-v1.1.0/ammocoin.conf
 init message: Loading block index...
 init message: Verifying blocks...
-genesis block hash: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+genesis block hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 init message: Loading wallet...
 init message: Activating best chain...
 init message: Done loading
@@ -388,7 +388,7 @@ ammocoind --version | grep "v1.1.0"
 
 # 2. Verify correct genesis block
 GENESIS=$(ammocoin-cli -datadir=/root/.ammocoin-v1.1.0 getblockhash 0)
-if [ "$GENESIS" = "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434" ]; then
+if [ "$GENESIS" = "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" ]; then
     echo "✓ Correct genesis block (Path A)"
 else
     echo "✗ ERROR: Wrong genesis block!"
@@ -561,7 +561,7 @@ ammocoin-cli -datadir=/root/.ammocoin-v1.1.0 stop
 ammocoind --version
 
 # Verify chainparams.cpp has correct genesis
-strings /usr/local/bin/ammocoind | grep "00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"
+strings /usr/local/bin/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
 
 # If wrong, redownload or recompile binaries
 ```

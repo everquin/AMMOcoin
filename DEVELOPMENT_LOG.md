@@ -9,7 +9,7 @@ Fix AMMOcoin v1.1.0 to connect to live mainnet by resolving genesis block hash m
 
 ## PROBLEM SUMMARY
 - **Issue**: AMMOcoin v1.1.0 daemon crashes with assertion failure when trying to connect to mainnet
-- **Error**: `Assertion failed: (consensus.hashGenesisBlock == uint256S("0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434")), function CMainParams, file chainparams.cpp, line 197`
+- **Error**: `Assertion failed: (consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329")), function CMainParams, file chainparams.cpp, line 197`
 - **Root Cause**: Genesis block computed hash doesn't match hardcoded expected hash
 - **Impact**: Cannot connect to live mainnet network
 
@@ -20,7 +20,7 @@ Fix AMMOcoin v1.1.0 to connect to live mainnet by resolving genesis block hash m
 ### ✅ Genesis Block Analysis (COMPLETED)
 - **Location**: `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/chainparams.cpp:195-197`
 - **Genesis Parameters**: `CreateGenesisBlock(1623089845, 22256134, 0x1e0ffff0, 1, 1000 * COIN)`
-- **Expected Hash**: `00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434`
+- **Expected Hash**: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
 - **Expected Merkle**: `c8b9e6af9becf659d6edb2aa8e261d036e95fc336ca4bd419cccf344fadb7fd4`
 
 ### ✅ Testnet Verification (WORKING)
@@ -177,7 +177,7 @@ Fix AMMOcoin v1.1.0 to connect to live mainnet by resolving genesis block hash m
 ### CRITICAL ISSUE RESOLVED ✅
 The primary genesis block assertion failure that prevented mainnet connectivity has been **COMPLETELY FIXED**:
 
-- ❌ **Before**: `Assertion failed: (consensus.hashGenesisBlock == uint256S("0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"))`
+- ❌ **Before**: `Assertion failed: (consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"))`
 - ✅ **After**: Daemon starts successfully, no assertion failures
 
 ### DELIVERABLES COMPLETED ✅

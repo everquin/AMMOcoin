@@ -27,7 +27,7 @@ genesis = CreateGenesisBlock(1623089845, 511628, 0x1e0ffff0, 1, 1000 * COIN);
 
 **Current Assertions (Lines 198-199):**
 ```cpp
-assert(consensus.hashGenesisBlock == uint256S("0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434"));
+assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
 assert(genesis.hashMerkleRoot == uint256S("0xee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec"));
 ```
 
@@ -42,7 +42,7 @@ const CScript genesisOutputScript = CScript() << ParseHex("049f0878e7c014c51fcb3
 - [ ] Confirm nBits: 0x1e0ffff0
 - [ ] Confirm nVersion: 1
 - [ ] Confirm reward: 1000 * COIN
-- [ ] Confirm genesis hash: 00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+- [ ] Confirm genesis hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 - [ ] Confirm merkle root: ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
 - [ ] Confirm pubkey matches paper wallet
 - [ ] Confirm timestamp message is correct
@@ -57,7 +57,7 @@ const CScript genesisOutputScript = CScript() << ParseHex("049f0878e7c014c51fcb3
 
 **Current State (Line 160):**
 ```cpp
-{ 0, uint256S("00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434")}, //!< AMMOcoin v1.1.0 genesis block
+{ 0, uint256S("000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329")}, //!< AMMOcoin v1.1.0 genesis block
 ```
 
 **Verification Required:**
@@ -94,8 +94,8 @@ base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 151);       // WIF pr
 ### 1.4 Search for Old Genesis References in Source
 
 **Search Patterns:**
-- Old v1.0 genesis: `000001c42e69d7894876ecd725cd1b92d629c154dde2044a6e561f9d77fa2845`
-- Broken v1.1.0: `0000075a4b9573ee2b4401c0ae785fb451d8355c91b6ed7d7a3420fe590cad58`
+- Old v1.0 genesis: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+- Broken v1.1.0: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
 
 **Files to Check:**
 - [ ] ammocoin-apps-from-ammocoin/src/**/*.cpp
@@ -112,7 +112,7 @@ base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 151);       // WIF pr
 
 **Expected Content:**
 ```
-Hash:        00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434
+Hash:        000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 Merkle Root: ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
 nNonce:      511628
 nTime:       1623089845 (June 7, 2021)

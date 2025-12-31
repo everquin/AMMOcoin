@@ -221,7 +221,7 @@ CURRENT_COMMIT=$(git rev-parse --short HEAD)
 echo "Current commit: $CURRENT_COMMIT"
 
 # Check for v1.1.0 genesis block
-if grep -q "0x00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
+if grep -q "0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
     echo "✓ v1.1.0 genesis block confirmed (Path A)"
 else
     echo "⚠️  WARNING: Genesis block mismatch!"
