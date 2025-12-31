@@ -1,7 +1,7 @@
 # AMMOcoin v1.1.0 Distribution Process Guide
 
 **Purpose:** Team manual distribution of 250M AMMO premine to verified v1.0 users
-**Distribution Fund:** 250,000,000 AMMO at address Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+**Distribution Fund:** 250,000,000 AMMO at address AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 **Total to Distribute:** ~232,397,748 AMMO (based on v1.0 snapshot)
 **Buffer:** ~17,602,252 AMMO for adjustments/late claims
 
@@ -16,7 +16,7 @@ The v1.1.0 genesis block contains 250M AMMO in a single address controlled by th
 ## Prerequisites
 
 ### Required Access
-- ✅ Paper wallet private key for Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+- ✅ Paper wallet private key for AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 - ✅ Running v1.1.0 node with wallet
 - ✅ Running v1.0 node (for verification)
 - ✅ v1.0 snapshot data (balances at block 434,881)

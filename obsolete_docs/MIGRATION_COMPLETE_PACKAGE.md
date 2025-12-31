@@ -391,7 +391,7 @@ r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
 
 ## 💰 Migration Fund Details
 
-**Address:** `Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs`
+**Address:** `AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC`
 **Amount:** 13,690,696.25046043 AMMO
 **Covers:** 10,019 addresses
 **Expected Claims:** ~20-50 (out of 10,019)

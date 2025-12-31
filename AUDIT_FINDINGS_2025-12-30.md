@@ -26,7 +26,7 @@ Status: DEPRECATED
 
 ### DO NOT USE - Broken v1.1.0 Attempt (December 22-29, 2025)
 Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce: 1299334
+nNonce: 382647
 Status: INVALID
 ```
 
@@ -94,13 +94,13 @@ PURGE lines 93-105 and REPLACE with correct deprecated genesis hashes.
 
 **Verified Parameters (Line 196):**
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 511628, 0x1e0ffff0, 1, 1000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
 ```
 
 **Verified Assertions (Lines 198-199):**
 ```cpp
 assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-assert(genesis.hashMerkleRoot == uint256S("0xee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec"));
+assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
 ```
 
 **Verified Genesis Output Script (Line 59):**

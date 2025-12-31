@@ -17,11 +17,11 @@ Fix AMMOcoin v1.1.0 to connect to live mainnet by resolving genesis block hash m
 
 ## COMPLETED INVESTIGATIONS
 
-### ✅ Genesis Block Analysis (COMPLETED)
+### ✅ Genesis Block Analysis (COMPLETED - v1.1.0 Final)
 - **Location**: `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/chainparams.cpp:195-197`
-- **Genesis Parameters**: `CreateGenesisBlock(1623089845, 22256134, 0x1e0ffff0, 1, 1000 * COIN)`
+- **Genesis Parameters**: `CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN)`
 - **Expected Hash**: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
-- **Expected Merkle**: `c8b9e6af9becf659d6edb2aa8e261d036e95fc336ca4bd419cccf344fadb7fd4`
+- **Expected Merkle**: `47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e`
 
 ### ✅ Testnet Verification (WORKING)
 - **Status**: Testnet works correctly without assertion failures

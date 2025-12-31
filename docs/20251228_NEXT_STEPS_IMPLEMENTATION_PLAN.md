@@ -300,16 +300,16 @@ python3 distribute-to-top-holders.py
 ```bash
 # Send to migration fund address
 ./ammocoin-apps-from-ammocoin/src/ammocoin-cli sendtoaddress \
-  "Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs" \
+  "AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC" \
   13690696.25046043
 
 # Verify receipt
 ./ammocoin-apps-from-ammocoin/src/ammocoin-cli getreceivedbyaddress \
-  "Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs"
+  "AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC"
 
 # CRITICAL: Backup private key to secure location
 ./ammocoin-apps-from-ammocoin/src/ammocoin-cli dumpprivkey \
-  "Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs" > SECURE_BACKUP.key
+  "AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC" > SECURE_BACKUP.key
 chmod 400 SECURE_BACKUP.key
 # Move to encrypted external storage
 ```

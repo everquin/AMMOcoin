@@ -9,9 +9,9 @@
 ## CORRECT Genesis Block (MUST USE)
 ```
 Hash:    000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce:  511628
+nNonce:  382647
 nTime:   1623089845
-Merkle:  ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
+Merkle:  47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
 PubKey:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
 ```
 
@@ -29,7 +29,7 @@ Broken v1.1.0:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 1. `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
    - Status: UPDATED with correct genesis
    - Genesis hash: 00000f14...
-   - nNonce: 511628
+   - nNonce: 382647
    - Assertions: Correct
 
 ### ⏳ NEEDS UPDATE

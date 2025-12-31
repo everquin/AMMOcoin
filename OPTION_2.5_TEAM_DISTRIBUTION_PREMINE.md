@@ -65,10 +65,10 @@
 
 **Current genesis creation (lines ~145-155):**
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 511628, 0x1e0ffff0, 1, 1000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
 consensus.hashGenesisBlock = genesis.GetHash();
 assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-assert(genesis.hashMerkleRoot == uint256S("0xee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec"));
+assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
 ```
 
 **New genesis creation:**
@@ -85,7 +85,7 @@ assert(genesis.hashMerkleRoot == uint256S("0xNEW_MERKLE_ROOT"));
 ### Genesis Output Address Options
 
 **Option A: Use paper wallet address**
-- Address: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+- Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 - PubKey already in code: 049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
 - ✅ No code change needed (just increase amount)
 - ✅ You already have private key in paper wallet PDF
@@ -151,7 +151,7 @@ LogPrintf("\n=== GENESIS BLOCK FOUND ===\n");
 LogPrintf("nNonce: %u\n", genesis.nNonce);
 LogPrintf("Hash: %s\n", genesis.GetHash().ToString());
 LogPrintf("Merkle: %s\n", genesis.hashMerkleRoot.ToString());
-LogPrintf("Distribution Address: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs\n");
+LogPrintf("Distribution Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC\n");
 LogPrintf("Distribution Amount: 250,000,000 AMMO\n");
 LogPrintf("===========================\n");
 ```
@@ -208,7 +208,7 @@ sleep 10
 ./src/ammocoin-cli -datadir=/tmp/test-genesis getblock $(./src/ammocoin-cli -datadir=/tmp/test-genesis getblockhash 0) 2
 
 # Look for coinbase transaction with 250M AMMO output
-# Verify address is Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+# Verify address is AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 
 # Import paper wallet key
 ./src/ammocoin-cli -datadir=/tmp/test-genesis importprivkey "PAPER_WALLET_PRIVKEY"
@@ -257,7 +257,7 @@ nNonce:      FOUND_NONCE
 nTime:       1623089845
 
 Distribution Fund:
-Address:     Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+Address:     AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 Amount:      250,000,000 AMMO
 Purpose:     Manual distribution to verified v1.0 users
 ```

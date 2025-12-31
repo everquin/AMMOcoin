@@ -34,16 +34,16 @@
 **Genesis Parameters - ALL CORRECT:**
 ```cpp
 nTime:    1623089845
-nNonce:   511628
+nNonce:   382647
 nBits:    0x1e0ffff0
 nVersion: 1
-Reward:   1000 * COIN
+Reward:   250000000 * COIN
 
 Genesis Hash:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle Root:   ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
+Merkle Root:   47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
 
 PubKey: 049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
-Address: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 ```
 
 **Old Genesis References:**
@@ -179,7 +179,7 @@ grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" V1.1.0_G
 **File:** `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
 **Line 196:** Change from:
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 511628, 0x1e0ffff0, 1, 1000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
 ```
 
 To:
@@ -199,7 +199,7 @@ genesis = CreateGenesisBlock(1623089845, NEW_NONCE, 0x1e0ffff0, 1, 250000000 * C
 - ✅ nBits: 0x1e0ffff0 (same difficulty)
 - ✅ nVersion: 1 (same version)
 - ✅ PubKey: 049f0878... (same paper wallet address)
-- ✅ Address: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs (same)
+- ✅ Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC (same)
 - ✅ Timestamp message: "AMMOcoin Genesis Block - June 7 2021 - New Era of Privacy"
 
 **Only changes:** Reward amount (1000 → 250000000) which creates new merkle root and requires new mining

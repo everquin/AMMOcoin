@@ -22,13 +22,13 @@
 
 **Current State (Line 196):**
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 511628, 0x1e0ffff0, 1, 1000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
 ```
 
 **Current Assertions (Lines 198-199):**
 ```cpp
 assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-assert(genesis.hashMerkleRoot == uint256S("0xee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec"));
+assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
 ```
 
 **Current Genesis Output Script (Line 59):**
@@ -38,12 +38,12 @@ const CScript genesisOutputScript = CScript() << ParseHex("049f0878e7c014c51fcb3
 
 **Verification Required:**
 - [ ] Confirm nTime: 1623089845
-- [ ] Confirm nNonce: 511628
+- [ ] Confirm nNonce: 382647
 - [ ] Confirm nBits: 0x1e0ffff0
 - [ ] Confirm nVersion: 1
 - [ ] Confirm reward: 1000 * COIN
 - [ ] Confirm genesis hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-- [ ] Confirm merkle root: ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
+- [ ] Confirm merkle root: 47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
 - [ ] Confirm pubkey matches paper wallet
 - [ ] Confirm timestamp message is correct
 
@@ -85,7 +85,7 @@ base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 151);       // WIF pr
 - [ ] PUBKEY_ADDRESS = 23 (0x17) - produces 'A' prefix
 - [ ] SECRET_KEY = 151 (0x97) - WIF format
 - [ ] Matches paper wallet generator (0x17, 0x97)
-- [ ] Test address Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs derives correctly from pubkey
+- [ ] Test address AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC derives correctly from pubkey
 
 **Status:** PENDING
 
@@ -113,13 +113,13 @@ base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 151);       // WIF pr
 **Expected Content:**
 ```
 Hash:        000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle Root: ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
-nNonce:      511628
+Merkle Root: 47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
+nNonce:      382647
 nTime:       1623089845 (June 7, 2021)
 nBits:       0x1e0ffff0
 nVersion:    1
 Reward:      1,000 AMMO
-Paper Wallet: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+Paper Wallet: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 PubKey:      049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
 ```
 
@@ -255,7 +255,7 @@ scriptVersion: 0x7D      // Note: Different from chainparams (0x18)
 
 ### 5.2 Paper Wallet Address Derivation Test
 
-**Test:** Verify Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs derives from pubkey
+**Test:** Verify AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC derives from pubkey
 
 **PubKey (from chainparams.cpp line 59):**
 ```
@@ -264,7 +264,7 @@ scriptVersion: 0x7D      // Note: Different from chainparams (0x18)
 
 **Expected Address:**
 ```
-Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 ```
 
 **Verification Steps:**
@@ -273,7 +273,7 @@ Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
 3. Add version byte (0x17)
 4. Add checksum
 5. Base58 encode
-6. Result should be: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+6. Result should be: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 
 **Status:** PENDING
 
@@ -409,10 +409,10 @@ Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
 |-----------|---------------|-----------------|-----------------------------------|---------------|------------|
 | Hash | 00000f14... | ☐ | ☐ | ☐ | ☐ |
 | Merkle | ee2ff761... | ☐ | ☐ | ☐ | ☐ |
-| nNonce | 511628 | ☐ | ☐ | ☐ | ☐ |
+| nNonce | 382647 | ☐ | ☐ | ☐ | ☐ |
 | nTime | 1623089845 | ☐ | ☐ | ☐ | ☐ |
 | nBits | 0x1e0ffff0 | ☐ | ☐ | ☐ | ☐ |
-| Reward | 1000 COIN | ☐ | ☐ | ☐ | ☐ |
+| Reward | 250000000 COIN | ☐ | ☐ | ☐ | ☐ |
 | Address | Ae3MNUbjb... | ☐ | ☐ | ☐ | ☐ |
 
 **Status:** PENDING

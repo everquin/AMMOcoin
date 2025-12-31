@@ -159,7 +159,7 @@ static Consensus::LLMQParams llmq400_85 = {
  * + Contains no strange transactions
  */
 static MapCheckpoints mapCheckpoints = {
-    { 0, uint256S("00000f14ee7c9dc7580690364c94dbc86a4368bec1f7842be09063a662bc1434")}, //!< AMMOcoin v1.1.0 genesis block
+    { 0, uint256S("000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329")}, //!< AMMOcoin v1.1.0 genesis block (250M AMMO distribution premine)
 };
 
 static const CCheckpointData data = {

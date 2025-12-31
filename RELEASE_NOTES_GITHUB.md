@@ -15,16 +15,16 @@ This release introduces a **completely new blockchain** with the paper wallet pr
 **Genesis Block Parameters:**
 ```
 Hash:        000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle Root: ee2ff761e587117fb338182b9fa5b3555ab4510941590fe0577b1fd726c74aec
-nNonce:      511628
+Merkle Root: 47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
+nNonce:      382647
 nTime:       1623089845 (June 7, 2021 - 23:04:05 UTC)
 ```
 
 **Paper Wallet (Genesis Coinbase):**
 ```
-Address:     Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+Address:     AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 Public Key:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
-Private Key: PN7i68jFYmjzXiEFjrocJRt2dm9SRjppCk8RqWYNWdMqUC6oQUKF
+Private Key: PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB
 ```
 
 ---
@@ -303,7 +303,7 @@ sudo xattr -dr com.apple.quarantine ammocoind ammocoin-cli ammocoin-tx
 
 ### Paper Wallet Private Key
 The genesis block contains the paper wallet private key. This key:
-- ✅ Holds the genesis 1000 AMMO reward
+- ✅ Holds the genesis 250M AMMO reward
 - ✅ Is documented in V1.1.0_GENESIS_BLOCK_AUTHORITY.md
 - ✅ Is intentionally public for this fresh start
 - ⚠️ Should be treated carefully in production
@@ -332,7 +332,7 @@ The genesis block contains the paper wallet private key. This key:
 - Improved build configuration
 
 #### Fixed
-- Genesis block mining with correct nNonce (511628)
+- Genesis block mining with correct nNonce (382647)
 - Proof-of-work validation
 - Build system compatibility issues
 

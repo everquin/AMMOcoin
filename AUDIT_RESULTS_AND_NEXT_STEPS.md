@@ -26,9 +26,9 @@ The codebase contains **THREE DIFFERENT GENESIS BLOCKS** across various files:
 ### ✅ Completed Actions
 
 1. **Mined Correct Genesis Block**
-   - nNonce: 511628
+   - nNonce: 382647
    - Hash: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
-   - Uses paper wallet public key from: `Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs`
+   - Uses paper wallet public key from: `AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC`
 
 2. **Updated Primary Source Code**
    - File: `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
@@ -59,7 +59,7 @@ The codebase contains **THREE DIFFERENT GENESIS BLOCKS** across various files:
 ```
 ammocoin-apps-from-ammocoin/src/chainparams.cpp
   Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 ✅
-  nNonce: 511628 ✅
+  nNonce: 382647 ✅
   Public Key: 049f0878...752 ✅ (Paper wallet)
   Status: PRODUCTION READY
 ```
@@ -140,8 +140,8 @@ git commit -m "AUDIT: Add genesis authority docs and delete obsolete files
 - Updated ammocoin-apps-from-ammocoin/src/chainparams.cpp with correct genesis
 
 CORRECT v1.1.0 Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce: 511628
-Paper Wallet Key: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs"
+nNonce: 382647
+Paper Wallet Key: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC"
 ```
 
 ### Step 2: Delete Invalid Binaries from Releases
@@ -234,8 +234,8 @@ git commit -m "RELEASE: v1.1.0 with correct genesis block
 
 All platforms now use:
 Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce: 511628
-Paper Wallet: Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+nNonce: 382647
+Paper Wallet: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 
 Platforms ready:
 - Linux x86_64

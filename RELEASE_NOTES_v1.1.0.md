@@ -318,7 +318,7 @@ See detailed guides:
 - **P2P Port:** 37020
 - **RPC Port:** 8332
 - **Genesis Block:** `0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
-- **Genesis Nonce:** 1299334
+- **Genesis Nonce:** 382647
 
 ### Privacy Features:
 - **Sapling zkSNARK** - Zero-knowledge proofs for private transactions

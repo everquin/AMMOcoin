@@ -99,17 +99,17 @@ cat ~/v10-wallet-dump.txt
 **Format of dump file:**
 ```
 # Extended private key
-# addr=Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs hdkeypath=m/0'/0'/0' 2021-06-07T23:04:05Z label= # addr=Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
-Kz3fQ8... 2021-06-07T23:04:05Z label= # addr=Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+# addr=AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC hdkeypath=m/0'/0'/0' 2021-06-07T23:04:05Z label= # addr=AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
+Kz3fQ8... 2021-06-07T23:04:05Z label= # addr=AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 ...
 ```
 
 ### Method 2: Dump Specific Address
 ```bash
 # Get private key for specific address
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 dumpprivkey Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 dumpprivkey AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 
-# Returns: PN7i68jFYmjzXiEFjrocJRt2dm9SRjppCk8RqWYNWdMqUC6oQUKF
+# Returns: PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB
 ```
 
 ### Method 3: List All Addresses First
@@ -128,7 +128,7 @@ Kz3fQ8... 2021-06-07T23:04:05Z label= # addr=Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
 ### Import Individual Keys
 ```bash
 # Import a specific private key
-ammocoin-cli importprivkey "PN7i68jFYmjzXiEFjrocJRt2dm9SRjppCk8RqWYNWdMqUC6oQUKF" "my_label" false
+ammocoin-cli importprivkey "PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB" "my_label" false
 
 # The 'false' means don't rescan blockchain (faster if you know address has no history)
 ```
@@ -148,7 +148,7 @@ ammocoin-cli importwallet ~/v10-wallet-dump.txt
 ammocoin-cli listaddressgroupings
 
 # Check if specific address exists
-ammocoin-cli validateaddress Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs
+ammocoin-cli validateaddress AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 ```
 
 ---

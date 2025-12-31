@@ -187,7 +187,7 @@ AMMOcoin Development Team
 
 ### Small Holders Migration Fund
 
-**You control:** `Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs` (13,690,696 AMMO)
+**You control:** `AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC` (13,690,696 AMMO)
 
 **Claim Process:**
 
