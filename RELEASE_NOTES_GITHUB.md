@@ -14,17 +14,16 @@ This release introduces a **completely new blockchain** with the paper wallet pr
 
 **Genesis Block Parameters:**
 ```
-Hash:        000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle Root: 47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
-nNonce:      382647
+Hash:        00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Merkle Root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
+nNonce: 942131
 nTime:       1623089845 (June 7, 2021 - 23:04:05 UTC)
 ```
 
 **Paper Wallet (Genesis Coinbase):**
 ```
-Address:     AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
+Address:     AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 Public Key:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
-Private Key: PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB
 ```
 
 ---
@@ -137,7 +136,7 @@ sleep 10
 
 # Check genesis hash
 ammocoin-cli getblockhash 0
-# MUST return: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# MUST return: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 **If genesis hash doesn't match, DO NOT USE - contact support!**
@@ -159,7 +158,7 @@ shasum -a 256 -c CHECKSUMS-macOS-ARM64.txt
 
 #### Verify Genesis in Binary
 ```bash
-strings ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+strings ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 # Should return 2-3 matches
 ```
 
@@ -173,7 +172,7 @@ ammocoin-cli getblockchaininfo
 
 # Should show:
 # "blocks": 0
-# "bestblockhash": "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+# "bestblockhash": "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 ```
 
 ---
@@ -223,7 +222,7 @@ git checkout v1.1.0-genesis-final
 #### Verify Before Using
 ```bash
 # CRITICAL: Verify genesis in built binary
-strings src/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+strings src/ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 # MUST return matches!
 ```
 
@@ -240,7 +239,7 @@ strings src/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0
 
 ### Genesis Block
 ```
-Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 **ALL nodes MUST have this genesis hash or they cannot connect!**
@@ -332,7 +331,7 @@ The genesis block contains the paper wallet private key. This key:
 - Improved build configuration
 
 #### Fixed
-- Genesis block mining with correct nNonce (382647)
+- Genesis block mining with correct nNonce: 942131)
 - Proof-of-work validation
 - Build system compatibility issues
 
@@ -381,7 +380,7 @@ Before connecting:
 3. ✅ Verify genesis hash
 4. ✅ Connect to network
 
-**Genesis Hash:** `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+**Genesis Hash:** `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
 If your node shows a different genesis hash, STOP and investigate!
 

@@ -8,17 +8,17 @@
 
 ## CORRECT Genesis Block (MUST USE)
 ```
-Hash:    000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce:  382647
+Hash:    00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+nNonce: 942131
 nTime:   1623089845
-Merkle:  47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
+Merkle:  a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 PubKey:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
 ```
 
 ## DEPRECATED Hashes (MUST DELETE)
 ```
-v1.0:           000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Broken v1.1.0:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+v1.0:           00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Broken v1.1.0:  00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 ---
@@ -29,7 +29,7 @@ Broken v1.1.0:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 1. `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
    - Status: UPDATED with correct genesis
    - Genesis hash: 00000f14...
-   - nNonce: 382647
+   - nNonce: 942131
    - Assertions: Correct
 
 ### ⏳ NEEDS UPDATE
@@ -117,7 +117,7 @@ Broken v1.1.0:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
 - [ ] Upload new binaries with correct genesis
 - [ ] Start node
 - [ ] Verify genesis: `ammocoin-cli getblockhash 0`
-- [ ] Expected: `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+- [ ] Expected: `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
 ---
 
@@ -189,7 +189,7 @@ rm -f releases/CHECKSUMS-Linux.txt
 #!/bin/bash
 # verify-genesis.sh
 
-EXPECTED_HASH="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+EXPECTED_HASH="00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 
 # Check binary
 if strings ammocoind | grep -q "$EXPECTED_HASH"; then

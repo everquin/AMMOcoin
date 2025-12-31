@@ -34,16 +34,16 @@
 **Genesis Parameters - ALL CORRECT:**
 ```cpp
 nTime:    1623089845
-nNonce:   382647
+nNonce: 942131
 nBits:    0x1e0ffff0
 nVersion: 1
 Reward:   250000000 * COIN
 
-Genesis Hash:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle Root:   47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
+Genesis Hash:  00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Merkle Root:   a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 
 PubKey: 049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
-Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
+Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 ```
 
 **Old Genesis References:**
@@ -71,13 +71,13 @@ Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
 ### ✅ Authority Document (V1.1.0_GENESIS_BLOCK_AUTHORITY.md)
 
 **Current Correct Genesis:**
-- ✅ Documented: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+- ✅ Documented: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 - ✅ All parameters match source code
 - ✅ Paper wallet address documented correctly
 
 **Deprecated Genesis (Correctly Documented):**
-- ✅ OLD v1.0: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-- ✅ BROKEN v1.1.0: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+- ✅ OLD v1.0: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+- ✅ BROKEN v1.1.0: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 
 **Status:** ✅ FIXED - No longer contains backwards information
 
@@ -127,11 +127,11 @@ Replaced with correct deprecated hashes:
 
 **Verification:**
 ```bash
-grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
-# Returns: Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
+# Returns: Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 
-grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
-# Returns: Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570" V1.1.0_GENESIS_BLOCK_AUTHORITY.md
+# Returns: Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 **Result:** ✅ Fixed and committed
@@ -179,7 +179,7 @@ grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" V1.1.0_G
 **File:** `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
 **Line 196:** Change from:
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
 ```
 
 To:
@@ -199,7 +199,7 @@ genesis = CreateGenesisBlock(1623089845, NEW_NONCE, 0x1e0ffff0, 1, 250000000 * C
 - ✅ nBits: 0x1e0ffff0 (same difficulty)
 - ✅ nVersion: 1 (same version)
 - ✅ PubKey: 049f0878... (same paper wallet address)
-- ✅ Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC (same)
+- ✅ Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME (same)
 - ✅ Timestamp message: "AMMOcoin Genesis Block - June 7 2021 - New Era of Privacy"
 
 **Only changes:** Reward amount (1000 → 250000000) which creates new merkle root and requires new mining

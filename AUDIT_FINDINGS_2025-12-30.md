@@ -20,20 +20,20 @@ The "INVALID / DEPRECATED Genesis Hashes" section lists the CURRENT CORRECT gene
 ## ❌ INVALID / DEPRECATED Genesis Hashes
 
 ### DO NOT USE - v1.0 Genesis (Pre-December 2025)
-Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 nNonce: 22256134
 Status: DEPRECATED
 
 ### DO NOT USE - Broken v1.1.0 Attempt (December 22-29, 2025)
-Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce: 382647
+Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+nNonce: 942131
 Status: INVALID
 ```
 
 **Correct Information:**
-- **OLD v1.0 genesis:** 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-- **BROKEN v1.1.0:** 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-- **CORRECT v1.1.0:** 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+- **OLD v1.0 genesis:** 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+- **BROKEN v1.1.0:** 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+- **CORRECT v1.1.0:** 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 
 **Action Required:**
 PURGE lines 93-105 and REPLACE with correct deprecated genesis hashes.
@@ -94,13 +94,13 @@ PURGE lines 93-105 and REPLACE with correct deprecated genesis hashes.
 
 **Verified Parameters (Line 196):**
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
 ```
 
 **Verified Assertions (Lines 198-199):**
 ```cpp
-assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
+assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 ```
 
 **Verified Genesis Output Script (Line 59):**
@@ -115,7 +115,7 @@ const char* pszTimestamp = "AMMOcoin Genesis Block - June 7 2021 - New Era of Pr
 
 **Verified Checkpoint (Line 160):**
 ```cpp
-{ 0, uint256S("000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329")},
+{ 0, uint256S("00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570")},
 ```
 
 **Verified Network Parameters (Lines 305-309):**
@@ -139,7 +139,7 @@ base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 151);       // 0x97 =
 **Last Modified:** Dec 30 08:36
 
 **Verified:**
-- ✅ Contains correct genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329 (3 occurrences)
+- ✅ Contains correct genesis: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570 (3 occurrences)
 - ✅ Does NOT contain old v1.0 genesis: 000001c4...
 - ✅ Does NOT contain broken genesis: 0000075a...
 

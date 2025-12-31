@@ -18,7 +18,7 @@ Any deviation will result in incompatible blockchains that cannot connect!
 ### Core Parameters
 ```cpp
 nTime:    1623089845      // June 7, 2021 - 23:04:05 UTC
-nNonce:   382647          // ✅ MINED value that produces valid hash
+nNonce: 942131          // ✅ MINED value that produces valid hash
 nBits:    0x1e0ffff0      // Difficulty target
 nVersion: 1               // Block version
 Reward:   250000000 * COIN     // Genesis reward
@@ -26,8 +26,8 @@ Reward:   250000000 * COIN     // Genesis reward
 
 ### Genesis Block Hashes
 ```cpp
-Genesis Hash:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle Root:   47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
+Genesis Hash:  00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Merkle Root:   a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 ```
 
 ### Genesis Transaction Details
@@ -37,14 +37,13 @@ Timestamp: "AMMOcoin Genesis Block - June 7 2021 - New Era of Privacy"
 Public Key (from paper wallet):
 049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
 
-Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
-Private Key: PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB
+Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 ```
 
 ### Checkpoint Data
 ```cpp
 mapCheckpoints = {
-    { 0, uint256S("000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329")},
+    { 0, uint256S("00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570")},
 };
 
 CCheckpointData = {
@@ -76,10 +75,10 @@ CMainParams()
 {
     strNetworkID = "main";
 
-    genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
+    genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
     consensus.hashGenesisBlock = genesis.GetHash();
-    assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-    assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
+    assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+    assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 
     // ... rest of configuration
 }
@@ -91,15 +90,15 @@ CMainParams()
 
 ### DO NOT USE - v1.0 Genesis (Pre-December 2025)
 ```
-Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 nNonce: 22256134
 Status: DEPRECATED - Old blockchain, incompatible with v1.1.0
 ```
 
 ### DO NOT USE - Broken v1.1.0 Attempt (December 22-29, 2025)
 ```
-Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-nNonce: 382647
+Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+nNonce: 942131
 Status: INVALID - This nNonce does NOT produce this hash! Genesis block was broken.
 Reason: Hash was manually set instead of computed, nNonce is incorrect
 ```
@@ -111,19 +110,19 @@ Reason: Hash was manually set instead of computed, nNonce is incorrect
 ### Check Genesis Hash in Running Node
 ```bash
 ammocoin-cli getblockhash 0
-# Expected output: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# Expected output: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 ### Check Genesis in Binary
 ```bash
-strings ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+strings ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 # Should return matches if binary is correct
 ```
 
 ### Check Blockchain Info
 ```bash
 ammocoin-cli getblockchaininfo
-# "bestblockhash" should be "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+# "bestblockhash" should be "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 # "blocks" should be 0 (at genesis)
 ```
 
@@ -172,7 +171,7 @@ rm -rf %APPDATA%\AMMOcoin\* # Windows
 Mining started: December 30, 2025 08:08 PST
 Target: 00000ffff0000000000000000000000000000000000000000000000000000000
 Starting nNonce: 0
-Final nNonce: 382647
+Final nNonce: 942131
 Mining duration: ~30 seconds
 Hash attempts: 511,628
 Result: SUCCESS - Valid PoW hash found
@@ -189,9 +188,9 @@ nNonce: 400000, hash: c248234108521406bea4cdbab021dc928b0b6382200c01ab7a4aed7292
 nNonce: 500000, hash: 883680c244ba986a8b95737acc459c0dd9d5d366c64eabbdbb5e0e0bc6940911
 
 === GENESIS BLOCK MINED ===
-nNonce: 382647
-Genesis hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-Merkle root: 47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e
+nNonce: 942131
+Genesis hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Merkle root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 ===========================
 ```
 

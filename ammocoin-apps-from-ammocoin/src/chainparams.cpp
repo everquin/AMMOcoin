@@ -56,9 +56,8 @@ void CChainParams::UpdateNetworkUpgradeParameters(Consensus::UpgradeIndex idx, i
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "AMMOcoin Genesis Block - June 7 2021 - New Era of Privacy";
-    // Distribution fund public key (compressed) for address AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
-    // Private key: PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB
-    const CScript genesisOutputScript = CScript() << ParseHex("024c013b8b3a591431f6621fd196b7b499edc75992ae8f316f3815ed1e3839fdbb") << OP_CHECKSIG;
+    // Distribution fund public key (compressed) for address AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
+    const CScript genesisOutputScript = CScript() << ParseHex("0398413a7db9d8605f5447c40fab3026c7cce7b0dbec8e6ea94f5582b2adaa877d") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -159,7 +158,7 @@ static Consensus::LLMQParams llmq400_85 = {
  * + Contains no strange transactions
  */
 static MapCheckpoints mapCheckpoints = {
-    { 0, uint256S("000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329")}, //!< AMMOcoin v1.1.0 genesis block (250M AMMO distribution premine)
+    { 0, uint256S("00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570")}, //!< AMMOcoin v1.1.0 genesis block (250M AMMO distribution premine)
 };
 
 static const CCheckpointData data = {
@@ -196,10 +195,9 @@ public:
         strNetworkID = "main";
 
         // v1.1.0 Genesis Block with 250M AMMO distribution premine (Option 2.5)
-        // Distribution address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC (team-controlled wallet)
-        // Private key: PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB
+        // Distribution address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME (team-controlled wallet)
         // Team will manually distribute to verified v1.0 users via signed claim process
-        genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
+        genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
 
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
@@ -290,8 +288,8 @@ public:
                 uint256S("0x14e477e597d24549cac5e59d97d32155e6ec2861c1003b42d0566f9bf39b65d5");
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-        assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+        assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.

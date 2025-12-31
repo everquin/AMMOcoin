@@ -11,7 +11,7 @@
 **This is a completely new blockchain, NOT a fork of v1.0!**
 
 - **v1.0 Genesis Block:** `0x000001c4271a6e733011fbb7bde9f727b67e294413e89e89c525e169bda50795`
-- **v1.1.0 Genesis Block:** `0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+- **v1.1.0 Genesis Block:** `0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
 **Your v1.0 wallet is required to claim v1.1.0 balances.**
 
@@ -202,7 +202,7 @@ ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getinfo
 
 # Verify correct genesis block
 ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getblockhash 0
-# Should show: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# Should show: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 ---
@@ -317,8 +317,8 @@ See detailed guides:
 - **Staking Minimum:** Varies by tier
 - **P2P Port:** 37020
 - **RPC Port:** 8332
-- **Genesis Block:** `0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
-- **Genesis Nonce:** 382647
+- **Genesis Block:** `0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+- **Genesis Nonce:** 942131
 
 ### Privacy Features:
 - **Sapling zkSNARK** - Zero-knowledge proofs for private transactions

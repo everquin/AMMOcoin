@@ -248,13 +248,13 @@ ls -lh src/ammocoind src/ammocoin-cli src/ammocoin-tx
 
 ### Step 1: Verify Genesis in Binary (Static Check)
 ```bash
-strings src/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+strings src/ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 ```
 
 **MUST return 2-3 matches showing:**
 ```
-000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
+00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
 ```
 
 **❌ If NO matches found:** DO NOT PROCEED! Source code is wrong!
@@ -298,9 +298,9 @@ rm -rf /tmp/ammocoin-test
 
 # Verify genesis
 echo "Genesis hash from node: $GENESIS"
-echo "Expected genesis hash:  000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+echo "Expected genesis hash:  00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 
-if [ "$GENESIS" = "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" ]; then
+if [ "$GENESIS" = "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570" ]; then
     echo "✅ SUCCESS: Genesis verification PASSED!"
     echo "Safe to proceed with installation."
 else
@@ -339,7 +339,7 @@ ammocoind --version
 ### Step 3: Final Binary Verification
 ```bash
 # Verify installed binary has correct genesis
-strings /usr/local/bin/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+strings /usr/local/bin/ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 # MUST return matches!
 ```
 
@@ -384,7 +384,7 @@ shrinkdebugfile=1
 printtoconsole=0
 
 # Genesis Block (reference - embedded in binary)
-# Hash: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 EOF
 
 # Secure the config file
@@ -439,7 +439,7 @@ ammocoin-cli getblockhash 0
 
 **MUST return:**
 ```
-000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 **❌ If different:** STOP IMMEDIATELY! Investigate!
@@ -455,7 +455,7 @@ ammocoin-cli getblockchaininfo
   "chain": "main",
   "blocks": 0,
   "headers": 0,
-  "bestblockhash": "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329",
+  "bestblockhash": "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570",
   "difficulty": 0.000244140625,
   ...
 }
@@ -499,7 +499,7 @@ echo ""
 
 echo "1. GENESIS VERIFICATION:"
 GENESIS=$(ammocoin-cli getblockhash 0 2>/dev/null)
-EXPECTED="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+EXPECTED="00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 
 if [ "$GENESIS" = "$EXPECTED" ]; then
     echo "   ✅ Genesis: $GENESIS (CORRECT)"
@@ -581,7 +581,7 @@ Run through this checklist before announcing node is ready:
 ```bash
 # 1. Genesis hash correct?
 ammocoin-cli getblockhash 0
-# Expected: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# Expected: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 
 # 2. Node is running?
 ps aux | grep ammocoind | grep -v grep
@@ -699,7 +699,7 @@ ammocoind -daemon
 ```
 ✅ seed1.ammocoin.org is now live with v1.1.0!
 
-Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+Genesis: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 P2P Port: 8338
 
 Connect your v1.1.0 nodes:
@@ -727,7 +727,7 @@ Remember to delete old blockchain data before connecting!
 ### Genesis Verification
 ```bash
 ammocoin-cli getblockhash 0
-# MUST return: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# MUST return: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 ### Check Node Status

@@ -80,7 +80,7 @@ Since v1.1.0 is a **fresh blockchain** (not a continuation of v1.0), balances ca
 #### Record Your Information
 Create a file `my-v10-claim.txt`:
 ```
-v1.0 Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
+v1.0 Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 Balance at Block 434,881: 50000.12345678 AMMO
 Transaction History: (optional, helps verification)
   - tx1: abc123...
@@ -119,7 +119,7 @@ sleep 10
 
 # Verify correct genesis
 ./ammocoin-cli getblockhash 0
-# MUST return: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# MUST return: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 #### Generate New v1.1.0 Receiving Address
@@ -143,7 +143,7 @@ This is CRITICAL - you must prove you own the v1.0 address.
 MESSAGE="I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: $(date -u +%Y-%m-%d)"
 
 # Sign with v1.0 wallet
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 signmessage "AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC" "$MESSAGE"
+/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 signmessage "AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME" "$MESSAGE"
 
 # Returns signature like:
 # INsQ7k9R3m... (long base64 string)
@@ -154,7 +154,7 @@ Create `my-claim-package.txt`:
 ```
 === AMMOcoin v1.0 to v1.1.0 Migration Claim ===
 
-v1.0 Address: AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC
+v1.0 Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 v1.0 Balance at Block 434,881: 50000.12345678 AMMO
 
 v1.1.0 Receiving Address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n
@@ -269,7 +269,7 @@ Claim ID | v1.0 Address | v1.0 Balance | v1.1.0 Address | Signature | Status | N
 ```bash
 # Use v1.0 CLI to verify signature
 /path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 verifymessage \
-  "AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC" \
+  "AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME" \
   "INsQ7k9R3m..." \
   "I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: 2026-01-15"
 
@@ -281,7 +281,7 @@ Claim ID | v1.0 Address | v1.0 Balance | v1.1.0 Address | Signature | Status | N
 # Check balance at snapshot block 434,881
 # Use v1.0 node synced to at least that height
 
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 getreceivedbyaddress "AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC" 0
+/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 getreceivedbyaddress "AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME" 0
 
 # Compare to claimed amount
 ```
@@ -322,7 +322,6 @@ The team will need v1.1.0 AMMO to distribute. Options:
 **Option A: Use Genesis Wallet**
 ```bash
 # Import paper wallet private key (has genesis 250M AMMO)
-ammocoin-cli importprivkey "PPewqGBHgSnxRsYMRMgG4B2YHcJratTszSMBehfjSayqjjRgVnGB" "Genesis Paper Wallet"
 
 # Verify balance
 ammocoin-cli getbalance

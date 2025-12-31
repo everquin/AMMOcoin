@@ -31,10 +31,10 @@
 
 **Current Genesis (Line ~145-155):**
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 382647, 0x1e0ffff0, 1, 250000000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
 consensus.hashGenesisBlock = genesis.GetHash();
-assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
-assert(genesis.hashMerkleRoot == uint256S("0x47b49881d9f24a7925a18b5f0d9ce6403befb94cb76acd3d2a8f57236272e76e"));
+assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 ```
 
 **After Option 2 Changes:**
@@ -92,7 +92,7 @@ assert(genesis.hashMerkleRoot == uint256S("0xNEW_MERKLE_ROOT"));
 
 ### Why Genesis Hash Changes
 
-**Current genesis hash:** `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+**Current genesis hash:** `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
 **Why it must change:**
 1. Genesis block now contains 20+ outputs instead of 1
@@ -101,7 +101,7 @@ assert(genesis.hashMerkleRoot == uint256S("0xNEW_MERKLE_ROOT"));
 4. Must mine a NEW nNonce to find hash below difficulty target
 
 **What this means:**
-- Paper wallet address (AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC) will NOT receive genesis reward
+- Paper wallet address (AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME) will NOT receive genesis reward
 - Genesis reward will be distributed across all snapshot addresses
 - Current "00000f14..." hash becomes obsolete
 - New hash must be documented everywhere
@@ -234,7 +234,7 @@ shasum -a 256 AMMOcoin-v1.1.0-snapshot-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-sna
 
 **Script to update:**
 ```bash
-OLD_HASH="000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+OLD_HASH="00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 NEW_HASH="FOUND_HASH_HERE"
 
 find . -name "*.md" -type f -not -path "./.git/*" -exec sed -i '' "s/$OLD_HASH/$NEW_HASH/g" {} \;
@@ -421,7 +421,7 @@ ammocoin-cli getbalance
 **Probability:** CERTAIN
 
 **What happens:**
-- Paper wallet address (AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC) does NOT receive genesis reward
+- Paper wallet address (AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME) does NOT receive genesis reward
 - Genesis reward distributed across snapshot addresses instead
 - Paper wallet still usable, just not special
 
@@ -542,7 +542,7 @@ ammocoin-cli getbalance
 - AMMOcoin-v1.1.0-macOS-ARM64.zip
 - CHECKSUMS-macOS-ARM64.txt
 
-**Genesis:** 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+**Genesis:** 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 
 **Status:** MUST BE DELETED
 
@@ -597,7 +597,7 @@ WHAT YOU NEED TO DO:
 5. Import your v1.0 private keys
 6. Your v1.0 balance will appear automatically
 
-OLD GENESIS (obsolete): 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+OLD GENESIS (obsolete): 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 NEW GENESIS: [NEW_HASH_HERE]
 
 Apologies for the change, but this provides much better user
@@ -792,7 +792,7 @@ Before proceeding with Option 2, verify:
    - Acceptance of risks outlined above
 
 3. **Paper Wallet Decision**
-   - Should AeLWWVfT293noSbYpRJBN6xMsKk5ksgggC be included in snapshot?
+   - Should AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME be included in snapshot?
    - What was its v1.0 balance (if any)?
 
 4. **Communication Plan**

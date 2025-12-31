@@ -45,19 +45,19 @@
 #define ENABLE_ZMQ 1
 
 /* define if the Boost library is available */
-#define HAVE_BOOST /**/
+/* #undef HAVE_BOOST */
 
 /* define if the Boost::Chrono library is available */
-#define HAVE_BOOST_CHRONO /**/
+/* #undef HAVE_BOOST_CHRONO */
 
 /* define if the Boost::Filesystem library is available */
-#define HAVE_BOOST_FILESYSTEM /**/
+/* #undef HAVE_BOOST_FILESYSTEM */
 
 /* define if the Boost::System library is available */
-#define HAVE_BOOST_SYSTEM /**/
+/* #undef HAVE_BOOST_SYSTEM */
 
 /* define if the Boost::Thread library is available */
-#define HAVE_BOOST_THREAD /**/
+/* #undef HAVE_BOOST_THREAD */
 
 /* define if the Boost::Unit_Test_Framework library is available */
 /* #undef HAVE_BOOST_UNIT_TEST_FRAMEWORK */
@@ -288,7 +288,7 @@
 #define HAVE_MSG_NOSIGNAL 1
 
 /* Define to 1 if you have the <natpmp.h> header file. */
-#define HAVE_NATPMP_H 1
+/* #undef HAVE_NATPMP_H */
 
 /* Define if you have POSIX threads libraries and header files. */
 #define HAVE_PTHREAD 1
@@ -420,14 +420,14 @@
 /* #undef USE_CUSTOM_PARAMS */
 
 /* Define if dbus support should be compiled in */
-/* #undef USE_DBUS */
+#define USE_DBUS 1
 
 /* NAT-PMP support not compiled if undefined, otherwise value (0 or 1)
    determines default state */
-#define USE_NATPMP 0
+/* #undef USE_NATPMP */
 
 /* Define if QTCHARTS support should be compiled in */
-/* #undef USE_QTCHARTS */
+#define USE_QTCHARTS 1
 
 /* UPnP support not compiled if undefined, otherwise value (0 or 1) determines
    default state */

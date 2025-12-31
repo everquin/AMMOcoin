@@ -135,13 +135,13 @@ ammocoind --version
 
 ### 2. Verify Genesis Hash (CRITICAL)
 ```bash
-strings /usr/local/bin/ammocoind | grep "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+strings /usr/local/bin/ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
 ```
 
 **MUST return matches!** Example:
 ```
-000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
-assert(consensus.hashGenesisBlock == uint256S("0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"));
+00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
 ```
 
 **If no matches:** DO NOT START NODE - binaries are incorrect!
@@ -192,7 +192,7 @@ shrinkdebugfile=1
 dnsseed=1
 
 # Genesis block (for reference - embedded in binary)
-# Genesis: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# Genesis: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 EOF
 
 chmod 600 ~/.ammocoin/ammocoin.conf
@@ -230,7 +230,7 @@ ammocoin-cli getblockchaininfo
   "chain": "main",
   "blocks": 0,
   "headers": 0,
-  "bestblockhash": "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329",
+  "bestblockhash": "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570",
   "difficulty": 0.000244140625,
   ...
 }
@@ -241,11 +241,11 @@ ammocoin-cli getblockchaininfo
 GENESIS=$(ammocoin-cli getblockhash 0)
 echo "Genesis hash: $GENESIS"
 
-if [ "$GENESIS" = "000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" ]; then
+if [ "$GENESIS" = "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570" ]; then
     echo "✅ SUCCESS: Correct v1.1.0 genesis!"
 else
     echo "❌ CRITICAL ERROR: Wrong genesis hash!"
-    echo "Expected: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329"
+    echo "Expected: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
     echo "Got: $GENESIS"
     echo "STOP: Do not allow connections - investigate immediately!"
     exit 1
@@ -443,7 +443,7 @@ strings /usr/local/bin/ammocoind | grep genesis
 Before announcing seed node is ready:
 
 - [ ] Node starts without errors
-- [ ] Genesis hash is `000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+- [ ] Genesis hash is `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 - [ ] No old genesis hashes found in binaries
 - [ ] Port 8338 is open and listening
 - [ ] DNS entry for seed1.ammocoin.org is correct
@@ -464,7 +464,7 @@ Before announcing seed node is ready:
 
 The seed node (seed1.ammocoin.org) has been successfully updated to v1.1.0!
 
-Genesis Block: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+Genesis Block: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 Network Port: 8338
 RPC Port: 8332
 
@@ -490,7 +490,7 @@ For seed node issues:
 - Contact node operators channel for coordination
 
 **Genesis Hash (MUST match):**
-`000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+`00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
 ---
 

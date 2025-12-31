@@ -111,7 +111,7 @@ ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getinfo
 
 # Verify genesis block
 ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getblockhash 0
-# Should show: 000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329
+# Should show: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
 ```
 
 ---
@@ -182,7 +182,7 @@ cd ~
 
 ## 🌐 Network Information
 
-**Genesis Block:** `0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329`
+**Genesis Block:** `0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
 **Seed Nodes:**
 - `seed1.ammocoin.org:37020`
