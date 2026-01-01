@@ -31,7 +31,6 @@ jobs:
             automake \
             libtool \
             pkg-config \
-            pkgconf \
             git \
             curl \
             wget \
