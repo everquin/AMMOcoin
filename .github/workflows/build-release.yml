@@ -52,6 +52,15 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Update timestamps on pre-generated files
+        run: |
+          echo "🔧 Updating timestamps on pre-generated autotools files..."
+          find ammocoin-apps-from-ammocoin -name "configure" -exec touch {} \;
+          find ammocoin-apps-from-ammocoin -name "Makefile.in" -exec touch {} \;
+          find ammocoin-apps-from-ammocoin -name "aclocal.m4" -exec touch {} \;
+          find ammocoin-apps-from-ammocoin -name "config.h.in" -exec touch {} \;
+          echo "✅ Timestamps updated"
+
       - name: Verify Genesis Block Hash
         run: |
           echo "🔍 Verifying v1.1.0 genesis block in source code..."
