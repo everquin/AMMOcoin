@@ -96,9 +96,6 @@ jobs:
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
-          echo "🔧 Configuring subdirectories with --disable-maintainer-mode..."
-          cd src/univalue && ./configure --disable-maintainer-mode && cd ../..
-          cd src/secp256k1 && ./configure --disable-maintainer-mode && cd ../..
           echo "🔧 Configuring main project..."
           ./configure \
             --disable-tests \
@@ -109,6 +106,13 @@ jobs:
             --disable-maintainer-mode \
             CXXFLAGS="-O2 -g" \
             LDFLAGS="-static-libgcc -static-libstdc++"
+          echo "🔧 Touching generated Makefiles to prevent regeneration..."
+          find . -name "Makefile" -exec touch {} \;
+          find . -name "Makefile.in" -exec touch {} \;
+          sleep 1
+          touch src/univalue/Makefile src/univalue/Makefile.in
+          touch src/secp256k1/Makefile src/secp256k1/Makefile.in
+          echo "✅ Configuration complete, starting build..."
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
