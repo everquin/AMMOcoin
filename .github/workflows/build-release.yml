@@ -31,6 +31,7 @@ jobs:
             automake \
             libtool \
             pkg-config \
+            pkgconf \
             git \
             curl \
             wget \
@@ -52,11 +53,15 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Setup autoconf environment
+      - name: Prepare chiabls configure
+        working-directory: ammocoin-apps-from-ammocoin/src/chiabls
         run: |
-          echo "Setting up autoconf macros..."
-          export ACLOCAL_PATH=/usr/share/aclocal
-          echo "ACLOCAL_PATH=/usr/share/aclocal" >> $GITHUB_ENV
+          echo "Checking for pre-generated configure script..."
+          if [ -f configure ]; then
+            echo "✅ Configure script exists, skipping autogen for chiabls"
+          else
+            echo "⚠️  No configure script found"
+          fi
 
       - name: Verify Genesis Block Hash
         run: |
@@ -88,8 +93,13 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting build process..."
-          export ACLOCAL_PATH=/usr/share/aclocal
-          ./autogen.sh
+          if [ ! -f configure ]; then
+            echo "⚠️  No configure script found, running autogen.sh..."
+            export ACLOCAL_PATH=/usr/share/aclocal
+            ./autogen.sh
+          else
+            echo "✅ Configure script exists, skipping autogen.sh"
+          fi
           ./configure \
             --disable-tests \
             --disable-bench \
