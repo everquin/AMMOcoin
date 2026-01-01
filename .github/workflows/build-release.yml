@@ -52,6 +52,12 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Setup autoconf environment
+        run: |
+          echo "Setting up autoconf macros..."
+          export ACLOCAL_PATH=/usr/share/aclocal
+          echo "ACLOCAL_PATH=/usr/share/aclocal" >> $GITHUB_ENV
+
       - name: Verify Genesis Block Hash
         run: |
           echo "🔍 Verifying v1.1.0 genesis block in source code..."
@@ -82,6 +88,7 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting build process..."
+          export ACLOCAL_PATH=/usr/share/aclocal
           ./autogen.sh
           ./configure \
             --disable-tests \
