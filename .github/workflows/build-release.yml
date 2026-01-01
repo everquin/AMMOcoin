@@ -93,6 +93,13 @@ jobs:
           echo "🔨 Starting build process..."
           echo "✅ Using pre-generated configure scripts (skipping autogen.sh)"
           chmod +x configure
+          chmod +x src/univalue/configure
+          chmod +x src/secp256k1/configure
+          chmod +x src/chiabls/configure
+          echo "🔧 Configuring subdirectories with --disable-maintainer-mode..."
+          cd src/univalue && ./configure --disable-maintainer-mode && cd ../..
+          cd src/secp256k1 && ./configure --disable-maintainer-mode && cd ../..
+          echo "🔧 Configuring main project..."
           ./configure \
             --disable-tests \
             --disable-bench \
