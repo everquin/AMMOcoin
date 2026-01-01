@@ -53,16 +53,6 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Prepare chiabls configure
-        working-directory: ammocoin-apps-from-ammocoin/src/chiabls
-        run: |
-          echo "Checking for pre-generated configure script..."
-          if [ -f configure ]; then
-            echo "✅ Configure script exists, skipping autogen for chiabls"
-          else
-            echo "⚠️  No configure script found"
-          fi
-
       - name: Verify Genesis Block Hash
         run: |
           echo "🔍 Verifying v1.1.0 genesis block in source code..."
@@ -93,13 +83,8 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting build process..."
-          if [ ! -f configure ]; then
-            echo "⚠️  No configure script found, running autogen.sh..."
-            export ACLOCAL_PATH=/usr/share/aclocal
-            ./autogen.sh
-          else
-            echo "✅ Configure script exists, skipping autogen.sh"
-          fi
+          echo "✅ Using pre-generated configure scripts (skipping autogen.sh)"
+          chmod +x configure
           ./configure \
             --disable-tests \
             --disable-bench \
