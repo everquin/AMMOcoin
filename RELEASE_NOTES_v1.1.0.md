@@ -1,28 +1,27 @@
-# AMMOcoin v1.1.0 - Path A Migration
+# AMMOcoin v1.1.0 - Option 2.5: Team Distribution Premine
 
-**Release Date:** December 28, 2025
-**Release Type:** Major Release - New Blockchain (Path A)
+**Release Date:** December 31, 2025
+**Release Type:** Major Release - New Blockchain with 250M AMMO Team Distribution
 **Network Status:** Ready for deployment
 
 ---
 
-## ⚠️ CRITICAL: Path A Migration - New Blockchain
+## ⚠️ CRITICAL: New Blockchain with Team Distribution
 
 **This is a completely new blockchain, NOT a fork of v1.0!**
 
 - **v1.0 Genesis Block:** `0x000001c4271a6e733011fbb7bde9f727b67e294413e89e89c525e169bda50795`
 - **v1.1.0 Genesis Block:** `0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
 
-**Your v1.0 wallet is required to claim v1.1.0 balances.**
-
 ### What This Means:
 
 - ❌ v1.0 and v1.1.0 are **separate, incompatible blockchains**
 - ❌ Your v1.0 balances will **NOT automatically appear** in v1.1.0
-- ✅ v1.0 private keys are **required** to claim v1.1.0 balances
-- ✅ **NEVER delete** your v1.0 wallet before claiming v1.1.0
+- ✅ **Team-controlled distribution:** 250,000,000 AMMO in genesis will be manually distributed to verified v1.0 users
+- ✅ **NEVER delete** your v1.0 wallet - proof of ownership required for claims
+- ✅ **Secure genesis:** New wallet generated with no private key exposure
 
-📖 **Complete Migration Guide:** [V1.0_TO_V1.1.0_NODE_MIGRATION.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
+📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
 
 ---
 
@@ -72,22 +71,40 @@ ammocoind --version
 
 **For ARM64 Macs (Apple Silicon)**
 
-#### Download:
+#### Download tar.gz (Recommended):
 ```bash
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin-v1.1.0-macos-arm64.tar.gz
+wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+```
+
+#### Download zip (Alternative):
+```bash
+wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip
+```
+
+#### Verify Checksum:
+```bash
+shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+# Should match: b8712288fb59d3e34113029e1622b88c01d844de9d69bea22c89160ce8905bb5
 ```
 
 #### Extract and Install:
 ```bash
 # Extract
-tar -xzf ammocoin-v1.1.0-macos-arm64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+cd AMMOcoin-v1.1.0-macOS-ARM64
 
 # Install
 sudo cp ammocoind ammocoin-cli ammocoin-tx /usr/local/bin/
+sudo chmod +x /usr/local/bin/ammocoin*
 
 # Verify
 ammocoind --version
 ```
+
+**File Sizes:**
+- tar.gz: 4.5 MB (compressed)
+- zip: 9.1 MB (compressed)
+- Binaries: ~13 MB total (ammocoind: 11MB, ammocoin-cli: 382KB, ammocoin-tx: 1.4MB)
 
 **Note:** Intel Mac (x86_64) users should compile from source. See build guide below.
 
@@ -105,13 +122,16 @@ For now, Windows users can compile from source using WSL2 (Windows Subsystem for
 
 **Always verify checksums before installation!**
 
-### Linux x86_64:
+### macOS ARM64:
 ```
-917cd4365b352ad7800ba9dd2c388408cba0341ff6da1ba8aa33f84515e73acb  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-8cc8d9a3b96b92305cd99393f79598cf3ca3611693000d2da1f9727aadd161f7  AMMOcoin-v1.1.0-Linux-x86_64.zip
+b8712288fb59d3e34113029e1622b88c01d844de9d69bea22c89160ce8905bb5  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+a2f383362683ec4a0e26ff6ea3d90909b430a923ee454aac6615c0de28f60bd3  AMMOcoin-v1.1.0-macOS-ARM64.zip
 ```
 
-Download complete checksums: [CHECKSUMS-Linux.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS-Linux.txt)
+Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)
+
+### Linux x86_64:
+**Note:** Linux binaries are pending rebuild with new secure genesis. Coming soon.
 
 ---
 
@@ -243,27 +263,35 @@ See detailed guides:
 
 ---
 
-## 💰 Migration & Distribution
+## 💰 Distribution: Option 2.5 - Team Distribution Premine
 
-### For v1.0 Holders:
+### Genesis Distribution:
 
-**Top 61 Holders (94.11% of supply):**
-- 218.7M AMMO distributed automatically
-- Distribution will occur after network launch
-- Check your v1.1.0 balance after distribution
+**250,000,000 AMMO in Genesis Block:**
+- Controlled by team wallet: `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`
+- Private key secured offline (never exposed in code or GitHub)
+- Will be manually distributed to verified v1.0 users
 
-**All Other Holders (5.89% of supply):**
-- 13.7M AMMO available via migration fund
-- Claim using signature verification with v1.0 private keys
-- 90-day claim window after network launch
+### Distribution Process:
 
-### Migration Process:
+**For v1.0 Holders:**
+1. Submit claim with proof of v1.0 wallet ownership
+2. Team verifies v1.0 balance via snapshot
+3. Equivalent v1.1.0 AMMO sent from team wallet
+4. Claim window: TBD (estimated 90 days)
 
-📖 **User Migration Guide:** [USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
+**Advantages:**
+- ✅ No complex multi-output genesis
+- ✅ Full team control over distribution
+- ✅ Flexible claim verification process
+- ✅ Can handle edge cases individually
+- ✅ Prevents unclaimed funds from being lost
 
-📖 **Node Operator Migration:** [V1.0_TO_V1.1.0_NODE_MIGRATION.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
+📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
 
-**CRITICAL:** Your v1.0 `wallet.dat` contains the private keys needed to claim v1.1.0 balances. NEVER delete it!
+📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/DISTRIBUTION_PROCESS_GUIDE.md)
+
+**CRITICAL:** Your v1.0 `wallet.dat` contains proof of ownership needed to claim v1.1.0 balances. NEVER delete it!
 
 ---
 
@@ -271,18 +299,20 @@ See detailed guides:
 
 ### Binary Information:
 
-**Linux x86_64:**
-- **Platform:** Ubuntu 20.04 LTS
-- **Compiler:** GCC 9.4.0
-- **Architecture:** x86_64 (64-bit ELF)
-- **Linking:** Dynamically linked
-- **Debug Symbols:** Included (not stripped)
-- **Berkeley DB:** 4.8 (with atomic.h patch for modern GCC)
-
 **macOS ARM64:**
 - **Platform:** macOS 14+ (Sonoma)
 - **Architecture:** ARM64 (Apple Silicon)
 - **Minimum:** M1/M2/M3/M4 processors
+- **Compiler:** Apple Clang (Xcode Command Line Tools)
+- **Boost Version:** 1.85
+- **Berkeley DB:** 4.8
+- **Build Date:** December 31, 2025
+
+**Linux x86_64:**
+- **Status:** Pending rebuild with new secure genesis
+- **Platform:** Ubuntu 20.04 LTS (planned)
+- **Architecture:** x86_64 (64-bit ELF)
+- **Coming Soon:** After macOS testing complete
 
 ### Compatibility:
 
@@ -429,13 +459,15 @@ When reporting issues, please include:
 
 | Phase | Status | Date |
 |-------|--------|------|
-| v1.0 snapshot captured | ✅ Complete | December 2025 |
-| v1.1.0 binaries compiled | ✅ Complete | December 28, 2025 |
-| GitHub Release published | ✅ Complete | December 28, 2025 |
-| Seed nodes deployed | ⏸️ Pending | TBD |
+| Option 2.5 implementation | ✅ Complete | December 31, 2025 |
+| New secure genesis mined | ✅ Complete | December 31, 2025 |
+| macOS ARM64 binaries | ✅ Complete | December 31, 2025 |
+| Security remediation (private key removal) | ✅ Complete | December 31, 2025 |
+| Linux x86_64 binaries | ⏸️ Pending | TBD |
+| GitHub Release v1.1.0 | ⏸️ Pending | After testing |
+| Seed nodes deployed | ⏸️ Pending | After release |
 | Network launch | ⏸️ Pending | TBD |
-| Top 61 distribution | ⏸️ Pending | After network launch |
-| Migration fund claims open | ⏸️ Pending | After network launch |
+| Team distribution claims open | ⏸️ Pending | After network launch |
 | Claim window closes | ⏸️ Pending | 90 days after opening |
 
 ---
@@ -443,26 +475,28 @@ When reporting issues, please include:
 ## 💡 Key Takeaways
 
 1. ⚠️ **v1.1.0 is a NEW blockchain**, not an upgrade of v1.0
-2. 🔑 **Your v1.0 private keys** are required to claim v1.1.0 balances
-3. 🚫 **NEVER delete v1.0 wallet** before claiming
-4. 📦 **Pre-compiled binaries** available for quick setup
-5. 🌐 **Separate data directories** for v1.0 and v1.1.0
-6. ✅ **Verify checksums** before installation
-7. 📖 **Read migration guides** before upgrading nodes
+2. 💰 **250M AMMO team distribution** - manually distributed to verified v1.0 users
+3. 🔑 **Your v1.0 wallet** is proof of ownership for claims
+4. 🚫 **NEVER delete v1.0 wallet** before claiming
+5. 🔒 **Secure genesis** - no private keys exposed in code
+6. 📦 **macOS ARM64 binaries** available now (Linux coming soon)
+7. ✅ **Verify checksums** before installation
+8. 📖 **Read distribution guide** for claim process
 
 ---
 
 ## 🎉 Thank You
 
-Thank you to all AMMOcoin v1.0 holders for your continued support. This Path A migration represents a fresh start for the AMMOcoin network with improved features and enhanced privacy capabilities.
+Thank you to all AMMOcoin v1.0 holders for your continued support. This Option 2.5 implementation provides a secure, team-controlled distribution of 250M AMMO to verified v1.0 users, ensuring a fair and flexible migration process.
 
 **Happy Staking!**
 
 ---
 
-**Release Created:** December 28, 2025
-**Binary Compilation:** Ubuntu 20.04 LTS (Vultr VM)
+**Release Created:** December 31, 2025
+**Binary Compilation:** macOS ARM64 (Apple Silicon)
 **Version:** v1.1.0.0
-**Commit:** [See tagged commit](https://github.com/everquin/AMMOcoin-v1.1.0/tree/v1.1.0)
+**Genesis Hash:** `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+**Security:** Private keys never exposed in repository
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

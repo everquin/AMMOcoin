@@ -20,9 +20,9 @@ fi
 
 echo "✅ Source directories found"
 
-# Build Docker image for Linux compilation
-echo "🔨 Building Docker image for Linux compilation..."
-docker build -f Dockerfile.linux -t ammocoin-linux-builder:v1.1.0 .
+# Build Docker image for Linux x86_64 compilation
+echo "🔨 Building Docker image for Linux x86_64 compilation..."
+docker buildx build --platform linux/amd64 -f Dockerfile.linux -t ammocoin-linux-builder:v1.1.0 . --load
 
 if [ $? -ne 0 ]; then
     echo "❌ Docker build failed"

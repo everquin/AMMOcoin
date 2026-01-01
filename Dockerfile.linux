@@ -1,5 +1,6 @@
-# Ubuntu-based Linux build environment for AMMOcoin v1.1.0
-FROM ubuntu:22.04
+# Ubuntu-based Linux x86_64 build environment for AMMOcoin v1.1.0
+# Explicitly set platform to x86_64/amd64
+FROM --platform=linux/amd64 ubuntu:22.04
 
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -15,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     wget \
+    cmake \
     libssl-dev \
     libboost-all-dev \
     libdb-dev \
@@ -46,7 +48,7 @@ COPY ammocoin-apps-from-ammocoin/ /build/ammocoin-apps-from-ammocoin/
 # Set build directory
 WORKDIR /build/ammocoin-apps-from-ammocoin
 
-# Configure build for Linux
+# Configure build for Linux with additional flags to help with static linking
 RUN ./autogen.sh && \
     ./configure \
     --disable-tests \
@@ -58,8 +60,13 @@ RUN ./autogen.sh && \
     CXXFLAGS="-O2 -g" \
     LDFLAGS="-static-libgcc -static-libstdc++"
 
-# Build all binaries (limit parallel jobs to avoid memory issues)
-RUN make -j2 CARGO=/root/.cargo/bin/cargo RUSTC=/root/.cargo/bin/rustc
+# Build all binaries - let make handle subdirectory dependencies
+# Use V=1 for verbose output to help debug linking issues
+RUN make V=1 -j2 CARGO=/root/.cargo/bin/cargo RUSTC=/root/.cargo/bin/rustc 2>&1 | tee /build/build.log || \
+    (echo "Build failed - checking for common issues..." && \
+     echo "Last 100 lines of output:" && \
+     tail -100 /build/build.log && \
+     false)
 
 # Create output directory for binaries
 RUN mkdir -p /output && \
