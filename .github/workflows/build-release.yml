@@ -99,6 +99,7 @@ jobs:
             --without-gui \
             --enable-wallet \
             --with-incompatible-bdb \
+            --disable-maintainer-mode \
             CXXFLAGS="-O2 -g" \
             LDFLAGS="-static-libgcc -static-libstdc++"
           make -j$(nproc)
