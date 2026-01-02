@@ -2,17 +2,13 @@ name: Build AMMOcoin v1.1.0 Windows Only
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
-    paths:
-      - 'ammocoin-apps-from-ammocoin/**'
-      - '.github/workflows/**'
+    # Manual trigger only - prevents multiple simultaneous builds
 
 jobs:
   build-windows-x86_64:
     runs-on: ubuntu-22.04
     name: Build Windows x86_64 Binaries
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -49,13 +45,13 @@ jobs:
 
       - name: Install Rust with Windows target
         run: |
-          echo "🦀 Installing Rust 1.80+ for Windows target..."
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.80
-          source "$HOME/.cargo/env"
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          echo "🦀 Installing Rust 1.80+ and setting as default..."
+          rustup toolchain install 1.80
+          rustup default 1.80
           rustup target add x86_64-pc-windows-gnu
           rustc --version
-          echo "✅ Rust installed with Windows target"
+          cargo --version
+          echo "✅ Rust 1.80 set as default with Windows target"
 
       - name: Verify Genesis Block Hash
         run: |
@@ -83,11 +79,11 @@ jobs:
         run: |
           echo "🔨 Building dependencies for Windows (this takes 15-20 minutes)..."
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium, Qt..."
-          
+
           # Start the build
           make -j$(nproc) HOST=x86_64-w64-mingw32 &
           BUILD_PID=$!
-          
+
           # Monitor for Qt extraction and apply patch
           echo "📡 Monitoring for Qt extraction to apply numeric_limits patch..."
           while kill -0 $BUILD_PID 2>/dev/null; do
@@ -104,28 +100,65 @@ jobs:
             fi
             sleep 5
           done
-          
+
           # Wait for build to complete
           wait $BUILD_PID
           BUILD_RESULT=$?
-          
+
           if [ $BUILD_RESULT -ne 0 ]; then
             echo "❌ Build failed with exit code $BUILD_RESULT"
             exit $BUILD_RESULT
           fi
-          
+
           echo "✅ Dependencies built successfully"
+
+      - name: Replace depends Rust with version 1.80
+        run: |
+          echo "🔧 Replacing old Rust binaries in depends with Rust 1.80..."
+          DEPENDS_NATIVE_BIN="ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/bin"
+
+          if [ -d "$DEPENDS_NATIVE_BIN" ]; then
+            echo "📂 Found depends native bin directory"
+            ls -lh "$DEPENDS_NATIVE_BIN" | grep -E 'cargo|rustc' || echo "No existing Rust binaries found"
+
+            # Remove old Rust binaries if they exist
+            rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc" 2>/dev/null || true
+
+            # Create symlinks to our Rust 1.80
+            ln -sf "$(which cargo)" "$DEPENDS_NATIVE_BIN/cargo"
+            ln -sf "$(which rustc)" "$DEPENDS_NATIVE_BIN/rustc"
+
+            echo "✅ Replaced with symlinks to Rust 1.80"
+            ls -lh "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
+
+            # Verify the linked binaries work
+            echo "🔍 Verifying linked binaries:"
+            "$DEPENDS_NATIVE_BIN/rustc" --version
+            "$DEPENDS_NATIVE_BIN/cargo" --version
+          else
+            echo "❌ ERROR: Depends native bin directory not found!"
+            echo "Expected: $DEPENDS_NATIVE_BIN"
+            echo "Listing depends directory structure:"
+            find ammocoin-apps-from-ammocoin/depends -type d -name "native" || echo "No native directories found"
+            exit 1
+          fi
 
       - name: Build AMMOcoin Windows Binaries
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting Windows cross-compilation..."
+          echo "🦀 Verifying Rust version..."
+          rustc --version
+          cargo --version
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
 
           echo "🔧 Configuring for Windows x86_64..."
+          CARGO="$(which cargo)" \
+          RUSTC="$(which rustc)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
             --prefix=/ \
@@ -143,7 +176,10 @@ jobs:
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile
 
-          echo "✅ Starting build..."
+          echo "✅ Starting build with explicit Rust paths and Windows target..."
+          CARGO="$(which cargo)" \
+          RUSTC="$(which rustc)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
@@ -154,7 +190,7 @@ jobs:
           [ -f src/ammocoind.exe ] && echo "✅ ammocoind.exe found" || (echo "❌ ammocoind.exe missing" && exit 1)
           [ -f src/ammocoin-cli.exe ] && echo "✅ ammocoin-cli.exe found" || (echo "❌ ammocoin-cli.exe missing" && exit 1)
           [ -f src/ammocoin-tx.exe ] && echo "✅ ammocoin-tx.exe found" || (echo "❌ ammocoin-tx.exe missing" && exit 1)
-          
+
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings src/ammocoind.exe | grep -q "$GENESIS_HASH"; then
             echo "✅ Genesis hash verified in binary"
@@ -162,7 +198,7 @@ jobs:
             echo "❌ Genesis hash NOT found!"
             exit 1
           fi
-          
+
           echo "📋 Binary info:"
           file src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe
           echo "📊 Binary sizes:"
