@@ -52,6 +52,7 @@ jobs:
           echo "🦀 Installing Rust 1.80+ for Windows target..."
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.80
           source "$HOME/.cargo/env"
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
           rustup target add x86_64-pc-windows-gnu
           rustc --version
           echo "✅ Rust installed with Windows target"
@@ -119,7 +120,6 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting Windows cross-compilation..."
-          source "$HOME/.cargo/env"
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
