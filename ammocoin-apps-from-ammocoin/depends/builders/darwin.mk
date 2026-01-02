@@ -1,0 +1,10 @@
+build_darwin_CC=clang
+build_darwin_CXX=clang++
+build_darwin_AR=ar
+build_darwin_RANLIB=ranlib
+build_darwin_STRIP=strip
+build_darwin_NM=nm
+build_darwin_OTOOL=otool
+build_darwin_INSTALL_NAME_TOOL=install_name_tool
+build_darwin_SHA256SUM=shasum -a 256
+build_darwin_DOWNLOAD=curl --location --fail --connect-timeout 10 --retry 3 -o
