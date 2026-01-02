@@ -313,19 +313,13 @@ jobs:
           find ammocoin-apps-from-ammocoin -name "config.h.in" -exec touch {} \;
           echo "✅ Timestamps updated"
 
-      - name: Install Windows cross-compilation libraries
+      - name: Build Windows dependencies
+        working-directory: ammocoin-apps-from-ammocoin/depends
         run: |
-          echo "📦 Installing Windows development libraries..."
-          # Note: Using system libraries for faster builds
-          # A full depends build would take 20+ minutes
-          sudo apt-get install -y \
-            libboost-system-dev:amd64 \
-            libboost-filesystem-dev:amd64 \
-            libboost-program-options-dev:amd64 \
-            libboost-thread-dev:amd64 \
-            libssl-dev:amd64 \
-            libevent-dev:amd64
-          echo "✅ Libraries installed"
+          echo "🔨 Building dependencies for Windows (this takes 15-20 minutes)..."
+          echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium..."
+          make -j$(nproc) HOST=x86_64-w64-mingw32
+          echo "✅ Dependencies built successfully"
 
       - name: Build AMMOcoin Windows Binaries
         working-directory: ammocoin-apps-from-ammocoin
@@ -337,17 +331,16 @@ jobs:
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
           echo "🔧 Configuring for Windows x86_64..."
+          CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
-            --prefix=/usr/x86_64-w64-mingw32 \
+            --prefix=/ \
             --host=x86_64-w64-mingw32 \
             --disable-tests \
             --disable-bench \
             --without-gui \
-            --disable-wallet \
-            --disable-zmq \
-            --disable-maintainer-mode \
-            CXXFLAGS="-O2 -g" \
-            LDFLAGS="-static-libgcc -static-libstdc++"
+            --enable-wallet \
+            --with-incompatible-bdb \
+            --disable-maintainer-mode
           echo "🔧 Touching generated Makefiles to prevent regeneration..."
           find . -name "Makefile" -exec touch {} \;
           find . -name "Makefile.in" -exec touch {} \;
