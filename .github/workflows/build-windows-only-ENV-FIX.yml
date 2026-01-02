@@ -133,6 +133,7 @@ jobs:
           echo "🔧 Configuring for Windows x86_64..."
           CARGO="$(which cargo)" \
           RUSTC="$(which rustc)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
             --prefix=/ \
@@ -150,8 +151,11 @@ jobs:
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile
 
-          echo "✅ Starting build with explicit Rust paths..."
-          CARGO="$(which cargo)" RUSTC="$(which rustc)" make -j$(nproc)
+          echo "✅ Starting build with explicit Rust paths and Windows target..."
+          CARGO="$(which cargo)" \
+          RUSTC="$(which rustc)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
+          make -j$(nproc)
           echo "✅ Build completed successfully"
 
       - name: Verify Compiled Binaries
