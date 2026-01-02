@@ -40,6 +40,13 @@ jobs:
             libsodium-dev \
             nsis
 
+      - name: Configure MinGW to use POSIX threads
+        run: |
+          echo "🔧 Configuring MinGW-w64 to use POSIX threading model..."
+          sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
+          sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+          echo "✅ MinGW configured for POSIX threads (enables std::mutex, std::thread)"
+
       - name: Install Rust with Windows target
         uses: actions-rs/toolchain@v1
         with:
