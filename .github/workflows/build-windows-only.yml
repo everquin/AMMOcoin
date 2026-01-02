@@ -48,11 +48,13 @@ jobs:
           echo "✅ MinGW configured for POSIX threads (enables std::mutex, std::thread)"
 
       - name: Install Rust with Windows target
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: x86_64-pc-windows-gnu
-          override: true
+        run: |
+          echo "🦀 Installing Rust 1.80+ for Windows target..."
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.80
+          source "$HOME/.cargo/env"
+          rustup target add x86_64-pc-windows-gnu
+          rustc --version
+          echo "✅ Rust installed with Windows target"
 
       - name: Verify Genesis Block Hash
         run: |
@@ -117,11 +119,12 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting Windows cross-compilation..."
+          source "$HOME/.cargo/env"
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
-          
+
           echo "🔧 Configuring for Windows x86_64..."
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
@@ -133,13 +136,13 @@ jobs:
             --enable-wallet \
             --with-incompatible-bdb \
             --disable-maintainer-mode
-          
+
           echo "🔧 Touching Makefiles to prevent regeneration..."
           find . -name "Makefile" -exec touch {} \;
           find . -name "Makefile.in" -exec touch {} \;
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile
-          
+
           echo "✅ Starting build..."
           make -j$(nproc)
           echo "✅ Build completed successfully"
