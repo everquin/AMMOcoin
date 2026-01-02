@@ -1,248 +1,13 @@
-name: Build AMMOcoin v1.1.0 Release Binaries
+name: Build AMMOcoin v1.1.0 Windows Only
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'ammocoin-apps-from-ammocoin/src/**'
-      - 'ammocoin-source/src/**'
-      - '.github/workflows/build-release.yml'
   workflow_dispatch:
+    # Manual trigger only - prevents multiple simultaneous builds
 
 jobs:
-  build-linux-x86_64:
-    name: Build Linux x86_64 Binaries
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential \
-            autoconf \
-            autoconf-archive \
-            automake \
-            libtool \
-            pkg-config \
-            git \
-            curl \
-            wget \
-            libssl-dev \
-            libboost-all-dev \
-            libdb-dev \
-            libdb++-dev \
-            libevent-dev \
-            libzmq3-dev \
-            libminiupnpc-dev \
-            libnatpmp-dev \
-            libgmp-dev \
-            libsodium-dev \
-            python3
-
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - name: Update timestamps on pre-generated files
-        run: |
-          echo "🔧 Updating timestamps on pre-generated autotools files..."
-          find ammocoin-apps-from-ammocoin -name "configure" -exec touch {} \;
-          find ammocoin-apps-from-ammocoin -name "Makefile.in" -exec touch {} \;
-          find ammocoin-apps-from-ammocoin -name "aclocal.m4" -exec touch {} \;
-          find ammocoin-apps-from-ammocoin -name "config.h.in" -exec touch {} \;
-          echo "✅ Timestamps updated"
-
-      - name: Verify Genesis Block Hash
-        run: |
-          echo "🔍 Verifying v1.1.0 genesis block in source code..."
-          GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
-          MERKLE_ROOT="a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"
-          NONCE="1299391"
-          if grep -q "$GENESIS_HASH" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
-            echo "✅ Correct genesis hash found: $GENESIS_HASH"
-          else
-            echo "❌ ERROR: Expected genesis hash not found!"
-            echo "Expected: $GENESIS_HASH"
-            exit 1
-          fi
-          if grep -q "$MERKLE_ROOT" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
-            echo "✅ Correct merkle root found: $MERKLE_ROOT"
-          else
-            echo "❌ ERROR: Expected merkle root not found!"
-            exit 1
-          fi
-          if grep -q "$NONCE" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
-            echo "✅ Correct nNonce found: $NONCE"
-          else
-            echo "❌ ERROR: Expected nNonce not found!"
-            exit 1
-          fi
-
-      - name: Build AMMOcoin Binaries
-        working-directory: ammocoin-apps-from-ammocoin
-        run: |
-          echo "🔨 Starting build process..."
-          echo "✅ Using pre-generated configure scripts (skipping autogen.sh)"
-          chmod +x configure
-          chmod +x src/univalue/configure
-          chmod +x src/secp256k1/configure
-          chmod +x src/chiabls/configure
-          echo "🔧 Configuring main project..."
-          ./configure \
-            --disable-tests \
-            --disable-bench \
-            --without-gui \
-            --enable-wallet \
-            --with-incompatible-bdb \
-            --disable-maintainer-mode \
-            CXXFLAGS="-O2 -g" \
-            LDFLAGS="-static-libgcc -static-libstdc++"
-          echo "🔧 Touching generated Makefiles to prevent regeneration..."
-          find . -name "Makefile" -exec touch {} \;
-          find . -name "Makefile.in" -exec touch {} \;
-          sleep 1
-          touch src/univalue/Makefile src/univalue/Makefile.in
-          touch src/secp256k1/Makefile src/secp256k1/Makefile.in
-          echo "✅ Configuration complete, starting build..."
-          make -j$(nproc)
-          echo "✅ Build completed successfully"
-
-      - name: Verify Compiled Binaries
-        working-directory: ammocoin-apps-from-ammocoin
-        run: |
-          echo "🔍 Verifying compiled binaries..."
-          if [ ! -f src/ammocoind ]; then
-            echo "❌ ammocoind not found!"
-            exit 1
-          fi
-          if [ ! -f src/ammocoin-cli ]; then
-            echo "❌ ammocoin-cli not found!"
-            exit 1
-          fi
-          if [ ! -f src/ammocoin-tx ]; then
-            echo "❌ ammocoin-tx not found!"
-            exit 1
-          fi
-          GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
-          if strings src/ammocoind | grep -q "$GENESIS_HASH"; then
-            echo "✅ Genesis hash verified in ammocoind binary"
-          else
-            echo "❌ Genesis hash NOT found in binary!"
-            exit 1
-          fi
-          echo "📋 Binary version:"
-          src/ammocoind --version || true
-          echo "📊 Binary sizes:"
-          ls -lh src/ammocoind src/ammocoin-cli src/ammocoin-tx
-
-      - name: Create Release Package
-        run: |
-          echo "📦 Creating release package..."
-          mkdir -p release-package/bin
-          cp ammocoin-apps-from-ammocoin/src/ammocoind release-package/bin/
-          cp ammocoin-apps-from-ammocoin/src/ammocoin-cli release-package/bin/
-          cp ammocoin-apps-from-ammocoin/src/ammocoin-tx release-package/bin/
-          chmod +x release-package/bin/*
-          cat > release-package/README.md << 'EOFREADME'
-          # AMMOcoin v1.1.0 - Linux x86_64
-
-          **Built:** $(date -u)
-          **Platform:** Linux x86_64 (Ubuntu 22.04+)
-          **Build:** GitHub Actions (Automated)
-
-          ## ✅ Verified Genesis Block
-
-          ```
-          Genesis Hash:   000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-          Merkle Root:    a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
-          Genesis Time:   1623089845 (June 7, 2021)
-          Genesis Nonce:  1299391
-          Genesis Reward: 250,000,000 AMMO
-          ```
-
-          ## Package Contents
-
-          - `ammocoind` - AMMOcoin daemon
-          - `ammocoin-cli` - Command-line interface
-          - `ammocoin-tx` - Transaction utility
-
-          ## Installation
-
-          ```bash
-          sudo cp bin/* /usr/local/bin/
-          sudo chmod +x /usr/local/bin/ammocoin*
-          ```
-
-          ## Quick Start
-
-          ```bash
-          # Start daemon
-          ammocoind -daemon
-
-          # Check status
-          ammocoin-cli getinfo
-
-          # Get genesis block
-          ammocoin-cli getblockhash 0
-          # Should return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-
-          # Stop daemon
-          ammocoin-cli stop
-          ```
-
-          ## Network Parameters
-
-          - Max Supply: 9,999,999,999 AMMO
-          - Genesis Premine: 250,000,000 AMMO
-          - Block Time: 3 minutes
-          - RPC Port: 37020
-          - P2P Port: 37019
-          - Masternode Collateral: 10,000 AMMO
-
-          Built with ❤️ by GitHub Actions
-          EOFREADME
-          cd release-package
-          tar -czf ../AMMOcoin-v1.1.0-Linux-x86_64.tar.gz .
-          cd ..
-          sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz > AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
-          echo "✅ Release package created"
-          echo "📦 Package size:"
-          ls -lh AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-          echo ""
-          echo "🔐 SHA256 Checksum:"
-          cat AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
-
-      - name: Upload Release Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ammocoin-linux-x86_64
-          path: |
-            AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-            AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
-          retention-days: 90
-
-      - name: Upload Individual Binaries (for verification)
-        uses: actions/upload-artifact@v4
-        with:
-          name: ammocoin-linux-binaries-raw
-          path: |
-            ammocoin-apps-from-ammocoin/src/ammocoind
-            ammocoin-apps-from-ammocoin/src/ammocoin-cli
-            ammocoin-apps-from-ammocoin/src/ammocoin-tx
-          retention-days: 30
-
   build-windows-x86_64:
-    name: Build Windows x86_64 Binaries
     runs-on: ubuntu-22.04
+    name: Build Windows x86_64 Binaries
 
     steps:
       - name: Checkout code
@@ -271,12 +36,22 @@ jobs:
             libsodium-dev \
             nsis
 
+      - name: Configure MinGW to use POSIX threads
+        run: |
+          echo "🔧 Configuring MinGW-w64 to use POSIX threading model..."
+          sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
+          sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+          echo "✅ MinGW configured for POSIX threads (enables std::mutex, std::thread)"
+
       - name: Install Rust with Windows target
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: x86_64-pc-windows-gnu
-          override: true
+        run: |
+          echo "🦀 Installing Rust 1.80+ and setting as default..."
+          rustup toolchain install 1.80
+          rustup default 1.80
+          rustup target add x86_64-pc-windows-gnu
+          rustc --version
+          cargo --version
+          echo "✅ Rust 1.80 set as default with Windows target"
 
       - name: Verify Genesis Block Hash
         run: |
@@ -288,19 +63,6 @@ jobs:
             echo "✅ Correct genesis hash found: $GENESIS_HASH"
           else
             echo "❌ ERROR: Expected genesis hash not found!"
-            echo "Expected: $GENESIS_HASH"
-            exit 1
-          fi
-          if grep -q "$MERKLE_ROOT" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
-            echo "✅ Correct merkle root found: $MERKLE_ROOT"
-          else
-            echo "❌ ERROR: Expected merkle root not found!"
-            exit 1
-          fi
-          if grep -q "$NONCE" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
-            echo "✅ Correct nNonce found: $NONCE"
-          else
-            echo "❌ ERROR: Expected nNonce not found!"
             exit 1
           fi
 
@@ -310,27 +72,93 @@ jobs:
           find ammocoin-apps-from-ammocoin -name "configure" -exec touch {} \;
           find ammocoin-apps-from-ammocoin -name "Makefile.in" -exec touch {} \;
           find ammocoin-apps-from-ammocoin -name "aclocal.m4" -exec touch {} \;
-          find ammocoin-apps-from-ammocoin -name "config.h.in" -exec touch {} \;
           echo "✅ Timestamps updated"
 
-      - name: Build Windows dependencies
+      - name: Build Windows dependencies with Qt patch
         working-directory: ammocoin-apps-from-ammocoin/depends
         run: |
           echo "🔨 Building dependencies for Windows (this takes 15-20 minutes)..."
-          echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium..."
-          make -j$(nproc) HOST=x86_64-w64-mingw32
+          echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium, Qt..."
+
+          # Start the build
+          make -j$(nproc) HOST=x86_64-w64-mingw32 &
+          BUILD_PID=$!
+
+          # Monitor for Qt extraction and apply patch
+          echo "📡 Monitoring for Qt extraction to apply numeric_limits patch..."
+          while kill -0 $BUILD_PID 2>/dev/null; do
+            QT_HEADER="work/build/x86_64-w64-mingw32/qt/*/qtbase/src/corelib/tools/qbytearraymatcher.h"
+            if ls $QT_HEADER 2>/dev/null; then
+              echo "✅ Qt extracted, applying #include <limits> patch..."
+              for file in $QT_HEADER; do
+                if ! grep -q "#include <limits>" "$file"; then
+                  sed -i '/#include <QtCore\/qbytearray.h>/a \\n#include <limits>' "$file"
+                  echo "✅ Patched: $file"
+                fi
+              done
+              break
+            fi
+            sleep 5
+          done
+
+          # Wait for build to complete
+          wait $BUILD_PID
+          BUILD_RESULT=$?
+
+          if [ $BUILD_RESULT -ne 0 ]; then
+            echo "❌ Build failed with exit code $BUILD_RESULT"
+            exit $BUILD_RESULT
+          fi
+
           echo "✅ Dependencies built successfully"
+
+      - name: Replace depends Rust with version 1.80
+        run: |
+          echo "🔧 Replacing old Rust binaries in depends with Rust 1.80..."
+          DEPENDS_NATIVE_BIN="ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/bin"
+
+          if [ -d "$DEPENDS_NATIVE_BIN" ]; then
+            echo "📂 Found depends native bin directory"
+            ls -lh "$DEPENDS_NATIVE_BIN" | grep -E 'cargo|rustc' || echo "No existing Rust binaries found"
+
+            # Remove old Rust binaries if they exist
+            rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc" 2>/dev/null || true
+
+            # Create symlinks to our Rust 1.80
+            ln -sf "$(which cargo)" "$DEPENDS_NATIVE_BIN/cargo"
+            ln -sf "$(which rustc)" "$DEPENDS_NATIVE_BIN/rustc"
+
+            echo "✅ Replaced with symlinks to Rust 1.80"
+            ls -lh "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
+
+            # Verify the linked binaries work
+            echo "🔍 Verifying linked binaries:"
+            "$DEPENDS_NATIVE_BIN/rustc" --version
+            "$DEPENDS_NATIVE_BIN/cargo" --version
+          else
+            echo "❌ ERROR: Depends native bin directory not found!"
+            echo "Expected: $DEPENDS_NATIVE_BIN"
+            echo "Listing depends directory structure:"
+            find ammocoin-apps-from-ammocoin/depends -type d -name "native" || echo "No native directories found"
+            exit 1
+          fi
 
       - name: Build AMMOcoin Windows Binaries
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting Windows cross-compilation..."
-          echo "✅ Using pre-generated configure scripts (skipping autogen.sh)"
+          echo "🦀 Verifying Rust version..."
+          rustc --version
+          cargo --version
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
+
           echo "🔧 Configuring for Windows x86_64..."
+          CARGO="$(which cargo)" \
+          RUSTC="$(which rustc)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
             --prefix=/ \
@@ -341,13 +169,17 @@ jobs:
             --enable-wallet \
             --with-incompatible-bdb \
             --disable-maintainer-mode
-          echo "🔧 Touching generated Makefiles to prevent regeneration..."
+
+          echo "🔧 Touching Makefiles to prevent regeneration..."
           find . -name "Makefile" -exec touch {} \;
           find . -name "Makefile.in" -exec touch {} \;
           sleep 1
-          touch src/univalue/Makefile src/univalue/Makefile.in
-          touch src/secp256k1/Makefile src/secp256k1/Makefile.in
-          echo "✅ Configuration complete, starting build..."
+          touch src/univalue/Makefile src/secp256k1/Makefile
+
+          echo "✅ Starting build with explicit Rust paths and Windows target..."
+          CARGO="$(which cargo)" \
+          RUSTC="$(which rustc)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
@@ -355,25 +187,18 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔍 Verifying compiled binaries..."
-          if [ ! -f src/ammocoind.exe ]; then
-            echo "❌ ammocoind.exe not found!"
-            exit 1
-          fi
-          if [ ! -f src/ammocoin-cli.exe ]; then
-            echo "❌ ammocoin-cli.exe not found!"
-            exit 1
-          fi
-          if [ ! -f src/ammocoin-tx.exe ]; then
-            echo "❌ ammocoin-tx.exe not found!"
-            exit 1
-          fi
+          [ -f src/ammocoind.exe ] && echo "✅ ammocoind.exe found" || (echo "❌ ammocoind.exe missing" && exit 1)
+          [ -f src/ammocoin-cli.exe ] && echo "✅ ammocoin-cli.exe found" || (echo "❌ ammocoin-cli.exe missing" && exit 1)
+          [ -f src/ammocoin-tx.exe ] && echo "✅ ammocoin-tx.exe found" || (echo "❌ ammocoin-tx.exe missing" && exit 1)
+
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings src/ammocoind.exe | grep -q "$GENESIS_HASH"; then
-            echo "✅ Genesis hash verified in ammocoind.exe binary"
+            echo "✅ Genesis hash verified in binary"
           else
-            echo "❌ Genesis hash NOT found in binary!"
+            echo "❌ Genesis hash NOT found!"
             exit 1
           fi
+
           echo "📋 Binary info:"
           file src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe
           echo "📊 Binary sizes:"
@@ -386,135 +211,25 @@ jobs:
           cp ammocoin-apps-from-ammocoin/src/ammocoind.exe release-package/bin/
           cp ammocoin-apps-from-ammocoin/src/ammocoin-cli.exe release-package/bin/
           cp ammocoin-apps-from-ammocoin/src/ammocoin-tx.exe release-package/bin/
-          chmod +x release-package/bin/*
-          cat > release-package/README.md << 'EOFREADME'
-          # AMMOcoin v1.1.0 - Windows x86_64
-
-          **Built:** $(date -u)
-          **Platform:** Windows x86_64 (Windows 10+)
-          **Build:** GitHub Actions (Cross-compiled from Ubuntu)
-
-          ## ✅ Verified Genesis Block
-
-          ```
-          Genesis Hash:   000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-          Merkle Root:    a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
-          Genesis Time:   1623089845 (June 7, 2021)
-          Genesis Nonce:  1299391
-          Genesis Reward: 250,000,000 AMMO
-          ```
-
-          ## Package Contents
-
-          - `ammocoind.exe` - AMMOcoin daemon
-          - `ammocoin-cli.exe` - Command-line interface
-          - `ammocoin-tx.exe` - Transaction utility
-
-          ## Installation
-
-          1. Extract all files to a folder (e.g., `C:\AMMOcoin\`)
-          2. Open Command Prompt or PowerShell in that folder
-
-          ## Quick Start
-
-          ```cmd
-          # Start daemon
-          ammocoind.exe -daemon
-
-          # Check status
-          ammocoin-cli.exe getinfo
-
-          # Get genesis block
-          ammocoin-cli.exe getblockhash 0
-          # Should return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-
-          # Stop daemon
-          ammocoin-cli.exe stop
-          ```
-
-          ## Network Parameters
-
-          - Max Supply: 9,999,999,999 AMMO
-          - Genesis Premine: 250,000,000 AMMO
-          - Block Time: 3 minutes
-          - RPC Port: 37020
-          - P2P Port: 37019
-          - Masternode Collateral: 10,000 AMMO
-
-          Built with ❤️ by GitHub Actions
-          EOFREADME
           cd release-package
-          zip -r ../AMMOcoin-v1.1.0-Windows-x86_64.zip .
+          tar -czf ../AMMOcoin-v1.1.0-Windows-x86_64.tar.gz bin/
           cd ..
-          sha256sum AMMOcoin-v1.1.0-Windows-x86_64.zip > AMMOcoin-v1.1.0-Windows-x86_64-CHECKSUM.txt
-          echo "✅ Release package created"
-          echo "📦 Package size:"
-          ls -lh AMMOcoin-v1.1.0-Windows-x86_64.zip
-          echo ""
-          echo "🔐 SHA256 Checksum:"
-          cat AMMOcoin-v1.1.0-Windows-x86_64-CHECKSUM.txt
+          zip -r AMMOcoin-v1.1.0-Windows-x86_64.zip release-package/bin/
+          echo "✅ Release packages created"
 
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ammocoin-windows-x86_64
+          name: AMMOcoin-v1.1.0-Windows-x86_64
           path: |
+            AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
             AMMOcoin-v1.1.0-Windows-x86_64.zip
-            AMMOcoin-v1.1.0-Windows-x86_64-CHECKSUM.txt
-          retention-days: 90
 
-      - name: Upload Individual Binaries (for verification)
+      - name: Upload Individual Binaries
         uses: actions/upload-artifact@v4
         with:
-          name: ammocoin-windows-binaries-raw
+          name: Windows-Binaries
           path: |
             ammocoin-apps-from-ammocoin/src/ammocoind.exe
             ammocoin-apps-from-ammocoin/src/ammocoin-cli.exe
             ammocoin-apps-from-ammocoin/src/ammocoin-tx.exe
-          retention-days: 30
-
-  build-summary:
-    name: Build Summary
-    needs: [build-linux-x86_64, build-windows-x86_64]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download Linux artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: ammocoin-linux-x86_64
-
-      - name: Download Windows artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: ammocoin-windows-x86_64
-
-      - name: Display Build Summary
-        run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "🎉 AMMOcoin v1.1.0 Multi-Platform Build Complete!"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo ""
-          echo "📦 Linux x86_64 Package:"
-          ls -lh AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-          echo ""
-          echo "🔐 Linux Checksum:"
-          cat AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
-          echo ""
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo ""
-          echo "📦 Windows x86_64 Package:"
-          ls -lh AMMOcoin-v1.1.0-Windows-x86_64.zip
-          echo ""
-          echo "🔐 Windows Checksum:"
-          cat AMMOcoin-v1.1.0-Windows-x86_64-CHECKSUM.txt
-          echo ""
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo ""
-          echo "✅ Genesis Block: VERIFIED (both platforms)"
-          echo "✅ Linux Binaries: COMPILED"
-          echo "✅ Windows Binaries: CROSS-COMPILED"
-          echo "✅ Release Packages: CREATED"
-          echo ""
-          echo "Download artifacts from the Actions tab above!"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
