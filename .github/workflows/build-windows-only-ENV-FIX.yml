@@ -123,12 +123,16 @@ jobs:
           echo "🦀 Verifying Rust version..."
           rustc --version
           cargo --version
+          echo "CARGO=$(which cargo)" >> $GITHUB_ENV
+          echo "RUSTC=$(which rustc)" >> $GITHUB_ENV
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
 
           echo "🔧 Configuring for Windows x86_64..."
+          CARGO="$(which cargo)" \
+          RUSTC="$(which rustc)" \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
             --prefix=/ \
@@ -146,8 +150,8 @@ jobs:
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile
 
-          echo "✅ Starting build..."
-          make -j$(nproc)
+          echo "✅ Starting build with explicit Rust paths..."
+          CARGO="$(which cargo)" RUSTC="$(which rustc)" make -j$(nproc)
           echo "✅ Build completed successfully"
 
       - name: Verify Compiled Binaries
