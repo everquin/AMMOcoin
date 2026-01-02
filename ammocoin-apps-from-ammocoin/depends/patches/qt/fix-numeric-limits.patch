@@ -1,0 +1,10 @@
+--- qtbase/src/corelib/tools/qbytearraymatcher.h.orig	2018-12-03 11:15:26.000000000 +0000
++++ qtbase/src/corelib/tools/qbytearraymatcher.h	2026-01-02 01:50:00.000000000 +0000
+@@ -42,6 +42,7 @@
+
+ #include <QtCore/qbytearray.h>
+
++#include <limits>
+ QT_BEGIN_NAMESPACE
+
+ class QByteArrayMatcherPrivate;
