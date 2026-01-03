@@ -1,0 +1,14 @@
+--- a/boost/thread/pthread/thread_data.hpp
++++ b/boost/thread/pthread/thread_data.hpp
+@@ -57,7 +57,11 @@ namespace boost
+             if (size==0) return;
+ #ifdef BOOST_THREAD_USES_GETPAGESIZE
+             std::size_t page_size = getpagesize();
++#ifdef PTHREAD_STACK_MIN
++            std::size_t min_stack_size = sysconf(_SC_THREAD_STACK_MIN);
++#else
+ #if PTHREAD_STACK_MIN > 0
+             if (size<PTHREAD_STACK_MIN) size=PTHREAD_STACK_MIN;
+ #endif
++#endif
+ #endif
