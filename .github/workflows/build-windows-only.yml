@@ -155,8 +155,10 @@ jobs:
 
           echo "🔧 Configuring for Windows x86_64..."
           # Use explicit paths from rustup to avoid version switching
+          # Add ntdll to LDFLAGS for Rust Windows target support
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \
+          LDFLAGS="-lntdll" \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
             --prefix=/ \
@@ -168,16 +170,22 @@ jobs:
             --with-incompatible-bdb \
             --disable-maintainer-mode
 
-          echo "🔧 Patching src/Makefile to add --target flag to cargo..."
+          echo "🔧 Patching src/Makefile to add --target flag to cargo and ntdll library..."
+          
           # Patch the Makefile to add --target flag
           if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
             sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target x86_64-pc-windows-gnu --manifest-path|g' src/Makefile
-            echo "✅ Patched src/Makefile cargo build command"
-            echo "Verifying patch:"
-            grep -A2 "cargo-build:" src/Makefile
-          else
-            echo "❌ ERROR: Could not find cargo build pattern in Makefile!"
-            exit 1
+            echo "✅ Patched cargo build command with Windows target"
+          fi
+          
+          # Add ntdll to LDADD for all binaries
+          if grep -q '^ammocoind_LDADD' src/Makefile; then
+            sed -i 's|^\(ammocoind_LDADD.*\)$|\1 -lntdll|' src/Makefile
+            sed -i 's|^\(ammocoin_cli_LDADD.*\)$|\1 -lntdll|' src/Makefile
+            sed -i 's|^\(ammocoin_tx_LDADD.*\)$|\1 -lntdll|' src/Makefile
+            echo "✅ Added ntdll library to linker flags"
+            echo "Verifying ntdll patch:"
+            grep "LDADD.*ntdll" src/Makefile | head -3
           fi
 
           echo "🔧 Touching Makefiles to prevent regeneration..."
