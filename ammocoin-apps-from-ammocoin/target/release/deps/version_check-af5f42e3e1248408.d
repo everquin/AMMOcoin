@@ -1,0 +1,10 @@
+/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/target/release/deps/version_check-af5f42e3e1248408.d: /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/lib.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/version.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/channel.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/date.rs
+
+/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/target/release/deps/libversion_check-af5f42e3e1248408.rlib: /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/lib.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/version.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/channel.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/date.rs
+
+/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/target/release/deps/libversion_check-af5f42e3e1248408.rmeta: /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/lib.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/version.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/channel.rs /Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/date.rs
+
+/Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/lib.rs:
+/Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/version.rs:
+/Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/channel.rs:
+/Users/pletchman/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/version_check-0.9.4/src/date.rs:

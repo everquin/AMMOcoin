@@ -1,59 +1,56 @@
-# 📚 AMMOcoin Documentation Hub
+# AMMOcoin v1.1.0 Documentation
 
-Welcome to the complete AMMOcoin documentation! This guide will help you understand and use all features of the AMMOcoin ecosystem.
+Welcome to the AMMOcoin v1.1.0 documentation. This directory contains all official documentation for the project.
 
-## 🚀 Quick Start
+## Quick Links
 
-- **New to AMMOcoin?** Start with [Wallet Setup Guide](./01-wallet-setup.md)
-- **Want to earn rewards?** Check out [Staking Guide](./02-staking-guide.md)
-- **Technical user?** See [Node Setup Guide](./04-node-setup.md)
+### For Users
+- [User Migration Guide](migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md) - Migrating from v1.0 to v1.1.0
+- [Distribution Process Guide](migration/DISTRIBUTION_PROCESS_GUIDE.md) - How to claim your v1.1.0 AMMO
+- [Quick Download Guide](release-notes/QUICK_DOWNLOAD_GUIDE_v1.1.0.md) - Download and install binaries
 
-## 📖 Complete Documentation
+### For Node Operators
+- [Seed Node Operations](operations/SEED_NODE_QUICK_START.md) - Running a seed node
+- [Vultr VPS Deployment](operations/VULTR_VPS_DEPLOYMENT.md) - Deploy on Vultr VPS
+- [Testing Guide](operations/TEST_LOCAL_NODE_MACOS.md) - Test your node locally
 
-### Essential Guides
-1. **[Wallet Setup & Usage](./01-wallet-setup.md)** - Download, install, and use your AMMOcoin wallet
-2. **[Staking Guide](./02-staking-guide.md)** - Earn rewards by staking your AMMO coins
-3. **[Masternode Guide](./03-masternode-setup.md)** - Set up and run a masternode for higher rewards
-4. **[Node Setup](./04-node-setup.md)** - Run your own AMMOcoin network node
-5. **[Terminal Commands](./05-terminal-commands.md)** - Complete command reference for power users
-6. **[DAO Participation](./06-dao-participation.md)** - Vote on proposals and governance
+### For Developers
+- [Linux Build Instructions](installation/LINUX_BUILD_INSTRUCTIONS_v1.1.0.md) - Build from source on Linux
+- [Cross-Compilation Guide](installation/CROSS_COMPILATION_GUIDE.md) - Multi-platform builds
+- [macOS Installation](installation/INSTALL_MACOS.md) - Build on macOS
 
 ### Technical Documentation
-7. **[Mining Guide](./07-mining-guide.md)** - Mining AMMOcoin (if applicable)
-8. **[Security Best Practices](./08-security-guide.md)** - Keep your coins safe
-9. **[Troubleshooting](./09-troubleshooting.md)** - Common issues and solutions
-10. **[FAQ](./10-faq.md)** - Frequently asked questions
+- [Comprehensive Whitepaper](whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md) - Complete technical specification
+- [Standard Whitepaper](whitepapers/AMMOcoin_Whitepaper_v1.1.0.md) - Concise whitepaper
 
-### Developer Resources
-11. **[API Reference](./11-api-reference.md)** - RPC commands and integration
-12. **[Build Instructions](./12-build-instructions.md)** - Compile from source
-13. **[Network Parameters](./13-network-parameters.md)** - Technical network details
+### Release Information
+- [Release Notes v1.1.0](release-notes/RELEASE_NOTES_v1.1.0.md) - What's new in v1.1.0
+- [GitHub Release Notes](release-notes/RELEASE_NOTES_GITHUB.md) - GitHub-formatted notes
 
-## 🆘 Need Help?
+## Directory Structure
 
-- **Quick Issues**: Check [Troubleshooting Guide](./09-troubleshooting.md)
-- **Common Questions**: See [FAQ](./10-faq.md)
-- **Community Support**: Join our Discord/Telegram
-- **Bug Reports**: GitHub Issues
+```
+docs/
+├── installation/     # Build and installation guides
+├── guides/          # General guides and tutorials
+├── operations/      # Node operations and deployment
+├── whitepapers/     # Technical whitepapers
+├── migration/       # v1.0 → v1.1.0 migration docs
+└── release-notes/   # Release notes and changelogs
+```
 
-## 📊 Key Information
+## Genesis Block Authority
 
-| Property | Value |
-|----------|-------|
-| **Block Time** | 3 minutes |
-| **Total Supply** | 9,999,999,999 AMMO |
-| **Consensus** | Proof of Stake |
-| **Masternode Collateral** | 100,000 AMMO |
-| **Staking Minimum** | 1 AMMO |
-| **Port** | 37020 |
+The definitive genesis block parameters are documented in the root directory:
+[V1.1.0_GENESIS_BLOCK_AUTHORITY.md](../V1.1.0_GENESIS_BLOCK_AUTHORITY.md)
 
-## 🔄 Recent Updates
+**Genesis Hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
-- **v1.1.0** - Emergency security release with DoS protection
-- Protocol upgrade to version 70920
-- Enhanced network security and stability
-- Modern wallet interface improvements
+## Getting Help
 
----
+- **GitHub Issues:** https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- **GitHub Discussions:** https://github.com/everquin/AMMOcoin-v1.1.0/discussions
 
-*Last updated: October 2025 • AMMOcoin Development Team*
+## Contributing
+
+Documentation improvements are welcome! Please submit pull requests with clear descriptions of changes.

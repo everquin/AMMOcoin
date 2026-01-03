@@ -1,0 +1,1 @@
+04f0aec63498d10d0adbbe27b5d009f6b654bd94e6174b51c66507353eae94aa  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
