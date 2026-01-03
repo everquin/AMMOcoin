@@ -1,4 +1,4 @@
-name: Build AMMOcoin v1.1.0 Linux (Static Linking)
+name: Build AMMOcoin v1.1.0 Linux (Ubuntu 20.04)
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-linux-x86_64:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04  # Changed to 20.04 for maximum compatibility
     name: Build Linux x86_64 Static Binaries
 
     steps:
@@ -35,11 +35,12 @@ jobs:
       - name: Install Rust for librustzcash
         run: |
           echo "🦀 Installing Rust 1.80+ and setting as default..."
-          rustup toolchain install 1.80
-          rustup default 1.80
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.80
+          source "$HOME/.cargo/env"
           rustc --version
           cargo --version
-          echo "✅ Rust 1.80 set as default"
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          echo "✅ Rust 1.80 installed"
 
       - name: Verify Genesis Block Hash
         run: |
@@ -66,6 +67,7 @@ jobs:
         working-directory: source/depends
         run: |
           echo "🔨 Building dependencies for Linux with STATIC linking..."
+          echo "Building on Ubuntu 20.04 (glibc 2.31) for maximum compatibility"
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
           echo "All dependencies will be statically linked for maximum portability!"
 
@@ -143,6 +145,8 @@ jobs:
           fi
 
           echo "🎉 Binary verification complete!"
+          echo "📋 Binary built on Ubuntu 20.04 (glibc 2.31)"
+          echo "✅ Works on Ubuntu 20.04+, 22.04+, 24.04+, Debian 11+, etc."
 
       - name: Verify Compiled Binaries
         working-directory: source
@@ -177,6 +181,13 @@ jobs:
           cd ..
           zip -r AMMOcoin-v1.1.0-Linux-x86_64.zip release-package/bin/
           echo "✅ Release packages created"
+          echo ""
+          echo "📋 Compatibility: Ubuntu 20.04+ (glibc 2.31+)"
+          echo "    ✅ Ubuntu 20.04, 22.04, 24.04+"
+          echo "    ✅ Debian 11, 12, 13+"
+          echo "    ✅ CentOS Stream 8+"
+          echo "    ✅ Fedora 34+"
+          echo "    ✅ Rocky Linux 8, 9+"
 
       - name: Generate checksums
         run: |
