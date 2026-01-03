@@ -130,11 +130,6 @@ jobs:
             echo "✅ Replaced with symlinks to Rust 1.80"
             ls -lh "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
 
-            # Verify the symlinked binaries
-            echo "🔍 Verifying symlinked binaries:"
-            "$DEPENDS_NATIVE_BIN/rustc" --version
-            "$DEPENDS_NATIVE_BIN/cargo" --version
-
             # Verify Windows target standard library
             RUST_SYSROOT="$("$DEPENDS_NATIVE_BIN/rustc" --print sysroot)"
             echo "📂 Rust sysroot: $RUST_SYSROOT"
@@ -159,10 +154,8 @@ jobs:
           chmod +x src/chiabls/configure
 
           echo "🔧 Configuring for Windows x86_64..."
-          # Use explicit paths from rustup to avoid version switching
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \
-          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
             --prefix=/ \
@@ -174,16 +167,26 @@ jobs:
             --with-incompatible-bdb \
             --disable-maintainer-mode
 
+          echo "🔧 Patching Makefile to add --target flag to cargo build..."
+          # Find and patch the cargo-build target in src/Makefile
+          if grep -q "cargo build" src/Makefile; then
+            # Add --target x86_64-pc-windows-gnu to the cargo build command
+            sed -i 's|cargo build --release|cargo build --release --target x86_64-pc-windows-gnu|g' src/Makefile
+            echo "✅ Patched src/Makefile cargo build command"
+            echo "Verifying patch:"
+            grep "cargo build" src/Makefile | head -3
+          else
+            echo "❌ ERROR: Could not find cargo build command in Makefile!"
+            exit 1
+          fi
+
           echo "🔧 Touching Makefiles to prevent regeneration..."
           find . -name "Makefile" -exec touch {} \;
           find . -name "Makefile.in" -exec touch {} \;
           sleep 1
-          touch src/univalue/Makefile src/secp256k1/Makefile
+          touch src/univalue/Makefile src/secp256k1/Makefile src/Makefile
 
-          echo "✅ Starting build with explicit Rust 1.80 paths..."
-          CARGO="$(rustup which cargo --toolchain 1.80)" \
-          RUSTC="$(rustup which rustc --toolchain 1.80)" \
-          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
+          echo "✅ Starting build with Rust 1.80 and Windows target..."
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
