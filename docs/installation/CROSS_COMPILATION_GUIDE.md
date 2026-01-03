@@ -73,14 +73,11 @@ docker run -it --rm -v $(pwd):/build ubuntu:22.04 bash
 ./contrib/gitian-descriptors/gitian-win.yml
 ```
 
-### Method 3: Docker Build (Easiest)
-```bash
-# Create Windows build Dockerfile
-docker build -f Dockerfile.windows -t ammocoin-windows-builder .
-docker run --rm -v $(pwd)/windows-binaries:/output ammocoin-windows-builder
-```
+### Method 3: GitHub Actions (Recommended for automated builds)
 
-**Output**: Windows binaries in `windows-binaries-v1.1.0/`
+See `.github/workflows/build-windows-only.yml` for automated Windows builds.
+
+**Output**: Windows binaries in GitHub Actions artifacts
 
 ## Platform 3: macOS DMG (Cross-Compilation)
 

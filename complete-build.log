@@ -1,9 +1,0 @@
-==============================================
-AMMOcoin v1.1.0 Complete Build Setup
-==============================================
-
-Step 1: Installing missing dependencies...
-This requires sudo access.
-
-sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
-sudo: a password is required

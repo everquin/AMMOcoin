@@ -196,10 +196,10 @@ strings src/ammocoind | grep "00000f14"
 
 ### Step 6: Rebuild Linux Binaries (or Update Instructions)
 
-**Option A:** Build Linux binaries on macOS Docker
-- Use existing Dockerfile.linux
-- Cross-compile for x86_64
-- **Time:** 2-3 hours
+**Option A:** Use GitHub Actions for Linux builds
+- Automated CI/CD build process
+- See `.github/workflows/` for build configurations
+- **Time:** 30-60 minutes (automated)
 
 **Option B:** Update LINUX_BUILD_INSTRUCTIONS_v1.1.0.md
 - Users build from source on their Linux systems

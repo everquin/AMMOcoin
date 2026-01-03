@@ -40,7 +40,7 @@
 **Usage:**
 ```bash
 # Update RPC credentials in script, then:
-python3 v1.0-snapshot-tool.py
+python3 scripts/migration/v1.0-snapshot-tool.py
 # Output: v1.0-balance-snapshot.json
 ```
 
@@ -102,7 +102,7 @@ CMainParams() {
 **Usage:**
 ```bash
 # After v1.1.0 is running with new genesis:
-python3 verify-migration.py v1.0-balance-snapshot.json
+python3 scripts/migration/verify-migration.py v1.0-balance-snapshot.json
 # Output: Detailed verification report
 ```
 
@@ -204,7 +204,7 @@ Example snapshot with 5 addresses demonstrating format:
 
 ### Migration Tools (Python 3)
 ```
-v1.0-snapshot-tool.py          - 152 lines - Extract v1.0 balances
+scripts/migration/v1.0-snapshot-tool.py          - 152 lines - Extract v1.0 balances
 v1.1.0-genesis-generator.py    - 300+ lines - Generate genesis C++ code
 verify-migration.py            - 250+ lines - Verify migration success
 ```
@@ -281,7 +281,7 @@ v1.1.0-migration-summary.txt        - Generated balance summary
 nano v1.0-snapshot-tool.py
 
 # Run snapshot
-python3 v1.0-snapshot-tool.py
+python3 scripts/migration/v1.0-snapshot-tool.py
 
 # Verify output
 cat v1.0-balance-snapshot.json | python3 -m json.tool

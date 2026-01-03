@@ -281,12 +281,12 @@ git push origin v1.1.0
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin
 
 # DRY RUN FIRST
-python3 distribute-to-top-holders.py --dry-run
+python3 scripts/migration/distribute-to-top-holders.py --dry-run
 
 # Review output, verify addresses
 
 # EXECUTE REAL DISTRIBUTION
-python3 distribute-to-top-holders.py
+python3 scripts/migration/distribute-to-top-holders.py
 
 # Monitor progress (61 transactions)
 # Verify all confirmations
@@ -422,7 +422,7 @@ git commit -m "Repository cleanup: Remove backup files and artifacts"
 **Process:**
 ```bash
 # For each claim request:
-python3 verify-claim.py
+python3 scripts/migration/verify-claim.py
 
 # Interactive mode walks through verification
 # Automatically sends AMMO if valid
