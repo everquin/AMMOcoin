@@ -169,25 +169,15 @@ jobs:
             --disable-maintainer-mode
 
           echo "🔧 Patching src/Makefile to add --target flag to cargo..."
-          # Check what the cargo command looks like
-          echo "Current cargo-build target in src/Makefile:"
-          grep -A2 "cargo-build:" src/Makefile || echo "cargo-build target not found"
-          
           # Patch the Makefile to add --target flag
-          # The Makefile uses: $(CARGO) build $(RUST_BUILD_OPTS) --manifest-path ...
-          # We need to add --target x86_64-pc-windows-gnu before --manifest-path
           if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
             sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target x86_64-pc-windows-gnu --manifest-path|g' src/Makefile
             echo "✅ Patched src/Makefile cargo build command"
             echo "Verifying patch:"
             grep -A2 "cargo-build:" src/Makefile
           else
-            echo "⚠️  Cargo build pattern not found, trying alternative approach..."
-            # Try to find any cargo build command
-            grep -n "cargo" src/Makefile | head -10
-            # Export CARGO_BUILD_TARGET for the make step
-            export CARGO_BUILD_TARGET=x86_64-pc-windows-gnu
-            echo "✅ Exported CARGO_BUILD_TARGET=x86_64-pc-windows-gnu"
+            echo "❌ ERROR: Could not find cargo build pattern in Makefile!"
+            exit 1
           fi
 
           echo "🔧 Touching Makefiles to prevent regeneration..."
@@ -200,7 +190,22 @@ jobs:
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \
           CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
-          make -j$(nproc)
+          make -j$(nproc) || {
+            # If build fails, check if it's the librustzcash path issue
+            if [ -f target/x86_64-pc-windows-gnu/release/librustzcash.a ]; then
+              echo "🔧 Found librustzcash.a in target subdirectory, creating symlink..."
+              mkdir -p target/release
+              ln -sf ../x86_64-pc-windows-gnu/release/librustzcash.a target/release/librustzcash.a
+              echo "✅ Symlink created, retrying build..."
+              CARGO="$(rustup which cargo --toolchain 1.80)" \
+              RUSTC="$(rustup which rustc --toolchain 1.80)" \
+              CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
+              make -j$(nproc)
+            else
+              echo "❌ Build failed and librustzcash.a not found"
+              exit 1
+            fi
+          }
           echo "✅ Build completed successfully"
 
       - name: Verify Compiled Binaries
