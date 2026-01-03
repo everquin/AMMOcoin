@@ -12,13 +12,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 # Check if source directories exist
-if [ ! -d "ammocoin-source" ] || [ ! -d "ammocoin-apps-from-ammocoin" ]; then
-    echo "❌ Error: Source directories not found"
-    echo "Expected: ammocoin-source/ and ammocoin-apps-from-ammocoin/"
+if [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+    echo "❌ Error: Source directory not found"
+    echo "Expected: ammocoin-apps-from-ammocoin/"
     exit 1
 fi
 
-echo "✅ Source directories found"
+echo "✅ Source directory found"
 
 # Build Docker image for Linux x86_64 compilation
 echo "🔨 Building Docker image for Linux x86_64 compilation..."

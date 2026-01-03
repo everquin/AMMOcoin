@@ -26,14 +26,14 @@ fi
 
 echo "✅ Docker is running"
 
-# Check if source directories exist
-if [ ! -d "ammocoin-source" ] || [ ! -d "ammocoin-apps-from-ammocoin" ]; then
-    echo "❌ Error: Source directories not found"
-    echo "Expected: ammocoin-source/ and ammocoin-apps-from-ammocoin/"
+# Check if source directory exists
+if [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+    echo "❌ Error: Source directory not found"
+    echo "Expected: ammocoin-apps-from-ammocoin/"
     exit 1
 fi
 
-echo "✅ Source directories found"
+echo "✅ Source directory found"
 echo ""
 
 # Make all build scripts executable

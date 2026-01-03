@@ -303,6 +303,8 @@ sudo mkdir -p /opt/AMMOcoin-v1.1.0
 cd /opt/AMMOcoin-v1.1.0
 
 # Clone the official repository
+# Note: "ammocoin-source" is the directory name for deployment.
+# The repository itself uses "ammocoin-apps-from-ammocoin" as the primary source directory.
 sudo git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin-source
 cd ammocoin-source
 
