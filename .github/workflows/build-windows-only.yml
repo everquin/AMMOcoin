@@ -112,14 +112,13 @@ jobs:
 
           echo "✅ Dependencies built successfully"
 
-      - name: Replace depends Rust with version 1.80
+      - name: Replace depends Rust and reinstall Windows target
         run: |
           echo "🔧 Replacing old Rust binaries in depends with Rust 1.80..."
           DEPENDS_NATIVE_BIN="ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/bin"
 
           if [ -d "$DEPENDS_NATIVE_BIN" ]; then
             echo "📂 Found depends native bin directory"
-            ls -lh "$DEPENDS_NATIVE_BIN" | grep -E 'cargo|rustc' || echo "No existing Rust binaries found"
 
             # Remove old Rust binaries if they exist
             rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc" 2>/dev/null || true
@@ -131,14 +130,31 @@ jobs:
             echo "✅ Replaced with symlinks to Rust 1.80"
             ls -lh "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
 
-            # Verify the linked binaries work
-            echo "🔍 Verifying linked binaries:"
-            "$DEPENDS_NATIVE_BIN/rustc" --version
-            "$DEPENDS_NATIVE_BIN/cargo" --version
+            # CRITICAL: Verify and re-add Windows target
+            echo "🔍 Verifying Windows target is installed..."
+            rustup target list --installed | grep x86_64-pc-windows-gnu || {
+              echo "⚠️  Windows target not found, reinstalling..."
+              rustup target add x86_64-pc-windows-gnu
+            }
+
+            echo "✅ Windows target confirmed:"
+            rustup target list --installed | grep windows
+            rustc --version
+            cargo --version
+
+            # Verify the target standard library exists
+            RUST_SYSROOT="$(rustc --print sysroot)"
+            echo "📂 Rust sysroot: $RUST_SYSROOT"
+            if [ -d "$RUST_SYSROOT/lib/rustlib/x86_64-pc-windows-gnu" ]; then
+              echo "✅ Windows target standard library found"
+              ls -lh "$RUST_SYSROOT/lib/rustlib/x86_64-pc-windows-gnu/lib/" | head -5
+            else
+              echo "❌ ERROR: Windows target standard library not found!"
+              exit 1
+            fi
           else
             echo "❌ ERROR: Depends native bin directory not found!"
             echo "Expected: $DEPENDS_NATIVE_BIN"
-            echo "Listing depends directory structure:"
             find ammocoin-apps-from-ammocoin/depends -type d -name "native" || echo "No native directories found"
             exit 1
           fi
@@ -150,6 +166,7 @@ jobs:
           echo "🦀 Verifying Rust version..."
           rustc --version
           cargo --version
+          rustup target list --installed | grep windows
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
