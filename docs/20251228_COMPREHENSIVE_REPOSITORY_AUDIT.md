@@ -283,7 +283,7 @@ AMMOcoin.app/
 ```
 distribute-to-top-holders.py
 verify-claim.py
-deploy-seed-node.sh
+scripts/deployment/deploy-seed-node.sh
 scan-all-balances.py
 v1.0-blockchain-scanner.py
 v1.0-snapshot-tool.py

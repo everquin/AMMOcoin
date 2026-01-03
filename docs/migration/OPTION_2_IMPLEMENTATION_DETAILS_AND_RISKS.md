@@ -230,7 +230,7 @@ shasum -a 256 AMMOcoin-v1.1.0-snapshot-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-sna
 3. LINUX_BUILD_INSTRUCTIONS_v1.1.0.md - New genesis verification
 4. RELEASE_NOTES_GITHUB.md - Mention snapshot distribution
 5. All 16+ .md files with genesis references
-6. update-genesis-refs.sh - Update to new hash
+6. scripts/utils/update-genesis-refs.sh - Update to new hash
 
 **Script to update:**
 ```bash

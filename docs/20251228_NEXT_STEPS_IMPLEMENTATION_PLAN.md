@@ -102,7 +102,7 @@ git add genesis-top-holders.json
 git add v1.0-complete-balance-snapshot.json
 git add migration-statistics.txt
 git add *.py
-git add deploy-seed-node.sh
+git add scripts/deployment/deploy-seed-node.sh
 git add *.md
 git add docs/20251228_*.md
 
@@ -148,12 +148,12 @@ cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin
 open -a Docker
 
 # Build all platforms
-./build-all.sh
+./scripts/build/build-all.sh
 
 # OR build individually:
-./build-linux.sh      # Linux x86_64 (~1 hour)
-./build-windows.sh    # Windows x64 (~1 hour)
-./build-arm64.sh      # ARM64/Pi (~1-2 hours)
+./scripts/build/build-linux.sh      # Linux x86_64 (~1 hour)
+./scripts/build/build-windows.sh    # Windows x64 (~1 hour)
+./scripts/build/build-arm64.sh      # ARM64/Pi (~1-2 hours)
 ```
 
 **Output Locations:**

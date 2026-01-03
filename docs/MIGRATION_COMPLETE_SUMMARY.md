@@ -350,19 +350,19 @@ rm -rf /tmp/ammocoin-v1.1.0-test
 **Action:**
 ```bash
 # macOS ARM64 (current)
-./build-macos-native.sh
+./scripts/build/build-macos-native.sh
 
 # macOS x86_64
 # Need cross-compilation or separate build machine
 
 # Windows
-./build-windows.sh
+./scripts/build/build-windows.sh
 
 # Linux ARM64
-./build-arm64.sh
+./scripts/build/build-arm64.sh
 
 # Linux x86_64
-./build-linux.sh
+./scripts/build/build-linux.sh
 ```
 
 **ETA:** 4-6 hours for all platforms

@@ -4,7 +4,7 @@ Complete guide for building AMMOcoin binaries for all platforms from Linux.
 
 ## Prerequisites
 
-All dependencies should be installed by running `BUILDME.sh` first.
+All dependencies should be installed by running `scripts/build/BUILDME.sh` first.
 
 ## Platform 1: Linux Native (ARM64 & x86_64)
 
@@ -233,7 +233,7 @@ sudo apt-get install -y \
 
 ## Next Steps
 
-1. **Build Linux binaries**: Run `sudo bash BUILDME.sh`
+1. **Build Linux binaries**: Run `sudo bash scripts/build/BUILDME.sh`
 2. **Build Windows EXE**: Follow Windows cross-compilation above
 3. **Build macOS DMG**: Use native Mac build or OSXCross
 4. **Package for release**: Create archives with version numbers

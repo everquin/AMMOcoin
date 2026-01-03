@@ -110,11 +110,11 @@ All major network upgrades properly configured:
 #### Supported Platforms
 | Platform | Build Method | Status | Script |
 |----------|--------------|--------|--------|
-| **macOS ARM64** | Native | ✅ Complete | `build-macos-native.sh` |
-| **Linux x86_64** | Docker | ✅ Ready | `build-linux.sh` |
-| **Windows x64** | Docker (MinGW) | ✅ Ready | `build-windows.sh` |
-| **ARM64/RPi** | Docker | ✅ Ready | `build-arm64.sh` |
-| **Universal** | Orchestrated | ✅ Ready | `build-all.sh` |
+| **macOS ARM64** | Native | ✅ Complete | `scripts/build/build-macos-native.sh` |
+| **Linux x86_64** | Docker | ✅ Ready | `scripts/build/build-linux.sh` |
+| **Windows x64** | Docker (MinGW) | ✅ Ready | `scripts/build/build-windows.sh` |
+| **ARM64/RPi** | Docker | ✅ Ready | `scripts/build/build-arm64.sh` |
+| **Universal** | Orchestrated | ✅ Ready | `scripts/build/build-all.sh` |
 
 #### Build System Features
 - ✅ Automated Docker-based cross-compilation
@@ -346,22 +346,22 @@ AMMOcoin v1.1.0 is ready for production deployment with the following provisos:
 ### Compile All Platforms
 ```bash
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin
-./build-all.sh
+./scripts/build/build-all.sh
 ```
 
 ### Individual Platform Builds
 ```bash
 # Windows x64
-./build-windows.sh
+./scripts/build/build-windows.sh
 
 # Linux x86_64
-./build-linux.sh
+./scripts/build/build-linux.sh
 
 # ARM64/Raspberry Pi
-./build-arm64.sh
+./scripts/build/build-arm64.sh
 
 # macOS ARM64 (native)
-./build-macos-native.sh
+./scripts/build/build-macos-native.sh
 ```
 
 ### Flutter App Build
@@ -428,11 +428,11 @@ flutter build web --release
 ### Build Scripts
 ```
 /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/
-├── build-all.sh - Comprehensive multi-platform build
-├── build-linux.sh - Linux x86_64
-├── build-windows.sh - Windows x64
-├── build-arm64.sh - ARM64/Raspberry Pi
-└── build-macos-native.sh - macOS ARM64
+├── scripts/build/build-all.sh - Comprehensive multi-platform build
+├── scripts/build/build-linux.sh - Linux x86_64
+├── scripts/build/build-windows.sh - Windows x64
+├── scripts/build/build-arm64.sh - ARM64/Raspberry Pi
+└── scripts/build/build-macos-native.sh - macOS ARM64
 ```
 
 ---

@@ -262,7 +262,7 @@ Amount:      250,000,000 AMMO
 Purpose:     Manual distribution to verified v1.0 users
 ```
 
-**Run update-genesis-refs.sh:**
+**Run scripts/utils/update-genesis-refs.sh:**
 ```bash
 # Update script with new hash
 OLD_HASH="00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"

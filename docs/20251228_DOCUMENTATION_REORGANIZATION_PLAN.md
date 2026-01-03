@@ -108,7 +108,7 @@ This plan reorganizes all AMMOcoin documentation into a professional, date-prefi
 │   │   └── verify-migration.py
 │   │
 │   └── deployment/
-│       └── deploy-seed-node.sh
+│       └── scripts/deployment/deploy-seed-node.sh
 │
 ├── migration-data/
 │   ├── v1.0-complete-balance-snapshot.json
@@ -298,7 +298,7 @@ mv insert-genesis-into-chainparams.py scripts/migration/
 mv verify-migration.py scripts/migration/
 
 # Deployment scripts
-mv deploy-seed-node.sh scripts/deployment/
+mv scripts/deployment/deploy-seed-node.sh scripts/deployment/
 
 # Make scripts executable
 chmod +x scripts/migration/*.py

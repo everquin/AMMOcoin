@@ -191,11 +191,11 @@ make clean && make -j8
 - ⏳ Linux x86_64
 
 **Build Scripts Ready:**
-- build-macos-native.sh
-- build-windows.sh
-- build-linux.sh
-- build-arm64.sh
-- build-all.sh
+- scripts/build/build-macos-native.sh
+- scripts/build/build-windows.sh
+- scripts/build/build-linux.sh
+- scripts/build/build-arm64.sh
+- scripts/build/build-all.sh
 
 **Status:** Build system configured, awaiting final genesis
 

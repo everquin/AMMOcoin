@@ -23,7 +23,7 @@ The compiled Linux binaries are located at:
 
 ```bash
 # Run the automated download script
-./DOWNLOAD_LINUX_BINARIES.sh
+./scripts/packaging/DOWNLOAD_LINUX_BINARIES.sh
 
 # Or download manually:
 scp root@48.141.194.140:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind ./binaries-linux-v1.1.0/
