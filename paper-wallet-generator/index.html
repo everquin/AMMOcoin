@@ -285,6 +285,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/elliptic@6.5.4/dist/elliptic.min.js"></script>
     <script>
         // AMMOcoin-specific configuration
         const NETWORK = {
@@ -383,16 +384,28 @@
             ]).flat());
         }
 
-        // Generate public key from private key (simplified - in production use secp256k1)
+        // Initialize secp256k1 elliptic curve
+        const EC = elliptic.ec;
+        const ec = new EC('secp256k1');
+
+        // Generate public key from private key using proper secp256k1 cryptography
         function generatePublicKey(privateKey) {
-            // This is a simplified version. In production, use proper secp256k1 implementation
-            const hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(privateKey));
-            return Array.from(hash.words.map(word => [
-                (word >>> 24) & 0xff,
-                (word >>> 16) & 0xff,
-                (word >>> 8) & 0xff,
-                word & 0xff
-            ]).flat()).slice(0, 33); // Compressed public key format
+            // Convert private key bytes to hex string for elliptic library
+            const privateKeyHex = Array.from(privateKey).map(b => b.toString(16).padStart(2, '0')).join('');
+
+            // Generate key pair from private key
+            const keyPair = ec.keyFromPrivate(privateKeyHex, 'hex');
+
+            // Get compressed public key (33 bytes: 02/03 prefix + 32 bytes x-coordinate)
+            const publicKeyHex = keyPair.getPublic(true, 'hex');
+
+            // Convert hex string back to byte array
+            const publicKey = [];
+            for (let i = 0; i < publicKeyHex.length; i += 2) {
+                publicKey.push(parseInt(publicKeyHex.substr(i, 2), 16));
+            }
+
+            return publicKey;
         }
 
         // Generate AMMOcoin address from public key
