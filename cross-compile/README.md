@@ -29,15 +29,15 @@ This directory contains Docker-based cross-compilation infrastructure for buildi
 
 ```bash
 # Build only Linux x64
-docker build -t ammocoin-build-linux -f Dockerfile.linux ../ammocoin-apps-from-ammocoin
+docker build -t ammocoin-build-linux -f Dockerfile.linux ../source
 docker run --rm -v "$(pwd)/../releases:/output" ammocoin-build-linux
 
 # Build only Windows x64
-docker build -t ammocoin-build-windows -f Dockerfile.windows ../ammocoin-apps-from-ammocoin
+docker build -t ammocoin-build-windows -f Dockerfile.windows ../source
 docker run --rm -v "$(pwd)/../releases:/output" ammocoin-build-windows
 
 # Build only ARM64/Raspberry Pi
-docker build -t ammocoin-build-arm64 -f Dockerfile.arm64 ../ammocoin-apps-from-ammocoin
+docker build -t ammocoin-build-arm64 -f Dockerfile.arm64 ../source
 docker run --rm -v "$(pwd)/../releases:/output" ammocoin-build-arm64
 ```
 
@@ -45,7 +45,7 @@ docker run --rm -v "$(pwd)/../releases:/output" ammocoin-build-arm64
 
 ### System Requirements
 - **Docker**: Latest version installed and running
-- **Source Code**: Complete AMMOcoin source in `../ammocoin-apps-from-ammocoin/`
+- **Source Code**: Complete AMMOcoin source in `../source/`
 - **Disk Space**: ~2GB for Docker images and build cache
 - **Memory**: 4GB+ RAM recommended for parallel builds
 
@@ -213,11 +213,11 @@ docker info
 docker system prune -a
 
 # View build logs
-docker build --no-cache -t test-build -f Dockerfile.linux ../ammocoin-apps-from-ammocoin
+docker build --no-cache -t test-build -f Dockerfile.linux ../source
 ```
 
 ### Build Failures
-- Ensure source code is complete in `../ammocoin-apps-from-ammocoin/`
+- Ensure source code is complete in `../source/`
 - Check available disk space (builds require ~1GB temporary space)
 - Verify Docker has sufficient memory allocation (4GB+ recommended)
 

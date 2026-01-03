@@ -10,7 +10,7 @@ echo "=============================================="
 echo ""
 
 # Navigate to source directory
-cd "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source"
 
 # Check if Homebrew is installed
 if ! command -v brew &> /dev/null; then

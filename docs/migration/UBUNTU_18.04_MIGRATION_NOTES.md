@@ -148,7 +148,7 @@ g++ --version  # Should show g++ (Ubuntu 9.x)
 # Clone repository
 cd ~
 git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin-v1.1.0
-cd ammocoin-v1.1.0/ammocoin-apps-from-ammocoin
+cd ammocoin-v1.1.0/source
 
 # Generate build scripts
 ./autogen.sh
@@ -274,7 +274,7 @@ sudo apt install -y libssl1.1 libssl-dev
 
 ```bash
 # After successful build, verify binaries
-cd ~/ammocoin-v1.1.0/ammocoin-apps-from-ammocoin/src
+cd ~/ammocoin-v1.1.0/source/src
 
 # Check binary dependencies
 ldd ./ammocoind | grep "not found"

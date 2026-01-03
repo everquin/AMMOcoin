@@ -326,14 +326,14 @@ Dockerfile.arm64                            2 KB
 ### Source Code
 ```
 ammocoin-source/                            Complete PIVX 5.x codebase
-ammocoin-apps-from-ammocoin/                Working v1.1.0 implementation
+source/                Working v1.1.0 implementation
 ```
 
 ### Binaries (macOS complete, others building)
 ```
-ammocoin-apps-from-ammocoin/src/ammocoind           ✅ macOS ARM64
-ammocoin-apps-from-ammocoin/src/ammocoin-cli        ✅ macOS ARM64
-ammocoin-apps-from-ammocoin/src/ammocoin-tx         ✅ macOS ARM64
+source/src/ammocoind           ✅ macOS ARM64
+source/src/ammocoin-cli        ✅ macOS ARM64
+source/src/ammocoin-tx         ✅ macOS ARM64
 build/linux/bin/                                     🔄 Building...
 build/windows/bin/                                   ⏸️ Queued
 build/arm64/bin/                                     ⏸️ Queued

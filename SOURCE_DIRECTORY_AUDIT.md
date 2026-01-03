@@ -13,14 +13,14 @@ The AMMOcoin repository currently has TWO source directories with conflicting pu
 
 | Directory | Size | Files | Purpose | Status |
 |-----------|------|-------|---------|--------|
-| **ammocoin-apps-from-ammocoin** | 6.6 GB | 4,594 | **Active development & builds** | ✅ Production |
+| **source** | 6.6 GB | 4,594 | **Active development & builds** | ✅ Production |
 | **ammocoin-source** | 18 MB | 54 | Incomplete copy, legacy artifact | ❌ Redundant |
 
 ---
 
 ## Detailed Analysis
 
-### ammocoin-apps-from-ammocoin/
+### source/
 
 **Size:** 6.6 GB
 **Files:** 4,594 source files
@@ -43,7 +43,7 @@ consensus.hashGenesisBlock = uint256S("0x000000593410213331b5adcc6a79054a984bfc9
 
 **Usage:**
 - This is the ACTUAL source directory used for all builds
-- Contains working binaries at `ammocoin-apps-from-ammocoin/src/`
+- Contains working binaries at `source/src/`
 - All build scripts ultimately compile from this directory
 
 ---
@@ -57,7 +57,7 @@ consensus.hashGenesisBlock = uint256S("0x000000593410213331b5adcc6a79054a984bfc9
   - `src/secp256k1/src/libsecp256k1-config.h.in`
 
 **Contents:**
-- ONE source file: `src/chainparams.cpp` (IDENTICAL to ammocoin-apps-from-ammocoin version)
+- ONE source file: `src/chainparams.cpp` (IDENTICAL to source version)
 - ONE backup: `src/chainparams.cpp.backup`
 - Empty directory structure (depends/, doc/, build-aux/)
 - Autotools artifacts (configure, Makefile.in, autom4te.cache)
@@ -68,7 +68,7 @@ consensus.hashGenesisBlock = uint256S("0x000000593410213331b5adcc6a79054a984bfc9
 ```cpp
 consensus.hashGenesisBlock = uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2");
 ```
-✅ Same as ammocoin-apps-from-ammocoin (identical file)
+✅ Same as source (identical file)
 
 **History:**
 - Commit `a0e430c` (Dec 30, 2025) attempted to DELETE this directory:
@@ -99,7 +99,7 @@ consensus.hashGenesisBlock = uint256S("0x000000593410213331b5adcc6a79054a984bfc9
 /opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind
 ```
 This is CONFUSING because:
-- Local repository uses `ammocoin-apps-from-ammocoin`
+- Local repository uses `source`
 - Remote VM uses `ammocoin-source` as directory name
 - They refer to the SAME codebase, just cloned with different names
 
@@ -112,9 +112,9 @@ This instructs users to clone the repo as "ammocoin-source" directory.
 
 **Build Scripts (build-all.sh, build-linux.sh, build-arm64.sh):**
 ```bash
-if [ ! -d "ammocoin-source" ] || [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+if [ ! -d "ammocoin-source" ] || [ ! -d "source" ]; then
     echo "❌ Error: Source directories not found"
-    echo "Expected: ammocoin-source/ and ammocoin-apps-from-ammocoin/"
+    echo "Expected: ammocoin-source/ and source/"
     exit 1
 fi
 ```
@@ -127,14 +127,14 @@ fi
 ### 1. Naming Confusion
 - Repository has two directories with "source" in their names
 - Unclear which is the "official" source directory
-- Name `ammocoin-apps-from-ammocoin` doesn't clearly indicate it's the primary source
+- Name `source` doesn't clearly indicate it's the primary source
 
 ### 2. Redundant Content
-- `ammocoin-source/src/chainparams.cpp` is IDENTICAL to `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
+- `ammocoin-source/src/chainparams.cpp` is IDENTICAL to `source/src/chainparams.cpp`
 - No reason for ammocoin-source to exist locally
 
 ### 3. Documentation Inconsistency
-- Local repository uses `ammocoin-apps-from-ammocoin`
+- Local repository uses `source`
 - Remote VM documentation uses `ammocoin-source`
 - Build scripts check for both (unnecessarily)
 
@@ -160,10 +160,10 @@ fi
 1. Remove from git: `git rm -rf ammocoin-source/`
 2. Update build scripts to remove ammocoin-source check
 3. Update LINUX_BINARY_DISTRIBUTION_GUIDE.md
-   - Change VM paths from `ammocoin-source` → `ammocoin-apps-from-ammocoin`
+   - Change VM paths from `ammocoin-source` → `source`
    - Or note that VM uses different directory name
 4. Update UBUNTU_UPGRADE_GUIDE.md
-   - Clone as `ammocoin-apps-from-ammocoin` OR
+   - Clone as `source` OR
    - Document that directory name doesn't matter
 
 **Pros:**
@@ -179,12 +179,12 @@ fi
 
 ---
 
-### Option B: Rename ammocoin-apps-from-ammocoin → ammocoin-source
+### Option B: Rename source → ammocoin-source
 
 **Action:** Rename primary source directory to match documentation
 
 **Steps:**
-1. `git mv ammocoin-apps-from-ammocoin ammocoin-source`
+1. `git mv source ammocoin-source`
 2. Delete current empty ammocoin-source/
 3. Update build scripts
 4. Update all documentation references
@@ -195,18 +195,18 @@ fi
 - ✅ Shorter path names
 
 **Cons:**
-- ❌ Loses descriptive name "ammocoin-apps-from-ammocoin" (which indicates it came from PIVX apps)
+- ❌ Loses descriptive name "source" (which indicates it came from PIVX apps)
 - ❌ Massive git operation
 - ❌ Would break all existing references in issues, PRs, external docs
 
 ---
 
-### Option C: Rename ammocoin-apps-from-ammocoin → src
+### Option C: Rename source → src
 
 **Action:** Use simple, standard name for source directory
 
 **Steps:**
-1. `git mv ammocoin-apps-from-ammocoin src`
+1. `git mv source src`
 2. `git rm -rf ammocoin-source`
 3. Update all references
 4. Update build scripts
@@ -229,7 +229,7 @@ fi
 1. ammocoin-source serves NO purpose locally
 2. Cleanup was already attempted (Dec 30) but incomplete
 3. Minimal disruption - just remove redundant files
-4. ammocoin-apps-from-ammocoin is already established as the working directory
+4. source is already established as the working directory
 5. Can be done incrementally without breaking builds
 
 **Implementation Priority:**
@@ -246,7 +246,7 @@ fi
 **Local Repository (Development):**
 ```
 AMMOcoin/
-├── ammocoin-apps-from-ammocoin/  ← Primary source
+├── source/  ← Primary source
 └── ammocoin-source/              ← Redundant, should be removed
 ```
 
@@ -263,7 +263,7 @@ git clone https://github.com/everquin/AMMOcoin-v1.1.0.git my-custom-name
 
 The UBUNTU_UPGRADE_GUIDE tells users to clone as "ammocoin-source" which is fine for the VM, but shouldn't create confusion in the repository itself.
 
-**Resolution:** Keep ammocoin-apps-from-ammocoin as the official source directory name in the repository, but document that when deploying to VMs, users may clone with any name they prefer.
+**Resolution:** Keep source as the official source directory name in the repository, but document that when deploying to VMs, users may clone with any name they prefer.
 
 ---
 
@@ -279,12 +279,12 @@ The UBUNTU_UPGRADE_GUIDE tells users to clone as "ammocoin-source" which is fine
 2. **Update build scripts** (`scripts/build/build-all.sh`, `build-linux.sh`, `build-arm64.sh`):
    ```bash
    # Remove this check:
-   if [ ! -d "ammocoin-source" ] || [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+   if [ ! -d "ammocoin-source" ] || [ ! -d "source" ]; then
 
    # Replace with:
-   if [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+   if [ ! -d "source" ]; then
        echo "❌ Error: Source directory not found"
-       echo "Expected: ammocoin-apps-from-ammocoin/"
+       echo "Expected: source/"
        exit 1
    fi
    ```
@@ -304,11 +304,11 @@ The UBUNTU_UPGRADE_GUIDE tells users to clone as "ammocoin-source" which is fine
    - Updated build scripts to remove unnecessary directory check
    - Clarified documentation regarding VM vs local directory naming
 
-   The primary source directory is ammocoin-apps-from-ammocoin/
+   The primary source directory is source/
    (Users may clone repository with any directory name they prefer)"
    ```
 
 ---
 
-**Conclusion:** ammocoin-source is redundant, confusing, and should be completely removed. The primary source directory is and should remain `ammocoin-apps-from-ammocoin/`.
+**Conclusion:** ammocoin-source is redundant, confusing, and should be completely removed. The primary source directory is and should remain `source/`.
 

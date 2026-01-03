@@ -10,14 +10,14 @@ All dependencies should be installed by running `scripts/build/BUILDME.sh` first
 
 ### ARM64 (Current System)
 ```bash
-cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/ammocoin-apps-from-ammocoin
+cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/source
 ./configure --prefix=/usr/local --enable-wallet --with-incompatible-bdb
 make -j$(nproc)
 ```
 
 ### x86_64 Linux (via Gitian)
 ```bash
-cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/ammocoin-apps-from-ammocoin/contrib/gitian-descriptors
+cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/source/contrib/gitian-descriptors
 # Build using Gitian Docker
 docker run -it --rm -v $(pwd):/build ubuntu:22.04 bash
 # Inside container:
@@ -26,14 +26,14 @@ git clone https://github.com/devrandom/gitian-builder
 cd gitian-builder
 ./bin/make-base-vm --docker
 # Build Linux
-./bin/gbuild ../ammocoin-apps-from-ammocoin/contrib/gitian-descriptors/gitian-linux.yml
+./bin/gbuild ../source/contrib/gitian-descriptors/gitian-linux.yml
 ```
 
 ## Platform 2: Windows EXE (Cross-Compilation)
 
 ### Method 1: Using depends system (Recommended)
 ```bash
-cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/ammocoin-apps-from-ammocoin
+cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/source
 
 # Install Windows cross-compilation tools
 sudo apt-get install -y \
@@ -101,7 +101,7 @@ export PATH="/tmp/osxcross/target/bin:$PATH"
 
 #### Step 2: Build macOS dependencies
 ```bash
-cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/ammocoin-apps-from-ammocoin/depends
+cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/source/depends
 
 # Build for macOS
 make HOST=x86_64-apple-darwin19 -j$(nproc)
@@ -109,7 +109,7 @@ make HOST=x86_64-apple-darwin19 -j$(nproc)
 
 #### Step 3: Configure and build
 ```bash
-cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/ammocoin-apps-from-ammocoin
+cd /media/psf/CRUCIAL_2TB/"  _GITHUB"/AMMOcoin/source
 
 ./configure \
     --prefix=`pwd`/depends/x86_64-apple-darwin19 \
@@ -139,7 +139,7 @@ Since you have access to macOS (the CRUCIAL_2TB volume), the cleanest approach f
 
 ```bash
 # On your Mac:
-cd "/Volumes/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/Volumes/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source"
 
 # Install Xcode Command Line Tools
 xcode-select --install

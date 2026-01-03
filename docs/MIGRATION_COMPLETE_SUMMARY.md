@@ -306,7 +306,7 @@ python3 v1.1.0-genesis-generator.py v1.0-balance-snapshot.json
 cat v1.1.0-genesis-code.cpp
 
 # Insert into chainparams.cpp
-cd ammocoin-apps-from-ammocoin/src
+cd source/src
 nano chainparams.cpp
 # Replace CMainParams() constructor
 

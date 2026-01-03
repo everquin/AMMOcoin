@@ -8,7 +8,7 @@
 
 ## 📦 Binary Location on VM
 
-**Note:** The VM uses `ammocoin-source` as the directory name (when the repository was cloned). The same codebase in the repository is located in `ammocoin-apps-from-ammocoin/`. Users may clone the repository with any directory name.
+**Note:** The VM uses `ammocoin-source` as the directory name (when the repository was cloned). The same codebase in the repository is located in `source/`. Users may clone the repository with any directory name.
 
 The compiled Linux binaries are located at:
 ```

@@ -7,7 +7,7 @@ echo "🚨 AMMOcoin v1.1.0 Emergency Security Build"
 echo "=============================================="
 
 # Check if we're in the right directory
-if [ ! -d "ammocoin-source" ] || [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+if [ ! -d "ammocoin-source" ] || [ ! -d "source" ]; then
     echo "❌ Error: Please run this script from the AMMOcoin-v1.1.0-Emergency-Release directory"
     exit 1
 fi
@@ -74,7 +74,7 @@ case $choice in
         echo "🔧 Building AMMOcoin Modern Applications v1.1.0"
         echo "==============================================="
 
-        cd ammocoin-apps-from-ammocoin
+        cd source
 
         echo "📋 Step 1: Generating build configuration..."
         ./autogen.sh

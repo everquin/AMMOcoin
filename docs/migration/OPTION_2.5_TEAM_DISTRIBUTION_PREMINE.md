@@ -61,7 +61,7 @@
 
 ### Code Changes Required
 
-**File:** `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
+**File:** `source/src/chainparams.cpp`
 
 **Current genesis creation (lines ~145-155):**
 ```cpp
@@ -124,7 +124,7 @@ That's literally the only code change if using existing paper wallet address!
 ### Step 1: Modify Genesis Amount (5 minutes)
 
 ```bash
-cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src
+cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src
 
 # Edit chainparams.cpp
 # Line ~145: Change 1000 * COIN to 250000000 * COIN
@@ -233,13 +233,13 @@ cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 
 # Package macOS ARM64
 tar -czf AMMOcoin-v1.1.0-distribution-macOS-ARM64.tar.gz \
-    -C ../ammocoin-apps-from-ammocoin/src \
+    -C ../source/src \
     ammocoind ammocoin-cli ammocoin-tx
 
 zip AMMOcoin-v1.1.0-distribution-macOS-ARM64.zip \
-    -j ../ammocoin-apps-from-ammocoin/src/ammocoind \
-    ../ammocoin-apps-from-ammocoin/src/ammocoin-cli \
-    ../ammocoin-apps-from-ammocoin/src/ammocoin-tx
+    -j ../source/src/ammocoind \
+    ../source/src/ammocoin-cli \
+    ../source/src/ammocoin-tx
 
 # Generate checksums
 shasum -a 256 AMMOcoin-v1.1.0-distribution-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-distribution.txt

@@ -91,7 +91,7 @@ git log -1 --oneline  # Verify you have latest commit
 
 ### 3. Navigate to Build Directory
 ```bash
-cd ammocoin-apps-from-ammocoin
+cd source
 ```
 
 ### 4. Clean Previous Build (if any)
@@ -148,7 +148,7 @@ make -j$(nproc)
 
 **Expected output:**
 ```
-make[1]: Leaving directory '.../ammocoin-apps-from-ammocoin'
+make[1]: Leaving directory '.../source'
 ```
 
 ### 8. Verify Build Success

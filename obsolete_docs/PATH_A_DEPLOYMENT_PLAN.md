@@ -40,7 +40,7 @@ cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin
 - Linux: `build/linux/bin/`
 - Windows: `build/windows/bin/`
 - ARM64: `build/arm64/bin/`
-- macOS: Already compiled in `ammocoin-apps-from-ammocoin/src/`
+- macOS: Already compiled in `source/src/`
 
 **Build time:** ~3-4 hours total
 
@@ -54,7 +54,7 @@ docker run -it --rm -v $(pwd)/build/linux/bin:/bin ubuntu:22.04 /bin/ammocoind -
 # Copy to Windows and test
 
 # macOS (already tested)
-./ammocoin-apps-from-ammocoin/src/ammocoind --version
+./source/src/ammocoind --version
 ```
 
 ### Step 3: Create Release Packages

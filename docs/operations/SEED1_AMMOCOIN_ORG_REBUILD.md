@@ -177,9 +177,9 @@ git log -1 --oneline
 
 ### Step 3: Navigate to Build Directory
 ```bash
-cd ammocoin-apps-from-ammocoin
+cd source
 pwd
-# Should show: /tmp/AMMOcoin-v1.1.0/ammocoin-apps-from-ammocoin
+# Should show: /tmp/AMMOcoin-v1.1.0/source
 ```
 
 ### Step 4: Generate Configure Script
@@ -227,7 +227,7 @@ make -j$(nproc)
 
 **When complete, you should see:**
 ```
-make[1]: Leaving directory '.../ammocoin-apps-from-ammocoin'
+make[1]: Leaving directory '.../source'
 ```
 
 ### Step 7: Verify Build Success

@@ -27,7 +27,7 @@
 
 ### What Gets Changed in Code
 
-**File:** `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
+**File:** `source/src/chainparams.cpp`
 
 **Current Genesis (Line ~145-155):**
 ```cpp
@@ -178,7 +178,7 @@ assert(genesis.hashMerkleRoot == uint256S("0xFOUND_MERKLE"));
 
 **Commands:**
 ```bash
-cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin
+cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source
 make clean
 ./configure --prefix=/usr/local --disable-tests --disable-bench --without-gui --with-incompatible-bdb
 make -j$(sysctl -n hw.ncpu)
@@ -213,8 +213,8 @@ strings src/ammocoind | grep "00000f14"
 **macOS:**
 ```bash
 cd releases
-tar -czf AMMOcoin-v1.1.0-snapshot-macOS-ARM64.tar.gz -C ../ammocoin-apps-from-ammocoin/src ammocoind ammocoin-cli ammocoin-tx
-zip AMMOcoin-v1.1.0-snapshot-macOS-ARM64.zip -j ../ammocoin-apps-from-ammocoin/src/ammocoind ../ammocoin-apps-from-ammocoin/src/ammocoin-cli ../ammocoin-apps-from-ammocoin/src/ammocoin-tx
+tar -czf AMMOcoin-v1.1.0-snapshot-macOS-ARM64.tar.gz -C ../source/src ammocoind ammocoin-cli ammocoin-tx
+zip AMMOcoin-v1.1.0-snapshot-macOS-ARM64.zip -j ../source/src/ammocoind ../source/src/ammocoin-cli ../source/src/ammocoin-tx
 
 shasum -a 256 AMMOcoin-v1.1.0-snapshot-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-snapshot.txt
 ```

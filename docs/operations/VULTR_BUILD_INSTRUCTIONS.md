@@ -43,7 +43,7 @@ git clone https://github.com/everquin/AMMOcoin-v1.1.0.git AMMOcoin-build
 cd AMMOcoin-build
 
 # Verify we have the correct genesis hash
-grep -r "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162" ammocoin-apps-from-ammocoin/src/chainparams.cpp
+grep -r "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162" source/src/chainparams.cpp
 
 # Should show the correct genesis hash - if not, stop here!
 ```
@@ -94,7 +94,7 @@ gcc --version
 
 ```bash
 # Navigate to build directory
-cd ~/AMMOcoin-build/ammocoin-apps-from-ammocoin
+cd ~/AMMOcoin-build/source
 
 # Clean any previous build attempts
 make clean 2>/dev/null || true

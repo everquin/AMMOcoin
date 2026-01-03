@@ -79,7 +79,7 @@ See `V1.0_TO_V1.1.0_NODE_MIGRATION.md` for detailed explanation. This patch is s
 
 ```bash
 git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ~/ammocoin
-cd ~/ammocoin/ammocoin-apps-from-ammocoin
+cd ~/ammocoin/source
 ```
 
 ---

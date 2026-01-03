@@ -67,7 +67,7 @@ NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=secure_password_here
 ```
 
 **Source Verification:**
-From `/ammocoin-apps-from-ammocoin/src/chainparamsbase.cpp:39`:
+From `/source/src/chainparamsbase.cpp:39`:
 ```cpp
 if (chain == CBaseChainParams::MAIN)
     return std::make_unique<CBaseChainParams>("", 51473);  // <-- Mainnet RPC port

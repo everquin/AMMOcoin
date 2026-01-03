@@ -21,7 +21,7 @@ echo ""
 
 # Count files that will be updated
 echo "Scanning for files to update..."
-MD_COUNT=$(find . -name "*.md" -type f -not -path "./.git/*" -not -path "./ammocoin-apps-from-ammocoin/target/*" | xargs grep -l "$OLD_V10\|$OLD_BROKEN\|$OLD_1000AMMO\|$OLD_250M_NOPK" 2>/dev/null | wc -l)
+MD_COUNT=$(find . -name "*.md" -type f -not -path "./.git/*" -not -path "./source/target/*" | xargs grep -l "$OLD_V10\|$OLD_BROKEN\|$OLD_1000AMMO\|$OLD_250M_NOPK" 2>/dev/null | wc -l)
 SH_COUNT=$(find ./scripts -name "*.sh" -type f 2>/dev/null | xargs grep -l "$OLD_V10\|$OLD_BROKEN\|$OLD_1000AMMO\|$OLD_250M_NOPK" 2>/dev/null | wc -l)
 
 echo "Found $MD_COUNT markdown files to update"
@@ -30,7 +30,7 @@ echo ""
 
 # Update .md files
 echo "Updating .md files..."
-find . -name "*.md" -type f -not -path "./.git/*" -not -path "./ammocoin-apps-from-ammocoin/target/*" -not -path "./V1.1.0_GENESIS_BLOCK_AUTHORITY.md" -print0 | while IFS= read -r -d '' file; do
+find . -name "*.md" -type f -not -path "./.git/*" -not -path "./source/target/*" -not -path "./V1.1.0_GENESIS_BLOCK_AUTHORITY.md" -print0 | while IFS= read -r -d '' file; do
     if grep -q "$OLD_V10\|$OLD_BROKEN\|$OLD_1000AMMO\|$OLD_250M_NOPK" "$file" 2>/dev/null; then
         echo "  Updating: $file"
         sed -i '' "s/$OLD_V10/$NEW_CORRECT/g" "$file"

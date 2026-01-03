@@ -33,16 +33,16 @@ aclocal.m4
 *.app/
 
 # Compiled binaries (keep in releases/)
-ammocoin-apps-from-ammocoin/src/ammocoind
-ammocoin-apps-from-ammocoin/src/ammocoin-cli
-ammocoin-apps-from-ammocoin/src/ammocoin-tx
+source/src/ammocoind
+source/src/ammocoin-cli
+source/src/ammocoin-tx
 
 # Build directories
 build/
-ammocoin-apps-from-ammocoin/depends/built/
-ammocoin-apps-from-ammocoin/depends/work/
-ammocoin-apps-from-ammocoin/depends/sources/
-ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/
+source/depends/built/
+source/depends/work/
+source/depends/sources/
+source/depends/x86_64-w64-mingw32/
 
 # Backup files
 *.backup

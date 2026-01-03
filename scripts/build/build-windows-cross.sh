@@ -19,7 +19,7 @@ sudo apt-get install -y \
     nsis \
     zip
 
-cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source"
 
 echo ""
 echo "Step 1: Building Windows dependencies..."

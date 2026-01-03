@@ -19,7 +19,7 @@ fi
 echo "✓ MinGW found: $(x86_64-w64-mingw32-g++ --version | head -1)"
 echo ""
 
-cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source"
 
 echo "Step 1: Building Windows dependencies (15-20 minutes)..."
 cd depends

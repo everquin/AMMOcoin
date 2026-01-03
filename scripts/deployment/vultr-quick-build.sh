@@ -25,7 +25,7 @@ cd AMMOcoin-build
 
 # Verify genesis hash
 echo "🔍 Verifying genesis block hash..."
-if grep -q "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
+if grep -q "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162" source/src/chainparams.cpp; then
     echo "✅ Correct genesis hash found!"
 else
     echo "❌ ERROR: Genesis hash not found in source code!"
@@ -47,7 +47,7 @@ if ! command -v rustc &> /dev/null; then
 fi
 
 # Navigate to build directory
-cd ~/AMMOcoin-build/ammocoin-apps-from-ammocoin
+cd ~/AMMOcoin-build/source
 
 # Clean any previous attempts
 echo "🧼 Cleaning previous build artifacts..."

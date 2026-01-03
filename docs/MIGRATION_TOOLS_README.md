@@ -149,7 +149,7 @@ cat v1.1.0-genesis-code.cpp
 
 **Step 2:** Update chainparams.cpp
 ```bash
-cd ammocoin-apps-from-ammocoin/src
+cd source/src
 nano chainparams.cpp
 
 # Replace the CMainParams() constructor with generated code
@@ -170,7 +170,7 @@ while (UintToArith256(genesis.GetHash()) > UintToArith256(consensus.powLimit)) {
 
 **Step 4:** Compile and mine genesis
 ```bash
-cd ammocoin-apps-from-ammocoin
+cd source
 make clean
 make -j8
 

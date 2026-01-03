@@ -12,9 +12,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 # Check if source directories exist
-if [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+if [ ! -d "source" ]; then
     echo "❌ Error: Source directory not found"
-    echo "Expected: ammocoin-apps-from-ammocoin/"
+    echo "Expected: source/"
     exit 1
 fi
 

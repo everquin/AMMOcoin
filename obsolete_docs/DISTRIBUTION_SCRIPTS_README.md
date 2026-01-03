@@ -243,7 +243,7 @@ python3 verify-claim.py --stats
 
 **1. Start your v1.1.0 node:**
 ```bash
-cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin
+cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source
 ./src/ammocoind -daemon
 ```
 
@@ -397,7 +397,7 @@ cat processed-claims.json | python3 -m json.tool
 
 **Fix:**
 ```bash
-cd ammocoin-apps-from-ammocoin
+cd source
 ./src/ammocoind -daemon
 # Wait 30 seconds
 ./src/ammocoin-cli getinfo

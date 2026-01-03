@@ -46,7 +46,7 @@ The hybrid genesis code needs to be integrated into `chainparams.cpp` in a way t
 Two options:
 
 #### Option A: Manual Integration (Recommended - 1-2 hours)
-1. Open `ammocoin-apps-from-ammocoin/src/chainparams.cpp`
+1. Open `source/src/chainparams.cpp`
 2. Find the genesis transaction section (around line 166-170)
 3. Manually convert each of the 62 outputs from `v1.1.0-hybrid-genesis.cpp` to match the existing format
 
@@ -116,7 +116,7 @@ Given the complexity, here's a simpler approach that will work **immediately**:
 **Use existing genesis + manual distribution**
 
 1. Keep existing chainparams.cpp unchanged
-2. Compile: `cd ammocoin-apps-from-ammocoin && make -j8`
+2. Compile: `cd source && make -j8`
 3. Test: `./src/ammocoind -daemon && ./src/ammocoin-cli getinfo`
 4. Build cross-platform binaries: `cd .. && ./build-all.sh`
 5. Launch network
@@ -202,7 +202,7 @@ When you're ready to build (regardless of path):
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin
 
 # Test compile current version
-cd ammocoin-apps-from-ammocoin
+cd source
 make -j8
 
 # If successful, build all platforms

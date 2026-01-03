@@ -83,7 +83,7 @@ sudo make install
 ```bash
 cd ~
 git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin
-cd ammocoin/ammocoin-apps-from-ammocoin
+cd ammocoin/source
 ```
 
 ### Step 5: Build AMMOcoin

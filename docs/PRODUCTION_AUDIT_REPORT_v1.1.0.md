@@ -17,7 +17,7 @@ AMMOcoin v1.1.0 has undergone a comprehensive production readiness audit. The co
 
 ### ✅ PASSED - Proper Attribution
 The codebase correctly attributes PIVX in the MIT license file:
-- **File**: `ammocoin-apps-from-ammocoin/COPYING` (Line 7)
+- **File**: `source/COPYING` (Line 7)
 - **Content**: `Copyright (c) 2015-2020 PIVX Developers`
 - **Status**: ✅ Correct - MIT license requires attribution
 
@@ -31,7 +31,7 @@ The codebase correctly attributes PIVX in the MIT license file:
 ### ⚠️ MINOR ISSUES - Non-Critical Cosmetic Fixes
 
 #### Issue 1: CSS Comments Reference PIVX
-**File**: `ammocoin-apps-from-ammocoin/src/qt/res/css/default.css`
+**File**: `source/src/qt/res/css/default.css`
 **Lines**: 884, 885, 889
 **Content**:
 ```css
@@ -45,8 +45,8 @@ QDialog#AboutDialog QLabel#label_2 { /* Margin for About Pivx text */
 
 #### Issue 2: SVG Metadata Contains "PIVXWallpaper"
 **Files**:
-- `ammocoin-apps-from-ammocoin/src/qt/ammocoin/res/img/bg-splash.svg`
-- `ammocoin-apps-from-ammocoin/src/qt/ammocoin/res/img/bg-welcome.svg`
+- `source/src/qt/ammocoin/res/img/bg-splash.svg`
+- `source/src/qt/ammocoin/res/img/bg-welcome.svg`
 
 **Issue**: Embedded XMP metadata contains `<dc:title><rdf:li>PIVXWallpaper</rdf:li></dc:title>`
 **Recommendation**: Update metadata title to "AMMOcoinWallpaper"
@@ -410,7 +410,7 @@ flutter build web --release
 
 ### Core Binaries
 ```
-/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/
+/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src/
 ├── ammocoind (12MB) - Daemon
 ├── ammocoin-cli (412KB) - CLI
 └── ammocoin-tx (1.4MB) - Transaction utility

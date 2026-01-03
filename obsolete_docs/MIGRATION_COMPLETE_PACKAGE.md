@@ -173,9 +173,9 @@ Dockerfile.arm64                            2 KB   ✅
 ### Binaries
 ```
 macOS ARM64:
-  ammocoin-apps-from-ammocoin/src/ammocoind     12 MB  ✅ WORKING
-  ammocoin-apps-from-ammocoin/src/ammocoin-cli   2 MB  ✅ WORKING
-  ammocoin-apps-from-ammocoin/src/ammocoin-tx    2 MB  ✅ WORKING
+  source/src/ammocoind     12 MB  ✅ WORKING
+  source/src/ammocoin-cli   2 MB  ✅ WORKING
+  source/src/ammocoin-tx    2 MB  ✅ WORKING
 
 Linux / Windows / ARM64:
   Status: Build fix needed (miniupnpc compatibility)
@@ -202,7 +202,7 @@ r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
 
 **Alternative Solutions:**
 1. **Option A:** Fix the code (recommended)
-   - Edit `ammocoin-apps-from-ammocoin/src/mapport.cpp`
+   - Edit `source/src/mapport.cpp`
    - Remove last 2 parameters from UPNP_GetValidIGD call
    - Rebuild
 
@@ -276,7 +276,7 @@ r = UPNP_GetValidIGD(devlist, &urls, &data, lanaddr, sizeof(lanaddr));
 ### Immediate Next Steps (Day 1)
 
 1. **Fix miniupnpc Compatibility** (30 mins)
-   - Edit `ammocoin-apps-from-ammocoin/src/mapport.cpp:171`
+   - Edit `source/src/mapport.cpp:171`
    - Change UPNP_GetValidIGD call to 5 parameters
    - Rebuild
 

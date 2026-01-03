@@ -8,7 +8,7 @@ set -e  # Exit on error
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/parallels/.cargo/bin"
 
 # Navigate to build directory
-cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source"
 
 echo "=========================================="
 echo "AMMOcoin v1.1.0 Linux Native Build"

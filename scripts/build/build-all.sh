@@ -27,9 +27,9 @@ fi
 echo "✅ Docker is running"
 
 # Check if source directory exists
-if [ ! -d "ammocoin-apps-from-ammocoin" ]; then
+if [ ! -d "source" ]; then
     echo "❌ Error: Source directory not found"
-    echo "Expected: ammocoin-apps-from-ammocoin/"
+    echo "Expected: source/"
     exit 1
 fi
 
@@ -69,7 +69,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Building macOS native binaries..."
     mkdir -p macos-binaries-v1.1.0
 
-    cd ammocoin-apps-from-ammocoin
+    cd source
 
     # Clean previous build
     make clean > /dev/null 2>&1 || true

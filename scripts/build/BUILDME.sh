@@ -62,12 +62,12 @@ fi
 
 echo ""
 echo "Building AMMOcoin..."
-cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source"
 
 # Run as user (not root) for the build
 su - parallels -c "
 export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$USER_HOME/.cargo/bin'
-cd '/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin'
+cd '/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source'
 
 make distclean || true
 

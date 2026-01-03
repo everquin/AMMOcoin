@@ -12,7 +12,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-AMMOCOIN_SRC="/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src"
+AMMOCOIN_SRC="/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src"
 AMMOCOIN_TEST_DATA="$HOME/.ammocoin-v1.1.0-test"
 PARAMS_DIR="$HOME/.ammocoin-params"
 

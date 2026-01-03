@@ -144,7 +144,7 @@ txNew.vout[1].scriptPubKey = GetScriptForDestination(
 
 **Step 2: Recompile**
 ```bash
-cd ammocoin-apps-from-ammocoin
+cd source
 make clean
 make -j8
 ```

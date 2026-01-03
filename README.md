@@ -151,7 +151,7 @@ sudo apt-get install build-essential libtool autotools-dev automake \
 ```bash
 # Clone repository
 git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0/ammocoin-apps-from-ammocoin
+cd AMMOcoin-v1.1.0/source
 
 # Configure
 ./configure --with-incompatible-bdb --disable-tests --disable-bench

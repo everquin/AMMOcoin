@@ -56,7 +56,7 @@ cargo --version
 
 echo ""
 echo "Step 3: Cleaning previous build..."
-cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin"
+cd "/media/psf/CRUCIAL_2TB/  _GITHUB/AMMOcoin/source"
 make distclean || true
 
 echo ""

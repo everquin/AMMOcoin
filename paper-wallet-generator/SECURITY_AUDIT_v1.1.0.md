@@ -54,7 +54,7 @@ const NETWORK = {
 ```
 
 **Verification:**
-- Address version 0x17 matches `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/chainparams.cpp:105`
+- Address version 0x17 matches `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src/chainparams.cpp:105`
 - WIF version 0x97 matches standard AMMOcoin format
 - All network parameters align with v1.1.0 release
 
@@ -257,7 +257,7 @@ WIF Private Key
 **NOT APPLICABLE** - Paper wallet generator doesn't need genesis block data. It only generates key pairs and addresses based on network parameters.
 
 ### Network Parameters Match
-Compared with `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/chainparams.cpp`:
+Compared with `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src/chainparams.cpp`:
 
 | Parameter | Paper Wallet | chainparams.cpp | Status |
 |-----------|--------------|-----------------|--------|

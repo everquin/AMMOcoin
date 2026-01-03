@@ -21,7 +21,7 @@
 
 Your macOS ARM64 binaries are at:
 ```
-/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/
+/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src/
 ├── ammocoind
 ├── ammocoin-cli
 └── ammocoin-tx
@@ -42,7 +42,7 @@ Open Terminal and run:
 
 ```bash
 # Set convenient aliases for this session
-export AMMOCOIN_SRC="/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src"
+export AMMOCOIN_SRC="/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src"
 export AMMOCOIN_TEST_DATA="$HOME/.ammocoin-v1.1.0-test"
 
 # Verify binaries exist
@@ -410,7 +410,7 @@ cat "$AMMOCOIN_TEST_DATA/ammocoin.conf"
 
 ```
 Local Test Setup:
-├── Binaries: /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/src/
+├── Binaries: /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src/
 ├── Test Data: ~/.ammocoin-v1.1.0-test/
 ├── Parameters: ~/.ammocoin-params/
 ├── Credentials: ~/ammocoin-test-credentials.txt

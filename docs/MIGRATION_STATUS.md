@@ -167,7 +167,7 @@ python3 v1.1.0-genesis-generator.py v1.0-balance-snapshot.json
 # Insert generated code into CMainParams()
 
 # 4. Compile and mine genesis
-cd ammocoin-apps-from-ammocoin
+cd source
 make clean && make -j8
 ./src/ammocoind -printtoconsole
 # Outputs: nNonce, genesis hash, merkle root
