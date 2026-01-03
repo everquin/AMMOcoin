@@ -61,7 +61,7 @@ Edit `.env.local` with your AMMOcoin node details:
 
 ```bash
 # AMMOcoin RPC Configuration
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:55882
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
 NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
 NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=your_secure_password
 
@@ -96,7 +96,7 @@ rpcallowip=127.0.0.1
 rpcallowip=10.0.0.0/8
 rpcallowip=172.16.0.0/12
 rpcallowip=192.168.0.0/16
-rpcport=55882
+rpcport=51473
 
 # Optional: Increase RPC timeout for large requests
 rpctimeout=300
@@ -144,7 +144,7 @@ Create `.env.local` with all necessary configuration:
 # === REQUIRED SETTINGS ===
 
 # AMMOcoin Node RPC
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:55882
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
 NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
 NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=secure_password_here
 
@@ -173,7 +173,7 @@ For different networks (testnet, regtest), adjust your settings:
 
 **Testnet:**
 ```bash
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:55882
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
 NEXT_PUBLIC_NETWORK_NAME="AMMOcoin Testnet"
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Testnet Explorer"
 ```
@@ -309,7 +309,7 @@ docker build -t ammocoin-explorer .
 
 # Run container
 docker run -p 3000:3000 \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://your-node:55882 \
+  -e NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://your-node:51473 \
   -e NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer \
   -e NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=password \
   ammocoin-explorer
@@ -454,7 +454,7 @@ curl http://localhost:3000/api/stats
 curl -u explorer:password \
      -d '{"jsonrpc":"1.0","id":"test","method":"getblockchaininfo","params":[]}' \
      -H 'content-type: text/plain;' \
-     http://localhost:55882/
+     http://localhost:51473/
 ```
 
 ---
@@ -537,7 +537,7 @@ sudo ufw enable
 sudo ufw allow ssh
 sudo ufw allow 80
 sudo ufw allow 443
-sudo ufw deny 55882  # Block external RPC access
+sudo ufw deny 51473  # Block external RPC access
 ```
 
 **3. Content Security Policy**

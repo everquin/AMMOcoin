@@ -168,7 +168,8 @@ Create a `.env.local` file:
 
 ```bash
 # AMMOcoin RPC Configuration
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:55882
+# AMMOcoin v1.1.0 Mainnet RPC Port: 51473
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
 NEXT_PUBLIC_AMMOCOIN_RPC_USER=your_rpc_user
 NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=your_rpc_password
 
@@ -189,7 +190,7 @@ NEXT_PUBLIC_COINMARKETCAP_API_KEY=your_cmc_api_key
    rpcuser=explorer
    rpcpassword=secure_password
    rpcallowip=127.0.0.1
-   rpcport=55882
+   # rpcport=51473  # Optional - 51473 is the default for v1.1.0 mainnet
    ```
 
 2. **Update API endpoints** - Modify `src/lib/api.ts` with your node details

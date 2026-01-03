@@ -92,7 +92,7 @@ setup_environment() {
             print_warning ".env.example not found, creating basic .env.local"
             cat > .env.local << EOF
 # AMMOcoin RPC Configuration
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:55882
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
 NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
 NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=change_this_password
 
@@ -127,7 +127,7 @@ check_ammocoin_node() {
         export $(grep -v '^#' .env.local | xargs)
     fi
 
-    RPC_URL=${NEXT_PUBLIC_AMMOCOIN_RPC_URL:-"http://localhost:55882"}
+    RPC_URL=${NEXT_PUBLIC_AMMOCOIN_RPC_URL:-"http://localhost:51473"}
     RPC_USER=${NEXT_PUBLIC_AMMOCOIN_RPC_USER:-"explorer"}
     RPC_PASSWORD=${NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD:-""}
 
