@@ -79,11 +79,11 @@ jobs:
         run: |
           echo "🔨 Building dependencies for Windows (this takes 15-20 minutes)..."
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium, Qt..."
-          
+
           # Start the build
           make -j$(nproc) HOST=x86_64-w64-mingw32 &
           BUILD_PID=$!
-          
+
           # Monitor for Qt extraction and apply patch
           echo "📡 Monitoring for Qt extraction to apply numeric_limits patch..."
           while kill -0 $BUILD_PID 2>/dev/null; do
@@ -100,16 +100,16 @@ jobs:
             fi
             sleep 5
           done
-          
+
           # Wait for build to complete
           wait $BUILD_PID
           BUILD_RESULT=$?
-          
+
           if [ $BUILD_RESULT -ne 0 ]; then
             echo "❌ Build failed with exit code $BUILD_RESULT"
             exit $BUILD_RESULT
           fi
-          
+
           echo "✅ Dependencies built successfully"
 
       - name: Replace depends Rust binaries with Rust 1.80
@@ -171,21 +171,21 @@ jobs:
             --disable-maintainer-mode
 
           echo "🔧 Patching src/Makefile to add --target flag to cargo and ntdll library..."
-          
+
           # Patch the Makefile to add --target flag
           if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
             sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target x86_64-pc-windows-gnu --manifest-path|g' src/Makefile
             echo "✅ Patched cargo build command with Windows target"
           fi
-          
-          # Add ntdll to LDADD for all binaries
-          if grep -q '^ammocoind_LDADD' src/Makefile; then
-            sed -i 's|^\(ammocoind_LDADD.*\)$|\1 -lntdll|' src/Makefile
-            sed -i 's|^\(ammocoin_cli_LDADD.*\)$|\1 -lntdll|' src/Makefile
-            sed -i 's|^\(ammocoin_tx_LDADD.*\)$|\1 -lntdll|' src/Makefile
+
+          # Add ntdll to LDADD for all binaries - CORRECTED to append to += lines
+          if grep -q '^ammocoind_LDADD +=' src/Makefile; then
+            sed -i 's|^\(ammocoind_LDADD += .*\)$|\1 -lntdll|' src/Makefile
+            sed -i 's|^\(ammocoin_cli_LDADD += .*\)$|\1 -lntdll|' src/Makefile
+            sed -i 's|^\(ammocoin_tx_LDADD += .*\)$|\1 -lntdll|' src/Makefile
             echo "✅ Added ntdll library to linker flags"
             echo "Verifying ntdll patch:"
-            grep "LDADD.*ntdll" src/Makefile | head -3
+            grep "LDADD += .*ntdll" src/Makefile | head -3
           fi
 
           echo "🔧 Touching Makefiles to prevent regeneration..."
@@ -223,7 +223,7 @@ jobs:
           [ -f src/ammocoind.exe ] && echo "✅ ammocoind.exe found" || (echo "❌ ammocoind.exe missing" && exit 1)
           [ -f src/ammocoin-cli.exe ] && echo "✅ ammocoin-cli.exe found" || (echo "❌ ammocoin-cli.exe missing" && exit 1)
           [ -f src/ammocoin-tx.exe ] && echo "✅ ammocoin-tx.exe found" || (echo "❌ ammocoin-tx.exe missing" && exit 1)
-          
+
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings src/ammocoind.exe | grep -q "$GENESIS_HASH"; then
             echo "✅ Genesis hash verified in binary"
@@ -231,7 +231,7 @@ jobs:
             echo "❌ Genesis hash NOT found!"
             exit 1
           fi
-          
+
           echo "📋 Binary info:"
           file src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe
           echo "📊 Binary sizes:"
