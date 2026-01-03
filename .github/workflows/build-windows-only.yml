@@ -79,11 +79,11 @@ jobs:
         run: |
           echo "🔨 Building dependencies for Windows (this takes 15-20 minutes)..."
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium, Qt..."
-
+          
           # Start the build
           make -j$(nproc) HOST=x86_64-w64-mingw32 &
           BUILD_PID=$!
-
+          
           # Monitor for Qt extraction and apply patch
           echo "📡 Monitoring for Qt extraction to apply numeric_limits patch..."
           while kill -0 $BUILD_PID 2>/dev/null; do
@@ -100,16 +100,16 @@ jobs:
             fi
             sleep 5
           done
-
+          
           # Wait for build to complete
           wait $BUILD_PID
           BUILD_RESULT=$?
-
+          
           if [ $BUILD_RESULT -ne 0 ]; then
             echo "❌ Build failed with exit code $BUILD_RESULT"
             exit $BUILD_RESULT
           fi
-
+          
           echo "✅ Dependencies built successfully"
 
       - name: Replace depends Rust binaries with Rust 1.80
@@ -154,6 +154,7 @@ jobs:
           chmod +x src/chiabls/configure
 
           echo "🔧 Configuring for Windows x86_64..."
+          # Use explicit paths from rustup to avoid version switching
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
@@ -167,17 +168,26 @@ jobs:
             --with-incompatible-bdb \
             --disable-maintainer-mode
 
-          echo "🔧 Patching Makefile to add --target flag to cargo build..."
-          # Find and patch the cargo-build target in src/Makefile
-          if grep -q "cargo build" src/Makefile; then
-            # Add --target x86_64-pc-windows-gnu to the cargo build command
-            sed -i 's|cargo build --release|cargo build --release --target x86_64-pc-windows-gnu|g' src/Makefile
+          echo "🔧 Patching src/Makefile to add --target flag to cargo..."
+          # Check what the cargo command looks like
+          echo "Current cargo-build target in src/Makefile:"
+          grep -A2 "cargo-build:" src/Makefile || echo "cargo-build target not found"
+          
+          # Patch the Makefile to add --target flag
+          # The Makefile uses: $(CARGO) build $(RUST_BUILD_OPTS) --manifest-path ...
+          # We need to add --target x86_64-pc-windows-gnu before --manifest-path
+          if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
+            sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target x86_64-pc-windows-gnu --manifest-path|g' src/Makefile
             echo "✅ Patched src/Makefile cargo build command"
             echo "Verifying patch:"
-            grep "cargo build" src/Makefile | head -3
+            grep -A2 "cargo-build:" src/Makefile
           else
-            echo "❌ ERROR: Could not find cargo build command in Makefile!"
-            exit 1
+            echo "⚠️  Cargo build pattern not found, trying alternative approach..."
+            # Try to find any cargo build command
+            grep -n "cargo" src/Makefile | head -10
+            # Export CARGO_BUILD_TARGET for the make step
+            export CARGO_BUILD_TARGET=x86_64-pc-windows-gnu
+            echo "✅ Exported CARGO_BUILD_TARGET=x86_64-pc-windows-gnu"
           fi
 
           echo "🔧 Touching Makefiles to prevent regeneration..."
@@ -187,6 +197,9 @@ jobs:
           touch src/univalue/Makefile src/secp256k1/Makefile src/Makefile
 
           echo "✅ Starting build with Rust 1.80 and Windows target..."
+          CARGO="$(rustup which cargo --toolchain 1.80)" \
+          RUSTC="$(rustup which rustc --toolchain 1.80)" \
+          CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
@@ -197,7 +210,7 @@ jobs:
           [ -f src/ammocoind.exe ] && echo "✅ ammocoind.exe found" || (echo "❌ ammocoind.exe missing" && exit 1)
           [ -f src/ammocoin-cli.exe ] && echo "✅ ammocoin-cli.exe found" || (echo "❌ ammocoin-cli.exe missing" && exit 1)
           [ -f src/ammocoin-tx.exe ] && echo "✅ ammocoin-tx.exe found" || (echo "❌ ammocoin-tx.exe missing" && exit 1)
-
+          
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings src/ammocoind.exe | grep -q "$GENESIS_HASH"; then
             echo "✅ Genesis hash verified in binary"
@@ -205,7 +218,7 @@ jobs:
             echo "❌ Genesis hash NOT found!"
             exit 1
           fi
-
+          
           echo "📋 Binary info:"
           file src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe
           echo "📊 Binary sizes:"
