@@ -112,7 +112,7 @@ jobs:
 
           echo "✅ Dependencies built successfully"
 
-      - name: Replace depends Rust and reinstall Windows target
+      - name: Replace depends Rust binaries with Rust 1.80
         run: |
           echo "🔧 Replacing old Rust binaries in depends with Rust 1.80..."
           DEPENDS_NATIVE_BIN="ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/bin"
@@ -120,42 +120,32 @@ jobs:
           if [ -d "$DEPENDS_NATIVE_BIN" ]; then
             echo "📂 Found depends native bin directory"
 
-            # Remove old Rust binaries if they exist
+            # Remove old Rust binaries
             rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc" 2>/dev/null || true
 
             # Create symlinks to our Rust 1.80
-            ln -sf "$(which cargo)" "$DEPENDS_NATIVE_BIN/cargo"
-            ln -sf "$(which rustc)" "$DEPENDS_NATIVE_BIN/rustc"
+            ln -sf "$(rustup which cargo --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/cargo"
+            ln -sf "$(rustup which rustc --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/rustc"
 
             echo "✅ Replaced with symlinks to Rust 1.80"
             ls -lh "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
 
-            # CRITICAL: Verify and re-add Windows target
-            echo "🔍 Verifying Windows target is installed..."
-            rustup target list --installed | grep x86_64-pc-windows-gnu || {
-              echo "⚠️  Windows target not found, reinstalling..."
-              rustup target add x86_64-pc-windows-gnu
-            }
+            # Verify the symlinked binaries
+            echo "🔍 Verifying symlinked binaries:"
+            "$DEPENDS_NATIVE_BIN/rustc" --version
+            "$DEPENDS_NATIVE_BIN/cargo" --version
 
-            echo "✅ Windows target confirmed:"
-            rustup target list --installed | grep windows
-            rustc --version
-            cargo --version
-
-            # Verify the target standard library exists
-            RUST_SYSROOT="$(rustc --print sysroot)"
+            # Verify Windows target standard library
+            RUST_SYSROOT="$("$DEPENDS_NATIVE_BIN/rustc" --print sysroot)"
             echo "📂 Rust sysroot: $RUST_SYSROOT"
             if [ -d "$RUST_SYSROOT/lib/rustlib/x86_64-pc-windows-gnu" ]; then
               echo "✅ Windows target standard library found"
-              ls -lh "$RUST_SYSROOT/lib/rustlib/x86_64-pc-windows-gnu/lib/" | head -5
             else
               echo "❌ ERROR: Windows target standard library not found!"
               exit 1
             fi
           else
             echo "❌ ERROR: Depends native bin directory not found!"
-            echo "Expected: $DEPENDS_NATIVE_BIN"
-            find ammocoin-apps-from-ammocoin/depends -type d -name "native" || echo "No native directories found"
             exit 1
           fi
 
@@ -163,18 +153,15 @@ jobs:
         working-directory: ammocoin-apps-from-ammocoin
         run: |
           echo "🔨 Starting Windows cross-compilation..."
-          echo "🦀 Verifying Rust version..."
-          rustc --version
-          cargo --version
-          rustup target list --installed | grep windows
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure
           chmod +x src/chiabls/configure
 
           echo "🔧 Configuring for Windows x86_64..."
-          CARGO="$(which cargo)" \
-          RUSTC="$(which rustc)" \
+          # Use explicit paths from rustup to avoid version switching
+          CARGO="$(rustup which cargo --toolchain 1.80)" \
+          RUSTC="$(rustup which rustc --toolchain 1.80)" \
           CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site \
           ./configure \
@@ -193,9 +180,9 @@ jobs:
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile
 
-          echo "✅ Starting build with explicit Rust paths and Windows target..."
-          CARGO="$(which cargo)" \
-          RUSTC="$(which rustc)" \
+          echo "✅ Starting build with explicit Rust 1.80 paths..."
+          CARGO="$(rustup which cargo --toolchain 1.80)" \
+          RUSTC="$(rustup which rustc --toolchain 1.80)" \
           CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
           make -j$(nproc)
           echo "✅ Build completed successfully"
