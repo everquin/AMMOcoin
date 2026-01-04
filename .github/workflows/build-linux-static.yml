@@ -101,6 +101,8 @@ jobs:
             --with-incompatible-bdb \
             --disable-maintainer-mode \
             --disable-online-rust \
+            CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
             LDFLAGS="-static-libstdc++ -static-libgcc"
 
           echo "✅ Starting build..."
