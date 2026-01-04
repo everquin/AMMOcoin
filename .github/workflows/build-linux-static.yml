@@ -62,14 +62,6 @@ jobs:
             exit 1
           fi
 
-      - name: Update timestamps on pre-generated files
-        run: |
-          echo "🔧 Updating timestamps on pre-generated autotools files..."
-          find source -name "configure" -exec touch {} \;
-          find source -name "Makefile.in" -exec touch {} \;
-          find source -name "aclocal.m4" -exec touch {} \;
-          echo "✅ Timestamps updated"
-
       - name: Build dependencies (Boost, BDB, libevent, etc.) - STATIC
         working-directory: source/depends
         run: |
@@ -81,14 +73,18 @@ jobs:
 
           echo "✅ Dependencies built successfully"
 
+      - name: Generate configure scripts
+        working-directory: source
+        run: |
+          echo "🔧 Generating configure scripts with autogen.sh..."
+          chmod +x autogen.sh
+          ./autogen.sh
+          echo "✅ Configure scripts generated"
+
       - name: Build AMMOcoin Linux Binaries
         working-directory: source
         run: |
           echo "🔨 Starting Linux build..."
-          chmod +x configure
-          chmod +x src/univalue/configure
-          chmod +x src/secp256k1/configure
-          chmod +x src/chiabls/configure
 
           echo "🔧 Configuring for Linux x86_64 with static dependencies..."
           CONFIG_SITE=$PWD/depends/x86_64-pc-linux-gnu/share/config.site \
@@ -101,12 +97,6 @@ jobs:
             --with-incompatible-bdb \
             --disable-maintainer-mode \
             LDFLAGS="-static-libstdc++ -static-libgcc"
-
-          echo "🔧 Touching Makefiles to prevent regeneration..."
-          find . -name "Makefile" -exec touch {} \;
-          find . -name "Makefile.in" -exec touch {} \;
-          sleep 1
-          touch src/univalue/Makefile src/secp256k1/Makefile src/Makefile
 
           echo "✅ Starting build..."
           make -j$(nproc)
