@@ -40,6 +40,31 @@ jobs:
           cargo --version
           echo "✅ Rust 1.80 set as default"
 
+      - name: Update timestamps on pre-generated autotools files
+        working-directory: source
+        run: |
+          echo "🔧 Updating timestamps to prevent autotools regeneration..."
+
+          # Touch all autotools generated files in order of dependency
+          # This prevents make from trying to regenerate them
+
+          # 1. aclocal.m4 files (generated from configure.ac and m4 macros)
+          find . -name "aclocal.m4" -exec touch {} \;
+
+          # 2. configure scripts (generated from configure.ac and aclocal.m4)
+          find . -name "configure" -exec touch {} \;
+
+          # 3. Makefile.in files (generated from Makefile.am and configure.ac)
+          find . -name "Makefile.in" -exec touch {} \;
+
+          # 4. config.h.in files
+          find . -name "*config.h.in" -exec touch {} \;
+
+          # 5. All build-aux helper scripts
+          find . -path "*/build-aux/*" -type f -exec touch {} \;
+
+          echo "✅ Timestamps updated - autotools files will not be regenerated"
+
       - name: Vendor Rust dependencies
         working-directory: source
         run: |
