@@ -16,7 +16,6 @@ linux-binaries-v1.1.0/
 *.dll
 *.exe
 Makefile
-Makefile.in
 .deps/
 .dirstamp
 .libs/
