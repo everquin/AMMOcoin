@@ -40,6 +40,14 @@ jobs:
           cargo --version
           echo "✅ Rust 1.80 set as default"
 
+      - name: Vendor Rust dependencies
+        working-directory: source
+        run: |
+          echo "📦 Vendoring Rust dependencies..."
+          cargo vendor vendor-sources
+          echo "✅ Rust dependencies vendored"
+          du -sh vendor-sources
+
       - name: Verify Genesis Block Hash
         run: |
           echo "🔍 Verifying v1.1.0 genesis block in source code..."
@@ -72,13 +80,17 @@ jobs:
 
           echo "✅ Dependencies built successfully"
 
+          echo "📦 Copying vendored Rust sources to depends directory..."
+          mkdir -p x86_64-pc-linux-gnu/vendored-sources
+          cp -r ../vendor-sources/* x86_64-pc-linux-gnu/vendored-sources/
+          echo "✅ Vendored sources copied"
+
       - name: Build AMMOcoin Linux Binaries
         working-directory: source
         run: |
           echo "🔨 Starting Linux build..."
-          chmod +x configure
 
-          echo "🔧 Configuring for Linux x86_64 with static dependencies..."
+          echo "🔧 Configuring for Linux x86_64 with static dependencies and vendored Rust..."
           CONFIG_SITE=$PWD/depends/x86_64-pc-linux-gnu/share/config.site \
           ./configure \
             --prefix=$PWD/dist \
@@ -88,6 +100,7 @@ jobs:
             --enable-wallet \
             --with-incompatible-bdb \
             --disable-maintainer-mode \
+            --disable-online-rust \
             LDFLAGS="-static-libstdc++ -static-libgcc"
 
           echo "✅ Starting build..."
