@@ -8,13 +8,6 @@ jobs:
     runs-on: ubuntu-22.04
     name: Build Linux x86_64 Static Binaries
 
-    # Disable autotools regeneration globally
-    env:
-      ACLOCAL: ":"
-      AUTOCONF: ":"
-      AUTOMAKE: ":"
-      AUTOHEADER: ":"
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -83,6 +76,7 @@ jobs:
           echo "Building on Ubuntu 22.04 with Boost PTHREAD_STACK_MIN fix"
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
 
+          # Depends build needs real autotools, so don't override them here
           make -j$(nproc) HOST=x86_64-pc-linux-gnu
 
           echo "✅ Dependencies built successfully"
@@ -94,6 +88,12 @@ jobs:
 
       - name: Build AMMOcoin Linux Binaries
         working-directory: source
+        # Disable autotools regeneration ONLY for main source build
+        env:
+          ACLOCAL: ":"
+          AUTOCONF: ":"
+          AUTOMAKE: ":"
+          AUTOHEADER: ":"
         run: |
           echo "🔨 Starting Linux build..."
 
@@ -113,7 +113,7 @@ jobs:
             LDFLAGS="-static-libstdc++ -static-libgcc"
 
           echo "✅ Starting build with autotools regeneration disabled..."
-          make -j$(nproc) ACLOCAL=: AUTOCONF=: AUTOMAKE=: AUTOHEADER=:
+          make -j$(nproc)
           echo "✅ Build completed successfully"
 
           echo "📦 Installing binaries..."
