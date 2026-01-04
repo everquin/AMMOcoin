@@ -51,23 +51,14 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Boost patch exists
+      - name: Verify Boost fix
         run: |
-          echo "🔍 Verifying Boost patch file exists..."
-          if [ -f source/depends/patches/boost/fix-pthread-stack-min.patch ]; then
-            echo "✅ Boost patch file found"
-            cat source/depends/patches/boost/fix-pthread-stack-min.patch
+          echo "🔍 Verifying Boost PTHREAD_STACK_MIN fix..."
+          if grep -q "PTHREAD_STACK_MIN=16384" source/depends/packages/boost.mk; then
+            echo "✅ Boost fix found: PTHREAD_STACK_MIN defined as compile-time constant"
+            grep "PTHREAD_STACK_MIN" source/depends/packages/boost.mk
           else
-            echo "❌ ERROR: Boost patch file missing!"
-            exit 1
-          fi
-
-          echo "🔍 Checking boost.mk patch declaration..."
-          if grep -q "fix-pthread-stack-min.patch" source/depends/packages/boost.mk; then
-            echo "✅ Patch declared in boost.mk"
-            grep "patches" source/depends/packages/boost.mk
-          else
-            echo "❌ ERROR: Patch not declared in boost.mk!"
+            echo "❌ ERROR: Boost fix not found!"
             exit 1
           fi
 
@@ -83,11 +74,10 @@ jobs:
         working-directory: source/depends
         run: |
           echo "🔨 Building dependencies for Linux with STATIC linking..."
-          echo "Building on Ubuntu 22.04 with Boost patch for glibc 2.35+"
+          echo "Building on Ubuntu 22.04 with Boost PTHREAD_STACK_MIN fix"
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
 
-          # Enable verbose output for debugging
-          make -j$(nproc) HOST=x86_64-pc-linux-gnu V=1
+          make -j$(nproc) HOST=x86_64-pc-linux-gnu
 
           echo "✅ Dependencies built successfully"
 
