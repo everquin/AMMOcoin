@@ -23,7 +23,6 @@ Makefile.in
 autom4te.cache/
 build-aux/
 config.status
-configure
 libtool
 aclocal.m4
 
