@@ -21,7 +21,6 @@ Makefile.in
 .dirstamp
 .libs/
 autom4te.cache/
-build-aux/
 config.status
 libtool
 aclocal.m4
