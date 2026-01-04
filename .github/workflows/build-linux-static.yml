@@ -110,9 +110,13 @@ jobs:
             --disable-online-rust \
             CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
             CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
-            LDFLAGS="-static-libstdc++ -static-libgcc"
+            LDFLAGS="-static-libstdc++ -static-libgcc" \
+            RUSTC="$(command -v rustc)" \
+            CARGO="$(command -v cargo)"
 
-          echo "✅ Starting build with autotools regeneration disabled..."
+          echo "✅ Starting build with Rust 1.80..."
+          echo "Using rustc: $(which rustc)"
+          echo "Rust version: $(rustc --version)"
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
