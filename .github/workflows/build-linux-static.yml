@@ -56,7 +56,6 @@ jobs:
           echo "🔍 Verifying Boost PTHREAD_STACK_MIN fix..."
           if grep -q "PTHREAD_STACK_MIN=16384" source/depends/packages/boost.mk; then
             echo "✅ Boost fix found: PTHREAD_STACK_MIN defined as compile-time constant"
-            grep "PTHREAD_STACK_MIN" source/depends/packages/boost.mk
           else
             echo "❌ ERROR: Boost fix not found!"
             exit 1
@@ -73,18 +72,11 @@ jobs:
 
           echo "✅ Dependencies built successfully"
 
-      - name: Generate configure scripts
-        working-directory: source
-        run: |
-          echo "🔧 Generating configure scripts with autogen.sh..."
-          chmod +x autogen.sh
-          ./autogen.sh
-          echo "✅ Configure scripts generated"
-
       - name: Build AMMOcoin Linux Binaries
         working-directory: source
         run: |
           echo "🔨 Starting Linux build..."
+          chmod +x configure
 
           echo "🔧 Configuring for Linux x86_64 with static dependencies..."
           CONFIG_SITE=$PWD/depends/x86_64-pc-linux-gnu/share/config.site \
