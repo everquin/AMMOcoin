@@ -1,12 +1,11 @@
-name: Build AMMOcoin v1.1.0 Linux (Ubuntu 20.04)
+name: Build AMMOcoin v1.1.0 Linux x86_64
 
 on:
   workflow_dispatch:
-    # Manual trigger only - prevents multiple simultaneous builds
 
 jobs:
   build-linux-x86_64:
-    runs-on: ubuntu-20.04  # Changed to 20.04 for maximum compatibility
+    runs-on: ubuntu-22.04
     name: Build Linux x86_64 Static Binaries
 
     steps:
@@ -35,23 +34,40 @@ jobs:
       - name: Install Rust for librustzcash
         run: |
           echo "🦀 Installing Rust 1.80+ and setting as default..."
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.80
-          source "$HOME/.cargo/env"
+          rustup toolchain install 1.80
+          rustup default 1.80
           rustc --version
           cargo --version
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          echo "✅ Rust 1.80 installed"
+          echo "✅ Rust 1.80 set as default"
 
       - name: Verify Genesis Block Hash
         run: |
           echo "🔍 Verifying v1.1.0 genesis block in source code..."
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
-          MERKLE_ROOT="a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"
-          NONCE="1299391"
           if grep -q "$GENESIS_HASH" source/src/chainparams.cpp; then
             echo "✅ Correct genesis hash found: $GENESIS_HASH"
           else
             echo "❌ ERROR: Expected genesis hash not found!"
+            exit 1
+          fi
+
+      - name: Verify Boost patch exists
+        run: |
+          echo "🔍 Verifying Boost patch file exists..."
+          if [ -f source/depends/patches/boost/fix-pthread-stack-min.patch ]; then
+            echo "✅ Boost patch file found"
+            cat source/depends/patches/boost/fix-pthread-stack-min.patch
+          else
+            echo "❌ ERROR: Boost patch file missing!"
+            exit 1
+          fi
+
+          echo "🔍 Checking boost.mk patch declaration..."
+          if grep -q "fix-pthread-stack-min.patch" source/depends/packages/boost.mk; then
+            echo "✅ Patch declared in boost.mk"
+            grep "patches" source/depends/packages/boost.mk
+          else
+            echo "❌ ERROR: Patch not declared in boost.mk!"
             exit 1
           fi
 
@@ -67,11 +83,11 @@ jobs:
         working-directory: source/depends
         run: |
           echo "🔨 Building dependencies for Linux with STATIC linking..."
-          echo "Building on Ubuntu 20.04 (glibc 2.31) for maximum compatibility"
+          echo "Building on Ubuntu 22.04 with Boost patch for glibc 2.35+"
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
-          echo "All dependencies will be statically linked for maximum portability!"
 
-          make -j$(nproc) HOST=x86_64-pc-linux-gnu
+          # Enable verbose output for debugging
+          make -j$(nproc) HOST=x86_64-pc-linux-gnu V=1
 
           echo "✅ Dependencies built successfully"
 
@@ -145,8 +161,6 @@ jobs:
           fi
 
           echo "🎉 Binary verification complete!"
-          echo "📋 Binary built on Ubuntu 20.04 (glibc 2.31)"
-          echo "✅ Works on Ubuntu 20.04+, 22.04+, 24.04+, Debian 11+, etc."
 
       - name: Verify Compiled Binaries
         working-directory: source
@@ -181,13 +195,6 @@ jobs:
           cd ..
           zip -r AMMOcoin-v1.1.0-Linux-x86_64.zip release-package/bin/
           echo "✅ Release packages created"
-          echo ""
-          echo "📋 Compatibility: Ubuntu 20.04+ (glibc 2.31+)"
-          echo "    ✅ Ubuntu 20.04, 22.04, 24.04+"
-          echo "    ✅ Debian 11, 12, 13+"
-          echo "    ✅ CentOS Stream 8+"
-          echo "    ✅ Fedora 34+"
-          echo "    ✅ Rocky Linux 8, 9+"
 
       - name: Generate checksums
         run: |
@@ -213,4 +220,3 @@ jobs:
             source/dist/bin/ammocoind
             source/dist/bin/ammocoin-cli
             source/dist/bin/ammocoin-tx
-
