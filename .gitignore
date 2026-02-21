@@ -33,6 +33,13 @@ aclocal.m4
 source/src/ammocoind
 source/src/ammocoin-cli
 source/src/ammocoin-tx
+source/src/qt/ammocoin-qt
+
+# Generated build files
+source/src/obj/build.h
+source/src/qt/*.moc
+source/src/qt/qrc_*.cpp
+*.h.old
 
 # Build directories
 build/
