@@ -98,6 +98,16 @@ jobs:
             ln -sf "$(rustup which cargo --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/cargo"
             ln -sf "$(rustup which rustc --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/rustc"
             echo "Replaced with symlinks to Rust 1.80"
+
+            # Verify ARM64 target standard library is available
+            RUST_SYSROOT="$("$DEPENDS_NATIVE_BIN/rustc" --print sysroot)"
+            echo "Rust sysroot: $RUST_SYSROOT"
+            if [ -d "$RUST_SYSROOT/lib/rustlib/aarch64-unknown-linux-gnu" ]; then
+              echo "ARM64 target standard library found"
+            else
+              echo "ARM64 target not found in sysroot, adding..."
+              rustup target add aarch64-unknown-linux-gnu --toolchain 1.80
+            fi
           else
             echo "Depends native bin directory not found, using system Rust directly"
           fi
@@ -127,8 +137,8 @@ jobs:
             CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
             CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
             LDFLAGS="-static-libstdc++ -static-libgcc" \
-            RUSTC="$(command -v rustc)" \
-            CARGO="$(command -v cargo)"
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO="$(rustup which cargo --toolchain 1.80)"
 
           echo "Patching Makefile for ARM64 Rust target..."
           if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
@@ -137,6 +147,8 @@ jobs:
           fi
 
           echo "Starting build with Rust 1.80..."
+          CARGO="$(rustup which cargo --toolchain 1.80)" \
+          RUSTC="$(rustup which rustc --toolchain 1.80)" \
           CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
           make -j$(nproc) || {
             if [ -f target/aarch64-unknown-linux-gnu/release/librustzcash.a ]; then
@@ -144,6 +156,8 @@ jobs:
               mkdir -p target/release
               ln -sf ../aarch64-unknown-linux-gnu/release/librustzcash.a target/release/librustzcash.a
               echo "Symlink created, retrying build..."
+              CARGO="$(rustup which cargo --toolchain 1.80)" \
+              RUSTC="$(rustup which rustc --toolchain 1.80)" \
               CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
               make -j$(nproc)
             else
