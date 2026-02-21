@@ -108,7 +108,9 @@ jobs:
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
 
           # Depends build needs real autotools, so don't override them here
-          make -j$(nproc) HOST=x86_64-pc-linux-gnu
+          # NO_QT=1: Use system Qt packages instead of depends Qt
+          # (depends Qt requires building libxcb/X11 from source which is complex)
+          make -j$(nproc) HOST=x86_64-pc-linux-gnu NO_QT=1
 
           echo "✅ Dependencies built successfully"
 
@@ -135,7 +137,11 @@ jobs:
           echo "✅ Stale Qt files cleaned"
 
           echo "🔧 Configuring for Linux x86_64 with static dependencies and vendored Rust..."
+          # Append system pkg-config paths so configure finds system Qt5 packages
+          DEPENDS_PKG_CONFIG="$PWD/depends/x86_64-pc-linux-gnu/lib/pkgconfig"
+          SYSTEM_PKG_CONFIG="/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig"
           CONFIG_SITE=$PWD/depends/x86_64-pc-linux-gnu/share/config.site \
+          PKG_CONFIG_PATH="${DEPENDS_PKG_CONFIG}:${SYSTEM_PKG_CONFIG}" \
           ./configure \
             --prefix=$PWD/dist \
             --disable-tests \
