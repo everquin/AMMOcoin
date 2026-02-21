@@ -148,6 +148,13 @@ jobs:
         working-directory: source
         run: |
           echo "🔨 Starting Windows cross-compilation..."
+
+          echo "🧹 Cleaning stale Qt generated files (moc/ui/qrc)..."
+          rm -f src/qt/moc_*.cpp src/qt/ammocoin/moc_*.cpp src/qt/ammocoin/settings/moc_*.cpp
+          rm -f src/qt/forms/ui_*.h src/qt/ammocoin/forms/ui_*.h src/qt/ammocoin/settings/forms/ui_*.h
+          rm -f src/qt/qrc_*.cpp src/qt/*.moc src/qt/locale/*.qm
+          echo "✅ Stale Qt files cleaned"
+
           chmod +x configure
           chmod +x src/univalue/configure
           chmod +x src/secp256k1/configure

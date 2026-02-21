@@ -41,7 +41,14 @@ source/src/qt/test/test_ammocoin-qt
 # Generated build files
 source/src/obj/build.h
 source/src/qt/*.moc
+source/src/qt/moc_*.cpp
 source/src/qt/qrc_*.cpp
+source/src/qt/ammocoin/moc_*.cpp
+source/src/qt/ammocoin/settings/moc_*.cpp
+source/src/qt/forms/ui_*.h
+source/src/qt/ammocoin/forms/ui_*.h
+source/src/qt/ammocoin/settings/forms/ui_*.h
+source/src/qt/locale/*.qm
 *.h.old
 
 # Build directories

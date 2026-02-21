@@ -79,7 +79,7 @@ jobs:
           echo "Building dependencies for ARM64 with STATIC linking..."
           echo "Cross-compiling: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
 
-          make -j$(nproc) HOST=aarch64-linux-gnu NO_QT=1
+          make -j$(nproc) HOST=aarch64-linux-gnu NO_QT=1 NO_RUST=1
 
           echo "Dependencies built successfully"
 
