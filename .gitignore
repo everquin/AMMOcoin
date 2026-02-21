@@ -34,6 +34,9 @@ source/src/ammocoind
 source/src/ammocoin-cli
 source/src/ammocoin-tx
 source/src/qt/ammocoin-qt
+source/src/test/test_ammocoin
+source/src/bench/bench_ammocoin
+source/src/qt/test/test_ammocoin-qt
 
 # Generated build files
 source/src/obj/build.h
