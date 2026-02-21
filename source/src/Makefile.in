@@ -480,7 +480,6 @@ libbitcoin_common_a_LIBADD =
 am_libbitcoin_common_a_OBJECTS =  \
 	libbitcoin_common_a-activemasternode.$(OBJEXT) \
 	libbitcoin_common_a-base58.$(OBJEXT) \
-	libbitcoin_common_a-bip38.$(OBJEXT) \
 	budget/libbitcoin_common_a-budgetdb.$(OBJEXT) \
 	budget/libbitcoin_common_a-budgetmanager.$(OBJEXT) \
 	budget/libbitcoin_common_a-budgetproposal.$(OBJEXT) \
@@ -599,7 +598,6 @@ am_libbitcoin_server_a_OBJECTS =  \
 	script/libbitcoin_server_a-sigcache.$(OBJEXT) \
 	script/libbitcoin_server_a-ismine.$(OBJEXT) \
 	libbitcoin_server_a-shutdown.$(OBJEXT) \
-	libbitcoin_server_a-sporkdb.$(OBJEXT) \
 	libbitcoin_server_a-timedata.$(OBJEXT) \
 	libbitcoin_server_a-torcontrol.$(OBJEXT) \
 	libbitcoin_server_a-txdb.$(OBJEXT) \
@@ -648,6 +646,41 @@ am__libbitcoin_util_a_SOURCES_DIST = arith_uint256.cpp \
 	interfaces/handler.h interfaces/wallet.h invalid.h \
 	invalid_outpoints.json.h legacy/stakemodifier.h kernel.h key.h \
 	key_io.h keystore.h dbwrapper.h limitedmap.h logging.h \
+	legacy/validation_zerocoin_legacy.h \
+	sapling/sapling_validation.h budget/budgetdb.h \
+	budget/budgetmanager.h budget/budgetproposal.h \
+	budget/budgetvote.h budget/finalizedbudget.h \
+	budget/finalizedbudgetvote.h budget/budgetutil.h mapport.h \
+	memusage.h masternode.h masternode-payments.h \
+	masternode-sync.h masternodeman.h masternodeconfig.h \
+	merkleblock.h messagesigner.h blockassembler.h miner.h \
+	moneysupply.h net.h net_processing.h netaddress.h netbase.h \
+	netmessagemaker.h noui.h policy/feerate.h policy/fees.h \
+	policy/policy.h optional.h operationresult.h pow.h prevector.h \
+	protocol.h pubkey.h random.h randomenv.h reverse_iterate.h \
+	rpc/client.h rpc/protocol.h rpc/register.h rpc/server.h \
+	saltedhasher.h scheduler.h script/descriptor.h \
+	script/interpreter.h script/keyorigin.h script/script.h \
+	script/sigcache.h script/sign.h script/standard.h \
+	script/script_error.h serialize.h shutdown.h span.h spork.h \
+	sporkdb.h sporkid.h stakeinput.h script/ismine.h streams.h \
+	support/allocators/mt_pooled_secure.h \
+	support/allocators/pooled_secure.h support/allocators/secure.h \
+	support/allocators/zeroafterfree.h support/cleanse.h \
+	support/events.h support/lockedpool.h sync.h threadsafety.h \
+	threadinterrupt.h timedata.h tinyformat.h \
+	tiertwo/netfulfilledman.h tiertwo/tiertwo_sync_state.h \
+	torcontrol.h txdb.h txmempool.h guiinterface.h \
+	guiinterfaceutil.h uint256.h undo.h unordered_lru_cache.h \
+	util/asmap.h util/blockstatecatcher.h util/system.h \
+	util/macros.h util/string.h util/threadnames.h \
+	util/validation.h utilstrencodings.h utilmoneystr.h utiltime.h \
+	util/vector.h validation.h validationinterface.h version.h \
+	wallet/hdchain.h wallet/rpcwallet.h wallet/scriptpubkeyman.h \
+	destination_io.h wallet/fees.h wallet/init.h wallet/wallet.h \
+	wallet/walletdb.h wallet/walletutil.h warnings.h zpiv/zpos.h \
+	zmq/zmqabstractnotifier.h zmq/zmqconfig.h \
+	zmq/zmqnotificationinterface.h zmq/zmqpublishnotifier.h \
 	sapling/sapling.h bech32.h sapling/key_io_sapling.h \
 	sapling/sapling_core_write.h sapling/sapling_util.h \
 	sapling/prf.h sapling/noteencryption.h sapling/address.h \
@@ -1545,7 +1578,7 @@ qt_ammocoin_qt_OBJECTS = $(am_qt_ammocoin_qt_OBJECTS)
 @ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 @ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 @ENABLE_QT_TRUE@	$(LIBSECP256K1) $(am__DEPENDENCIES_1) \
-@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1)
+@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(BLS_LIBS)
 qt_ammocoin_qt_LINK = $(LIBTOOL) $(AM_V_lt) \
 	$(qt_ammocoin_qt_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(OBJCXXLD) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) \
@@ -2232,7 +2265,6 @@ am__depfiles_remade = ./$(DEPDIR)/ammocoin_cli-ammocoin-cli.Po \
 	./$(DEPDIR)/ammocoind-ammocoind.Po \
 	./$(DEPDIR)/libbitcoin_common_a-activemasternode.Po \
 	./$(DEPDIR)/libbitcoin_common_a-base58.Po \
-	./$(DEPDIR)/libbitcoin_common_a-bip38.Po \
 	./$(DEPDIR)/libbitcoin_common_a-chainparams.Po \
 	./$(DEPDIR)/libbitcoin_common_a-coins.Po \
 	./$(DEPDIR)/libbitcoin_common_a-compressor.Po \
@@ -2280,7 +2312,6 @@ am__depfiles_remade = ./$(DEPDIR)/ammocoin_cli-ammocoin-cli.Po \
 	./$(DEPDIR)/libbitcoin_server_a-pow.Po \
 	./$(DEPDIR)/libbitcoin_server_a-rest.Po \
 	./$(DEPDIR)/libbitcoin_server_a-shutdown.Po \
-	./$(DEPDIR)/libbitcoin_server_a-sporkdb.Po \
 	./$(DEPDIR)/libbitcoin_server_a-timedata.Po \
 	./$(DEPDIR)/libbitcoin_server_a-torcontrol.Po \
 	./$(DEPDIR)/libbitcoin_server_a-txdb.Po \
@@ -3715,7 +3746,7 @@ BITCOIN_CORE_H = \
   dbwrapper.h \
   limitedmap.h \
   logging.h \
-  # legacy/validation_zerocoin_legacy.h \
+  legacy/validation_zerocoin_legacy.h \
   sapling/sapling_validation.h \
   budget/budgetdb.h \
   budget/budgetmanager.h \
@@ -3900,7 +3931,6 @@ libbitcoin_server_a_SOURCES = \
   script/sigcache.cpp \
   script/ismine.cpp \
   shutdown.cpp \
-  sporkdb.cpp \
   timedata.cpp \
   torcontrol.cpp \
   txdb.cpp \
@@ -4023,7 +4053,6 @@ libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
   activemasternode.cpp \
   base58.cpp \
-  bip38.cpp \
   budget/budgetdb.cpp \
   budget/budgetmanager.cpp \
   budget/budgetproposal.cpp \
@@ -5378,7 +5407,7 @@ EXTRA_DIST = $(CTAES_DIST) rust $(IMMER_DIST)
 @ENABLE_QT_TRUE@	$(SVG_LIBS) $(CHARTS_LIBS) $(BDB_LIBS) \
 @ENABLE_QT_TRUE@	$(MINIUPNPC_LIBS) $(NATPMP_LIBS) \
 @ENABLE_QT_TRUE@	$(LIBSECP256K1) $(EVENT_PTHREADS_LIBS) \
-@ENABLE_QT_TRUE@	$(EVENT_LIBS)
+@ENABLE_QT_TRUE@	$(EVENT_LIBS) $(BLS_LIBS)
 @ENABLE_QT_TRUE@qt_ammocoin_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 @ENABLE_QT_TRUE@qt_ammocoin_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
 
@@ -7323,7 +7352,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ammocoind-ammocoind.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-activemasternode.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-base58.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-bip38.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-chainparams.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-coins.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-compressor.Po@am__quote@ # am--include-marker
@@ -7371,7 +7399,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-pow.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-rest.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-shutdown.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-sporkdb.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-timedata.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-torcontrol.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_server_a-txdb.Po@am__quote@ # am--include-marker
@@ -8930,20 +8957,6 @@ libbitcoin_common_a-base58.obj: base58.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='base58.cpp' object='libbitcoin_common_a-base58.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_common_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_common_a_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_common_a-base58.obj `if test -f 'base58.cpp'; then $(CYGPATH_W) 'base58.cpp'; else $(CYGPATH_W) '$(srcdir)/base58.cpp'; fi`
-
-libbitcoin_common_a-bip38.o: bip38.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_common_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_common_a_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_common_a-bip38.o -MD -MP -MF $(DEPDIR)/libbitcoin_common_a-bip38.Tpo -c -o libbitcoin_common_a-bip38.o `test -f 'bip38.cpp' || echo '$(srcdir)/'`bip38.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_common_a-bip38.Tpo $(DEPDIR)/libbitcoin_common_a-bip38.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bip38.cpp' object='libbitcoin_common_a-bip38.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_common_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_common_a_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_common_a-bip38.o `test -f 'bip38.cpp' || echo '$(srcdir)/'`bip38.cpp
-
-libbitcoin_common_a-bip38.obj: bip38.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_common_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_common_a_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_common_a-bip38.obj -MD -MP -MF $(DEPDIR)/libbitcoin_common_a-bip38.Tpo -c -o libbitcoin_common_a-bip38.obj `if test -f 'bip38.cpp'; then $(CYGPATH_W) 'bip38.cpp'; else $(CYGPATH_W) '$(srcdir)/bip38.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_common_a-bip38.Tpo $(DEPDIR)/libbitcoin_common_a-bip38.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bip38.cpp' object='libbitcoin_common_a-bip38.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_common_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_common_a_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_common_a-bip38.obj `if test -f 'bip38.cpp'; then $(CYGPATH_W) 'bip38.cpp'; else $(CYGPATH_W) '$(srcdir)/bip38.cpp'; fi`
 
 budget/libbitcoin_common_a-budgetdb.o: budget/budgetdb.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_common_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_common_a_CXXFLAGS) $(CXXFLAGS) -MT budget/libbitcoin_common_a-budgetdb.o -MD -MP -MF budget/$(DEPDIR)/libbitcoin_common_a-budgetdb.Tpo -c -o budget/libbitcoin_common_a-budgetdb.o `test -f 'budget/budgetdb.cpp' || echo '$(srcdir)/'`budget/budgetdb.cpp
@@ -10512,20 +10525,6 @@ libbitcoin_server_a-shutdown.obj: shutdown.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='shutdown.cpp' object='libbitcoin_server_a-shutdown.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_server_a_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-shutdown.obj `if test -f 'shutdown.cpp'; then $(CYGPATH_W) 'shutdown.cpp'; else $(CYGPATH_W) '$(srcdir)/shutdown.cpp'; fi`
-
-libbitcoin_server_a-sporkdb.o: sporkdb.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_server_a_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-sporkdb.o -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-sporkdb.Tpo -c -o libbitcoin_server_a-sporkdb.o `test -f 'sporkdb.cpp' || echo '$(srcdir)/'`sporkdb.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-sporkdb.Tpo $(DEPDIR)/libbitcoin_server_a-sporkdb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='sporkdb.cpp' object='libbitcoin_server_a-sporkdb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_server_a_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-sporkdb.o `test -f 'sporkdb.cpp' || echo '$(srcdir)/'`sporkdb.cpp
-
-libbitcoin_server_a-sporkdb.obj: sporkdb.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_server_a_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-sporkdb.obj -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-sporkdb.Tpo -c -o libbitcoin_server_a-sporkdb.obj `if test -f 'sporkdb.cpp'; then $(CYGPATH_W) 'sporkdb.cpp'; else $(CYGPATH_W) '$(srcdir)/sporkdb.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-sporkdb.Tpo $(DEPDIR)/libbitcoin_server_a-sporkdb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='sporkdb.cpp' object='libbitcoin_server_a-sporkdb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_server_a_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-sporkdb.obj `if test -f 'sporkdb.cpp'; then $(CYGPATH_W) 'sporkdb.cpp'; else $(CYGPATH_W) '$(srcdir)/sporkdb.cpp'; fi`
 
 libbitcoin_server_a-timedata.o: timedata.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(libbitcoin_server_a_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-timedata.o -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-timedata.Tpo -c -o libbitcoin_server_a-timedata.o `test -f 'timedata.cpp' || echo '$(srcdir)/'`timedata.cpp
@@ -17333,7 +17332,6 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/ammocoind-ammocoind.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-activemasternode.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-base58.Po
-	-rm -f ./$(DEPDIR)/libbitcoin_common_a-bip38.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-chainparams.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-coins.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-compressor.Po
@@ -17381,7 +17379,6 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-pow.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-rest.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-shutdown.Po
-	-rm -f ./$(DEPDIR)/libbitcoin_server_a-sporkdb.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-timedata.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-torcontrol.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-txdb.Po
@@ -18012,7 +18009,6 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/ammocoind-ammocoind.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-activemasternode.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-base58.Po
-	-rm -f ./$(DEPDIR)/libbitcoin_common_a-bip38.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-chainparams.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-coins.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-compressor.Po
@@ -18060,7 +18056,6 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-pow.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-rest.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-shutdown.Po
-	-rm -f ./$(DEPDIR)/libbitcoin_server_a-sporkdb.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-timedata.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-torcontrol.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_server_a-txdb.Po

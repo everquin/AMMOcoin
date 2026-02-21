@@ -1,9 +1,9 @@
 /* src/config/ammocoin-config.h.  Generated from ammocoin-config.h.in by configure.  */
 /* src/config/ammocoin-config.h.in.  Generated from configure.ac by autoheader.  */
 
-#ifndef PIV_CONFIG_H
+#ifndef AMMOCOIN_CONFIG_H
 
-#define PIV_CONFIG_H
+#define AMMOCOIN_CONFIG_H
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
@@ -23,8 +23,8 @@
 /* Build revision */
 #define CLIENT_VERSION_REVISION 0
 
-/* Version is release */
-#define COPYRIGHT_YEAR 2025
+/* Copyright year */
+#define COPYRIGHT_YEAR 2026
 
 /* Define this symbol to build code that uses AVX2 intrinsics */
 /* #undef ENABLE_AVX2 */
@@ -45,22 +45,22 @@
 #define ENABLE_ZMQ 1
 
 /* define if the Boost library is available */
-/* #undef HAVE_BOOST */
+#define HAVE_BOOST /**/
 
 /* define if the Boost::Chrono library is available */
-/* #undef HAVE_BOOST_CHRONO */
+#define HAVE_BOOST_CHRONO /**/
 
 /* define if the Boost::Filesystem library is available */
-/* #undef HAVE_BOOST_FILESYSTEM */
+#define HAVE_BOOST_FILESYSTEM /**/
 
 /* define if the Boost::System library is available */
-/* #undef HAVE_BOOST_SYSTEM */
+#define HAVE_BOOST_SYSTEM /**/
 
 /* define if the Boost::Thread library is available */
-/* #undef HAVE_BOOST_THREAD */
+#define HAVE_BOOST_THREAD /**/
 
 /* define if the Boost::Unit_Test_Framework library is available */
-/* #undef HAVE_BOOST_UNIT_TEST_FRAMEWORK */
+#define HAVE_BOOST_UNIT_TEST_FRAMEWORK /**/
 
 /* Define to 1 if you have the <byteswap.h> header file. */
 /* #undef HAVE_BYTESWAP_H */
@@ -457,4 +457,4 @@
 /* Define to 1 on platforms where this makes time_t a 64-bit type. */
 /* #undef __MINGW_USE_VC2005_COMPAT */
 
-#endif //PIV_CONFIG_H
+#endif //AMMOCOIN_CONFIG_H

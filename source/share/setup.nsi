@@ -9,11 +9,11 @@ SetCompressor /SOLID lzma
 !define URL https://www.ammocoin.org/
 
 # MUI Symbol Definitions
-!define MUI_ICON "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/share/pixmaps/ammocoin.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/share/pixmaps/nsis-wizard.bmp"
+!define MUI_ICON "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/share/pixmaps/ammocoin.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/share/pixmaps/nsis-wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
-!define MUI_HEADERIMAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/share/pixmaps/nsis-header.bmp"
+!define MUI_HEADERIMAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/share/pixmaps/nsis-header.bmp"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
@@ -21,7 +21,7 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "AMMOcoin Core"
 !define MUI_FINISHPAGE_RUN $INSTDIR\ammocoin-qt
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/share/pixmaps/nsis-wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/share/pixmaps/nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 # Included files
@@ -45,7 +45,7 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/ammocoin-1.1.0-win64-setup-unsigned.exe
+OutFile /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/ammocoin-1.1.0-win64-setup-unsigned.exe
 InstallDir $PROGRAMFILES64\AMMOcoin
 CRCCheck on
 XPStyle on
@@ -58,7 +58,7 @@ VIAddVersionKey CompanyName "${COMPANY}"
 VIAddVersionKey CompanyWebsite "${URL}"
 VIAddVersionKey FileVersion "1.1.0"
 VIAddVersionKey FileDescription "Installer for AMMOcoin Core"
-VIAddVersionKey LegalCopyright "Copyright (C) 2015-2025 The AMMOcoin Core developers"
+VIAddVersionKey LegalCopyright "Copyright (C) 2015-2026 The AMMOcoin Core developers"
 InstallDirRegKey HKCU "${REGKEY}" Path
 ShowUninstDetails show
 
@@ -66,17 +66,17 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/release/ammocoin-qt
-    File /oname=COPYING.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/COPYING
-    File /oname=readme.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/doc/README_windows.txt
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoin-qt
+    File /oname=COPYING.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/COPYING
+    File /oname=readme.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/doc/README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/release/ammocoind
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/release/ammocoin-cli
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoind
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoin-cli
     SetOutPath $INSTDIR\doc
-    File /r /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/doc\*.*
+    File /r /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/doc\*.*
     SetOutPath $APPDATA\AMMOcoinParams
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/params/sapling-output.params
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/ammocoin-apps-from-ammocoin/params/sapling-spend.params
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/params/sapling-output.params
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/params/sapling-spend.params
     SetOutPath $INSTDIR
     WriteRegStr HKCU "${REGKEY}\Components" Main 1
 SectionEnd
