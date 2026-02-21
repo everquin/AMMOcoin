@@ -234,9 +234,9 @@ public:
         consensus.height_last_ZC_AccumCheckpoint = 1686240;
         consensus.height_last_ZC_WrappedSerials = 1686229;
 
-        // validation by-pass
-        consensus.nAmmocoinBadBlockTime = 1471401614;    // Skip nBit validation of Block 259201 per PR #915
-        consensus.nAmmocoinBadBlockBits = 0x1c056dac;    // Skip nBit validation of Block 259201 per PR #915
+        // validation by-pass (disabled - legacy PIVX values not applicable to AMMOcoin chain)
+        consensus.nAmmocoinBadBlockTime = 0;
+        consensus.nAmmocoinBadBlockBits = 0;
 
         // Zerocoin-related params
         consensus.ZC_Modulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"
@@ -448,7 +448,7 @@ public:
         pchMessageStart[1] = 0xe6;
         pchMessageStart[2] = 0xd5;
         pchMessageStart[3] = 0xca;
-        nDefaultPort = 51474;
+        nDefaultPort = 37022;
 
         // nodes with support for servicebits filtering should be at the top
         vSeeds.emplace_back("ammocoin-testnet.seed.fuzzbawls.pw", true);
@@ -474,7 +474,7 @@ public:
         // Sapling
         bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "ptestsapling";
         bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "pviewtestsapling";
-        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "pivktestsapling";
+        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "aivktestsapling";
         bech32HRPs[SAPLING_EXTENDED_SPEND_KEY]   = "p-secret-spending-key-test";
         bech32HRPs[SAPLING_EXTENDED_FVK]         = "pxviewtestsapling";
 
@@ -601,7 +601,7 @@ public:
         pchMessageStart[1] = 0xcf;
         pchMessageStart[2] = 0x7e;
         pchMessageStart[3] = 0xac;
-        nDefaultPort = 51476;
+        nDefaultPort = 37024;
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 139); // Testnet ammocoin addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 19);  // Testnet ammocoin script addresses start with '8' or '9'
@@ -621,7 +621,7 @@ public:
         // Sapling
         bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "ptestsapling";
         bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "pviewtestsapling";
-        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "pivktestsapling";
+        bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "aivktestsapling";
         bech32HRPs[SAPLING_EXTENDED_SPEND_KEY]   = "p-secret-spending-key-test";
         bech32HRPs[SAPLING_EXTENDED_FVK]         = "pxviewtestsapling";
 

@@ -1,8 +1,8 @@
 /* src/config/ammocoin-config.h.in.  Generated from configure.ac by autoheader.  */
 
-#ifndef PIV_CONFIG_H
+#ifndef AMMOCOIN_CONFIG_H
 
-#define PIV_CONFIG_H
+#define AMMOCOIN_CONFIG_H
 
 /* Define if building universal (internal helper macro) */
 #undef AC_APPLE_UNIVERSAL_BUILD
@@ -22,7 +22,7 @@
 /* Build revision */
 #undef CLIENT_VERSION_REVISION
 
-/* Version is release */
+/* Copyright year */
 #undef COPYRIGHT_YEAR
 
 /* Define this symbol to build code that uses AVX2 intrinsics */
@@ -456,4 +456,4 @@
 /* Define to 1 on platforms where this makes time_t a 64-bit type. */
 #undef __MINGW_USE_VC2005_COMPAT
 
-#endif //PIV_CONFIG_H
+#endif //AMMOCOIN_CONFIG_H

@@ -230,7 +230,7 @@ BITCOIN_CORE_H = \
   dbwrapper.h \
   limitedmap.h \
   logging.h \
-  # legacy/validation_zerocoin_legacy.h \
+  legacy/validation_zerocoin_legacy.h \
   sapling/sapling_validation.h \
   budget/budgetdb.h \
   budget/budgetmanager.h \
@@ -420,7 +420,6 @@ libbitcoin_server_a_SOURCES = \
   script/sigcache.cpp \
   script/ismine.cpp \
   shutdown.cpp \
-  sporkdb.cpp \
   timedata.cpp \
   torcontrol.cpp \
   txdb.cpp \
@@ -541,7 +540,6 @@ libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
   activemasternode.cpp \
   base58.cpp \
-  bip38.cpp \
   budget/budgetdb.cpp \
   budget/budgetmanager.cpp \
   budget/budgetproposal.cpp \
