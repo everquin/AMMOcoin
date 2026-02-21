@@ -1,0 +1,227 @@
+name: Build AMMOcoin v1.1.0 Linux ARM64 (Raspberry Pi)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux-arm64:
+    runs-on: ubuntu-22.04
+    name: Build Linux ARM64 Static Binaries
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies and ARM64 cross-compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            autoconf \
+            autoconf-archive \
+            automake \
+            libtool \
+            pkg-config \
+            git \
+            curl \
+            wget \
+            python3 \
+            bsdmainutils \
+            cmake \
+            g++-aarch64-linux-gnu \
+            binutils-aarch64-linux-gnu \
+            gcc-aarch64-linux-gnu
+
+      - name: Install Rust with ARM64 target
+        run: |
+          echo "Installing Rust 1.80+ with ARM64 Linux target..."
+          rustup toolchain install 1.80
+          rustup default 1.80
+          rustup target add aarch64-unknown-linux-gnu
+          rustc --version
+          cargo --version
+          echo "Rust 1.80 set as default with ARM64 target"
+
+      - name: Vendor Rust dependencies
+        working-directory: source
+        run: |
+          echo "Vendoring Rust dependencies..."
+          cargo vendor vendor-sources
+          echo "Rust dependencies vendored"
+          du -sh vendor-sources
+
+      - name: Verify Genesis Block Hash
+        run: |
+          echo "Verifying v1.1.0 genesis block in source code..."
+          GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
+          if grep -q "$GENESIS_HASH" source/src/chainparams.cpp; then
+            echo "Correct genesis hash found: $GENESIS_HASH"
+          else
+            echo "ERROR: Expected genesis hash not found!"
+            exit 1
+          fi
+
+      - name: Verify Boost fix
+        run: |
+          echo "Verifying Boost PTHREAD_STACK_MIN fix..."
+          if grep -q "PTHREAD_STACK_MIN=16384" source/depends/packages/boost.mk; then
+            echo "Boost fix found: PTHREAD_STACK_MIN defined as compile-time constant"
+          else
+            echo "ERROR: Boost fix not found!"
+            exit 1
+          fi
+
+      - name: Build dependencies for ARM64 - STATIC
+        working-directory: source/depends
+        run: |
+          echo "Building dependencies for ARM64 with STATIC linking..."
+          echo "Cross-compiling: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium"
+
+          make -j$(nproc) HOST=aarch64-linux-gnu NO_QT=1
+
+          echo "Dependencies built successfully"
+
+          echo "Copying vendored Rust sources to depends directory..."
+          mkdir -p aarch64-linux-gnu/vendored-sources
+          cp -r ../vendor-sources/* aarch64-linux-gnu/vendored-sources/
+          echo "Vendored sources copied"
+
+      - name: Replace depends Rust binaries with Rust 1.80
+        run: |
+          echo "Replacing old Rust binaries in depends with Rust 1.80..."
+          DEPENDS_NATIVE_BIN="source/depends/aarch64-linux-gnu/native/bin"
+
+          if [ -d "$DEPENDS_NATIVE_BIN" ]; then
+            rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc" 2>/dev/null || true
+            ln -sf "$(rustup which cargo --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/cargo"
+            ln -sf "$(rustup which rustc --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/rustc"
+            echo "Replaced with symlinks to Rust 1.80"
+          else
+            echo "Depends native bin directory not found, using system Rust directly"
+          fi
+
+      - name: Build AMMOcoin ARM64 Binaries
+        working-directory: source
+        env:
+          ACLOCAL: ":"
+          AUTOCONF: ":"
+          AUTOMAKE: ":"
+          AUTOHEADER: ":"
+        run: |
+          echo "Starting ARM64 cross-compilation..."
+
+          echo "Configuring for ARM64 with static dependencies and vendored Rust..."
+          CONFIG_SITE=$PWD/depends/aarch64-linux-gnu/share/config.site \
+          ./configure \
+            --prefix=$PWD/dist \
+            --host=aarch64-linux-gnu \
+            --disable-tests \
+            --disable-bench \
+            --without-gui \
+            --enable-wallet \
+            --with-incompatible-bdb \
+            --disable-maintainer-mode \
+            --disable-online-rust \
+            CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            LDFLAGS="-static-libstdc++ -static-libgcc" \
+            RUSTC="$(command -v rustc)" \
+            CARGO="$(command -v cargo)"
+
+          echo "Patching Makefile for ARM64 Rust target..."
+          if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
+            sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target aarch64-unknown-linux-gnu --manifest-path|g' src/Makefile
+            echo "Patched cargo build command with ARM64 target"
+          fi
+
+          echo "Starting build with Rust 1.80..."
+          CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
+          make -j$(nproc) || {
+            if [ -f target/aarch64-unknown-linux-gnu/release/librustzcash.a ]; then
+              echo "Found librustzcash.a in target subdirectory, creating symlink..."
+              mkdir -p target/release
+              ln -sf ../aarch64-unknown-linux-gnu/release/librustzcash.a target/release/librustzcash.a
+              echo "Symlink created, retrying build..."
+              CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
+              make -j$(nproc)
+            else
+              echo "Build failed and librustzcash.a not found"
+              exit 1
+            fi
+          }
+          echo "Build completed successfully"
+
+          echo "Installing binaries..."
+          make install
+          echo "Installation complete"
+
+      - name: Strip binaries
+        working-directory: source
+        run: |
+          echo "Stripping debug symbols with ARM64 strip..."
+          aarch64-linux-gnu-strip dist/bin/ammocoind
+          aarch64-linux-gnu-strip dist/bin/ammocoin-cli
+          aarch64-linux-gnu-strip dist/bin/ammocoin-tx
+          echo "Final binary sizes:"
+          ls -lh dist/bin/
+
+      - name: Verify Compiled Binaries
+        working-directory: source
+        run: |
+          echo "Verifying compiled binaries..."
+          [ -f dist/bin/ammocoind ] && echo "ammocoind found" || (echo "ammocoind missing" && exit 1)
+          [ -f dist/bin/ammocoin-cli ] && echo "ammocoin-cli found" || (echo "ammocoin-cli missing" && exit 1)
+          [ -f dist/bin/ammocoin-tx ] && echo "ammocoin-tx found" || (echo "ammocoin-tx missing" && exit 1)
+
+          GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
+          if strings dist/bin/ammocoind | grep -q "$GENESIS_HASH"; then
+            echo "Genesis hash verified in binary"
+          else
+            echo "Genesis hash NOT found!"
+            exit 1
+          fi
+
+          echo "Binary info:"
+          file dist/bin/ammocoind dist/bin/ammocoin-cli dist/bin/ammocoin-tx
+          echo "Binary sizes:"
+          ls -lh dist/bin/
+
+      - name: Create Release Package
+        run: |
+          echo "Creating ARM64 release package..."
+          mkdir -p release-package/bin
+          cp source/dist/bin/ammocoind release-package/bin/
+          cp source/dist/bin/ammocoin-cli release-package/bin/
+          cp source/dist/bin/ammocoin-tx release-package/bin/
+          cd release-package
+          tar -czf ../AMMOcoin-v1.1.0-Linux-ARM64.tar.gz bin/
+          cd ..
+          zip -r AMMOcoin-v1.1.0-Linux-ARM64.zip release-package/bin/
+          echo "Release packages created"
+
+      - name: Generate checksums
+        run: |
+          echo "Generating SHA256 checksums..."
+          sha256sum AMMOcoin-v1.1.0-Linux-ARM64.tar.gz > AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.0-Linux-ARM64.zip >> AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+          cat AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+
+      - name: Upload Release Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMMOcoin-v1.1.0-Linux-ARM64
+          path: |
+            AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+            AMMOcoin-v1.1.0-Linux-ARM64.zip
+            AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+
+      - name: Upload Individual Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARM64-Binaries
+          path: |
+            source/dist/bin/ammocoind
+            source/dist/bin/ammocoin-cli
+            source/dist/bin/ammocoin-tx

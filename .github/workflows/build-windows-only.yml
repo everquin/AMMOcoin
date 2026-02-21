@@ -59,7 +59,7 @@ jobs:
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           MERKLE_ROOT="a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"
           NONCE="1299391"
-          if grep -q "$GENESIS_HASH" ammocoin-apps-from-ammocoin/src/chainparams.cpp; then
+          if grep -q "$GENESIS_HASH" source/src/chainparams.cpp; then
             echo "✅ Correct genesis hash found: $GENESIS_HASH"
           else
             echo "❌ ERROR: Expected genesis hash not found!"
@@ -69,13 +69,13 @@ jobs:
       - name: Update timestamps on pre-generated files
         run: |
           echo "🔧 Updating timestamps on pre-generated autotools files..."
-          find ammocoin-apps-from-ammocoin -name "configure" -exec touch {} \;
-          find ammocoin-apps-from-ammocoin -name "Makefile.in" -exec touch {} \;
-          find ammocoin-apps-from-ammocoin -name "aclocal.m4" -exec touch {} \;
+          find source -name "configure" -exec touch {} \;
+          find source -name "Makefile.in" -exec touch {} \;
+          find source -name "aclocal.m4" -exec touch {} \;
           echo "✅ Timestamps updated"
 
       - name: Build Windows dependencies with Qt patch
-        working-directory: ammocoin-apps-from-ammocoin/depends
+        working-directory: source/depends
         run: |
           echo "🔨 Building dependencies for Windows (this takes 15-20 minutes)..."
           echo "Building: Boost, OpenSSL, BerkeleyDB, libevent, ZMQ, GMP, libsodium, Qt..."
@@ -115,7 +115,7 @@ jobs:
       - name: Replace depends Rust binaries with Rust 1.80
         run: |
           echo "🔧 Replacing old Rust binaries in depends with Rust 1.80..."
-          DEPENDS_NATIVE_BIN="ammocoin-apps-from-ammocoin/depends/x86_64-w64-mingw32/native/bin"
+          DEPENDS_NATIVE_BIN="source/depends/x86_64-w64-mingw32/native/bin"
 
           if [ -d "$DEPENDS_NATIVE_BIN" ]; then
             echo "📂 Found depends native bin directory"
@@ -145,7 +145,7 @@ jobs:
           fi
 
       - name: Build AMMOcoin Windows Binaries
-        working-directory: ammocoin-apps-from-ammocoin
+        working-directory: source
         run: |
           echo "🔨 Starting Windows cross-compilation..."
           chmod +x configure
@@ -165,7 +165,7 @@ jobs:
             --host=x86_64-w64-mingw32 \
             --disable-tests \
             --disable-bench \
-            --without-gui \
+            --with-gui=qt5 \
             --enable-wallet \
             --with-incompatible-bdb \
             --disable-maintainer-mode
@@ -183,6 +183,7 @@ jobs:
             sed -i 's|^\(ammocoind_LDADD += .*\)$|\1 -lntdll|' src/Makefile
             sed -i 's|^\(ammocoin_cli_LDADD += .*\)$|\1 -lntdll|' src/Makefile
             sed -i 's|^\(ammocoin_tx_LDADD += .*\)$|\1 -lntdll|' src/Makefile
+            sed -i 's|^\(qt_ammocoin_qt_LDADD += .*\)$|\1 -lntdll|' src/Makefile
             echo "✅ Added ntdll library to linker flags"
             echo "Verifying ntdll patch:"
             grep "LDADD += .*ntdll" src/Makefile | head -3
@@ -217,12 +218,13 @@ jobs:
           echo "✅ Build completed successfully"
 
       - name: Verify Compiled Binaries
-        working-directory: ammocoin-apps-from-ammocoin
+        working-directory: source
         run: |
           echo "🔍 Verifying compiled binaries..."
           [ -f src/ammocoind.exe ] && echo "✅ ammocoind.exe found" || (echo "❌ ammocoind.exe missing" && exit 1)
           [ -f src/ammocoin-cli.exe ] && echo "✅ ammocoin-cli.exe found" || (echo "❌ ammocoin-cli.exe missing" && exit 1)
           [ -f src/ammocoin-tx.exe ] && echo "✅ ammocoin-tx.exe found" || (echo "❌ ammocoin-tx.exe missing" && exit 1)
+          [ -f src/qt/ammocoin-qt.exe ] && echo "✅ ammocoin-qt.exe found" || echo "⚠️  ammocoin-qt.exe not found (Qt build may have been skipped)"
 
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings src/ammocoind.exe | grep -q "$GENESIS_HASH"; then
@@ -233,17 +235,18 @@ jobs:
           fi
 
           echo "📋 Binary info:"
-          file src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe
+          file src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe src/qt/ammocoin-qt.exe 2>/dev/null || true
           echo "📊 Binary sizes:"
-          ls -lh src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe
+          ls -lh src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe src/qt/ammocoin-qt.exe 2>/dev/null || true
 
       - name: Create Release Package
         run: |
           echo "📦 Creating Windows release package..."
           mkdir -p release-package/bin
-          cp ammocoin-apps-from-ammocoin/src/ammocoind.exe release-package/bin/
-          cp ammocoin-apps-from-ammocoin/src/ammocoin-cli.exe release-package/bin/
-          cp ammocoin-apps-from-ammocoin/src/ammocoin-tx.exe release-package/bin/
+          cp source/src/ammocoind.exe release-package/bin/
+          cp source/src/ammocoin-cli.exe release-package/bin/
+          cp source/src/ammocoin-tx.exe release-package/bin/
+          cp source/src/qt/ammocoin-qt.exe release-package/bin/ 2>/dev/null || true
           cd release-package
           tar -czf ../AMMOcoin-v1.1.0-Windows-x86_64.tar.gz bin/
           cd ..
@@ -263,6 +266,7 @@ jobs:
         with:
           name: Windows-Binaries
           path: |
-            ammocoin-apps-from-ammocoin/src/ammocoind.exe
-            ammocoin-apps-from-ammocoin/src/ammocoin-cli.exe
-            ammocoin-apps-from-ammocoin/src/ammocoin-tx.exe
+            source/src/ammocoind.exe
+            source/src/ammocoin-cli.exe
+            source/src/ammocoin-tx.exe
+            source/src/qt/ammocoin-qt.exe

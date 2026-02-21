@@ -29,7 +29,15 @@ jobs:
             wget \
             python3 \
             bsdmainutils \
-            cmake
+            cmake \
+            qtbase5-dev \
+            qttools5-dev \
+            qttools5-dev-tools \
+            libqt5svg5-dev \
+            libqt5charts5-dev \
+            libqrencode-dev \
+            libprotobuf-dev \
+            protobuf-compiler
 
       - name: Install Rust for librustzcash
         run: |
@@ -103,7 +111,7 @@ jobs:
             --prefix=$PWD/dist \
             --disable-tests \
             --disable-bench \
-            --without-gui \
+            --with-gui=qt5 \
             --enable-wallet \
             --with-incompatible-bdb \
             --disable-maintainer-mode \
@@ -131,6 +139,9 @@ jobs:
           strip dist/bin/ammocoind
           strip dist/bin/ammocoin-cli
           strip dist/bin/ammocoin-tx
+          if [ -f dist/bin/ammocoin-qt ]; then
+            strip dist/bin/ammocoin-qt
+          fi
           echo "📊 Final binary sizes:"
           ls -lh dist/bin/
 
@@ -167,6 +178,7 @@ jobs:
           [ -f dist/bin/ammocoind ] && echo "✅ ammocoind found" || (echo "❌ ammocoind missing" && exit 1)
           [ -f dist/bin/ammocoin-cli ] && echo "✅ ammocoin-cli found" || (echo "❌ ammocoin-cli missing" && exit 1)
           [ -f dist/bin/ammocoin-tx ] && echo "✅ ammocoin-tx found" || (echo "❌ ammocoin-tx missing" && exit 1)
+          [ -f dist/bin/ammocoin-qt ] && echo "✅ ammocoin-qt found" || echo "⚠️  ammocoin-qt not found (Qt build may have been skipped)"
 
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings dist/bin/ammocoind | grep -q "$GENESIS_HASH"; then
@@ -177,9 +189,9 @@ jobs:
           fi
 
           echo "📋 Binary info:"
-          file dist/bin/ammocoind dist/bin/ammocoin-cli dist/bin/ammocoin-tx
+          file dist/bin/ammocoind dist/bin/ammocoin-cli dist/bin/ammocoin-tx dist/bin/ammocoin-qt 2>/dev/null || true
           echo "📊 Binary sizes:"
-          ls -lh dist/bin/ammocoind dist/bin/ammocoin-cli dist/bin/ammocoin-tx
+          ls -lh dist/bin/ 2>/dev/null || true
 
       - name: Create Release Package
         run: |
@@ -188,6 +200,7 @@ jobs:
           cp source/dist/bin/ammocoind release-package/bin/
           cp source/dist/bin/ammocoin-cli release-package/bin/
           cp source/dist/bin/ammocoin-tx release-package/bin/
+          cp source/dist/bin/ammocoin-qt release-package/bin/ 2>/dev/null || true
           cd release-package
           tar -czf ../AMMOcoin-v1.1.0-Linux-x86_64.tar.gz bin/
           cd ..
@@ -218,3 +231,4 @@ jobs:
             source/dist/bin/ammocoind
             source/dist/bin/ammocoin-cli
             source/dist/bin/ammocoin-tx
+            source/dist/bin/ammocoin-qt
