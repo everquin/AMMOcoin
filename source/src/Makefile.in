@@ -1082,15 +1082,15 @@ am__qt_libbitcoinqt_a_SOURCES_DIST = qt/bantablemodel.cpp \
 	qt/ammocoin/res/img/ic-radio-liliac-on.svg \
 	qt/ammocoin/res/img/img-empty-staking-off.svg \
 	qt/ammocoin/res/img/ic-arrow-drop-down.svg \
-	qt/ammocoin/res/img/ic-coin-piv.svg \
+	qt/ammocoin/res/img/ic-coin-ammo.svg \
 	qt/ammocoin/res/img/ic-receive-off.svg \
 	qt/ammocoin/res/img/img-empty-staking-on.svg \
 	qt/ammocoin/res/img/ic-arrow-drop-up-white.svg \
-	qt/ammocoin/res/img/ic-coin-zpiv.png \
+	qt/ammocoin/res/img/ic-coin-zammo.png \
 	qt/ammocoin/res/img/ic-receive-on.svg \
 	qt/ammocoin/res/img/img-empty-transactions.svg \
 	qt/ammocoin/res/img/ic-arrow-drop-up.svg \
-	qt/ammocoin/res/img/ic-coin-zpiv.svg \
+	qt/ammocoin/res/img/ic-coin-zammo.svg \
 	qt/ammocoin/res/img/ic-received.svg \
 	qt/ammocoin/res/img/img-logo-ammocoin.png \
 	qt/ammocoin/res/img/ic-arrow-drop-white-down.svg \
@@ -5132,15 +5132,15 @@ EXTRA_DIST = $(CTAES_DIST) rust $(IMMER_DIST)
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-radio-liliac-on.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/img-empty-staking-off.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-arrow-drop-down.svg \
-@ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-coin-piv.svg \
+@ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-coin-ammo.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-receive-off.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/img-empty-staking-on.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-arrow-drop-up-white.svg \
-@ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-coin-zpiv.png \
+@ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-coin-zammo.png \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-receive-on.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/img-empty-transactions.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-arrow-drop-up.svg \
-@ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-coin-zpiv.svg \
+@ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-coin-zammo.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-received.svg \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/img-logo-ammocoin.png \
 @ENABLE_QT_TRUE@  qt/ammocoin/res/img/ic-arrow-drop-white-down.svg \

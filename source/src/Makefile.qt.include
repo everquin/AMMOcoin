@@ -385,15 +385,15 @@ RES_ICONS = \
   qt/ammocoin/res/img/ic-radio-liliac-on.svg \
   qt/ammocoin/res/img/img-empty-staking-off.svg \
   qt/ammocoin/res/img/ic-arrow-drop-down.svg \
-  qt/ammocoin/res/img/ic-coin-piv.svg \
+  qt/ammocoin/res/img/ic-coin-ammo.svg \
   qt/ammocoin/res/img/ic-receive-off.svg \
   qt/ammocoin/res/img/img-empty-staking-on.svg \
   qt/ammocoin/res/img/ic-arrow-drop-up-white.svg \
-  qt/ammocoin/res/img/ic-coin-zpiv.png \
+  qt/ammocoin/res/img/ic-coin-zammo.png \
   qt/ammocoin/res/img/ic-receive-on.svg \
   qt/ammocoin/res/img/img-empty-transactions.svg \
   qt/ammocoin/res/img/ic-arrow-drop-up.svg \
-  qt/ammocoin/res/img/ic-coin-zpiv.svg \
+  qt/ammocoin/res/img/ic-coin-zammo.svg \
   qt/ammocoin/res/img/ic-received.svg \
   qt/ammocoin/res/img/img-logo-ammocoin.png \
   qt/ammocoin/res/img/ic-arrow-drop-white-down.svg \
