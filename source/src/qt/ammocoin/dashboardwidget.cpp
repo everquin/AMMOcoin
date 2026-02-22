@@ -51,9 +51,9 @@ DashboardWidget::DashboardWidget(AMMOCOINGUI* parent) :
 
     // Staking Information
     setCssSubtitleScreen(ui->labelMessage);
-    setCssProperty(ui->labelSquarePiv, "square-chart-piv");
+    setCssProperty(ui->labelSquarePiv, "square-chart-ammo");
     setCssProperty(ui->labelSquareMN, "square-chart-mn");
-    setCssProperty(ui->labelPiv, "text-chart-piv");
+    setCssProperty(ui->labelPiv, "text-chart-ammo");
     setCssProperty(ui->labelMN, "text-chart-mn");
 
     // Staking Amount
@@ -61,7 +61,7 @@ DashboardWidget::DashboardWidget(AMMOCOINGUI* parent) :
     fontBold.setWeight(QFont::Bold);
 
     setCssProperty(ui->labelChart, "legend-chart");
-    setCssProperty(ui->labelAmountPiv, "text-stake-piv-disable");
+    setCssProperty(ui->labelAmountPiv, "text-stake-ammo-disable");
     setCssProperty(ui->labelAmountMN, "text-stake-mn-disable");
 
     setCssProperty({ui->pushButtonAll,  ui->pushButtonMonth, ui->pushButtonYear}, "btn-check-time");
@@ -215,7 +215,7 @@ void DashboardWidget::loadWalletModel()
                 &DashboardWidget::onHideChartsChanged);
 #endif
     }
-    // update the display unit, to not use the default ("PIV")
+    // update the display unit, to not use the default ("AMMO")
     updateDisplayUnit();
 }
 
@@ -518,7 +518,7 @@ void DashboardWidget::updateStakeFilter()
     }
 }
 
-// pair PIV, MN Reward
+// pair AMMO, MN Reward
 QMap<int, std::pair<qint64, qint64>> DashboardWidget::getAmountBy()
 {
     if (filterUpdateNeeded) {
@@ -577,7 +577,7 @@ bool DashboardWidget::loadChartData(bool withMonthNames)
     }
 
     chartData = new ChartData();
-    chartData->amountsByCache = getAmountBy(); // pair PIV, MN Reward
+    chartData->amountsByCache = getAmountBy(); // pair AMMO, MN Reward
 
     std::pair<int,int> range = getChartRange(chartData->amountsByCache);
     if (range.first == 0 && range.second == 0) {
@@ -682,10 +682,10 @@ void DashboardWidget::onChartRefreshed()
     // Total
     nDisplayUnit = walletModel->getOptionsModel()->getDisplayUnit();
     if (chartData->totalPiv > 0 || chartData->totalMN > 0) {
-        setCssProperty(ui->labelAmountPiv, "text-stake-piv");
+        setCssProperty(ui->labelAmountPiv, "text-stake-ammo");
         setCssProperty(ui->labelAmountMN, "text-stake-mn");
     } else {
-        setCssProperty(ui->labelAmountPiv, "text-stake-piv-disable");
+        setCssProperty(ui->labelAmountPiv, "text-stake-ammo-disable");
         setCssProperty(ui->labelAmountMN, "text-stake-mn-disable");
     }
     forceUpdateStyle({ui->labelAmountPiv, ui->labelAmountMN});
@@ -885,7 +885,7 @@ void DashboardWidget::onHideChartsChanged(bool fHide)
             stakesFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
             stakesFilter->setTypeFilter(TransactionFilterProxy::TYPE(TransactionRecord::StakeMint) |
                                         TransactionFilterProxy::TYPE(TransactionRecord::Generated) |
-                                        TransactionFilterProxy::TYPE(TransactionRecord::StakeZPIV) |
+                                        TransactionFilterProxy::TYPE(TransactionRecord::StakeZAMMO) |
                                         TransactionFilterProxy::TYPE(TransactionRecord::StakeDelegated) |
                                         TransactionFilterProxy::TYPE(TransactionRecord::MNReward));
         }

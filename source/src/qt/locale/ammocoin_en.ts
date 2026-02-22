@@ -289,7 +289,7 @@ for staking</source>
     </message>
     <message>
         <location line="-15"/>
-        <source>Your wallet is now encrypted. Remember that encrypting your wallet cannot fully protect your PIVs from being stolen by malware infecting your computer.</source>
+        <source>Your wallet is now encrypted. Remember that encrypting your wallet cannot fully protect your AMMO from being stolen by malware infecting your computer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -418,7 +418,7 @@ for staking</source>
     </message>
     <message>
         <location line="+81"/>
-        <source>Select PIV Outputs to Spend</source>
+        <source>Select AMMO Outputs to Spend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -455,7 +455,7 @@ for staking</source>
     <message>
         <location line="-269"/>
         <location line="+461"/>
-        <source>0.00 PIV</source>
+        <source>0.00 AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -696,7 +696,7 @@ for staking</source>
     </message>
     <message>
         <location filename="../ammocoin/forms/coldstakingwidget.ui" line="-603"/>
-        <source>You can delegate your PIVs, letting a hot node (24/7 online node)
+        <source>You can delegate your AMMO, letting a hot node (24/7 online node)
 stake on your behalf, while you keep the keys securely offline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -707,7 +707,7 @@ stake on your behalf, while you keep the keys securely offline.</source>
     </message>
     <message>
         <location line="-139"/>
-        <source>Accept PIV delegation / Delegate PIV</source>
+        <source>Accept AMMO delegation / Delegate AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -939,7 +939,7 @@ address</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>Make sure you have 50 PIV for the proposal fee</source>
+        <source>Make sure you have 50 AMMO for the proposal fee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1061,7 +1061,7 @@ address</source>
     </message>
     <message>
         <location line="+357"/>
-        <source>How to get PIV</source>
+        <source>How to get AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1106,7 +1106,7 @@ address</source>
     </message>
     <message>
         <location line="+7"/>
-        <source>Amount of PIV stakes and masternodes rewards.</source>
+        <source>Amount of AMMO stakes and masternodes rewards.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3329,7 +3329,7 @@ Address: %4
     <name>ReceiveWidget</name>
     <message>
         <location filename="../ammocoin/forms/receivewidget.ui" line="+81"/>
-        <source>Scan the QR code or copy the address to receive PIV</source>
+        <source>Scan the QR code or copy the address to receive AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3344,7 +3344,7 @@ Address: %4
     </message>
     <message>
         <location line="+19"/>
-        <source>Accept transparent or shielded PIV</source>
+        <source>Accept transparent or shielded AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3704,7 +3704,7 @@ try unlocking the wallet</source>
     </message>
     <message>
         <location line="+38"/>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive less PIV than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive less AMMO than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3918,12 +3918,12 @@ Do you want to continue?
     </message>
     <message>
         <location line="+12"/>
-        <source>Error generating address to shield PIVs</source>
+        <source>Error generating address to shield AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>You don&apos;t have any transparent PIVs to shield.</source>
+        <source>You don&apos;t have any transparent AMMO to shield.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4482,7 +4482,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+31"/>
-        <source>2) Why are my PIV unspendable?</source>
+        <source>2) Why are my AMMO unspendable?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4502,7 +4502,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+21"/>
-        <source>Why are my PIV unspendable?</source>
+        <source>Why are my AMMO unspendable?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4512,7 +4512,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+18"/>
-        <source>How do I stake PIV?</source>
+        <source>How do I stake AMMO?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4557,7 +4557,7 @@ There was an error trying to save the address list to %1. Please try again.</sou
     </message>
     <message>
         <location line="+138"/>
-        <source>3) How do I stake PIV?</source>
+        <source>3) How do I stake AMMO?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6009,7 +6009,7 @@ backup will be created.
     </message>
     <message>
         <location line="+2"/>
-        <source>Burned PIVs</source>
+        <source>Burned AMMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

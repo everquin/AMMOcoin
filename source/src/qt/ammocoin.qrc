@@ -41,7 +41,7 @@
         <file alias="btn-radio-off">ammocoin/res/img/btn-radio-off.svg</file>
         <file alias="ic-add-label">ammocoin/res/img/ic-add-label.svg</file>
         <file alias="ic-add-liliac">ammocoin/res/img/ic-add-liliac.svg</file>
-        <file alias="ic-add-purple">ammocoin/res/img/ic-add-purple.svg</file>
+        <file alias="ic-add-accent">ammocoin/res/img/ic-add-purple.svg</file>
         <file alias="ic-add">ammocoin/res/img/ic-add.svg</file>
         <file alias="ic-address-book-grey">ammocoin/res/img/ic-address-book-grey.svg</file>
         <file alias="ic-address-book-white">ammocoin/res/img/ic-address-book-white.svg</file>
@@ -53,7 +53,7 @@
         <file alias="ic-arrow-drop-up-white">ammocoin/res/img/ic-arrow-drop-up-white.svg</file>
         <file alias="ic-arrow-drop-up">ammocoin/res/img/ic-arrow-drop-up.svg</file>
         <file alias="ic-arrow-drop-white-down">ammocoin/res/img/ic-arrow-drop-white-down.svg</file>
-        <file alias="ic-arrow-purple-down">ammocoin/res/img/ic-arrow-purple-down.svg</file>
+        <file alias="ic-arrow-accent-down">ammocoin/res/img/ic-arrow-purple-down.svg</file>
         <file alias="ic-arrow-right-white">ammocoin/res/img/ic-arrow-right-white.svg</file>
         <file alias="ic-arrow-right">ammocoin/res/img/ic-arrow-right.svg</file>
         <file alias="ic-arrow-left-white">ammocoin/res/img/ic-arrow-left-white.svg</file>
@@ -89,11 +89,11 @@
         <file alias="ic-chevron-right">ammocoin/res/img/ic-chevron-right.svg</file>
         <file alias="ic-chevron-right-liliac">ammocoin/res/img/ic-chevron-right-liliac.svg</file>
         <file alias="ic-clear-liliac">ammocoin/res/img/ic-clear-liliac.svg</file>
-        <file alias="ic-clear-purple">ammocoin/res/img/ic-clear-purple.svg</file>
+        <file alias="ic-clear-accent">ammocoin/res/img/ic-clear-purple.svg</file>
         <file alias="ic-close-white">ammocoin/res/img/ic-close-white.svg</file>
         <file alias="ic-close">ammocoin/res/img/ic-close.svg</file>
-        <file alias="ic-coin-piv">ammocoin/res/img/ic-coin-piv.svg</file>
-        <file alias="ic-coin-zpiv">ammocoin/res/img/ic-coin-zpiv.svg</file>
+        <file alias="ic-coin-ammo">ammocoin/res/img/ic-coin-ammo.svg</file>
+        <file alias="ic-coin-zammo">ammocoin/res/img/ic-coin-zammo.svg</file>
         <file alias="ic-combo-box">ammocoin/res/img/ic-combo-box.svg</file>
         <file alias="ic-connect">ammocoin/res/img/ic-connect.svg</file>
         <file alias="ic-copy-liliac">ammocoin/res/img/ic-copy-liliac.svg</file>
@@ -188,8 +188,8 @@
         <file alias="img-qr">ammocoin/res/img/img-qr.svg</file>
         <file alias="ic-contact-arrow-down">ammocoin/res/img/ic-contact-arrow-down.svg</file>
         <file alias="ic-contact-arrow-down-white">ammocoin/res/img/ic-contact-arrow-down-white.svg</file>
-        <file alias="ic-arrow-drop-down-purple">ammocoin/res/img/ic-arrow-drop-down-purple.svg</file>
-        <file alias="ic-arrow-drop-up-purple">ammocoin/res/img/ic-arrow-drop-up-purple.svg</file>
+        <file alias="ic-arrow-drop-down-accent">ammocoin/res/img/ic-arrow-drop-down-purple.svg</file>
+        <file alias="ic-arrow-drop-up-accent">ammocoin/res/img/ic-arrow-drop-up-purple.svg</file>
         <file alias="bg-welcome-2x">ammocoin/res/img/bg-welcome@2x.jpg</file>
         <file alias="bg-welcome-3x">ammocoin/res/img/bg-welcome@3x.jpg</file>
         <file alias="img-logo-ammocoin">ammocoin/res/img/img-logo-ammocoin.svg</file>

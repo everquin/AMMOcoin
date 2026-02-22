@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="ic_zammo" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style type="text/css">
+            .cls-1{fill:#32cd32}.cls-2{fill:none}
+        </style>
+    </defs>
+    <g id="Group_8933" data-name="Group 8933">
+        <g id="Group_8932" data-name="Group 8932">
+            <path id="Path_18926" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 19.25A9.25 9.25 0 1 1 21.25 12 9.25 9.25 0 0 1 12 21.25z" class="cls-1" data-name="Path 18926"/>
+            <path id="Path_18927" d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5A8.5 8.5 0 0 0 12 3.5zM7.5 6.5h4.2v0.85L8.5 12.1h3.3v0.85H7.5v-0.85l3.2-4.75H7.5V6.5zM14 9.5l2.5 8.5h-1.3l-0.55-1.8h-2.3l-0.55 1.8H10.5L13 9.5h1zm-0.5 2.1l-0.85 3.1h1.7l-0.85-3.1z" class="cls-1" data-name="Path 18927"/>
+        </g>
+    </g>
+    <path id="Rectangle_4542" d="M0 0h24v24H0z" class="cls-2" data-name="Rectangle 4542"/>
+</svg>

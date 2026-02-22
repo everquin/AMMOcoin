@@ -37,7 +37,7 @@ CreateProposalDialog::CreateProposalDialog(AMMOCOINGUI* parent, GovernanceModel*
 
     setCssProperty(ui->frame, "container-dialog");
     ui->frame->setContentsMargins(10,10,10,10);
-    setCssProperty({ui->labelLine1, ui->labelLine2}, "line-purple");
+    setCssProperty({ui->labelLine1, ui->labelLine2}, "line-accent");
     setCssProperty({ui->groupBoxName, ui->groupContainer}, "container-border");
     setCssProperty({ui->pushNumber1, ui->pushNumber2, ui->pushNumber3}, "btn-number-check");
     setCssProperty({ui->pushName1, ui->pushName2, ui->pushName3}, "btn-name-check");
@@ -95,7 +95,7 @@ void CreateProposalDialog::setupPageTwo()
 {
     setCssProperty(ui->labelTitleDest, "text-title-dialog");
     setCssProperty(ui->labelMessageDest, "dialog-proposal-message");
-    setEditBoxStyle(ui->labelAmount, ui->lineEditAmount, "e.g 500 PIV");
+    setEditBoxStyle(ui->labelAmount, ui->lineEditAmount, "e.g 500 AMMO");
     setCssProperty(ui->labelMonths, "text-title");
     setEditBoxStyle(ui->labelAddress, ui->lineEditAddress, "e.g D...something..");
     setCssProperty(ui->lineEditAddress, "edit-primary-multi-book");

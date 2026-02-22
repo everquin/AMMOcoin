@@ -49,7 +49,7 @@ MasterNodeWizardDialog::MasterNodeWizardDialog(WalletModel* model, MNModel* _mnM
     setCssProperty(ui->frame, "container-dialog");
     ui->frame->setContentsMargins(10,10,10,10);
 
-    setCssProperty({ui->labelLine1, ui->labelLine3}, "line-purple");
+    setCssProperty({ui->labelLine1, ui->labelLine3}, "line-accent");
     setCssProperty({ui->groupBoxName, ui->groupContainer}, "container-border");
     setCssProperty({ui->pushNumber1, ui->pushNumber3, ui->pushNumber4}, "btn-number-check");
     setCssProperty({ui->pushName1, ui->pushName3, ui->pushName4}, "btn-name-check");
@@ -64,7 +64,7 @@ MasterNodeWizardDialog::MasterNodeWizardDialog(WalletModel* model, MNModel* _mnM
     // Frame 1
     setCssProperty(ui->labelTitle1, "text-title-dialog");
     setCssProperty(ui->labelMessage1a, "text-main-grey");
-    setCssProperty(ui->labelMessage1b, "text-main-purple");
+    setCssProperty(ui->labelMessage1b, "text-main-accent");
 
     QString collateralAmountStr = GUIUtil::formatBalance(mnModel->getMNCollateralRequiredAmount());
     ui->labelMessage1a->setText(formatHtmlContent(

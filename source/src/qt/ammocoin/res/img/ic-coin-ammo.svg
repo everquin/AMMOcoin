@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="ic_ammo" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style type="text/css">
+            .cls-1{fill:#32cd32}.cls-2{fill:none}
+        </style>
+    </defs>
+    <g id="Group_8935" data-name="Group 8935">
+        <g id="Group_8934" data-name="Group 8934">
+            <path id="Path_18928" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 19.25A9.25 9.25 0 1 1 21.25 12 9.25 9.25 0 0 1 12 21.25z" class="cls-1" data-name="Path 18928"/>
+            <path id="Path_18929" d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5A8.5 8.5 0 0 0 12 3.5zM12 7l3.5 11h-1.75l-0.7-2.2H10.95l-0.7 2.2H8.5L12 7zm0 2.8L10.55 14.3h2.9L12 9.8z" class="cls-1" data-name="Path 18929"/>
+        </g>
+    </g>
+    <path id="Rectangle_4543" d="M0 0h24v24H0z" class="cls-2" data-name="Rectangle 4543"/>
+</svg>

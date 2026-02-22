@@ -56,7 +56,7 @@ CoinControlDialog::CoinControlDialog(QWidget* parent, bool _forDelegation) : QDi
                     ui->layoutDust,
                     ui->layoutFee,
                     ui->layoutQuantity
-                    }, "container-border-purple");
+                    }, "container-border-accent");
 
     // Title
     ui->labelTitle->setProperty("cssClass", "text-title-dialog");
@@ -69,7 +69,7 @@ CoinControlDialog::CoinControlDialog(QWidget* parent, bool _forDelegation) : QDi
                     ui->labelCoinControlLowOutputText,
                     ui->labelCoinControlFeeText,
                     ui->labelCoinControlQuantityText
-                    }, "text-main-purple");
+                    }, "text-main-accent");
 
     // Value Style
     setCssProperty({ui->labelCoinControlAfterFee,
@@ -79,11 +79,11 @@ CoinControlDialog::CoinControlDialog(QWidget* parent, bool _forDelegation) : QDi
                     ui->labelCoinControlLowOutput,
                     ui->labelCoinControlFee,
                     ui->labelCoinControlQuantity
-                    }, "text-main-purple");
+                    }, "text-main-accent");
 
     ui->groupBox_2->setProperty("cssClass", "group-box");
     ui->treeWidget->setProperty("cssClass", "table-tree");
-    ui->labelLocked->setProperty("cssClass", "text-main-purple");
+    ui->labelLocked->setProperty("cssClass", "text-main-accent");
 
     // Buttons
     setCssProperty({ui->pushButtonSelectAll, ui->pushButtonToggleLock}, "btn-check");
@@ -588,8 +588,8 @@ void CoinControlDialog::updateLabels()
         return;
 
     ui->labelTitle->setText(fSelectTransparent ?
-            "Select PIV Outputs to Spend" :
-            "Select Shielded PIV to Spend");
+            "Select AMMO Outputs to Spend" :
+            "Select Shielded AMMO to Spend");
 
     const TotalAmounts& t = getTotals();
 
@@ -599,7 +599,7 @@ void CoinControlDialog::updateLabels()
     updatePushButtonSelectAll(coinControl->QuantitySelected() * 2 > nSelectableInputs);
 
     // actually update labels
-    int nDisplayUnit = BitcoinUnits::PIV;
+    int nDisplayUnit = BitcoinUnits::AMMO;
     if (model && model->getOptionsModel())
         nDisplayUnit = model->getOptionsModel()->getDisplayUnit();
 
