@@ -112,9 +112,7 @@ ammocoind --version
 
 ### Windows
 
-Coming soon - Windows binaries are currently in development.
-
-For now, Windows users can compile from source using WSL2 (Windows Subsystem for Linux).
+Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0). The NSIS installer includes the Qt wallet, daemon, CLI tools, Sapling parameters, and Start Menu shortcuts.
 
 ---
 
@@ -479,7 +477,7 @@ When reporting issues, please include:
 3. 🔑 **Your v1.0 wallet** is proof of ownership for claims
 4. 🚫 **NEVER delete v1.0 wallet** before claiming
 5. 🔒 **Secure genesis** - no private keys exposed in code
-6. 📦 **macOS ARM64 binaries** available now (Linux coming soon)
+6. 📦 **All platform binaries** available (macOS, Windows, Linux x86_64, ARM64)
 7. ✅ **Verify checksums** before installation
 8. 📖 **Read distribution guide** for claim process
 
