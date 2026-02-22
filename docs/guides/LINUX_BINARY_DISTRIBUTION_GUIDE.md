@@ -76,7 +76,7 @@ alias ammocoind-v1.1.0='/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind'
 
 ```bash
 # v1.0 (if you need it running)
-ammocoind -datadir=/root/.ammocoin -port=37021 -rpcport=8333 -daemon
+ammocoind -datadir=/root/.ammocoin -port=37021 -rpcport=51474 -daemon
 
 # v1.1.0 (on standard ports)
 /opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind \

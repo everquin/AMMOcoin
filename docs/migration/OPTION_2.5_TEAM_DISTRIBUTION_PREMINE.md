@@ -65,7 +65,7 @@
 
 **Current genesis creation (lines ~145-155):**
 ```cpp
-genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
+genesis = CreateGenesisBlock(1623089845, 1299391, 0x1e0ffff0, 1, 250000000 * COIN);
 consensus.hashGenesisBlock = genesis.GetHash();
 assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
 assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));

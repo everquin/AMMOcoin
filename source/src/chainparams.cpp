@@ -303,9 +303,9 @@ public:
         nDefaultPort = 37020;
 
         // Note that of those with the service bits flag, most only support a subset of possible options
-        // AMMOcoin seed nodes - using hardcoded nodes from chainparamsseeds.h
-        // vSeeds.emplace_back("seed.ammocoin.org", true);     // Primary DNS Seeder
-        // vSeeds.emplace_back("seed2.ammocoin.org", true);    // Secondary DNS Seeder
+        // AMMOcoin DNS seed nodes
+        vSeeds.emplace_back("seed1.ammocoin.org", true);    // Primary DNS Seeder
+        vSeeds.emplace_back("seed2.ammocoin.org", true);    // Secondary DNS Seeder
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 23);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 24);
@@ -317,8 +317,8 @@ public:
         // BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
         base58Prefixes[EXT_COIN_TYPE] = {0x80, 0x00, 0x00, 0x77};
 
-        // Empty seed list for emergency deployment
-        vFixedSeeds.clear();
+        // Fixed seed nodes from chainparamsseeds.h (BIP155 format)
+        vFixedSeeds = std::vector<uint8_t>(chainparams_seed_main, chainparams_seed_main + sizeof(chainparams_seed_main));
 
         // Reject non-standard transactions by default
         fRequireStandard = true;
@@ -450,9 +450,9 @@ public:
         pchMessageStart[3] = 0xca;
         nDefaultPort = 37022;
 
-        // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("ammocoin-testnet.seed.fuzzbawls.pw", true);
-        vSeeds.emplace_back("ammocoin-testnet.seed2.fuzzbawls.pw", true);
+        // AMMOcoin testnet DNS seed nodes (not yet available)
+        // vSeeds.emplace_back("testnet-seed1.ammocoin.org", true);
+        // vSeeds.emplace_back("testnet-seed2.ammocoin.org", true);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 139); // Testnet ammocoin addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 19);  // Testnet ammocoin script addresses start with '8' or '9'
@@ -466,7 +466,7 @@ public:
         // Testnet ammocoin BIP44 coin type is '1' (All coin's testnet default)
         base58Prefixes[EXT_COIN_TYPE] = {0x80, 0x00, 0x00, 0x01};
 
-        // Empty seed list for testnet
+        // No testnet fixed seeds currently available
         vFixedSeeds.clear();
 
         fRequireStandard = false;
