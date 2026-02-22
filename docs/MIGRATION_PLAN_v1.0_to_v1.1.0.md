@@ -82,8 +82,8 @@ Due to fundamental transaction encoding differences between v1.0 and v1.1.0, a d
 
 **Step 1: Announce Snapshot Block**
 ```
-We will take a balance snapshot at block height: [TBD - e.g., 500,000]
-Estimated date: [TBD - e.g., January 15, 2026]
+We will take a balance snapshot at block height: To be announced
+Estimated date: To be announced
 
 All balances at this block will be migrated to v1.1.0
 ```
@@ -244,7 +244,7 @@ getbalance
 
 **Linux:**
 ```bash
-wget https://github.com/ammocoin/releases/AMMOcoin-v1.1.0-Linux.tar.gz
+wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 tar -xzf AMMOcoin-v1.1.0-Linux.tar.gz
 cd AMMOcoin-v1.1.0/
 ./ammocoind -daemon
@@ -383,8 +383,8 @@ Before using normally, test with small amount:
 
 ```cpp
 // v1.1.0 Genesis with v1.0 Snapshot (Block 500,000)
-// Snapshot Date: [TBD]
-// Total Supply: [TBD] AMMO
+// Snapshot Date: See announcement for details
+// Total Supply: See announcement for details
 // Total Addresses: 20
 
 CMainParams() {

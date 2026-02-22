@@ -131,7 +131,7 @@ a2f383362683ec4a0e26ff6ea3d90909b430a923ee454aac6615c0de28f60bd3  AMMOcoin-v1.1.
 Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)
 
 ### Linux x86_64:
-**Note:** Linux binaries are pending rebuild with new secure genesis. Coming soon.
+**Note:** Linux binaries released February 22, 2026. See checksums above for verification.
 
 ---
 
@@ -278,7 +278,7 @@ See detailed guides:
 1. Submit claim with proof of v1.0 wallet ownership
 2. Team verifies v1.0 balance via snapshot
 3. Equivalent v1.1.0 AMMO sent from team wallet
-4. Claim window: TBD (estimated 90 days)
+4. Claim window: 90 days from network launch
 
 **Advantages:**
 - ✅ No complex multi-output genesis
@@ -309,10 +309,10 @@ See detailed guides:
 - **Build Date:** December 31, 2025
 
 **Linux x86_64:**
-- **Status:** Pending rebuild with new secure genesis
-- **Platform:** Ubuntu 20.04 LTS (planned)
+- **Status:** Released, February 22, 2026
+- **Platform:** Ubuntu 20.04 LTS
 - **Architecture:** x86_64 (64-bit ELF)
-- **Coming Soon:** After macOS testing complete
+- **Build Date:** February 22, 2026
 
 ### Compatibility:
 
@@ -463,11 +463,11 @@ When reporting issues, please include:
 | New secure genesis mined | ✅ Complete | December 31, 2025 |
 | macOS ARM64 binaries | ✅ Complete | December 31, 2025 |
 | Security remediation (private key removal) | ✅ Complete | December 31, 2025 |
-| Linux x86_64 binaries | ⏸️ Pending | TBD |
-| GitHub Release v1.1.0 | ⏸️ Pending | After testing |
-| Seed nodes deployed | ⏸️ Pending | After release |
-| Network launch | ⏸️ Pending | TBD |
-| Team distribution claims open | ⏸️ Pending | After network launch |
+| Linux x86_64 binaries | ✅ Complete | February 22, 2026 |
+| GitHub Release v1.1.0 | ✅ Complete | February 22, 2026 |
+| Seed nodes deployed | ✅ Complete | January 3, 2026 |
+| Network launch | ✅ Complete | January 3, 2026 |
+| Team distribution claims open | ✅ Complete | January 3, 2026 |
 | Claim window closes | ⏸️ Pending | 90 days after opening |
 
 ---

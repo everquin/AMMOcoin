@@ -372,7 +372,7 @@ echo "Transaction ID: $TXID"
 tail -50 "$AMMOCOIN_TEST_DATA/debug.log"
 
 # Check if port is in use
-lsof -i :8332
+lsof -i :51473
 
 # Kill any stuck processes
 pkill -f ammocoind

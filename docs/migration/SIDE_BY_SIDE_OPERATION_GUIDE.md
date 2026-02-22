@@ -28,7 +28,7 @@ Keep v1.0 in default location with different ports:
 # v1.0 Configuration
 datadir=/home/user/.ammocoin-v1.0
 port=8339           # Different from v1.1.0
-rpcport=8333        # Different from v1.1.0
+rpcport=51474       # Different from v1.1.0
 rpcuser=ammo_v10
 rpcpassword=your_password_here
 server=1
@@ -78,7 +78,7 @@ netstat -tulpn | grep ammocoin
 
 # Should see:
 # 8339 - v1.0 P2P
-# 8333 - v1.0 RPC
+# 51474 - v1.0 RPC
 # 37020 - v1.1.0 P2P
 # 51473 - v1.1.0 RPC
 ```
@@ -240,7 +240,7 @@ pkill -9 ammocoind
 ### RPC Connection Failed
 ```bash
 # Specify datadir when using v1.0 CLI
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 -rpcport=8333 getinfo
+/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 -rpcport=51474 getinfo
 ```
 
 ### Wrong Balance Showing

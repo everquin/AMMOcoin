@@ -123,7 +123,7 @@ source $HOME/.cargo/env
 ```bash
 # Clone repository
 cd ~
-git clone https://github.com/ammocoin/ammocoin.git ammocoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin-v1.1.0
 cd ammocoin-v1.1.0
 
 # Build
@@ -589,7 +589,7 @@ sed -i '' '/ammocoin/d' ~/.zshrc
 - Email: support@ammocoin.org
 - Documentation: https://docs.ammocoin.org
 - macOS Forum: https://forum.ammocoin.org/macos
-- GitHub Issues: https://github.com/ammocoin/ammocoin/issues
+- GitHub Issues: https://github.com/everquin/AMMOcoin-v1.1.0/issues
 
 ---
 

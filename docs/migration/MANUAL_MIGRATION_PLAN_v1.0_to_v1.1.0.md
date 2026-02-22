@@ -28,7 +28,7 @@ Since v1.1.0 is a **fresh blockchain** (not a continuation of v1.0), balances ca
 - Total supply: 232,397,748 AMMO
 
 ### Phase 2: User Claims (30 days)
-**Claim Period:** TBD - January 2026
+**Claim Period:** 90 days from network launch
 - Users have 30 days to submit claims
 - Proof of ownership required
 - Must provide v1.1.0 receiving address
@@ -163,7 +163,7 @@ Proof of Ownership (Signed Message):
 Message: "I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: 2026-01-15"
 Signature: INsQ7k9R3m...
 
-Contact Email: your-email@example.com (for verification)
+Contact Email: support@ammocoin.com (for verification)
 Submission Date: 2026-01-15
 
 Optional: Transaction IDs showing balance history
