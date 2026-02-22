@@ -11,7 +11,7 @@
 **This is a completely new blockchain, NOT a fork of v1.0!**
 
 - **v1.0 Genesis Block:** `0x000001c4271a6e733011fbb7bde9f727b67e294413e89e89c525e169bda50795`
-- **v1.1.0 Genesis Block:** `0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+- **v1.1.0 Genesis Block:** `0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
 ### What This Means:
 
@@ -222,7 +222,7 @@ ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getinfo
 
 # Verify correct genesis block
 ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getblockhash 0
-# Should show: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+# Should show: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
 ---
@@ -347,7 +347,7 @@ See detailed guides:
 - **Staking Minimum:** Varies by tier
 - **P2P Port:** 37020
 - **RPC Port:** 8332
-- **Genesis Block:** `0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+- **Genesis Block:** `0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - **Genesis Nonce:** 942131
 
 ### Privacy Features:
@@ -496,7 +496,7 @@ Thank you to all AMMOcoin v1.0 holders for your continued support. This Option 2
 **Release Created:** December 31, 2025
 **Binary Compilation:** macOS ARM64 (Apple Silicon)
 **Version:** v1.1.0.0
-**Genesis Hash:** `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+**Genesis Hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 **Security:** Private keys never exposed in repository
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

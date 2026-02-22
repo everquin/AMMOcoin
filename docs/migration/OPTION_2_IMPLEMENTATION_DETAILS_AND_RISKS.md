@@ -33,7 +33,7 @@
 ```cpp
 genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
 consensus.hashGenesisBlock = genesis.GetHash();
-assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
 assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 ```
 
@@ -92,7 +92,7 @@ assert(genesis.hashMerkleRoot == uint256S("0xNEW_MERKLE_ROOT"));
 
 ### Why Genesis Hash Changes
 
-**Current genesis hash:** `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+**Current genesis hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
 **Why it must change:**
 1. Genesis block now contains 20+ outputs instead of 1
@@ -234,7 +234,7 @@ shasum -a 256 AMMOcoin-v1.1.0-snapshot-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-sna
 
 **Script to update:**
 ```bash
-OLD_HASH="00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+OLD_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 NEW_HASH="FOUND_HASH_HERE"
 
 find . -name "*.md" -type f -not -path "./.git/*" -exec sed -i '' "s/$OLD_HASH/$NEW_HASH/g" {} \;
@@ -542,7 +542,7 @@ ammocoin-cli getbalance
 - AMMOcoin-v1.1.0-macOS-ARM64.zip
 - CHECKSUMS-macOS-ARM64.txt
 
-**Genesis:** 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+**Genesis:** 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 **Status:** MUST BE DELETED
 
@@ -597,7 +597,7 @@ WHAT YOU NEED TO DO:
 5. Import your v1.0 private keys
 6. Your v1.0 balance will appear automatically
 
-OLD GENESIS (obsolete): 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+OLD GENESIS (obsolete): 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 NEW GENESIS: [NEW_HASH_HERE]
 
 Apologies for the change, but this provides much better user

@@ -183,14 +183,14 @@ ammocoin-cli help  # View all available commands
 ## Network Information
 
 ### Mainnet
-- **Port**: 55881
-- **RPC Port**: 55882
-- **Genesis Block**: [Block Hash]
+- **Port**: 37020
+- **RPC Port**: 51473
+- **Genesis Block**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - **Block Time**: 60 seconds
 - **Algorithm**: Proof-of-Stake
 
 ### Testnet
-- **Port**: 51474
+- **Port**: 37022
 - **RPC Port**: 51475
 - **Block Time**: 60 seconds
 

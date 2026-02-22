@@ -107,7 +107,7 @@ file ammocoind
 # Should show: AMMOcoin Core Daemon version v1.1.0.0
 
 # Verify genesis block in code
-strings ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+strings ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 # Should match v1.1.0 genesis block
 ```
 

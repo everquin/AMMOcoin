@@ -166,7 +166,7 @@ externalip=YOUR_SERVER_IP
 
 # Network settings
 port=37020
-rpcport=37021
+rpcport=51473
 
 # Performance settings
 maxconnections=256

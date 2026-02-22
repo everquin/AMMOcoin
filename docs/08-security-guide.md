@@ -141,7 +141,7 @@ sudo ufw allow 22/tcp    # SSH (change port for security)
 sudo ufw allow 37020/tcp # AMMOcoin P2P
 sudo ufw enable
 
-# Don't open RPC port (37021) to internet
+# Don't open RPC port (51473) to internet
 # Keep RPC local only
 ```
 
@@ -211,10 +211,10 @@ rpcport=47021
 #### RPC over SSH Tunnel
 ```bash
 # Connect to remote node securely
-ssh -L 37021:localhost:37021 user@remote_server
+ssh -L 51473:localhost:51473 user@remote_server
 
 # Now use local RPC commands
-ammocoin-cli -rpcport=37021 getinfo
+ammocoin-cli -rpcport=51473 getinfo
 ```
 
 ### Tor Integration

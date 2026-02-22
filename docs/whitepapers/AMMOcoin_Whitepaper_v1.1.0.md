@@ -256,7 +256,7 @@ AMMOcoin is developed by a dedicated team of blockchain engineers and cryptocurr
 
 ### 9.1 Network Parameters
 
-- **P2P Port**: 37020 (mainnet), 51474 (testnet), 51476 (regtest)
+- **P2P Port**: 37020 (mainnet), 37022 (testnet), 37024 (regtest)
 - **RPC Port**: 51473 (mainnet), 51475 (testnet), 51477 (regtest)
 - **Block Time**: 60 seconds
 - **Difficulty Adjustment**: Every block using LWMA algorithm

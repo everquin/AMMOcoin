@@ -178,7 +178,7 @@ For detailed build instructions, see:
 | **macOS Intel** | ✅ Production | macOS 10.15 | Via Rosetta 2 on ARM64 |
 | **Linux x86_64** | ✅ Production | Ubuntu 20.04, Debian 11, RHEL 8 | glibc 2.31+ |
 | **Windows x86_64** | ✅ Production | Windows 10/11 64-bit | Built with MinGW |
-| **ARM64/RPi** | 🔄 Planned | Raspberry Pi OS | Future release |
+| **ARM64/RPi** | ✅ Production | Raspberry Pi OS (64-bit) | Headless daemon + CLI |
 
 ---
 
@@ -411,6 +411,7 @@ We acknowledge and thank the broader cryptocurrency development community for th
 - macOS ARM64 native support
 - Linux x86_64 binaries
 - Windows x86_64 binaries
+- ARM64/Raspberry Pi binaries
 - Comprehensive documentation
 - Migration guides and tools
 
@@ -421,7 +422,6 @@ We acknowledge and thank the broader cryptocurrency development community for th
 - Additional exchange listings
 
 ### Planned 📋
-- ARM64/Raspberry Pi support
 - Hardware wallet integration
 - Enhanced privacy features
 - Lightning network integration

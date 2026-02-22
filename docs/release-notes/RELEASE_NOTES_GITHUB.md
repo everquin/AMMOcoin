@@ -14,7 +14,7 @@ This release introduces a **completely new blockchain** with the paper wallet pr
 
 **Genesis Block Parameters:**
 ```
-Hash:        00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Hash:        000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 Merkle Root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 nNonce: 942131
 nTime:       1623089845 (June 7, 2021 - 23:04:05 UTC)
@@ -136,7 +136,7 @@ sleep 10
 
 # Check genesis hash
 ammocoin-cli getblockhash 0
-# MUST return: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+# MUST return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
 **If genesis hash doesn't match, DO NOT USE - contact support!**
@@ -158,7 +158,7 @@ shasum -a 256 -c CHECKSUMS-macOS-ARM64.txt
 
 #### Verify Genesis in Binary
 ```bash
-strings ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+strings ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 # Should return 2-3 matches
 ```
 
@@ -172,7 +172,7 @@ ammocoin-cli getblockchaininfo
 
 # Should show:
 # "blocks": 0
-# "bestblockhash": "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+# "bestblockhash": "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 ```
 
 ---
@@ -222,7 +222,7 @@ git checkout v1.1.0-genesis-final
 #### Verify Before Using
 ```bash
 # CRITICAL: Verify genesis in built binary
-strings src/ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+strings src/ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 # MUST return matches!
 ```
 
@@ -239,7 +239,7 @@ strings src/ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb
 
 ### Genesis Block
 ```
-Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
 **ALL nodes MUST have this genesis hash or they cannot connect!**
@@ -380,7 +380,7 @@ Before connecting:
 3. ✅ Verify genesis hash
 4. ✅ Connect to network
 
-**Genesis Hash:** `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+**Genesis Hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
 If your node shows a different genesis hash, STOP and investigate!
 

@@ -67,7 +67,7 @@
 ```cpp
 genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
 consensus.hashGenesisBlock = genesis.GetHash();
-assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
 assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 ```
 
@@ -265,7 +265,7 @@ Purpose:     Manual distribution to verified v1.0 users
 **Run scripts/utils/update-genesis-refs.sh:**
 ```bash
 # Update script with new hash
-OLD_HASH="00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+OLD_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 NEW_HASH="FOUND_HASH"
 
 find . -name "*.md" -type f -not -path "./.git/*" -exec sed -i '' "s/$OLD_HASH/$NEW_HASH/g" {} \;

@@ -26,7 +26,7 @@ Reward:   250000000 * COIN     // Genesis reward
 
 ### Genesis Block Hashes
 ```cpp
-Genesis Hash:  00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Genesis Hash:  000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 Merkle Root:   a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 ```
 
@@ -43,7 +43,7 @@ Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 ### Checkpoint Data
 ```cpp
 mapCheckpoints = {
-    { 0, uint256S("00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570")},
+    { 0, uint256S("000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2")},
 };
 
 CCheckpointData = {
@@ -77,7 +77,7 @@ CMainParams()
 
     genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
     consensus.hashGenesisBlock = genesis.GetHash();
-    assert(consensus.hashGenesisBlock == uint256S("0x00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"));
+    assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
     assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
 
     // ... rest of configuration
@@ -90,14 +90,14 @@ CMainParams()
 
 ### DO NOT USE - v1.0 Genesis (Pre-December 2025)
 ```
-Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 nNonce: 22256134
 Status: DEPRECATED - Old blockchain, incompatible with v1.1.0
 ```
 
 ### DO NOT USE - Broken v1.1.0 Attempt (December 22-29, 2025)
 ```
-Hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 nNonce: 942131
 Status: INVALID - This nNonce does NOT produce this hash! Genesis block was broken.
 Reason: Hash was manually set instead of computed, nNonce is incorrect
@@ -110,19 +110,19 @@ Reason: Hash was manually set instead of computed, nNonce is incorrect
 ### Check Genesis Hash in Running Node
 ```bash
 ammocoin-cli getblockhash 0
-# Expected output: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+# Expected output: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
 ### Check Genesis in Binary
 ```bash
-strings ammocoind | grep "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+strings ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 # Should return matches if binary is correct
 ```
 
 ### Check Blockchain Info
 ```bash
 ammocoin-cli getblockchaininfo
-# "bestblockhash" should be "00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570"
+# "bestblockhash" should be "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 # "blocks" should be 0 (at genesis)
 ```
 
@@ -189,7 +189,7 @@ nNonce: 500000, hash: 883680c244ba986a8b95737acc459c0dd9d5d366c64eabbdbb5e0e0bc6
 
 === GENESIS BLOCK MINED ===
 nNonce: 942131
-Genesis hash: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+Genesis hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 Merkle root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 ===========================
 ```

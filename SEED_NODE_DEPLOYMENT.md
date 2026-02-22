@@ -42,12 +42,12 @@ SEED NODE CONFIGURATION REQUIREMENTS:
 - Set maxconnections=125 (seed nodes need higher limits)
 - Enable transaction indexing (txindex=1)
 - Set RPC credentials with strong password
-- Configure P2P port: 44444
-- Configure RPC port: 44445
+- Configure P2P port: 37020
+- Configure RPC port: 51473
 
 NETWORK PORTS:
-- P2P: 44444
-- RPC: 44445
+- P2P: 37020
+- RPC: 51473
 
 After setup, provide me with:
 1. The node's public IP address
@@ -68,7 +68,7 @@ Make sure to use proper permissions and security practices. This is a production
 - Ubuntu 20.04 or 22.04 (recommended) or 24.04
 - Root or sudo access
 - At least 10GB free disk space
-- Ports 44444 and 44445 open in firewall
+- Ports 37020 and 51473 open in firewall
 
 ---
 
@@ -187,10 +187,10 @@ maxconnections=125
 rpcuser=ammocoin_rpc
 rpcpassword=${RPC_PASSWORD}
 rpcallowip=127.0.0.1
-rpcport=44445
+rpcport=51473
 
 # P2P Settings
-port=44444
+port=37020
 
 # Performance
 dbcache=512
@@ -218,7 +218,7 @@ echo "    Save this password securely!"
 
 ```bash
 # Allow P2P port
-sudo ufw allow 44444/tcp comment 'AMMOcoin P2P'
+sudo ufw allow 37020/tcp comment 'AMMOcoin P2P'
 
 # RPC port should NOT be exposed to internet
 # Only allow from localhost (already configured in ammocoin.conf)
@@ -391,7 +391,7 @@ ammocoin-cli getinfo
 
 ```bash
 # Check if port is already in use
-sudo netstat -tulpn | grep 44444
+sudo netstat -tulpn | grep 37020
 
 # Check log file for errors
 tail -100 ~/.ammocoin-v1.1.0/debug.log
@@ -404,10 +404,10 @@ ls -lh /opt/ammocoin/v1.1.0/
 
 ```bash
 # Verify firewall allows P2P port
-sudo ufw status | grep 44444
+sudo ufw status | grep 37020
 
 # Test if port is reachable
-curl -v telnet://YOUR_PUBLIC_IP:44444
+curl -v telnet://YOUR_PUBLIC_IP:37020
 
 # Check if node is listening
 sudo netstat -tulpn | grep ammocoind

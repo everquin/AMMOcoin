@@ -284,22 +284,22 @@ RPC Port: 51473
 
 ### Testnet
 ```
-P2P Port: 51474
+P2P Port: 37022
 RPC Port: 51475
 ```
 
 **Source:**
-- P2P Port: `chainparams.cpp:451` - `nDefaultPort = 51474;`
+- P2P Port: `chainparams.cpp:451` - `nDefaultPort = 37022;`
 - RPC Port: `chainparamsbase.cpp:41` - `return std::make_unique<CBaseChainParams>("testnet5", 51475);`
 
 ### Regtest
 ```
-P2P Port: 51476
+P2P Port: 37024
 RPC Port: 51477
 ```
 
 **Source:**
-- P2P Port: `chainparams.cpp:604` - `nDefaultPort = 51476;`
+- P2P Port: `chainparams.cpp:604` - `nDefaultPort = 37024;`
 - RPC Port: `chainparamsbase.cpp:43` - `return std::make_unique<CBaseChainParams>("regtest", 51477);`
 
 ---

@@ -33,7 +33,7 @@ ammocoin-cli help <command>
 -conf=<file>       # Specify config file location
 -rpcuser=<user>    # RPC username
 -rpcpassword=<pw>  # RPC password
--rpcport=<port>    # RPC port (default: 37021)
+-rpcport=<port>    # RPC port (default: 51473)
 -rpcconnect=<ip>   # RPC server IP
 -testnet           # Use testnet
 ```

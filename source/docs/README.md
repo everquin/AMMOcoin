@@ -54,9 +54,9 @@ This directory contains comprehensive documentation for AMMOcoin v1.1.0.
 - **Windows** - Windows 10/11 (x64)
 
 ### **Network Information**
-- **Mainnet Port**: 55881
-- **RPC Port**: 55882
-- **Testnet Port**: 51474
+- **Mainnet Port**: 37020
+- **RPC Port**: 51473
+- **Testnet Port**: 37022
 - **Block Time**: 60 seconds
 
 ---

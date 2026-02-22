@@ -119,7 +119,7 @@ sleep 10
 
 # Verify correct genesis
 ./ammocoin-cli getblockhash 0
-# MUST return: 00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570
+# MUST return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
 #### Generate New v1.1.0 Receiving Address

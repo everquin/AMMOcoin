@@ -577,8 +577,8 @@ echo 'source ~/.cargo/env' >> ~/.bashrc
 sudo ufw status
 
 # Allow AMMOcoin ports
-sudo ufw allow 55881
-sudo ufw allow 55882
+sudo ufw allow 37020
+sudo ufw allow 51473
 
 # Restart AMMOcoin
 ammocoin-cli stop
@@ -611,8 +611,8 @@ ammocoind -daemon
 sudo ufw enable
 sudo ufw default deny incoming
 sudo ufw allow ssh
-sudo ufw allow 55881  # AMMOcoin P2P
-sudo ufw deny 55882   # Block RPC from external access
+sudo ufw allow 37020  # AMMOcoin P2P
+sudo ufw deny 51473   # Block RPC from external access
 
 # Secure configuration files
 chmod 600 ~/.ammocoin/ammocoin.conf

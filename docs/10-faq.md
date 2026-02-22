@@ -155,7 +155,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 | **Consensus** | Proof of Stake |
 | **Masternode Collateral** | 100,000 AMMO |
 | **Network Port** | 37020 |
-| **RPC Port** | 37021 |
+| **RPC Port** | 51473 |
 | **Protocol Version** | 70920 |
 
 ### How do I check if I'm on the correct network?
@@ -234,7 +234,7 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 
 ### What ports does AMMOcoin use?
 - **P2P Network**: 37020 (must be open for incoming connections)
-- **RPC**: 37021 (localhost only by default)
+- **RPC**: 51473 (localhost only by default)
 - **Testnet**: 37120 (P2P), 37121 (RPC)
 
 ### How do I enable remote RPC access?
@@ -244,7 +244,7 @@ rpcallowip=192.168.1.0/24  # Allow local network
 rpcbind=0.0.0.0           # Listen on all interfaces
 
 # Better: Use SSH tunnel instead
-ssh -L 37021:localhost:37021 user@remote_server
+ssh -L 51473:localhost:51473 user@remote_server
 ```
 
 ## 🔐 Security Questions

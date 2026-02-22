@@ -69,11 +69,11 @@ rpcallowip=127.0.0.1
 ### Firewall Settings
 ```bash
 # Block unnecessary ports
-# Only allow: 55881 (P2P), 55882 (RPC local only)
+# Only allow: 37020 (P2P), 51473 (RPC local only)
 
 # Example iptables rules:
-sudo iptables -A INPUT -p tcp --dport 55881 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 55882 -s 127.0.0.1 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 37020 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 51473 -s 127.0.0.1 -j ACCEPT
 ```
 
 ## 🏛️ **Masternode Security**
@@ -86,7 +86,7 @@ sudo apt update && sudo apt upgrade
 # Secure SSH
 sudo ufw allow ssh
 sudo ufw enable
-sudo ufw allow 55881
+sudo ufw allow 37020
 
 # Non-root user
 sudo adduser ammocoin

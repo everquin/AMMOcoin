@@ -789,8 +789,8 @@ Together, we are building the future of financial privacy and freedom.
 ```
 Network Configuration:
 ├── Network Magic: 0xA1B2C3D4
-├── Default Port: 21328 (mainnet), 31328 (testnet)
-├── RPC Port: 21329 (mainnet), 31329 (testnet)
+├── Default Port: 37020 (mainnet), 37022 (testnet)
+├── RPC Port: 51473 (mainnet), 51475 (testnet)
 ├── Block Time: 60 seconds target
 ├── Difficulty Adjustment: Every block (LWMA)
 ├── Block Size Limit: 2 MB

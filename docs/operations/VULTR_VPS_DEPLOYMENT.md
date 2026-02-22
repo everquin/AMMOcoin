@@ -42,7 +42,7 @@ sudo apt install -y curl wget git htop unzip fail2ban ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow ssh
-sudo ufw allow 51472/tcp  # AMMOcoin P2P port
+sudo ufw allow 37020/tcp  # AMMOcoin P2P port
 sudo ufw allow 51473/tcp  # AMMOcoin RPC port (optional, for remote access)
 sudo ufw --force enable
 
@@ -90,7 +90,7 @@ rpcuser=ammocoinrpc
 rpcpassword=$(openssl rand -base64 32)
 rpcallowip=127.0.0.1
 rpcport=51473
-port=51472
+port=37020
 
 # Masternode configuration
 masternode=1
@@ -330,7 +330,7 @@ ps aux | grep ammocoind
 ammocoin-cli getpeerinfo
 
 # Add more nodes manually
-ammocoin-cli addnode "ip.address.here:51472" "add"
+ammocoin-cli addnode "ip.address.here:37020" "add"
 
 # Check firewall
 sudo ufw status

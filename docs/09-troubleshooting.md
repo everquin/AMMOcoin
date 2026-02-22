@@ -572,7 +572,7 @@ ps aux | grep ammocoind
 grep -E "rpc" ~/.ammocoin/ammocoin.conf
 
 # Test RPC connection
-curl --user user:pass --data-binary '{"jsonrpc": "1.0", "id":"test", "method": "getinfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:37021/
+curl --user user:pass --data-binary '{"jsonrpc": "1.0", "id":"test", "method": "getinfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:51473/
 ```
 
 **Solutions**:

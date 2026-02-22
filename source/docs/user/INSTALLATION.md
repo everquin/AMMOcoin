@@ -100,7 +100,7 @@ chmod 700 ~/.ammocoin
 ### Prerequisites:
 - 10,000 AMMO collateral
 - Static IP address
-- Port 55881 open
+- Port 37020 open
 
 ### Setup Steps:
 1. Generate masternode private key:
@@ -142,7 +142,7 @@ masternodeprivkey=YOUR_PRIVATE_KEY
 2. **Connection issues**:
    - Verify firewall settings
    - Check network connectivity
-   - Confirm port 55881 is accessible
+   - Confirm port 37020 is accessible
 
 3. **Sync problems**:
    - Delete peers.dat and restart

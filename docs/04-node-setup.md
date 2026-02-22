@@ -137,7 +137,7 @@ listen=1
 
 # Network settings
 port=37020
-rpcport=37021
+rpcport=51473
 maxconnections=50
 
 # Performance settings
@@ -409,7 +409,7 @@ sudo firewall-cmd --reload
 ```conf
 # Default ports
 port=37020        # P2P network port
-rpcport=37021     # RPC port (localhost only)
+rpcport=51473     # RPC port (localhost only)
 
 # Custom ports (if needed)
 port=47020

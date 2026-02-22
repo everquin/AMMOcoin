@@ -236,9 +236,9 @@ A: Migration is completely free. Standard transaction fees apply for normal oper
 
 **Network Specifications:**
 - Network ID: v1.1.0
-- Genesis Hash: `00000cd103e27df3a1c4ab850754c16b4923f075a82eb8aecb4c0e288c4f9570`
+- Genesis Hash: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - P2P Port: 37020
-- RPC Port: 37021
+- RPC Port: 51473
 - Base58 Prefix: 23 (same as v1.0, addresses start with 'A')
 
 **Seed Nodes:**
