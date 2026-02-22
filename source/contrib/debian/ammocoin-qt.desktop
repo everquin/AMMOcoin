@@ -1,13 +1,13 @@
 [Desktop Entry]
 Version=1.0
-Name=PIVX Core
-Comment=PIVX P2P Cryptocurrency
-Comment[fr]=PIVX, monnaie virtuelle cryptographique pair à pair
-Comment[tr]=PIVX, eşten eşe kriptografik sanal para birimi
-Exec=pivx-qt %u
+Name=AMMOcoin Core
+Comment=AMMOcoin P2P Cryptocurrency
+Comment[fr]=AMMOcoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=AMMOcoin, eşten eşe kriptografik sanal para birimi
+Exec=ammocoin-qt %u
 Terminal=false
 Type=Application
-Icon=pivx128
-MimeType=x-scheme-handler/pivx;
+Icon=ammocoin128
+MimeType=x-scheme-handler/ammocoin;
 Categories=Office;Finance;
-StartupWMClass=Pivx-qt
+StartupWMClass=Ammocoin-qt
