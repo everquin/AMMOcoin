@@ -1,12 +1,12 @@
 # AMMOcoin v1.1.0 - Official Release
 
-**Release Date:** December 30, 2025
-**Tag:** v1.1.0-genesis-final
-**Status:** Production Ready (macOS ARM64 available now, Linux coming soon)
+**Release Date:** February 22, 2026
+**Tag:** v1.1.0
+**Status:** Production Ready - All platforms available
 
 ---
 
-## 🎉 What's New in v1.1.0
+## What's New in v1.1.0
 
 ### Fresh Blockchain Start with Paper Wallet Genesis
 
@@ -16,7 +16,7 @@ This release introduces a **completely new blockchain** with the paper wallet pr
 ```
 Hash:        000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 Merkle Root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
-nNonce: 942131
+nNonce:      1299391
 nTime:       1623089845 (June 7, 2021 - 23:04:05 UTC)
 ```
 
@@ -28,214 +28,144 @@ Public Key:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee
 
 ---
 
-## ⚠️ CRITICAL: This is NOT an Upgrade - It's a Restart
+## CRITICAL: This is NOT an Upgrade - It's a Restart
 
 **THIS IS A FRESH BLOCKCHAIN** - completely incompatible with v1.0
 
 ### What This Means:
-- ❌ **NO migration** from v1.0 blockchain
-- ❌ **NO compatibility** with v1.0 nodes
-- ✅ **MUST delete** old blockchain data (~/.ammocoin)
-- ✅ **MUST download** new v1.1.0 binaries
-- ✅ **ALL nodes** must upgrade simultaneously
-
-### Why the Restart?
-- Genesis block now contains the paper wallet private key
-- Properly mined genesis with correct proof-of-work
-- Elimination of all previous genesis block issues
-- Clean network start with verified parameters
+- **NO migration** from v1.0 blockchain
+- **NO compatibility** with v1.0 nodes
+- **MUST delete** old blockchain data (~/.ammocoin)
+- **MUST download** new v1.1.0 binaries
+- **ALL nodes** must upgrade simultaneously
 
 ---
 
-## 📦 Downloads
+## Downloads
 
 ### macOS ARM64 (Apple Silicon)
 
-**Available NOW:**
+| File | Description |
+|------|-------------|
+| [AMMOcoin-v1.1.0-macOS-ARM64.dmg](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.dmg) | **Recommended** - Disk image with Qt wallet + CLI tools (67 MB) |
+| [AMMOcoin-v1.1.0-macOS-ARM64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz) | CLI binaries only (15 MB) |
+| [AMMOcoin-v1.1.0-macOS-ARM64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip) | CLI binaries only (19 MB) |
 
-| File | Size | SHA256 Checksum |
-|------|------|-----------------|
-| [AMMOcoin-v1.1.0-macOS-ARM64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0-genesis-final/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz) | 4.6 MB | `8e37a2349b556c78aa8d98f56cc7849716d0f857a055646fd10a60bb024c9ab1` |
-| [AMMOcoin-v1.1.0-macOS-ARM64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0-genesis-final/AMMOcoin-v1.1.0-macOS-ARM64.zip) | 4.6 MB | `1e41792ec576361a3d270a37209dc062faba200d7409812d271691202554a41d` |
+**Install:** Open .dmg, drag AMMOcoin-Qt to Applications. On first launch: right-click > Open, or run `xattr -cr AMMOcoin-Qt.app`
 
-**Contains:**
-- `ammocoind` (11 MB) - Daemon/Node
-- `ammocoin-cli` (382 KB) - Command-line interface
-- `ammocoin-tx` (1.4 MB) - Transaction utility
+### Windows x86_64
 
-### Linux x86_64
+| File | Description |
+|------|-------------|
+| [AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe) | **Recommended** - NSIS installer with Start Menu, uninstaller, protocol handler (78 MB) |
+| [AMMOcoin-v1.1.0-Windows-x86_64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz) | Portable binaries (41 MB) |
+| [AMMOcoin-v1.1.0-Windows-x86_64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.zip) | Portable binaries (41 MB) |
 
-**Coming Soon** - Build instructions available in repository:
-- See: `LINUX_BUILD_INSTRUCTIONS_v1.1.0.md`
-- Build from tag: `v1.1.0-genesis-final`
+**Install:** Run the .exe installer and follow the wizard. Launches from Start Menu.
 
-### Windows
+### Linux x86_64 (Ubuntu/Debian)
 
-**To Be Announced** - Not required for initial network launch
+| File | Description |
+|------|-------------|
+| [ammocoin_1.1.0_amd64.deb](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin_1.1.0_amd64.deb) | **Recommended** - Debian package with systemd service (7 MB) |
+| [AMMOcoin-v1.1.0-Linux-x86_64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz) | Standalone binaries (11 MB) |
+| [AMMOcoin-v1.1.0-Linux-x86_64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.zip) | Standalone binaries (11 MB) |
 
----
-
-## 🚀 Installation Guide
-
-### macOS ARM64 (Apple Silicon)
-
-#### 1. Download and Extract
+**Install:**
 ```bash
-# Download (choose tar.gz or zip)
-curl -L -O https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0-genesis-final/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-
-# Verify checksum
-shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: 8e37a2349b556c78aa8d98f56cc7849716d0f857a055646fd10a60bb024c9ab1
-
-# Extract
-tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-cd AMMOcoin-v1.1.0-macOS-ARM64/
+sudo dpkg -i ammocoin_1.1.0_amd64.deb
+sudo systemctl start ammocoind
 ```
 
-#### 2. Delete Old Blockchain Data (REQUIRED!)
+### Linux ARM64 / Raspberry Pi
+
+| File | Description |
+|------|-------------|
+| [ammocoin_1.1.0_arm64.deb](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin_1.1.0_arm64.deb) | **Recommended** - Debian package with systemd service, ARM-tuned config (6 MB) |
+| [AMMOcoin-v1.1.0-Linux-ARM64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-ARM64.tar.gz) | Standalone binaries (10 MB) |
+| [AMMOcoin-v1.1.0-Linux-ARM64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-ARM64.zip) | Standalone binaries (10 MB) |
+
+**Install:**
 ```bash
-# ⚠️ WARNING: This deletes ALL blockchain data and wallets!
-# Backup wallets first if they have balances (they shouldn't in v1.0)
+sudo dpkg -i ammocoin_1.1.0_arm64.deb
+sudo systemctl start ammocoind
+```
+
+### Checksums
+
+Full checksums file: [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
+
+```
+# macOS ARM64
+84bf723d7c028375e2f042815ea8c204b2c2ea0ce0743cd0a5a4095f62cc5568  AMMOcoin-v1.1.0-macOS-ARM64.dmg
+ca78ad02390e939a8186c450d9f0fd287ecaf7c9646d35386efd133b275927c0  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+
+# Windows x86_64
+b11e47bee51148abb9bd1246de30818e9350a435b80e2c1af1517e48c1e84df6  AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
+edf852963d51f371f582189e39bfbc28753942802f996d7fb55924fc67260539  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+
+# Linux x86_64
+8624831cb35f3451ebef957bf35f84256ac11c09e435654a69aa5c1fecc6de97  ammocoin_1.1.0_amd64.deb
+9ddc177e64756239cba750b70884ded7431c507b0ef496ff73dda79e2b678f09  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+
+# Linux ARM64
+a34c222caf3a6b91a098f4ad6be8c4ce6a5c7ff760cbdb8de5c911411184f108  ammocoin_1.1.0_arm64.deb
+81296365ea8812687c80b292ca5d4bbf593c4257d57749f7abd9ee7b59adbdf8  AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+```
+
+---
+
+## Quick Start
+
+### 1. Delete Old Blockchain Data (REQUIRED!)
+```bash
+# WARNING: This deletes ALL old blockchain data
+# Backup wallet.dat first if it has balances
 rm -rf ~/.ammocoin
 ```
 
-#### 3. Install Binaries
-```bash
-# Option A: Install to /usr/local/bin
-sudo cp ammocoind ammocoin-cli ammocoin-tx /usr/local/bin/
-sudo chmod +x /usr/local/bin/ammocoin*
-
-# Option B: Run from current directory
-chmod +x ammocoind ammocoin-cli ammocoin-tx
-```
-
-#### 4. Configure Node
+### 2. Install and Configure
 ```bash
 mkdir -p ~/.ammocoin
 cat > ~/.ammocoin/ammocoin.conf <<EOF
 rpcuser=yourusername
-rpcpassword=yourpassword
+rpcpassword=$(openssl rand -hex 32)
 rpcport=51473
+port=37020
 server=1
 daemon=1
+listen=1
+
+# Seed nodes
+addnode=seed1.ammocoin.org:37020
+addnode=seed2.ammocoin.org:37020
 EOF
+chmod 600 ~/.ammocoin/ammocoin.conf
 ```
 
-#### 5. Start Node
+### 3. Start Node
 ```bash
 ammocoind -daemon
-# Or if running from current directory:
-./ammocoind -daemon
 ```
 
-#### 6. Verify Genesis Block
+### 4. Verify Genesis Block
 ```bash
-# Wait a few seconds for startup
 sleep 10
-
-# Check genesis hash
 ammocoin-cli getblockhash 0
 # MUST return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
-**If genesis hash doesn't match, DO NOT USE - contact support!**
-
 ---
 
-## 🔍 Verification
-
-### Verify Downloaded Binaries
-
-#### Check Checksums
-```bash
-# Download checksums file
-curl -L -O https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0-genesis-final/CHECKSUMS-macOS-ARM64.txt
-
-# Verify
-shasum -a 256 -c CHECKSUMS-macOS-ARM64.txt
-```
-
-#### Verify Genesis in Binary
-```bash
-strings ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
-# Should return 2-3 matches
-```
-
-### Verify Running Node
-```bash
-# Get genesis hash
-ammocoin-cli getblockhash 0
-
-# Get blockchain info
-ammocoin-cli getblockchaininfo
-
-# Should show:
-# "blocks": 0
-# "bestblockhash": "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
-```
-
----
-
-## 📚 Documentation
-
-### Essential Reading
-- **[V1.1.0_GENESIS_BLOCK_AUTHORITY.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.1.0_GENESIS_BLOCK_AUTHORITY.md)** - Single source of truth for genesis parameters
-- **[EXECUTION_COMPLETE_v1.1.0.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/EXECUTION_COMPLETE_v1.1.0.md)** - Complete execution summary
-- **[LINUX_BUILD_INSTRUCTIONS_v1.1.0.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/LINUX_BUILD_INSTRUCTIONS_v1.1.0.md)** - Build Linux binaries from source
-
-### For Node Operators
-- **[SEED_NODE_UPDATE_GUIDE_v1.1.0.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/SEED_NODE_UPDATE_GUIDE_v1.1.0.md)** - Update seed nodes
-- **[USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)** - User upgrade guide
-
----
-
-## 🛠️ Building from Source
-
-### Prerequisites
-- Git
-- C++ compiler (GCC/Clang)
-- Rust toolchain (1.80.0+)
-- Boost libraries
-- Berkeley DB 4.8
-- OpenSSL
-- Other dependencies (see build guide)
-
-### Build Instructions
-
-#### Clone Repository
-```bash
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
-```
-
-#### Checkout Release Tag
-```bash
-git checkout v1.1.0-genesis-final
-```
-
-#### Follow Platform-Specific Guide
-- **Linux:** See `LINUX_BUILD_INSTRUCTIONS_v1.1.0.md`
-- **macOS:** Build process documented in repository
-- **Windows:** Cross-compile or native build (instructions TBD)
-
-#### Verify Before Using
-```bash
-# CRITICAL: Verify genesis in built binary
-strings src/ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
-# MUST return matches!
-```
-
----
-
-## 🌐 Network Information
+## Network Information
 
 ### Seed Nodes
-- **seed1.ammocoin.org** - Primary seed node (update pending)
+- **seed1.ammocoin.org** (78.141.194.140)
+- **seed2.ammocoin.org** (147.182.245.102)
 
 ### Network Ports
-- **P2P Port:** 8338
-- **RPC Port:** 8332 (localhost only by default)
+- **P2P Port:** 37020 (mainnet), 37022 (testnet)
+- **RPC Port:** 51473 (mainnet), 51475 (testnet)
 
 ### Genesis Block
 ```
@@ -246,144 +176,139 @@ Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 ---
 
-## ⚡ Quick Start Checklist
+## Verification
 
-Before connecting to the network:
+### Verify Downloaded Binaries
+```bash
+# macOS/Linux
+shasum -a 256 <downloaded-file>
 
-- [ ] Downloaded correct binaries for your platform
-- [ ] Verified SHA256 checksums
-- [ ] Deleted old blockchain data (`rm -rf ~/.ammocoin`)
-- [ ] Installed new v1.1.0 binaries
-- [ ] Created fresh configuration file
-- [ ] Started node with `-daemon`
-- [ ] Verified genesis hash matches: `00000f14...`
-- [ ] Checked `getblockchaininfo` shows blocks: 0
+# Windows (PowerShell)
+Get-FileHash <downloaded-file> -Algorithm SHA256
+```
+
+Compare output with the checksums above.
+
+### Verify Running Node
+```bash
+ammocoin-cli getblockhash 0
+ammocoin-cli getblockchaininfo
+
+# Should show:
+# "blocks": 0
+# "bestblockhash": "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
+```
 
 ---
 
-## 🐛 Known Issues
+## Building from Source
 
-### macOS Gatekeeper
-If macOS prevents you from running the binaries:
+### Prerequisites
+- Git, C++ compiler (GCC 9+ / Clang)
+- Rust toolchain (1.80.0+)
+- Boost, Berkeley DB 4.8, OpenSSL, libevent
+
+### Build
 ```bash
+git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
+cd AMMOcoin-v1.1.0/source
+
+# Install depends
+cd depends && make -j$(nproc) && cd ..
+
+# Configure and build
+./autogen.sh
+./configure --prefix=$(pwd)/depends/$(depends/config.guess)
+make -j$(nproc)
+```
+
+See platform-specific build guides in `docs/installation/`.
+
+---
+
+## Known Issues
+
+### macOS Gatekeeper ("damaged" warning)
+```bash
+# Remove quarantine attribute
+xattr -cr /Applications/AMMOcoin-Qt.app
+# Or for CLI binaries:
 sudo xattr -dr com.apple.quarantine ammocoind ammocoin-cli ammocoin-tx
 ```
 
 ### No Peers Connecting
-- Normal at launch - network is starting fresh
-- Ensure port 8338 is open in firewall
-- Add seed nodes manually if needed:
+- Ensure port **37020** is open in firewall
+- Add seed nodes manually:
   ```bash
-  ammocoin-cli addnode "seed1.ammocoin.org:8338" "add"
+  ammocoin-cli addnode "seed1.ammocoin.org:37020" "add"
+  ammocoin-cli addnode "seed2.ammocoin.org:37020" "add"
   ```
 
-### "Cannot find genesis block" Error
-- This means you're running binaries with wrong genesis
-- Verify checksums match exactly
-- Re-download if needed
-- DO NOT use v1.0 binaries!
+---
+
+## Documentation
+
+- **[Whitepaper v1.1.0](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md)**
+- **[Genesis Block Authority](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.1.0_GENESIS_BLOCK_AUTHORITY.md)** - Single source of truth for genesis parameters
+- **[Linux Build Instructions](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/installation/LINUX_BUILD_INSTRUCTIONS_v1.1.0.md)**
+- **[Seed Node Quick Start](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/operations/SEED_NODE_QUICK_START.md)**
 
 ---
 
-## 💬 Support & Community
+## Changelog
 
-### Getting Help
-- **GitHub Issues:** [Report bugs or ask questions](https://github.com/everquin/AMMOcoin-v1.1.0/issues)
-- **Documentation:** Check repository docs for detailed guides
+### v1.1.0 (February 22, 2026)
 
-### Contributing
-- Build and test binaries for your platform
-- Report issues with clear reproduction steps
-- Submit pull requests for improvements
+#### Added
+- Pre-built installers for all platforms (.dmg, .exe, .deb)
+- New genesis block with paper wallet key integration
+- Sapling shielded transaction support
+- Complete documentation suite
+- Paper wallet generator and blockchain explorer
+
+#### Changed
+- **BREAKING:** Fresh blockchain start - incompatible with v1.0
+- Upgraded from PIVX 3.x to PIVX 5.x codebase
+- P2P port: 37020, RPC port: 51473
+- Correct genesis nNonce: 1299391
+
+#### Fixed
+- All PIVX legacy branding replaced with AMMOcoin
+- Correct port configuration across all documentation
+- macOS Gatekeeper compatibility (ad-hoc codesigning)
 
 ---
 
-## 🔐 Security Notes
+## Security Notes
 
 ### Paper Wallet Private Key
 The genesis block contains the paper wallet private key. This key:
-- ✅ Holds the genesis 250M AMMO reward
-- ✅ Is documented in V1.1.0_GENESIS_BLOCK_AUTHORITY.md
-- ✅ Is intentionally public for this fresh start
-- ⚠️ Should be treated carefully in production
+- Holds the genesis 250M AMMO reward
+- Is documented in V1.1.0_GENESIS_BLOCK_AUTHORITY.md
+- Is intentionally public for this fresh start
 
 ### Verify Everything
-- Always verify SHA256 checksums
-- Always verify genesis hash in binaries
+- Always verify SHA256 checksums after download
+- Always verify genesis hash in running node
 - Never run unverified binaries
 - Build from source if unsure
 
 ---
 
-## 📋 Changelog
-
-### v1.1.0 (December 30, 2025)
-
-#### Added
-- New genesis block with paper wallet key integration
-- Complete documentation suite
-- Automated build system improvements
-- Genesis verification procedures
-
-#### Changed
-- **BREAKING:** Fresh blockchain start - incompatible with v1.0
-- Updated all genesis block parameters
-- Improved build configuration
-
-#### Fixed
-- Genesis block mining with correct nNonce: 942131)
-- Proof-of-work validation
-- Build system compatibility issues
-
-#### Removed
-- All v1.0 blockchain data (manual deletion required)
-- Old genesis block references
-
----
-
-## 🎯 What's Next
-
-### Short Term
-- [ ] Linux x86_64 binaries released
-- [ ] Seed nodes updated and verified
-- [ ] Network launch coordinated
-- [ ] Community announcement
-
-### Medium Term
-- [ ] Windows binaries available
-- [ ] Additional platform support
-- [ ] Network growth and stability
-
----
-
-## 📜 License
+## License
 
 Distributed under the MIT License. See `COPYING` file in repository.
 
 ---
 
-## 👥 Credits
+## Credits
 
 **Development:** AMMOcoin Core Development Team
-**Release Coordination:** Claude Code (AI Assistant)
-**Community:** All node operators and contributors
+**Website:** [ammocoin.org](https://ammocoin.org)
+**Repository:** [github.com/everquin/AMMOcoin-v1.1.0](https://github.com/everquin/AMMOcoin-v1.1.0)
 
 ---
-
-## ⚠️ Final Reminder
-
-**THIS IS A FRESH BLOCKCHAIN START**
-
-Before connecting:
-1. ✅ Delete old blockchain data
-2. ✅ Install v1.1.0 binaries
-3. ✅ Verify genesis hash
-4. ✅ Connect to network
 
 **Genesis Hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
 If your node shows a different genesis hash, STOP and investigate!
-
----
-
-**Questions?** See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for complete specifications.
