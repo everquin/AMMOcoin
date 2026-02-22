@@ -193,7 +193,7 @@ Install Visual C++ Redistributable from Microsoft.
 50ced5ad603795104584e17b2eb7c43ea48465b326c259d0bc619ce8baee314f  AMMOcoin-v1.1.0-macOS-ARM64.zip
 
 # Linux x86_64
-04f0aec63498d10d0adbbe27b5d009f6b654bd94e6174b51c66507353eae94aa  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Windows x86_64
 372e0e9f6a2162bf58d525152857277a4c3a5ad89cd1974e7564c8a51f92ac51  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz

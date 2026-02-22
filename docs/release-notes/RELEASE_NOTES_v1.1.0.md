@@ -44,7 +44,7 @@ wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOco
 #### Verify Checksum:
 ```bash
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-# Should match: 917cd4365b352ad7800ba9dd2c388408cba0341ff6da1ba8aa33f84515e73acb
+# Should match: db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c
 ```
 
 #### Extract and Install:

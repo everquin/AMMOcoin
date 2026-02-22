@@ -42,7 +42,7 @@ wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKS
 **Verify your download:**
 ```bash
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-# Should match: 917cd4365b352ad7800ba9dd2c388408cba0341ff6da1ba8aa33f84515e73acb
+# Should match: db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c
 
 # Or automatically verify:
 sha256sum -c CHECKSUMS-Linux.txt --ignore-missing
@@ -172,7 +172,7 @@ cd ~
 
 **Linux x86_64:**
 ```
-917cd4365b352ad7800ba9dd2c388408cba0341ff6da1ba8aa33f84515e73acb  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 8cc8d9a3b96b92305cd99393f79598cf3ca3611693000d2da1f9727aadd161f7  AMMOcoin-v1.1.0-Linux-x86_64.zip
 ```
 
