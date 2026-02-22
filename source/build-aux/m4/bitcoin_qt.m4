@@ -147,6 +147,10 @@ AC_DEFUN([BITCOIN_QT_CONFIGURE],[
       _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)],[-lqcocoa])
       AC_DEFINE(QT_QPA_PLATFORM_COCOA, 1, [Define this symbol if the qt platform is cocoa])
     fi
+    dnl Check for image format plugins (SVG, GIF) used by the wallet GUI
+    _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QSvgPlugin)],[-lqsvg -lQt5Svg])
+    _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QGifPlugin)],[-lqgif])
+    _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QSvgIconPlugin)],[-lqsvgicon -lQt5Svg])
   fi
   CPPFLAGS=$TEMP_CPPFLAGS
   CXXFLAGS=$TEMP_CXXFLAGS
@@ -358,6 +362,9 @@ AC_DEFUN([_BITCOIN_QT_FIND_STATIC_PLUGINS],[
       QT_LIBS="$QT_LIBS -L$qt_plugin_path/platforms"
       if test -d "$qt_plugin_path/accessible"; then
         QT_LIBS="$QT_LIBS -L$qt_plugin_path/accessible"
+      fi
+      if test -d "$qt_plugin_path/imageformats"; then
+        QT_LIBS="$QT_LIBS -L$qt_plugin_path/imageformats"
       fi
      if test "x$use_pkgconfig" = xyes; then
      : dnl
