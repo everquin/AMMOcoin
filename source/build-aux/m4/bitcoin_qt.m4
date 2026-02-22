@@ -150,7 +150,6 @@ AC_DEFUN([BITCOIN_QT_CONFIGURE],[
     dnl Check for image format plugins (SVG, GIF) used by the wallet GUI
     _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QSvgPlugin)],[-lqsvg -lQt5Svg])
     _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QGifPlugin)],[-lqgif])
-    _BITCOIN_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QSvgIconPlugin)],[-lqsvgicon -lQt5Svg])
   fi
   CPPFLAGS=$TEMP_CPPFLAGS
   CXXFLAGS=$TEMP_CXXFLAGS

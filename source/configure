@@ -32658,49 +32658,6 @@ rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
   LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
 
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static Qt plugins: -lqsvgicon -lQt5Svg" >&5
-printf %s "checking for static Qt plugins: -lqsvgicon -lQt5Svg... " >&6; }
-  CHECK_STATIC_PLUGINS_TEMP_LIBS="$LIBS"
-  LIBS="-lqsvgicon -lQt5Svg $QT_LIBS $LIBS"
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-    #define QT_STATICPLUGIN
-    #include <QtPlugin>
-    Q_IMPORT_PLUGIN(QSvgIconPlugin)
-int
-main (void)
-{
-return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }; QT_LIBS="-lqsvgicon -lQt5Svg $QT_LIBS"
-else case e in #(
-  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; };
-  if test "x$bitcoin_qt_want_version" = xauto && test "x$bitcoin_qt_force" != xyes; then
-    if test "x$bitcoin_enable_qt" != xno; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Could not resolve: -lqsvgicon -lQt5Svg; ammocoin-qt frontend will not be built" >&5
-printf "%s\n" "$as_me: WARNING: Could not resolve: -lqsvgicon -lQt5Svg; ammocoin-qt frontend will not be built" >&2;}
-    fi
-    bitcoin_enable_qt=no
-    bitcoin_enable_qt_test=no
-  else
-    as_fn_error $? "Could not resolve: -lqsvgicon -lQt5Svg" "$LINENO" 5
-  fi
- ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-  LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
-
   fi
   CPPFLAGS=$TEMP_CPPFLAGS
   CXXFLAGS=$TEMP_CXXFLAGS

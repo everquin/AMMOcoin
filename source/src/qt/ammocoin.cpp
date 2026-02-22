@@ -62,7 +62,6 @@ Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin);
 #endif
 Q_IMPORT_PLUGIN(QSvgPlugin);
-Q_IMPORT_PLUGIN(QSvgIconPlugin);
 Q_IMPORT_PLUGIN(QGifPlugin);
 #endif
 
