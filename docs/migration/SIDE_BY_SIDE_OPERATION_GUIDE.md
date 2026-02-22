@@ -42,7 +42,7 @@ Use default location for v1.1.0:
 ```ini
 # v1.1.0 Configuration
 port=8338           # Default v1.1.0 port
-rpcport=8332        # Default v1.1.0 RPC port
+rpcport=51473        # Default v1.1.0 RPC port
 rpcuser=ammo_v11
 rpcpassword=different_password_here
 server=1

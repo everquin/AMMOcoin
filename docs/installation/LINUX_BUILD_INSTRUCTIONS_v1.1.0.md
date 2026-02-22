@@ -185,7 +185,7 @@ mkdir -p /tmp/ammocoin-genesis-test
 cat > /tmp/ammocoin-genesis-test/ammocoin.conf <<EOF
 rpcuser=test
 rpcpassword=test123
-rpcport=8332
+rpcport=51473
 server=1
 daemon=1
 EOF

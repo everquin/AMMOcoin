@@ -82,7 +82,7 @@ ammocoind -datadir=/root/.ammocoin -port=37021 -rpcport=8333 -daemon
 /opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind \
   -datadir=/root/.ammocoin-v1.1.0 \
   -port=37020 \
-  -rpcport=8332 \
+  -rpcport=51473 \
   -daemon
 ```
 
@@ -231,7 +231,7 @@ daemon=1
 rpcuser=ammocoinrpc
 rpcpassword=$(openssl rand -hex 32)
 rpcallowip=127.0.0.1
-rpcport=8332
+rpcport=51473
 
 # Network
 port=37020

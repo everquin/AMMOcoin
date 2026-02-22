@@ -337,7 +337,7 @@ dnsseed=1
 rpcuser=$RPC_USER
 rpcpassword=$RPC_PASS
 rpcallowip=127.0.0.1
-rpcport=8332
+rpcport=51473
 
 # Network Settings
 port=37020
@@ -366,7 +366,7 @@ Generated: $(date)
 
 RPC User: $RPC_USER
 RPC Pass: $RPC_PASS
-RPC Port: 8332
+RPC Port: 51473
 
 Data Directory: $DATA_DIR
 Config File: $DATA_DIR/ammocoin.conf

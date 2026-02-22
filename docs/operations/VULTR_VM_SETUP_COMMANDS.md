@@ -145,7 +145,7 @@ dnsseed=1
 rpcuser=ammocoinrpc
 rpcpassword=$RPC_PASS
 rpcallowip=127.0.0.1
-rpcport=8332
+rpcport=51473
 
 # Network
 port=37020

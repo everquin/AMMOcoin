@@ -275,7 +275,7 @@ mkdir -p /tmp/ammocoin-test
 cat > /tmp/ammocoin-test/ammocoin.conf <<EOF
 rpcuser=test
 rpcpassword=test123
-rpcport=8332
+rpcport=51473
 server=1
 daemon=1
 EOF
@@ -367,7 +367,7 @@ listen=1
 # RPC Settings (CHANGE THESE!)
 rpcuser=ammouser
 rpcpassword=CHANGE_THIS_PASSWORD_NOW
-rpcport=8332
+rpcport=51473
 rpcallowip=127.0.0.1
 rpcbind=127.0.0.1
 

@@ -116,7 +116,7 @@ mkdir -p ~/.ammocoin
 cat > ~/.ammocoin/ammocoin.conf <<EOF
 rpcuser=yourusername
 rpcpassword=yourpassword
-rpcport=8332
+rpcport=51473
 server=1
 daemon=1
 EOF
