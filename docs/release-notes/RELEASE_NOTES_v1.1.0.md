@@ -84,7 +84,7 @@ wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOco
 #### Verify Checksum:
 ```bash
 shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: b8712288fb59d3e34113029e1622b88c01d844de9d69bea22c89160ce8905bb5
+# Should match: 578eead2eb47d1ed7258d091e9581891390894ed17e3e03c32eac5d98c56e9a0
 ```
 
 #### Extract and Install:
@@ -122,8 +122,8 @@ Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](
 
 ### macOS ARM64:
 ```
-b8712288fb59d3e34113029e1622b88c01d844de9d69bea22c89160ce8905bb5  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-a2f383362683ec4a0e26ff6ea3d90909b430a923ee454aac6615c0de28f60bd3  AMMOcoin-v1.1.0-macOS-ARM64.zip
+578eead2eb47d1ed7258d091e9581891390894ed17e3e03c32eac5d98c56e9a0  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+c744c0212ce29d52eab09cfc4b18c92722447e4002754e8ec3c2a6780262e043  AMMOcoin-v1.1.0-macOS-ARM64.zip
 ```
 
 Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)

@@ -80,15 +80,15 @@ Download each platform and verify:
 ```bash
 # macOS
 sha256sum AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: 2678196bbc610f3c49422750878dbac1522978a02aba3e04469d31ce773bdb5b
+# Should match: 578eead2eb47d1ed7258d091e9581891390894ed17e3e03c32eac5d98c56e9a0
 
 # Linux
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-# Should match: 04f0aec63498d10d0adbbe27b5d009f6b654bd94e6174b51c66507353eae94aa
+# Should match: db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c
 
 # Windows
 certutil -hashfile AMMOcoin-v1.1.0-Windows-x86_64.zip SHA256
-# Should match: f39a510229b9667bc79a31d440518dc04db79e6ec32fb98da7b933d59ed71546
+# Should match: 6e643a98e97ba698b4b55cf324706186739f1f0f7ec97d2a3176b1227ec1dcee
 ```
 
 #### B. Test Website (5 min)

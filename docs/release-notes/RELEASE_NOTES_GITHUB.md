@@ -98,11 +98,11 @@ Full checksums file: [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://githu
 ```
 # macOS ARM64
 2af87171ebcb362e9efa20737b7399fa44212cf1761aa3aed5a30a151a771f71  AMMOcoin-v1.1.0-macOS-ARM64.dmg
-ca78ad02390e939a8186c450d9f0fd287ecaf7c9646d35386efd133b275927c0  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+578eead2eb47d1ed7258d091e9581891390894ed17e3e03c32eac5d98c56e9a0  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 
 # Windows x86_64
 73c6de479ef705b59839aefb562cebab53c00fb4bf1b9739f53efad36a556683  AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
-edf852963d51f371f582189e39bfbc28753942802f996d7fb55924fc67260539  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+2b450c699d15c5e2d00caab51a97da1f245f13dcb11580329d875ff26d013c71  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
 
 # Linux x86_64
 8f13e55fab59b61ad9e385b1b5036d838f6797ae456074870bdb9eb3a28890dc  ammocoin-1.1.0-amd64.deb
