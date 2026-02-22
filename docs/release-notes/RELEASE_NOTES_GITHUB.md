@@ -67,13 +67,13 @@ Public Key:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee
 
 | File | Description |
 |------|-------------|
-| [ammocoin_1.1.0_amd64.deb](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin_1.1.0_amd64.deb) | **Recommended** - Debian package with systemd service (7 MB) |
+| [ammocoin-1.1.0-amd64.deb](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin-1.1.0-amd64.deb) | **Recommended** - Debian package with systemd service (7 MB) |
 | [AMMOcoin-v1.1.0-Linux-x86_64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz) | Standalone binaries (11 MB) |
 | [AMMOcoin-v1.1.0-Linux-x86_64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.zip) | Standalone binaries (11 MB) |
 
 **Install:**
 ```bash
-sudo dpkg -i ammocoin_1.1.0_amd64.deb
+sudo dpkg -i ammocoin-1.1.0-amd64.deb
 sudo systemctl start ammocoind
 ```
 
@@ -81,13 +81,13 @@ sudo systemctl start ammocoind
 
 | File | Description |
 |------|-------------|
-| [ammocoin_1.1.0_arm64.deb](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin_1.1.0_arm64.deb) | **Recommended** - Debian package with systemd service, ARM-tuned config (6 MB) |
+| [ammocoin-1.1.0-arm64.deb](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/ammocoin-1.1.0-arm64.deb) | **Recommended** - Debian package with systemd service, ARM-tuned config (6 MB) |
 | [AMMOcoin-v1.1.0-Linux-ARM64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-ARM64.tar.gz) | Standalone binaries (10 MB) |
 | [AMMOcoin-v1.1.0-Linux-ARM64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-ARM64.zip) | Standalone binaries (10 MB) |
 
 **Install:**
 ```bash
-sudo dpkg -i ammocoin_1.1.0_arm64.deb
+sudo dpkg -i ammocoin-1.1.0-arm64.deb
 sudo systemctl start ammocoind
 ```
 
@@ -105,11 +105,11 @@ ca78ad02390e939a8186c450d9f0fd287ecaf7c9646d35386efd133b275927c0  AMMOcoin-v1.1.
 edf852963d51f371f582189e39bfbc28753942802f996d7fb55924fc67260539  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
 
 # Linux x86_64
-8f13e55fab59b61ad9e385b1b5036d838f6797ae456074870bdb9eb3a28890dc  ammocoin_1.1.0_amd64.deb
+8f13e55fab59b61ad9e385b1b5036d838f6797ae456074870bdb9eb3a28890dc  ammocoin-1.1.0-amd64.deb
 db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Linux ARM64
-49457da728f515ecd581ea2c6eba81dc4ba5650d609ea79087126ab7749c2ab2  ammocoin_1.1.0_arm64.deb
+49457da728f515ecd581ea2c6eba81dc4ba5650d609ea79087126ab7749c2ab2  ammocoin-1.1.0-arm64.deb
 400fc31d32c84d6517e6e283cfdc7d4da34d89af0b3cd2e0bc0072e8fdc945e3  AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
 ```
 
