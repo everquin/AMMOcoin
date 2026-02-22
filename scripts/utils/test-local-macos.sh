@@ -116,7 +116,7 @@ AMMOcoin v1.1.0 Local Test Node
 Data Directory: $AMMOCOIN_TEST_DATA
 RPC User: ammocointest
 RPC Password: $RPC_PASS
-RPC Port: 8332
+RPC Port: 51473
 Created: $(date)
 
 Quick Commands:

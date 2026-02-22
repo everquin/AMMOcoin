@@ -18,7 +18,7 @@ Any deviation will result in incompatible blockchains that cannot connect!
 ### Core Parameters
 ```cpp
 nTime:    1623089845      // June 7, 2021 - 23:04:05 UTC
-nNonce: 942131          // ✅ MINED value that produces valid hash
+nNonce: 1299391          // ✅ MINED value that produces valid hash
 nBits:    0x1e0ffff0      // Difficulty target
 nVersion: 1               // Block version
 Reward:   250000000 * COIN     // Genesis reward
@@ -75,7 +75,7 @@ CMainParams()
 {
     strNetworkID = "main";
 
-    genesis = CreateGenesisBlock(1623089845, 942131, 0x1e0ffff0, 1, 250000000 * COIN);
+    genesis = CreateGenesisBlock(1623089845, 1299391, 0x1e0ffff0, 1, 250000000 * COIN);
     consensus.hashGenesisBlock = genesis.GetHash();
     assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
     assert(genesis.hashMerkleRoot == uint256S("0xa4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab"));
@@ -98,7 +98,7 @@ Status: DEPRECATED - Old blockchain, incompatible with v1.1.0
 ### DO NOT USE - Broken v1.1.0 Attempt (December 22-29, 2025)
 ```
 Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-nNonce: 942131
+nNonce: 1299391
 Status: INVALID - This nNonce does NOT produce this hash! Genesis block was broken.
 Reason: Hash was manually set instead of computed, nNonce is incorrect
 ```
@@ -171,7 +171,7 @@ rm -rf %APPDATA%\AMMOcoin\* # Windows
 Mining started: December 30, 2025 08:08 PST
 Target: 00000ffff0000000000000000000000000000000000000000000000000000000
 Starting nNonce: 0
-Final nNonce: 942131
+Final nNonce: 1299391
 Mining duration: ~30 seconds
 Hash attempts: 511,628
 Result: SUCCESS - Valid PoW hash found
@@ -188,7 +188,7 @@ nNonce: 400000, hash: c248234108521406bea4cdbab021dc928b0b6382200c01ab7a4aed7292
 nNonce: 500000, hash: 883680c244ba986a8b95737acc459c0dd9d5d366c64eabbdbb5e0e0bc6940911
 
 === GENESIS BLOCK MINED ===
-nNonce: 942131
+nNonce: 1299391
 Genesis hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 Merkle root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
 ===========================

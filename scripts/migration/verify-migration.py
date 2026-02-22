@@ -15,7 +15,7 @@ from urllib.error import URLError, HTTPError
 V1_1_RPC_USER = "user"  # Update with v1.1.0 RPC credentials
 V1_1_RPC_PASSWORD = "password"
 V1_1_RPC_HOST = "127.0.0.1"
-V1_1_RPC_PORT = 37020
+V1_1_RPC_PORT = 51473
 
 def run_rpc_command(host, port, user, password, method, params=[]):
     """Execute RPC command"""

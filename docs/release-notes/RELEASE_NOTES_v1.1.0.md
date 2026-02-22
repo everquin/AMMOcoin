@@ -340,15 +340,15 @@ See detailed guides:
 - ✅ **Masternodes** - Tiered masternode system
 - ✅ **zkSNARK Privacy** - Sapling-based private transactions
 - ✅ **P2P Network** - Port 37020 (mainnet)
-- ✅ **RPC API** - Port 8332 (JSON-RPC)
+- ✅ **RPC API** - Port 51473 (JSON-RPC)
 
 ### Network Parameters:
 - **Block Time:** 60 seconds
 - **Staking Minimum:** Varies by tier
 - **P2P Port:** 37020
-- **RPC Port:** 8332
+- **RPC Port:** 51473
 - **Genesis Block:** `0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
-- **Genesis Nonce:** 942131
+- **Genesis Nonce:** 1299391
 
 ### Privacy Features:
 - **Sapling zkSNARK** - Zero-knowledge proofs for private transactions

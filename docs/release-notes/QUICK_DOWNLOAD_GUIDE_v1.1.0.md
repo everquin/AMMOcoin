@@ -190,7 +190,7 @@ cd ~
 
 **Ports:**
 - P2P Network: 37020
-- RPC Server: 8332 (localhost only recommended)
+- RPC Server: 51473 (localhost only recommended)
 
 **Data Directory:** `~/.ammocoin-v1.1.0` (keep separate from v1.0!)
 
@@ -202,7 +202,7 @@ cd ~
 2. **Use separate data directory** for v1.1.0 (`-datadir=~/.ammocoin-v1.1.0`)
 3. **Never delete v1.0 wallet** (contains claim keys!)
 4. **Strong RPC password** - Use `openssl rand -hex 32`
-5. **Firewall**: Open port 37020 for P2P, keep 8332 localhost-only
+5. **Firewall**: Open port 37020 for P2P, keep 51473 localhost-only
 6. **Monitor logs**: `tail -f ~/.ammocoin-v1.1.0/debug.log`
 
 ---

@@ -11,7 +11,7 @@
 The current node on seed1.ammocoin.org has **WRONG genesis block** and must be:
 1. Completely stopped
 2. All old data deleted
-3. Fresh build from v1.1.0-genesis-final tag
+3. Fresh build from v1.1.0 tag
 4. Genesis verification BEFORE starting
 
 **DO NOT skip any step!**
@@ -165,11 +165,11 @@ cd AMMOcoin-v1.1.0
 ### Step 2: Checkout Correct Tag
 ```bash
 # CRITICAL: Use the exact tag
-git checkout v1.1.0-genesis-final
+git checkout v1.1.0
 
 # Verify you're on the right tag
 git describe --tags
-# Should show: v1.1.0-genesis-final
+# Should show: v1.1.0
 
 # Show current commit
 git log -1 --oneline
@@ -372,7 +372,7 @@ rpcallowip=127.0.0.1
 rpcbind=127.0.0.1
 
 # Network Settings
-port=8338
+port=37020
 maxconnections=125
 
 # This is a seed node
@@ -411,10 +411,10 @@ cat ~/.ammocoin/ammocoin.conf | grep -E "rpcuser|rpcpassword|port"
 ### Step 1: Open Firewall Port
 ```bash
 # Allow P2P port
-sudo ufw allow 8338/tcp
+sudo ufw allow 37020/tcp
 
 # Verify
-sudo ufw status | grep 8338
+sudo ufw status | grep 37020
 ```
 
 ### Step 2: Start Node
@@ -480,7 +480,7 @@ tail -50 ~/.ammocoin/debug.log
 - No errors
 - No genesis assertion failures
 - Clean startup messages
-- Listening on port 8338
+- Listening on port 37020
 
 ---
 
@@ -587,7 +587,7 @@ ammocoin-cli getblockhash 0
 ps aux | grep ammocoind | grep -v grep
 
 # 3. Port is listening?
-sudo netstat -tulpn | grep 8338
+sudo netstat -tulpn | grep 37020
 
 # 4. RPC is working?
 ammocoin-cli getblockchaininfo | grep blocks
@@ -601,14 +601,14 @@ dig seed1.ammocoin.org
 
 # 7. External connectivity?
 # From another machine:
-# telnet seed1.ammocoin.org 8338
+# telnet seed1.ammocoin.org 37020
 # Should connect
 ```
 
 ### Checklist:
 - [ ] Genesis hash is 00000f14...
 - [ ] Node is running without errors
-- [ ] Port 8338 is listening
+- [ ] Port 37020 is listening
 - [ ] RPC responds to commands
 - [ ] No errors in debug.log
 - [ ] DNS resolves correctly
@@ -647,7 +647,7 @@ make -j$(nproc)
 cat ~/.ammocoin/debug.log
 
 # Check if port is already in use
-sudo netstat -tulpn | grep 8338
+sudo netstat -tulpn | grep 37020
 
 # Try starting in foreground for debugging
 ammocoind -printtoconsole
@@ -661,7 +661,7 @@ cd /tmp/AMMOcoin-v1.1.0
 git log -1 --oneline
 git describe --tags
 
-# Should show v1.1.0-genesis-final
+# Should show v1.1.0
 # If not, you checked out wrong tag!
 ```
 
@@ -700,11 +700,11 @@ ammocoind -daemon
 ✅ seed1.ammocoin.org is now live with v1.1.0!
 
 Genesis: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-P2P Port: 8338
+P2P Port: 37020
 
 Connect your v1.1.0 nodes:
-- Download: https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0-genesis-final
-- Add seed node: ammocoin-cli addnode "seed1.ammocoin.org:8338" "add"
+- Download: https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+- Add seed node: ammocoin-cli addnode "seed1.ammocoin.org:37020" "add"
 
 Remember to delete old blockchain data before connecting!
 ```

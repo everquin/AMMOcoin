@@ -173,14 +173,14 @@ For different networks (testnet, regtest), adjust your settings:
 
 **Testnet:**
 ```bash
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51475
 NEXT_PUBLIC_NETWORK_NAME="AMMOcoin Testnet"
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Testnet Explorer"
 ```
 
 **Regtest:**
 ```bash
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:18332
+NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51477
 NEXT_PUBLIC_NETWORK_NAME="AMMOcoin Regtest"
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Regtest Explorer"
 ```

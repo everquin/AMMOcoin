@@ -41,7 +41,7 @@ Use default location for v1.1.0:
 **~/.ammocoin/ammocoin.conf:**
 ```ini
 # v1.1.0 Configuration
-port=8338           # Default v1.1.0 port
+port=37020          # Default v1.1.0 port
 rpcport=51473        # Default v1.1.0 RPC port
 rpcuser=ammo_v11
 rpcpassword=different_password_here
@@ -79,8 +79,8 @@ netstat -tulpn | grep ammocoin
 # Should see:
 # 8339 - v1.0 P2P
 # 8333 - v1.0 RPC
-# 8338 - v1.1.0 P2P
-# 8332 - v1.1.0 RPC
+# 37020 - v1.1.0 P2P
+# 51473 - v1.1.0 RPC
 ```
 
 ---

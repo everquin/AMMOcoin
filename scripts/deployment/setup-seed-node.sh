@@ -420,7 +420,7 @@ echo ""
 echo "=== Configuring Firewall ==="
 # Allow AMMOcoin port
 ufw allow 37020/tcp comment 'AMMOcoin P2P'
-ufw allow 8332/tcp comment 'AMMOcoin RPC' 2>/dev/null || true
+ufw allow 51473/tcp comment 'AMMOcoin RPC' 2>/dev/null || true
 ufw --force enable
 
 echo "✓ Firewall configured"
@@ -453,7 +453,7 @@ fi
 echo "RPC Credentials (saved to $RPC_CREDS_FILE):"
 echo "  User: $RPC_USER"
 echo "  Pass: $RPC_PASS"
-echo "  Port: 8332"
+echo "  Port: 51473"
 echo ""
 echo "⚠️  SAVE THESE CREDENTIALS SECURELY!"
 echo ""

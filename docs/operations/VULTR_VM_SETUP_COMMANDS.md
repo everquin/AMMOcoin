@@ -315,5 +315,5 @@ Once this node is running:
 **Total Setup Time:** ~30 minutes
 **Node Name:** seed1.ammocoin.org / node1.ammocoin.org
 **Network Port:** 37020
-**RPC Port:** 8332 (localhost only)
+**RPC Port:** 51473 (localhost only)
 

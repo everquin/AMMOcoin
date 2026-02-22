@@ -153,7 +153,7 @@ chmod 600 ~/.ammocoin/ammocoin.conf
 ### Step 9: Configure Firewall
 ```bash
 sudo ufw allow 37020/tcp comment 'AMMOcoin P2P'
-sudo ufw allow 8332/tcp comment 'AMMOcoin RPC'
+sudo ufw allow 51473/tcp comment 'AMMOcoin RPC'
 sudo ufw enable
 ```
 
@@ -273,7 +273,7 @@ cat ~/.ammocoin/ammocoin.conf | grep rpc
 curl --user ammocoinrpc:YOUR_PASSWORD \
      --data-binary '{"jsonrpc":"1.0","id":"test","method":"getinfo","params":[]}' \
      -H 'content-type: text/plain;' \
-     http://127.0.0.1:8332/
+     http://127.0.0.1:51473/
 ```
 
 ### No incoming connections?
@@ -299,7 +299,7 @@ curl ifconfig.me  # Get your public IP
 
 ### Firewall Ports
 - **37020/tcp** - AMMOcoin P2P (must be open)
-- **8332/tcp** - RPC (can be localhost only for security)
+- **51473/tcp** - RPC (can be localhost only for security)
 
 ### Performance Tuning
 
@@ -327,7 +327,7 @@ maxconnections=250
 
 2. **Firewall**
    - Only open port 37020 (P2P)
-   - Keep RPC (8332) localhost only
+   - Keep RPC (51473) localhost only
    - Use `ufw` to manage rules
 
 3. **Regular Updates**
