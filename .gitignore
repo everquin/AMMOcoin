@@ -51,6 +51,9 @@ source/src/qt/ammocoin/settings/forms/ui_*.h
 source/src/qt/locale/*.qm
 *.h.old
 
+# NSIS staging directory
+source/release/
+
 # Build directories
 build/
 source/target/
