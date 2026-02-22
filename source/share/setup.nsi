@@ -19,7 +19,7 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "AMMOcoin Core"
-!define MUI_FINISHPAGE_RUN $INSTDIR\ammocoin-qt
+!define MUI_FINISHPAGE_RUN $INSTDIR\ammocoin-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP "/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/share/pixmaps/nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
@@ -66,12 +66,12 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoin-qt
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoin-qt.exe
     File /oname=COPYING.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/COPYING
     File /oname=readme.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/doc/README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoind
-    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoin-cli
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoind.exe
+    File /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/release/ammocoin-cli.exe
     SetOutPath $INSTDIR\doc
     File /r /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/doc\*.*
     SetOutPath $APPDATA\AMMOcoinParams
@@ -87,8 +87,8 @@ Section -post SEC0001
     WriteUninstaller $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" $INSTDIR\ammocoin-qt
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\AMMOcoin Core (testnet, 64-bit).lnk" "$INSTDIR\ammocoin-qt" "-testnet" "$INSTDIR\ammocoin-qt" 1
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" $INSTDIR\ammocoin-qt.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\AMMOcoin Core (testnet, 64-bit).lnk" "$INSTDIR\ammocoin-qt.exe" "-testnet" "$INSTDIR\ammocoin-qt.exe" 1
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
@@ -101,8 +101,8 @@ Section -post SEC0001
     WriteRegDWORD HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoRepair 1
     WriteRegStr HKCR "ammocoin" "URL Protocol" ""
     WriteRegStr HKCR "ammocoin" "" "URL:AMMOcoin"
-    WriteRegStr HKCR "ammocoin\DefaultIcon" "" $INSTDIR\ammocoin-qt
-    WriteRegStr HKCR "ammocoin\shell\open\command" "" '"$INSTDIR\ammocoin-qt" "%1"'
+    WriteRegStr HKCR "ammocoin\DefaultIcon" "" $INSTDIR\ammocoin-qt.exe
+    WriteRegStr HKCR "ammocoin\shell\open\command" "" '"$INSTDIR\ammocoin-qt.exe" "%1"'
 SectionEnd
 
 # Macro for selecting uninstaller sections
@@ -120,7 +120,7 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
-    Delete /REBOOTOK $INSTDIR\ammocoin-qt
+    Delete /REBOOTOK $INSTDIR\ammocoin-qt.exe
     Delete /REBOOTOK $INSTDIR\COPYING.txt
     Delete /REBOOTOK $INSTDIR\readme.txt
     RMDir /r /REBOOTOK $INSTDIR\daemon
