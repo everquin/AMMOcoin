@@ -189,15 +189,15 @@ Install Visual C++ Redistributable from Microsoft.
 
 ```
 # macOS ARM64
-578eead2eb47d1ed7258d091e9581891390894ed17e3e03c32eac5d98c56e9a0  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c744c0212ce29d52eab09cfc4b18c92722447e4002754e8ec3c2a6780262e043  AMMOcoin-v1.1.0-macOS-ARM64.zip
+71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
 
 # Linux x86_64
-db7b90a98da45080467bb03a11e0de60bffe962888288ba74edb6eb4e646942c  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Windows x86_64
-2b450c699d15c5e2d00caab51a97da1f245f13dcb11580329d875ff26d013c71  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
-6e643a98e97ba698b4b55cf324706186739f1f0f7ec97d2a3176b1227ec1dcee  AMMOcoin-v1.1.0-Windows-x86_64.zip
+66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-v1.1.0-Windows-x86_64.zip
 ```
 
 ## Support

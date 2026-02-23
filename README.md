@@ -63,9 +63,9 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 
 | Platform | Download | Size | Checksum (SHA256) |
 |----------|----------|------|-------------------|
-| **macOS ARM64** | [.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip) | 4.0 MB | `578eead2eb...` |
-| **Linux x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz) | 112 MB | `db7b90a98d...` |
-| **Windows x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.zip) | 17 MB | `2b450c699d...` |
+| **macOS ARM64** | [.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip) | 4.0 MB | `71048bb009...` |
+| **Linux x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz) | 112 MB | `082f1eb063...` |
+| **Windows x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.zip) | 17 MB | `66bd10254f...` |
 
 **Verify Checksums:** [Download CHECKSUMS.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
 
