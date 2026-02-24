@@ -194,7 +194,8 @@ public:
     {
         strNetworkID = "main";
 
-        // v1.1.0 Genesis Block with 250M AMMO distribution premine (Option 2.5)
+        // v1.1.0 Genesis Block (genesis coinbase is unspendable by design)
+        // The 250M AMMO distribution premine is in block 1 via GetBlockValue()
         // Distribution address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME (team-controlled wallet)
         // Team will manually distribute to verified v1.0 users via signed claim process
         genesis = CreateGenesisBlock(1623089845, 1299391, 0x1e0ffff0, 1, 250000000 * COIN);

@@ -101,15 +101,15 @@ BOOST_AUTO_TEST_CASE(block_signature_test)
     }
 }
 
-CAmount nMoneySupplyPoWEnd = 43199500 * COIN;
+CAmount nMoneySupplyPoWEnd = 291039750 * COIN;
 
 BOOST_AUTO_TEST_CASE(subsidy_limit_test)
 {
     CAmount nSum = 0;
     for (int nHeight = 0; nHeight < 1; nHeight += 1) {
-        /* premine in block 1 (60,001 PIV) */
+        /* premine in block 1 (250M AMMO for v1.0 user migration) */
         CAmount nSubsidy = GetBlockValue(nHeight + 1);
-        BOOST_CHECK(nSubsidy <= 60001 * COIN);
+        BOOST_CHECK(nSubsidy <= 250000000 * COIN);
         nSum += nSubsidy;
     }
 
@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
         nSum += nSubsidy;
         BOOST_CHECK(nSum > 0 && nSum <= nMoneySupplyPoWEnd);
     }
-    BOOST_CHECK(nSum == 4109975100000000ULL);
+    BOOST_CHECK(nSum == 29103975000000000ULL);
 }
 
 bool ReturnFalse() { return false; }

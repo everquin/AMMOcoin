@@ -845,8 +845,10 @@ CAmount GetBlockValue(int nHeight)
     if (nHeight > 151200) return 45 * COIN;
     if (nHeight > 86400) return 225 * COIN;
     if (nHeight != 1) return 250 * COIN;
-    // Premine for 6 masternodes at block 1
-    return 60001 * COIN;
+    // Block 1: 250M AMMO distribution premine for v1.0 user migration
+    // Sent to distribution address AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
+    // Genesis block (block 0) coinbase is unspendable by design, so premine must be at block 1
+    return 250000000 * COIN;
 }
 
 int64_t GetMasternodePayment(int nHeight)
