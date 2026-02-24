@@ -1,23 +1,6 @@
-# AMMOcoin v1.1.0 - SHA256 Checksums
-# Release Date: January 3, 2026
-# Genesis Block Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
-# Merkle Root: a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab
-# Nonce: 1299391
-
-## macOS ARM64 (Apple Silicon - M1/M2/M3)
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
-
-## Linux x86_64 (Ubuntu 20.04+, Debian 11+, RHEL 8+)
-082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-
-## Windows x86_64 (Windows 10/11 64-bit)
-66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
-533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-v1.1.0-Windows-x86_64.zip
-
-# Verification
-To verify the integrity of your download, run:
-  macOS/Linux:  sha256sum <filename>
-  Windows:      certutil -hashfile <filename> SHA256
-
-Then compare the output to the checksums above.
+fe3b81839ff7b84eb8004941858e73d13241e2b910f0b65f0595622629d5db97  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+5ce0d8bdb930cad1da5bcb7f3f6dabac9e6c5e9fbf3dbaf3f2248d791771e699  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+42f2a1efe7dabc3dcdbd883ce4cb2ecd087458211cdf943b795dd5498bf646cd  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+ebed5d7921f6fc84422b5f9f5b46c2bbd306a98da6bb20a27a847caa2ae82596  AMMOcoin-v1.1.0-macOS-ARM64.zip
+f4623b19c8ff79737a304aafc69d90b9751d2a5139c10e35fa4604c2f1d5461a  AMMOcoin-v1.1.0-Linux-x86_64.zip
+261abba231cb576b73277047604510bdd72b450d23c2b1bac9353237d4f9ff1a  AMMOcoin-v1.1.0-Windows-x86_64.zip
