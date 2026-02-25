@@ -196,6 +196,14 @@ void DumpMasternodePayments()
 
 bool IsBlockValueValid(int nHeight, CAmount& nExpectedValue, CAmount nMinted, CAmount& nBudgetAmt)
 {
+    // Skip budget validation for the premine block (height 1).
+    // GetTotalBudget() multiplies GetBlockValue() by nBudgetCycleBlocks which
+    // overflows int64 for the large premine reward. No budget/masternode payments
+    // exist at block 1 anyway.
+    if (nHeight == 1) {
+        return nMinted <= nExpectedValue;
+    }
+
     const Consensus::Params& consensus = Params().GetConsensus();
     if (!g_tiertwo_sync_state.IsSynced()) {
         //there is no budget data to use to check anything

@@ -578,10 +578,10 @@ void TopBar::loadWalletModel()
             // hide upgrade
             ui->pushButtonHDUpgrade->setVisible(false);
         } else {
-            // show upgrade to Sapling
-            ui->pushButtonHDUpgrade->setButtonText(tr("Upgrade to Sapling Wallet"));
-            ui->pushButtonHDUpgrade->setNoIconText("SHIELD UPGRADE");
-            connectUpgradeBtnAndDialogTimer(tr("Upgrading to Sapling wallet will enable\nall of the privacy features!\n\n\n"
+            // show upgrade to Shielded
+            ui->pushButtonHDUpgrade->setButtonText(tr("Upgrade to Shielded Wallet"));
+            ui->pushButtonHDUpgrade->setNoIconText("PRIVACY UPGRADE");
+            connectUpgradeBtnAndDialogTimer(tr("Upgrading to shielded wallet will enable\nall of the privacy features!\n\n\n"
                                                "NOTE: after the upgrade, a new\nbackup will be created.\n"));
         }
     } else {

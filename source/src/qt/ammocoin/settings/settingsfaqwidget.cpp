@@ -78,7 +78,7 @@ SettingsFaqWidget::SettingsFaqWidget(AMMOCOINGUI* parent, MNModel* mnModel) :
                "that can be easily transferred globally, instantly, and with near "
                "zero fees. AMMOcoin incorporates market leading security & "
                "privacy and is also the first PoS (Proof of Stake) Cryptocurrency "
-               "to implement Sapling(SHIELD), a zk-SNARKs based privacy protocol.")) +
+               "to implement advanced shielded transactions with cutting-edge cryptographic privacy technology.")) +
         formatFAQParagraph(
             tr("AMMOcoin utilizes a Proof of Stake (PoS) consensus system algorithm, "
                "allowing all owners of AMMOcoin to participate in earning block rewards "
@@ -113,7 +113,7 @@ SettingsFaqWidget::SettingsFaqWidget(AMMOCOINGUI* parent, MNModel* mnModel) :
     QString supportContent = formatFAQContent(
         formatFAQParagraph(
             tr("We have support channels in most of our official chat groups, for example %1")
-                .arg("<a style='color: #b088ff' href='https://discord.AMMOcoin.org'>" + tr("#support in our Discord") + "</a>.")));
+                .arg("<a style='color: #32cd32' href='https://discord.gg/ammocoin'>" + tr("#support in our Discord") + "</a>.")));
     ui->labelContent_Support->setText(supportContent);
 
     QString masternodeContent = formatFAQContent(
