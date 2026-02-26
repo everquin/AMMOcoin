@@ -169,9 +169,9 @@ Create a `.env.local` file:
 ```bash
 # AMMOcoin RPC Configuration
 # AMMOcoin v1.1.0 Mainnet RPC Port: 51473
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
-NEXT_PUBLIC_AMMOCOIN_RPC_USER=your_rpc_user
-NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=your_rpc_password
+AMMOCOIN_RPC_URL=http://localhost:51473
+AMMOCOIN_RPC_USER=your_rpc_user
+AMMOCOIN_RPC_PASSWORD=your_rpc_password
 
 # Explorer Configuration
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Explorer"

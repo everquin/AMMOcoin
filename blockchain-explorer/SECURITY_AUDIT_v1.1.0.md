@@ -18,6 +18,20 @@
 
 **The blockchain explorer is now PRODUCTION READY and will connect properly to AMMOcoin v1.1.0 nodes.**
 
+## ✅ SECURITY FIX APPLIED - February 26, 2026
+
+**RPC credential leak via NEXT_PUBLIC_ prefix has been FIXED.**
+
+The three RPC environment variables (`AMMOCOIN_RPC_URL`, `AMMOCOIN_RPC_USER`, `AMMOCOIN_RPC_PASSWORD`) previously used the `NEXT_PUBLIC_` prefix, which caused Next.js to bundle them into client-side JavaScript — exposing RPC credentials to anyone visiting the explorer via browser DevTools.
+
+Since all RPC calls are server-side only (Next.js API routes via `src/lib/api.ts` → `src/lib/rpc.ts`), the `NEXT_PUBLIC_` prefix was unnecessary. It has been removed from:
+- `.env.example`
+- `src/lib/rpc.ts`
+- `DEPLOYMENT_GUIDE.md`
+- This audit document
+
+Non-sensitive display vars (`NEXT_PUBLIC_EXPLORER_NAME`, `NEXT_PUBLIC_COIN_SYMBOL`, etc.) correctly retain the `NEXT_PUBLIC_` prefix.
+
 ---
 
 ## Executive Summary
@@ -52,7 +66,7 @@ The AMMOcoin Blockchain Explorer is a modern Next.js 16 application with proper 
 
 **Previous Configuration (INCORRECT):**
 ```bash
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:55882  # ❌ WRONG
+AMMOCOIN_RPC_URL=http://localhost:55882  # ❌ WRONG
 ```
 
 **Issue (NOW RESOLVED):**
@@ -61,9 +75,9 @@ Port 55882 was NOT the default AMMOcoin RPC port and would cause connection fail
 **Current Configuration (CORRECT):**
 ```bash
 # AMMOcoin v1.1.0 Mainnet RPC
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473  # ✅ CORRECT
-NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
-NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=secure_password_here
+AMMOCOIN_RPC_URL=http://localhost:51473  # ✅ CORRECT
+AMMOCOIN_RPC_USER=explorer
+AMMOCOIN_RPC_PASSWORD=secure_password_here
 ```
 
 **Source Verification:**
@@ -80,7 +94,7 @@ if (chain == CBaseChainParams::MAIN)
 **Previous Code (INCORRECT):**
 ```typescript
 const config: RPCConfig = {
-  url: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_URL || 'http://localhost:55882',  // ❌ WRONG
+  url: process.env.AMMOCOIN_RPC_URL || 'http://localhost:55882',  // ❌ WRONG
   // ...
 };
 ```
@@ -88,9 +102,9 @@ const config: RPCConfig = {
 **Current Code (CORRECT):**
 ```typescript
 const config: RPCConfig = {
-  url: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_URL || 'http://localhost:51473',  // ✅ FIXED
-  username: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_USER || 'explorer',
-  password: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD || '',
+  url: process.env.AMMOCOIN_RPC_URL || 'http://localhost:51473',  // ✅ FIXED
+  username: process.env.AMMOCOIN_RPC_USER || 'explorer',
+  password: process.env.AMMOCOIN_RPC_PASSWORD || '',
 };
 ```
 
@@ -397,9 +411,9 @@ cd /path/to/blockchain-explorer
 cp .env.example .env.local
 
 # Edit .env.local:
-# NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
-# NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
-# NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=your_password_from_ammocoin.conf
+# AMMOCOIN_RPC_URL=http://localhost:51473
+# AMMOCOIN_RPC_USER=explorer
+# AMMOCOIN_RPC_PASSWORD=your_password_from_ammocoin.conf
 
 # 3. Install and run
 npm install
@@ -417,9 +431,9 @@ npm install -g vercel
 vercel
 
 # Configure environment variables in Vercel dashboard:
-# - NEXT_PUBLIC_AMMOCOIN_RPC_URL
-# - NEXT_PUBLIC_AMMOCOIN_RPC_USER
-# - NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD
+# - AMMOCOIN_RPC_URL
+# - AMMOCOIN_RPC_USER
+# - AMMOCOIN_RPC_PASSWORD
 ```
 
 **Option 2: VPS with PM2**
@@ -448,9 +462,9 @@ CMD ["npm", "start"]
 ```bash
 docker build -t ammocoin-explorer .
 docker run -p 3000:3000 \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://host.docker.internal:51473 \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=password \
+  -e AMMOCOIN_RPC_URL=http://host.docker.internal:51473 \
+  -e AMMOCOIN_RPC_USER=explorer \
+  -e AMMOCOIN_RPC_PASSWORD=password \
   ammocoin-explorer
 ```
 

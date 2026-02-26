@@ -186,9 +186,9 @@ export class AMMOcoinRPC {
 // Create default RPC client instance
 export const createRPCClient = (): AMMOcoinRPC => {
   const config: RPCConfig = {
-    url: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_URL || 'http://localhost:51473', // AMMOcoin v1.1.0 mainnet RPC port
-    username: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_USER || 'explorer',
-    password: process.env.NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD || '',
+    url: process.env.AMMOCOIN_RPC_URL || 'http://localhost:51473', // AMMOcoin v1.1.0 mainnet RPC port
+    username: process.env.AMMOCOIN_RPC_USER || 'explorer',
+    password: process.env.AMMOCOIN_RPC_PASSWORD || '',
   };
 
   return new AMMOcoinRPC(config);

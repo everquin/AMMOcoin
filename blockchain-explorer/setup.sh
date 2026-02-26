@@ -92,9 +92,9 @@ setup_environment() {
             print_warning ".env.example not found, creating basic .env.local"
             cat > .env.local << EOF
 # AMMOcoin RPC Configuration
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
-NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
-NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=change_this_password
+AMMOCOIN_RPC_URL=http://localhost:51473
+AMMOCOIN_RPC_USER=explorer
+AMMOCOIN_RPC_PASSWORD=change_this_password
 
 # Explorer Configuration
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Explorer"
@@ -112,9 +112,9 @@ EOF
     echo
     print_warning "IMPORTANT: Please edit .env.local with your AMMOcoin node configuration!"
     print_warning "You need to set:"
-    print_warning "  - NEXT_PUBLIC_AMMOCOIN_RPC_URL (your node's RPC URL)"
-    print_warning "  - NEXT_PUBLIC_AMMOCOIN_RPC_USER (RPC username)"
-    print_warning "  - NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD (RPC password)"
+    print_warning "  - AMMOCOIN_RPC_URL (your node's RPC URL)"
+    print_warning "  - AMMOCOIN_RPC_USER (RPC username)"
+    print_warning "  - AMMOCOIN_RPC_PASSWORD (RPC password)"
     echo
 }
 
@@ -127,9 +127,9 @@ check_ammocoin_node() {
         export $(grep -v '^#' .env.local | xargs)
     fi
 
-    RPC_URL=${NEXT_PUBLIC_AMMOCOIN_RPC_URL:-"http://localhost:51473"}
-    RPC_USER=${NEXT_PUBLIC_AMMOCOIN_RPC_USER:-"explorer"}
-    RPC_PASSWORD=${NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD:-""}
+    RPC_URL=${AMMOCOIN_RPC_URL:-"http://localhost:51473"}
+    RPC_USER=${AMMOCOIN_RPC_USER:-"explorer"}
+    RPC_PASSWORD=${AMMOCOIN_RPC_PASSWORD:-""}
 
     if [ -z "$RPC_PASSWORD" ] || [ "$RPC_PASSWORD" = "change_this_password" ]; then
         print_warning "AMMOcoin RPC password not configured properly"

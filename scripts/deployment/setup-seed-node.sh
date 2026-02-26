@@ -221,7 +221,7 @@ CURRENT_COMMIT=$(git rev-parse --short HEAD)
 echo "Current commit: $CURRENT_COMMIT"
 
 # Check for v1.1.0 genesis block
-if grep -q "0x000005cb7068246016a7cc43aedde75eee3de551f24afca2b0dc28cfc4fb3329" source/src/chainparams.cpp; then
+if grep -q "0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp; then
     echo "✓ v1.1.0 genesis block confirmed (Path A)"
 else
     echo "⚠️  WARNING: Genesis block mismatch!"
@@ -418,12 +418,77 @@ echo "✓ Systemd service created and enabled"
 echo ""
 
 echo "=== Configuring Firewall ==="
-# Allow AMMOcoin port
+# Allow AMMOcoin P2P port and SSH only
+# NOTE: RPC port (51473) is intentionally NOT opened — it is localhost-only
+#       via rpcallowip=127.0.0.1 in ammocoin.conf. The firewall must also block it.
+ufw allow 22/tcp comment 'SSH'
 ufw allow 37020/tcp comment 'AMMOcoin P2P'
-ufw allow 51473/tcp comment 'AMMOcoin RPC' 2>/dev/null || true
 ufw --force enable
 
-echo "✓ Firewall configured"
+echo "✓ Firewall configured (RPC port 51473 blocked from external access)"
+echo ""
+
+echo "=== Hardening SSH ==="
+# Disable password authentication — require SSH keys only
+sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
+sed -i 's/^#\?ChallengeResponseAuthentication.*/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
+
+# Restart SSH to apply changes
+systemctl restart sshd
+
+echo "✓ SSH hardened (password auth disabled, root login restricted to keys)"
+echo ""
+
+echo "=== Installing fail2ban ==="
+apt-get install -y fail2ban
+
+# Configure fail2ban for SSH
+cat > /etc/fail2ban/jail.local << 'JAILEOF'
+[DEFAULT]
+bantime = 3600
+findtime = 600
+maxretry = 5
+
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 5
+bantime = 3600
+findtime = 600
+JAILEOF
+
+systemctl enable fail2ban
+systemctl restart fail2ban
+
+echo "✓ fail2ban configured (5 retries, 1hr ban, 10min window)"
+echo ""
+
+echo "=== Configuring Unattended Security Upgrades ==="
+apt-get install -y unattended-upgrades
+
+# Enable automatic security updates
+cat > /etc/apt/apt.conf.d/20auto-upgrades << 'UPGRADEEOF'
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::AutocleanInterval "7";
+UPGRADEEOF
+
+# Configure unattended-upgrades — security updates only, auto-reboot at 4am if needed
+cat > /etc/apt/apt.conf.d/50unattended-upgrades << 'UUEOF'
+Unattended-Upgrade::Allowed-Origins {
+    "${distro_id}:${distro_codename}-security";
+    "${distro_id}ESMApps:${distro_codename}-apps-security";
+    "${distro_id}ESM:${distro_codename}-infra-security";
+};
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "04:00";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+UUEOF
+
+echo "✓ Unattended security upgrades enabled (auto-reboot at 4:00 AM if needed)"
 echo ""
 
 echo "========================================"

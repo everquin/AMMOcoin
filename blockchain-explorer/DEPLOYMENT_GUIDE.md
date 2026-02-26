@@ -61,9 +61,9 @@ Edit `.env.local` with your AMMOcoin node details:
 
 ```bash
 # AMMOcoin RPC Configuration
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
-NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
-NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=your_secure_password
+AMMOCOIN_RPC_URL=http://localhost:51473
+AMMOCOIN_RPC_USER=explorer
+AMMOCOIN_RPC_PASSWORD=your_secure_password
 
 # Explorer Configuration
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Explorer"
@@ -144,9 +144,9 @@ Create `.env.local` with all necessary configuration:
 # === REQUIRED SETTINGS ===
 
 # AMMOcoin Node RPC
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51473
-NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer
-NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=secure_password_here
+AMMOCOIN_RPC_URL=http://localhost:51473
+AMMOCOIN_RPC_USER=explorer
+AMMOCOIN_RPC_PASSWORD=secure_password_here
 
 # === OPTIONAL SETTINGS ===
 
@@ -173,14 +173,14 @@ For different networks (testnet, regtest), adjust your settings:
 
 **Testnet:**
 ```bash
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51475
+AMMOCOIN_RPC_URL=http://localhost:51475
 NEXT_PUBLIC_NETWORK_NAME="AMMOcoin Testnet"
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Testnet Explorer"
 ```
 
 **Regtest:**
 ```bash
-NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://localhost:51477
+AMMOCOIN_RPC_URL=http://localhost:51477
 NEXT_PUBLIC_NETWORK_NAME="AMMOcoin Regtest"
 NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Regtest Explorer"
 ```
@@ -251,9 +251,9 @@ npm i -g vercel
 vercel
 
 # Configure environment variables
-vercel env add NEXT_PUBLIC_AMMOCOIN_RPC_URL
-vercel env add NEXT_PUBLIC_AMMOCOIN_RPC_USER
-vercel env add NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD
+vercel env add AMMOCOIN_RPC_URL
+vercel env add AMMOCOIN_RPC_USER
+vercel env add AMMOCOIN_RPC_PASSWORD
 
 # Deploy production
 vercel --prod
@@ -309,9 +309,9 @@ docker build -t ammocoin-explorer .
 
 # Run container
 docker run -p 3000:3000 \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_URL=http://your-node:51473 \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_USER=explorer \
-  -e NEXT_PUBLIC_AMMOCOIN_RPC_PASSWORD=password \
+  -e AMMOCOIN_RPC_URL=http://your-node:51473 \
+  -e AMMOCOIN_RPC_USER=explorer \
+  -e AMMOCOIN_RPC_PASSWORD=password \
   ammocoin-explorer
 ```
 
