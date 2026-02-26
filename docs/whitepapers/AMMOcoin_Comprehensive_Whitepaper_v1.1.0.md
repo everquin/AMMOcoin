@@ -170,7 +170,7 @@ AMMOcoin utilizes a sophisticated Proof-of-Stake consensus mechanism that provid
 - Energy efficiency (99.9% reduction vs. Bitcoin)
 - Democratic participation through coin ownership
 - Economic security through stake-based penalties
-- Fast finality with 60-second block times
+- Fast finality with 3-minute block times
 
 ### 4.2 Staking Process
 
@@ -553,11 +553,11 @@ RESTful interface for web applications:
 
 ```
 Performance Metrics:
-├── Block Time: 60 seconds average
+├── Block Time: 3 minutes average
 ├── Block Size: 2 MB maximum
-├── TPS Capacity: ~33 transactions per second
-├── Confirmation Time: 1-6 confirmations (1-6 minutes)
-└── Finality: ~10 confirmations (10 minutes)
+├── TPS Capacity: ~11 transactions per second
+├── Confirmation Time: 1-6 confirmations (3-18 minutes)
+└── Finality: ~10 confirmations (30 minutes)
 ```
 
 #### 10.1.2 Scaling Solutions
@@ -791,7 +791,7 @@ Network Configuration:
 ├── Network Magic: 0xA1B2C3D4
 ├── Default Port: 37020 (mainnet), 37022 (testnet)
 ├── RPC Port: 51473 (mainnet), 51475 (testnet)
-├── Block Time: 60 seconds target
+├── Block Time: 3 minutes target
 ├── Difficulty Adjustment: Every block (LWMA)
 ├── Block Size Limit: 2 MB
 ├── Transaction Size Limit: 100 KB
@@ -870,7 +870,7 @@ def lwma_difficulty_adjustment(timestamps, difficulties):
             weighted_time_sum += weight * time_diff
 
     average_time = weighted_time_sum / weight_sum
-    target_time = 60  # 60 seconds target
+    target_time = 180  # 3 minutes (180 seconds) target
 
     return difficulties[-1] * target_time / average_time
 ```

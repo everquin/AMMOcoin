@@ -1,6 +1,6 @@
 # AMMOcoin Seed Node Quick Start Guide
 
-**For:** seed1.ammocoin.org / node1.ammocoin.org
+**For:** seed1.ammocoin.org
 **Date:** December 28, 2025
 **Platform:** Ubuntu 20.04/22.04/24.04 LTS on Vultr
 
@@ -153,7 +153,6 @@ chmod 600 ~/.ammocoin/ammocoin.conf
 ### Step 9: Configure Firewall
 ```bash
 sudo ufw allow 37020/tcp comment 'AMMOcoin P2P'
-sudo ufw allow 51473/tcp comment 'AMMOcoin RPC'
 sudo ufw enable
 ```
 
@@ -295,7 +294,7 @@ curl ifconfig.me  # Get your public IP
 
 ### DNS Records (Already Configured)
 - **seed1.ammocoin.org** → This Vultr VM IP
-- **node1.ammocoin.org** → This Vultr VM IP
+- **seed1.ammocoin.org** → This Vultr VM IP
 
 ### Firewall Ports
 - **37020/tcp** - AMMOcoin P2P (must be open)
@@ -364,8 +363,7 @@ maxconnections=250
    Look for `"blocks"` field increasing
 
 3. **Generate Initial Supply** (if this is the genesis node)
-   - See: `NETWORK_BOOTSTRAP_GUIDE.md`
-   - Or wait for staking rewards
+   - Wait for staking rewards
 
 4. **Set Up Second Seed Node**
    - Repeat this process on another Vultr VM
@@ -382,7 +380,7 @@ maxconnections=250
 
 - **Documentation:** `/docs` folder in repository
 - **Implementation Plan:** `docs/20251228_NEXT_STEPS_IMPLEMENTATION_PLAN.md`
-- **Network Guide:** `NETWORK_BOOTSTRAP_GUIDE.md`
+- **Network Guide:** See `docs/operations/` for deployment guides
 
 ---
 
@@ -418,6 +416,6 @@ ammocoin-cli addnode "IP:37020" "add"
 ---
 
 **Last Updated:** December 28, 2025
-**Node:** seed1.ammocoin.org / node1.ammocoin.org
+**Node:** seed1.ammocoin.org
 **Network:** AMMOcoin v1.1.0 Mainnet
 

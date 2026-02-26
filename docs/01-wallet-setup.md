@@ -5,7 +5,7 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 ## 📥 Download & Installation
 
 ### Windows Installation
-1. **Download** the latest `ammocoin-qt-windows.exe` from GitHub releases
+1. **Download** the latest `AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe` from GitHub releases
 2. **Run** the installer as Administrator
 3. **Accept** the license agreement
 4. **Choose** installation directory (default recommended)
@@ -13,7 +13,7 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 6. **Launch** AMMOcoin-Qt from Start Menu
 
 ### macOS Installation
-1. **Download** `ammocoin-qt-macos.dmg` from GitHub releases
+1. **Download** `AMMOcoin-v1.1.0-macOS-ARM64.dmg` from GitHub releases
 2. **Open** the .dmg file
 3. **Drag** AMMOcoin-Qt to Applications folder
 4. **Right-click** → Open (first time only, for security)
@@ -23,13 +23,13 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 ```bash
 # Ubuntu/Debian
 wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-tar -xzf ammocoin-qt-linux.tar.gz
-chmod +x ammocoin-qt
-./ammocoin-qt
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+cd bin
+chmod +x ammocoind ammocoin-cli ammocoin-tx
+./ammocoind -daemon
 
-# Or use pre-built packages
-sudo apt update
-sudo apt install ammocoin-qt
+# Or install the .deb package
+sudo dpkg -i AMMOcoin-v1.1.0-Linux-amd64.deb
 ```
 
 ## 🚀 First Launch Setup

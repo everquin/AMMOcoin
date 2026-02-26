@@ -44,7 +44,7 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1
 #### Verify Checksum:
 ```bash
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-# Should match: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
+# Should match: 63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a
 ```
 
 #### Extract and Install:
@@ -122,14 +122,18 @@ Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](
 
 ### macOS ARM64:
 ```
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
+feea58d2ec34d7758eefa8d4ca04eb5a3d6e5a98a5d67d19f1d2ff69d07cdeb3  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+08dfb0be819eba85c3238f916e7c2464d1333f97a71a4c1caa0d9ebcea6fd7b6  AMMOcoin-v1.1.0-macOS-ARM64.dmg
+682e51a856c026bcf2a9bd2df3dcb234a67af5c130af0a1294855575bc0e3d50  AMMOcoin-v1.1.0-macOS-ARM64.zip
 ```
 
-Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)
-
 ### Linux x86_64:
-**Note:** Linux binaries released February 22, 2026. See checksums above for verification.
+```
+63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+801b371e41bd1d6d4a78c7883a04f6b6f300e610189a7f56e020f3d82ad81f6d  AMMOcoin-v1.1.0-Linux-amd64.deb
+```
+
+Download complete checksums: [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
 
 ---
 
@@ -341,7 +345,7 @@ See detailed guides:
 - ✅ **RPC API** - Port 51473 (JSON-RPC)
 
 ### Network Parameters:
-- **Block Time:** 60 seconds
+- **Block Time:** 3 minutes
 - **Staking Minimum:** Varies by tier
 - **P2P Port:** 37020
 - **RPC Port:** 51473

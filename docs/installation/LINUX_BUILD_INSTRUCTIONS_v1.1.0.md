@@ -310,7 +310,7 @@ git push origin main
 ### 3. Create GitHub Release (or update existing)
 ```bash
 # Using GitHub CLI (gh)
-gh release create v1.1.0-genesis-final \
+gh release create v1.1.0 \
     --title "AMMOcoin v1.1.0 - Official Release" \
     --notes "See V1.1.0_GENESIS_BLOCK_AUTHORITY.md for genesis block details" \
     releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz \
@@ -367,8 +367,8 @@ sudo swapon /swapfile
 Before distribution, verify:
 
 - [ ] Build completed without errors
-- [ ] `strings ammocoind | grep "00000f14..."` returns matches
-- [ ] Runtime test: `ammocoin-cli getblockhash 0` returns `00000f14...`
+- [ ] `strings ammocoind | grep "000000593..."` returns matches
+- [ ] Runtime test: `ammocoin-cli getblockhash 0` returns `000000593...`
 - [ ] Binaries are stripped (reduced file size)
 - [ ] tar.gz and zip archives created
 - [ ] SHA256 checksums generated
@@ -383,7 +383,7 @@ Before distribution, verify:
 For build issues:
 - Check V1.1.0_GENESIS_BLOCK_AUTHORITY.md for genesis parameters
 - Review AUDIT_RESULTS_AND_NEXT_STEPS.md for project status
-- Ensure you're building from commit tagged `v1.1.0-genesis-final`
+- Ensure you're building from the `v1.1.0` tag or `main` branch
 
 **Genesis Hash (MUST match):**
 `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`

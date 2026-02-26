@@ -18,7 +18,7 @@ A **full node** is a program that validates transactions and blocks on the AMMOc
 | **Blockchain** | Headers only | Full download | Full download |
 | **Validation** | SPV | Complete | Complete |
 | **Requirements** | Low | Medium | High |
-| **Collateral** | None | None | 100,000 AMMO |
+| **Collateral** | None | None | 10,000 AMMO |
 | **Rewards** | Staking only | Staking only | MN + Staking |
 | **Voting** | No | No | Yes |
 
@@ -184,8 +184,8 @@ maxreceivebuffer=5000
 maxsendbuffer=1000
 
 # Connection management
-addnode=node1.ammocoin.org
-addnode=node2.ammocoin.org
+addnode=seed1.ammocoin.org
+addnode=seed2.ammocoin.org
 ```
 
 #### Low-Resource Node

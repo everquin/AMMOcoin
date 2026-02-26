@@ -92,14 +92,14 @@ Transaction History: (optional, helps verification)
 #### Download v1.1.0
 ```bash
 # Download from GitHub release
-# https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0-genesis-final
+# https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 
 # For macOS ARM64:
-curl -L -O https://github.com/everquin/AMMOcoin/releases/download/v1.1.0-genesis-final/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+curl -L -O https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 
 # Verify checksum
 shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: 8e37a2349b556c78aa8d98f56cc7849716d0f857a055646fd10a60bb024c9ab1
+# Should match: feea58d2ec34d7758eefa8d4ca04eb5a3d6e5a98a5d67d19f1d2ff69d07cdeb3
 
 # Extract
 tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
@@ -325,7 +325,7 @@ The team will need v1.1.0 AMMO to distribute. Options:
 
 # Verify balance
 ammocoin-cli getbalance
-# Should show: 1000.00000000
+# Should show: 250000000.00000000
 ```
 
 **Option B: Mine Additional Blocks**
@@ -500,8 +500,8 @@ If multiple people claim same v1.0 address:
 | Phase | Duration | Status |
 |-------|----------|--------|
 | Snapshot Taken | December 22, 2025 | ✅ Complete |
-| v1.1.0 Launch | December 30, 2025 | ✅ Complete |
-| Claim Period Opens | January 1, 2026 | ⏳ Pending |
+| v1.1.0 Launch | January 3, 2026 | ✅ Complete |
+| Claim Period Opens | January 3, 2026 | ✅ Complete |
 | Claim Period Closes | January 31, 2026 | ⏳ Pending |
 | Distribution Complete | February 28, 2026 | ⏳ Pending |
 

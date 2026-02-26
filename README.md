@@ -41,7 +41,7 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 ⚡ **Advanced Consensus**
 - **Proof-of-Stake**: Energy-efficient mining alternative
 - **Masternode Network**: Tier-two infrastructure for enhanced services
-- **Fast Block Times**: 60-second block generation
+- **Fast Block Times**: 3-minute block generation
 
 🏛️ **Governance & Economics**
 - **Decentralized Voting**: Community-driven development decisions
@@ -238,7 +238,7 @@ ammocoin-cli getmasternodeoutputs
 ### Network Parameters
 - **P2P Port**: 37020 (mainnet)
 - **RPC Port**: 51473 (mainnet)
-- **Block Time**: 60 seconds
+- **Block Time**: 3 minutes
 - **Algorithm**: Proof-of-Stake
 - **Masternode Collateral**: 10,000 AMMO
 - **Staking Minimum**: Variable by tier
@@ -282,7 +282,7 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 ### Migration & Distribution
 - [User Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
 - [Distribution Process Guide](docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
-- [Migration Options Comparison](docs/migration/MIGRATION_OPTION_COMPARISON.md)
+- [Side-by-Side Operation Guide](docs/migration/SIDE_BY_SIDE_OPERATION_GUIDE.md)
 
 ### Technical Documentation
 - [Comprehensive Whitepaper](docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md)

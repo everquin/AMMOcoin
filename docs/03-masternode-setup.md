@@ -16,7 +16,7 @@ A **masternode** is a specially configured node that provides enhanced services 
 ### Benefits vs Regular Staking
 | Feature | Staking | Masternode |
 |---------|---------|------------|
-| **Minimum Coins** | 1 AMMO | 100,000 AMMO |
+| **Minimum Coins** | 1 AMMO | 10,000 AMMO |
 | **Annual Returns** | 8-12% | 15-25% |
 | **Requirements** | Basic wallet | VPS + Technical setup |
 | **Voting Rights** | No | Yes |
@@ -25,7 +25,7 @@ A **masternode** is a specially configured node that provides enhanced services 
 ## 💎 Masternode Requirements
 
 ### Financial Requirements
-- **💰 Collateral**: Exactly 100,000 AMMO
+- **💰 Collateral**: Exactly 10,000 AMMO
 - **💸 Operating Costs**: $5-20/month (VPS hosting)
 - **⚡ Network Costs**: Minimal bandwidth usage
 
@@ -46,10 +46,10 @@ A **masternode** is a specially configured node that provides enhanced services 
 
 The setup involves **two main components**:
 
-1. **🔑 Collateral Wallet** - Holds the 100,000 AMMO collateral
+1. **🔑 Collateral Wallet** - Holds the 10,000 AMMO collateral
 2. **🖥️ Remote Server** - Runs the masternode software 24/7
 
-**Security Note**: Never store your 100,000 AMMO on the remote server!
+**Security Note**: Never store your 10,000 AMMO on the remote server!
 
 ## 📋 Step 1: Prepare Collateral Wallet
 
@@ -61,13 +61,13 @@ The setup involves **two main components**:
 
 ### Acquire Collateral
 ```
-Required: Exactly 100,000 AMMO
+Required: Exactly 10,000 AMMO
 Method: Purchase, mine, or stake to accumulate
 Important: Must be in single transaction/address
 ```
 
 ### Create Collateral Transaction
-1. **Send** exactly 100,000 AMMO to yourself
+1. **Send** exactly 10,000 AMMO to yourself
 2. **Use** a new address for collateral
 3. **Wait** for 15 confirmations
 4. **Record** transaction details
@@ -76,8 +76,8 @@ Important: Must be in single transaction/address
 # Generate new address for collateral
 ./ammocoin-cli getnewaddress
 
-# Send exactly 100,000 AMMO to this address
-./ammocoin-cli sendtoaddress [new_address] 100000
+# Send exactly 10,000 AMMO to this address
+./ammocoin-cli sendtoaddress [new_address] 10000
 
 # Get transaction output info
 ./ammocoin-cli gettransaction [txid]
@@ -306,7 +306,7 @@ Your Position: Average
 Rewards per Day: ~2.25 AMMO
 Monthly Rewards: ~67.5 AMMO
 Annual Rewards: ~821 AMMO
-Annual Return: ~0.8% (on 100,000 AMMO)
+Annual Return: ~0.8% (on 10,000 AMMO)
 ```
 
 ### Reward Calculation
@@ -419,7 +419,7 @@ sudo ufw enable
 ## 📈 Advanced Masternode Strategies
 
 ### Multiple Masternodes
-- **Scale** with additional 100,000 AMMO collaterals
+- **Scale** with additional 10,000 AMMO collaterals
 - **Distribute** across different VPS providers
 - **Stagger** start times for better queue position
 - **Monitor** performance across all nodes
@@ -450,7 +450,7 @@ fi
 
 ### Investment Breakdown
 ```
-Initial Investment: 100,000 AMMO
+Initial Investment: 10,000 AMMO
 VPS Costs: $10/month × 12 = $120/year
 Annual Rewards: ~821 AMMO
 Break-even: ~2.5 years (excluding AMMO price appreciation)
@@ -489,13 +489,13 @@ Break-even: ~2.5 years (excluding AMMO price appreciation)
 ## ✅ Masternode Setup Checklist
 
 ### Preparation
-- [ ] 100,000 AMMO acquired and confirmed
+- [ ] 10,000 AMMO acquired and confirmed
 - [ ] VPS purchased and configured
 - [ ] Local wallet encrypted and backed up
 - [ ] SSH access to server confirmed
 
 ### Configuration
-- [ ] Collateral transaction created (exactly 100,000 AMMO)
+- [ ] Collateral transaction created (exactly 10,000 AMMO)
 - [ ] 15+ confirmations on collateral
 - [ ] Masternode private key generated
 - [ ] Server daemon installed and configured

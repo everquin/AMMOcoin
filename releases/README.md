@@ -118,15 +118,24 @@ Compare the output with the checksums file.
 
 ```
 # macOS ARM64
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
+feea58d2ec34d7758eefa8d4ca04eb5a3d6e5a98a5d67d19f1d2ff69d07cdeb3  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+08dfb0be819eba85c3238f916e7c2464d1333f97a71a4c1caa0d9ebcea6fd7b6  AMMOcoin-v1.1.0-macOS-ARM64.dmg
+682e51a856c026bcf2a9bd2df3dcb234a67af5c130af0a1294855575bc0e3d50  AMMOcoin-v1.1.0-macOS-ARM64.zip
 
 # Linux x86_64
-082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+cc93add92c198039d17be6ddad3f0c0f9d463c1e14e7ddd5566fcef48bfd0548  AMMOcoin-v1.1.0-Linux-x86_64.zip
+801b371e41bd1d6d4a78c7883a04f6b6f300e610189a7f56e020f3d82ad81f6d  AMMOcoin-v1.1.0-Linux-amd64.deb
 
 # Windows x86_64
-66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
-533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-v1.1.0-Windows-x86_64.zip
+3a4170a4a1f71bcac2e5d33a3b3c83e3df384f2e7fe143d201b8e4e31ee407ac  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+c3c4fe99f544adb7409aa6938447ad51038cbde19aa8982bb11ee5d45ad5aa26  AMMOcoin-v1.1.0-Windows-x86_64.zip
+e24c16299e123d5929308530d7d3c3f413a35849e88339ceca561f1f5b8f2992  AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
+
+# Linux ARM64
+e558220746d595a3d24f7593664d9f63ae8fcce844c967c7a7afcc070bcb043a  AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+afadc0762283b9b4db0f31d7bf4d289a699cd5c97b8900391602fa98e619cc88  AMMOcoin-v1.1.0-Linux-ARM64.zip
+ddc1b030968468e0349d266e6b1647850ea1412a52fe5de36a76d0f7149ca65e  AMMOcoin-v1.1.0-Linux-arm64.deb
 ```
 
 ---
@@ -136,8 +145,8 @@ c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.
 - **Genesis Block Hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - **Merkle Root:** `a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab`
 - **Nonce:** `1299391`
-- **P2P Port:** 44444
-- **RPC Port:** 44445
+- **P2P Port:** 37020
+- **RPC Port:** 51473
 
 ---
 

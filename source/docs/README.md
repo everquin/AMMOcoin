@@ -57,7 +57,7 @@ This directory contains comprehensive documentation for AMMOcoin v1.1.0.
 - **Mainnet Port**: 37020
 - **RPC Port**: 51473
 - **Testnet Port**: 37022
-- **Block Time**: 60 seconds
+- **Block Time**: 3 minutes
 
 ---
 

@@ -43,7 +43,7 @@ git clone https://github.com/everquin/AMMOcoin.git AMMOcoin-build
 cd AMMOcoin-build
 
 # Verify we have the correct genesis hash
-grep -r "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162" source/src/chainparams.cpp
+grep -r "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp
 
 # Should show the correct genesis hash - if not, stop here!
 ```
@@ -133,9 +133,9 @@ fi
 
 ```bash
 # Check that the correct genesis hash is embedded in the binary
-strings src/ammocoind | grep "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162"
+strings src/ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
 
-# Should output: 00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162
+# Should output: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 # If not found, the build has the wrong genesis block!
 
 # Also verify the version
@@ -165,7 +165,7 @@ cat > ~/ammocoin-linux-release/README.md << 'EOF'
 
 **Built on:** $(date)
 **Platform:** Linux x86_64 (Ubuntu 18.04+)
-**Genesis Hash:** 00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162
+**Genesis Hash:** 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 ## Package Contents
 
@@ -202,8 +202,8 @@ ammocoin-cli stop
 - Max Supply: 9,999,999,999 AMMO
 - Genesis Premine: 250,000,000 AMMO
 - Block Time: 3 minutes
-- RPC Port: 37020
-- P2P Port: 37019
+- P2P Port: 37020
+- RPC Port: 51473
 
 Built with ❤️ for the AMMOcoin community
 EOF
@@ -277,7 +277,7 @@ sleep 5
 
 # Verify genesis block
 ~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getblockhash 0
-# Should return: 00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162
+# Should return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 # Check genesis block details
 ~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getblock $(~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getblockhash 0) 2
@@ -344,7 +344,7 @@ I've completed the Linux x86_64 build on seed1.ammocoin.build. The binaries are 
 Archive: ~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 Checksum: ~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 
-Genesis hash verified: 00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162
+Genesis hash verified: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 Daemon tested and working. Ready to download to Mac and add to release.
 ```

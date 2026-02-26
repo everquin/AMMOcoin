@@ -26,7 +26,7 @@ The **AMMOcoin DAO (Decentralized Autonomous Organization)** is a governance sys
 
 ### Voting Requirements
 - **🏛️ Masternode Operators** - Primary voting power
-- **💰 100,000 AMMO** - Required collateral for masternode
+- **💰 10,000 AMMO** - Required collateral for masternode
 - **⚡ Active Node** - Must be running and enabled
 - **🔗 Network Sync** - Node must be synchronized
 

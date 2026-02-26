@@ -15,15 +15,16 @@ Download the official macOS ARM64 binaries:
 
 **Option A: Direct Download**
 - Visit: https://ammocoin.org/downloads
-- Download: `ammocoin-v1.1.0-macos-arm64.tar.gz`
+- Download: `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz`
 
 **Option B: Via Terminal**
 ```bash
 cd ~/Downloads
-curl -LO https://ammocoin.org/downloads/ammocoin-v1.1.0-macos-arm64.tar.gz
+curl -LO https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 
-# Verify checksum (will be provided on download page)
-shasum -a 256 ammocoin-v1.1.0-macos-arm64.tar.gz
+# Verify checksum
+shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+# Should match: feea58d2ec34d7758eefa8d4ca04eb5a3d6e5a98a5d67d19f1d2ff69d07cdeb3
 ```
 
 ### Step 2: Extract and Install
@@ -31,13 +32,13 @@ shasum -a 256 ammocoin-v1.1.0-macos-arm64.tar.gz
 ```bash
 # Extract archive
 cd ~/Downloads
-tar -xzf ammocoin-v1.1.0-macos-arm64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 
 # Create application directory
 mkdir -p ~/Applications/AMMOcoin
 
 # Move binaries
-mv ammocoin-v1.1.0-macos-arm64/* ~/Applications/AMMOcoin/
+mv AMMOcoin-v1.1.0-macOS-ARM64/* ~/Applications/AMMOcoin/
 
 # Add to PATH (optional)
 echo 'export PATH="$HOME/Applications/AMMOcoin:$PATH"' >> ~/.zshrc
@@ -217,7 +218,7 @@ daemon=1
 # Seed nodes (will be provided at launch)
 # addnode=seed1.ammocoin.org
 # addnode=seed2.ammocoin.org
-# addnode=seed3.ammocoin.org
+# addnode=seed2.ammocoin.org
 EOF
 
 echo "Configuration created with RPC password: $RPCPASS"

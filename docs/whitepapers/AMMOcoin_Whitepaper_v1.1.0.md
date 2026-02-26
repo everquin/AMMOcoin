@@ -143,8 +143,8 @@ Version 1.1.0 introduces full Sapling support, providing:
 
 AMMOcoin utilizes Proof-of-Stake consensus with the following parameters:
 
-- **Block Time**: 60 seconds
-- **Stake Maturity**: 600 confirmations (~10 hours)
+- **Block Time**: 3 minutes
+- **Stake Maturity**: 600 confirmations (~30 hours)
 - **Minimum Stake**: No minimum required
 - **Annual Staking Rewards**: Variable based on network participation
 
@@ -258,7 +258,7 @@ AMMOcoin is developed by a dedicated team of blockchain engineers and cryptocurr
 
 - **P2P Port**: 37020 (mainnet), 37022 (testnet), 37024 (regtest)
 - **RPC Port**: 51473 (mainnet), 51475 (testnet), 51477 (regtest)
-- **Block Time**: 60 seconds
+- **Block Time**: 3 minutes
 - **Difficulty Adjustment**: Every block using LWMA algorithm
 - **Maximum Block Size**: 2MB
 - **Transaction Capacity**: ~2000 transactions per block

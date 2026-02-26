@@ -606,7 +606,7 @@ dig seed1.ammocoin.org
 ```
 
 ### Checklist:
-- [ ] Genesis hash is 00000f14...
+- [ ] Genesis hash is 000000593...
 - [ ] Node is running without errors
 - [ ] Port 37020 is listening
 - [ ] RPC responds to commands

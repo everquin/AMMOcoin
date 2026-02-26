@@ -305,7 +305,7 @@ echo "✓ Test data cleaned up"
 1. **Binary runs:** `ammocoind --version` shows v1.1.0
 2. **Daemon starts:** Process appears in `ps aux | grep ammocoind`
 3. **RPC works:** `ammocoin-cli getinfo` returns JSON
-4. **Correct genesis:** Block 0 hash is `0x0000075a...`
+4. **Correct genesis:** Block 0 hash is `0x000000593410...`
 5. **Can generate blocks:** `generate 10` creates 10 blocks
 6. **Balance increases:** After generating blocks, balance > 0
 7. **Wallet works:** Can create addresses, send transactions
@@ -384,7 +384,7 @@ pkill -f ammocoind
 
 ```bash
 # Check what's in the binary
-strings "$AMMOCOIN_SRC/ammocoind" | grep "0000075a"
+strings "$AMMOCOIN_SRC/ammocoind" | grep "000000593410"
 
 # If wrong, you may need to rebuild from the correct source
 ```

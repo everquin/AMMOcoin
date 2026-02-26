@@ -578,7 +578,6 @@ sudo ufw status
 
 # Allow AMMOcoin ports
 sudo ufw allow 37020
-sudo ufw allow 51473
 
 # Restart AMMOcoin
 ammocoin-cli stop
@@ -657,7 +656,7 @@ ammocoin-cli -testnet importwallet /path/to/backup/wallet.dat
 ### **If You Need Help**
 - **GitHub Issues**: [AMMOcoin v1.1.0 Issues](https://github.com/everquin/AMMOcoin/issues)
 - **Community Discord**: [Join AMMOcoin Discord](https://discord.gg/ammocoin)
-- **Documentation**: [Complete AMMOcoin Docs](https://docs.ammocoin.org)
+- **Documentation**: [Complete AMMOcoin Docs](https://github.com/everquin/AMMOcoin/tree/main/docs)
 
 ### **Emergency Recovery**
 If something goes wrong during the upgrade:

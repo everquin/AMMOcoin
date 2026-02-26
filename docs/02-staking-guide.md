@@ -26,7 +26,7 @@ Earn passive income by staking your AMMOcoin! This guide explains everything you
 | 100 AMMO | ~8-12% | 0.67-1.0 AMMO |
 | 1,000 AMMO | ~8-12% | 6.7-10 AMMO |
 | 10,000 AMMO | ~8-12% | 67-100 AMMO |
-| 100,000 AMMO | ~8-12% | 670-1,000 AMMO |
+| 100,000 AMMO | ~8-12% | 667-1,000 AMMO |
 
 *Estimates based on current network conditions
 

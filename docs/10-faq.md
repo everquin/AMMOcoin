@@ -115,10 +115,10 @@ ammocoin-cli walletpassphrase "your_password" 999999 true
 ## 🏛️ Masternode Questions
 
 ### What is a masternode?
-A **masternode** is a special type of node that provides enhanced services to the network (InstantSend, governance voting) and earns premium rewards in return for maintaining 100,000 AMMO collateral.
+A **masternode** is a special type of node that provides enhanced services to the network (InstantSend, governance voting) and earns premium rewards in return for maintaining 10,000 AMMO collateral.
 
 ### How much does it cost to run a masternode?
-- **Collateral**: Exactly 100,000 AMMO
+- **Collateral**: Exactly 10,000 AMMO
 - **VPS Costs**: $5-20/month for hosting
 - **Setup Time**: 2-4 hours initial setup
 - **Technical Knowledge**: Basic Linux command line skills
@@ -131,7 +131,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 
 ### Can I run multiple masternodes?
 **Yes!** Each requires:
-- Separate 100,000 AMMO collateral
+- Separate 10,000 AMMO collateral
 - Separate VPS/server
 - Unique configuration
 - Individual monitoring
@@ -143,7 +143,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 - **Restart**: Can restart anytime, returns to queue
 
 ### Can I spend my masternode collateral?
-**Yes**, but it will immediately disable your masternode. The 100,000 AMMO must remain untouched in your wallet for the masternode to stay active.
+**Yes**, but it will immediately disable your masternode. The 10,000 AMMO must remain untouched in your wallet for the masternode to stay active.
 
 ## 🌐 Network Questions
 
@@ -153,7 +153,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 | **Block Time** | 3 minutes |
 | **Total Supply** | 9,999,999,999 AMMO |
 | **Consensus** | Proof of Stake |
-| **Masternode Collateral** | 100,000 AMMO |
+| **Masternode Collateral** | 10,000 AMMO |
 | **Network Port** | 37020 |
 | **RPC Port** | 51473 |
 | **Protocol Version** | 70920 |
@@ -235,7 +235,7 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 ### What ports does AMMOcoin use?
 - **P2P Network**: 37020 (must be open for incoming connections)
 - **RPC**: 51473 (localhost only by default)
-- **Testnet**: 37120 (P2P), 37121 (RPC)
+- **Testnet**: 37022 (P2P), 51475 (RPC)
 
 ### How do I enable remote RPC access?
 ```bash
@@ -356,7 +356,7 @@ Common causes:
 Depends on your situation:
 
 **Staking** if you have:
-- Less than 100,000 AMMO
+- Less than 10,000 AMMO
 - Limited technical knowledge
 - Prefer simplicity
 

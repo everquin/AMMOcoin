@@ -132,7 +132,7 @@ ammocoin-cli getblockchaininfo
 
 ### All Platforms MUST:
 1. Use source code with these EXACT parameters
-2. Compile from the SAME git commit tagged `v1.1.0-genesis-final`
+2. Compile from the SAME git commit tagged `v1.1.0`
 3. Verify genesis hash after build before distribution
 4. Delete any old blockchain data directories before starting
 
@@ -261,7 +261,7 @@ All files containing old genesis hashes must be updated or marked DEPRECATED:
 **Authority:** This document is the official reference approved for v1.1.0 production deployment.
 
 **Last Updated:** December 30, 2025
-**Git Commit:** To be tagged as `v1.1.0-genesis-final`
+**Git Commit:** To be tagged as `v1.1.0`
 **Approved By:** AMMOcoin Core Development Team
 
 ---

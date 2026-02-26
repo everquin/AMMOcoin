@@ -33,7 +33,7 @@ TASK:
 RELEASE INFORMATION:
 - GitHub Release: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 - Binary: AMMOcoin-v1.1.0-Linux-x86_64.tar.gz (112 MB)
-- Expected SHA256: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
+- Expected SHA256: 63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a
 - Genesis Block Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 SEED NODE CONFIGURATION REQUIREMENTS:
@@ -131,7 +131,7 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1
 echo "Verifying checksum..."
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
-# Expected: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
+# Expected: 63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a
 # Compare with checksums file
 grep "Linux-x86_64" AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
 

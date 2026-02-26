@@ -193,8 +193,8 @@ After migration, verify everything:
 
 ### Network Timing
 
-- **v1.0 network will run until:** [DATE TO BE ANNOUNCED]
-- **v1.1.0 network launches:** [DATE TO BE ANNOUNCED]
+- **v1.0 network:** No longer maintained
+- **v1.1.0 network launched:** January 3, 2026
 - **Migration window:** 90 days
 - **After migration window:** v1.0 network may be shut down
 
@@ -207,7 +207,8 @@ After migration, verify everything:
 ### Address Compatibility
 
 - ✅ **v1.0 and v1.1.0 use identical address format** (both start with 'A')
-- ✅ **Private keys work in both versions**
+- ✅ **Private keys can be imported into v1.1.0**
+- ⚠️ **wallet.dat files are NOT directly compatible** — use `dumpwallet`/`importwallet` or `dumpprivkey`/`importprivkey` to migrate keys
 - ✅ **You can verify addresses match before migrating**
 
 ### What If I Don't Migrate?

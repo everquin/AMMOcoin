@@ -27,7 +27,7 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1
 ### macOS (Apple Silicon - M1/M2/M3/M4)
 
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/ammocoin-v1.1.0-macos-arm64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 ```
 
 ---
@@ -42,10 +42,10 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-Lin
 **Verify your download:**
 ```bash
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-# Should match: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
+# Should match: 63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a
 
 # Or automatically verify:
-sha256sum -c CHECKSUMS-Linux.txt --ignore-missing
+sha256sum -c AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt --ignore-missing
 ```
 
 ---
@@ -120,8 +120,9 @@ ammocoin-cli -datadir=~/.ammocoin-v1.1.0 getblockhash 0
 
 ```bash
 # Download and install
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/ammocoin-v1.1.0-macos-arm64.tar.gz
-tar -xzf ammocoin-v1.1.0-macos-arm64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+cd AMMOcoin-v1.1.0-macOS-ARM64
 sudo cp ammocoind ammocoin-cli ammocoin-tx /usr/local/bin/
 
 # Verify
@@ -172,8 +173,8 @@ cd ~
 
 **Linux x86_64:**
 ```
-082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-f9b9a7c572c30f5ee811d60e5bb19b77f166ebe86221fba65960f1ea96184d1c  AMMOcoin-v1.1.0-Linux-x86_64.zip
+63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+cc93add92c198039d17be6ddad3f0c0f9d463c1e14e7ddd5566fcef48bfd0548  AMMOcoin-v1.1.0-Linux-x86_64.zip
 ```
 
 **Always verify before installing!**

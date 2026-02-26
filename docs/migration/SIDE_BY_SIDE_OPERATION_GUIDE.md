@@ -160,10 +160,7 @@ After importing keys:
 - ✅ You control same private keys
 - ❌ **Your v1.0 balance is NOT automatically there**
 
-**Why?** v1.1.0 is a fresh blockchain. Your balance depends on:
-- Snapshot/airdrop mechanism (if implemented)
-- Team manual distribution (if planned)
-- Mining/receiving new coins on v1.1.0 chain
+**Why?** v1.1.0 is a fresh blockchain. Your v1.0 balance will be honored through the team-controlled 250M AMMO distribution fund. Submit a migration claim with proof of v1.0 address ownership to receive equivalent v1.1.0 AMMO. See the [Manual Migration Plan](MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md) for the claim process.
 
 ### Wallet.dat Is NOT Compatible
 
@@ -289,9 +286,4 @@ The wallet dump contains **all your private keys in plain text**:
 
 **Questions about balance migration?**
 
-Contact AMMOcoin team to understand:
-- Is there a snapshot/airdrop?
-- How will v1.0 balances be credited?
-- Do you need to register for migration?
-
-This guide only covers **key extraction**, not balance transfer!
+The 250M AMMO distribution fund in v1.1.0 is used to honor v1.0 balances. Submit a migration claim to receive your equivalent v1.1.0 AMMO. See the [Manual Migration Plan](MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md) for full details.

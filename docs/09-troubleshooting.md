@@ -413,7 +413,7 @@ telnet peer_ip 37020
 sudo ufw allow 37020/tcp
 
 # Add manual peers
-ammocoin-cli addnode "seed.ammocoin.org:37020" "add"
+ammocoin-cli addnode "seed1.ammocoin.org:37020" "add"
 
 # Check ISP blocking
 # Try different port in config

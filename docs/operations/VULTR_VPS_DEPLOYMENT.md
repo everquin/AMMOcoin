@@ -43,7 +43,6 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow ssh
 sudo ufw allow 37020/tcp  # AMMOcoin P2P port
-sudo ufw allow 51473/tcp  # AMMOcoin RPC port (optional, for remote access)
 sudo ufw --force enable
 
 # Create ammocoin user
@@ -116,9 +115,8 @@ maxmempool=300
 mempoolexpiry=24
 
 # Addnodes (add known good nodes)
-addnode=node1.ammocoin.org
-addnode=node2.ammocoin.org
-addnode=node3.ammocoin.org
+addnode=seed1.ammocoin.org
+addnode=seed2.ammocoin.org
 EOF
 
 # Secure configuration file
