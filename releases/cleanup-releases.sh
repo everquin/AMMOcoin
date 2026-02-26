@@ -14,14 +14,14 @@ echo ""
 # Remove binary directories (binaries are now on GitHub Releases)
 echo "Removing binary directories..."
 
-if [ -d "AMMOcoin-macOS-ARM64" ]; then
-    rm -rf AMMOcoin-macOS-ARM64/
-    echo "  ✅ Removed AMMOcoin-macOS-ARM64/"
+if [ -d "AMMOcoin-v1.1.0-macOS-ARM64" ]; then
+    rm -rf AMMOcoin-v1.1.0-macOS-ARM64/
+    echo "  ✅ Removed AMMOcoin-v1.1.0-macOS-ARM64/"
 fi
 
-if [ -d "AMMOcoin-Windows-x86_64" ]; then
-    rm -rf AMMOcoin-Windows-x86_64/
-    echo "  ✅ Removed AMMOcoin-Windows-x86_64/"
+if [ -d "AMMOcoin-v1.1.0-Windows-x86_64" ]; then
+    rm -rf AMMOcoin-v1.1.0-Windows-x86_64/
+    echo "  ✅ Removed AMMOcoin-v1.1.0-Windows-x86_64/"
 fi
 
 if [ -d "Windows-Binaries" ]; then

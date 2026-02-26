@@ -32,7 +32,7 @@ TASK:
 
 RELEASE INFORMATION:
 - GitHub Release: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
-- Binary: AMMOcoin-Linux-x86_64.tar.gz (112 MB)
+- Binary: AMMOcoin-v1.1.0-Linux-x86_64.tar.gz (112 MB)
 - Expected SHA256: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
 - Genesis Block Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
@@ -116,10 +116,10 @@ sudo mkdir -p /opt/ammocoin/v1.1.0
 cd /tmp
 
 # Download binaries
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Download checksums
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
 ```
 
 ---
@@ -129,11 +129,11 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-ALL-
 ```bash
 # Calculate SHA256
 echo "Verifying checksum..."
-sha256sum AMMOcoin-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Expected: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
 # Compare with checksums file
-grep "Linux-x86_64" AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt
+grep "Linux-x86_64" AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
 
 # If they match, proceed. If not, STOP and investigate!
 ```
@@ -144,7 +144,7 @@ grep "Linux-x86_64" AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt
 
 ```bash
 # Extract
-tar -xzf AMMOcoin-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Move binaries
 sudo mv bin/* /opt/ammocoin/v1.1.0/

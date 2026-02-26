@@ -64,7 +64,7 @@ mkdir -p ~/ammocoin-v1.1.0
 cd ~/ammocoin-v1.1.0
 
 # Download Linux binaries (replace with actual download link)
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Extract binaries
 tar -xzf ammocoin-v1.1.0-linux-x86_64.tar.gz

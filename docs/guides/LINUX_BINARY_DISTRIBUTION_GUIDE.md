@@ -120,15 +120,15 @@ After downloading, create distribution packages:
 ```bash
 # Create tar.gz archive
 cd binaries-linux-v1.1.0/
-tar -czf ../releases/AMMOcoin-Linux-x86_64.tar.gz ammocoind ammocoin-cli ammocoin-tx
+tar -czf ../releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz ammocoind ammocoin-cli ammocoin-tx
 
 # Create zip archive
-zip ../releases/AMMOcoin-Linux-x86_64.zip ammocoind ammocoin-cli ammocoin-tx
+zip ../releases/AMMOcoin-v1.1.0-Linux-x86_64.zip ammocoind ammocoin-cli ammocoin-tx
 
 # Generate checksums
 cd ../releases/
-sha256sum AMMOcoin-Linux-x86_64.tar.gz >> CHECKSUMS.txt
-sha256sum AMMOcoin-Linux-x86_64.zip >> CHECKSUMS.txt
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz >> CHECKSUMS.txt
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.zip >> CHECKSUMS.txt
 ```
 
 ---
@@ -141,14 +141,14 @@ Users downloading these binaries should follow this process:
 
 ```bash
 # Download from GitHub releases
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Verify checksum
-sha256sum AMMOcoin-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 # Compare with CHECKSUMS.txt
 
 # Extract
-tar -xzf AMMOcoin-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 ```
 
 ### 2. Install Binaries

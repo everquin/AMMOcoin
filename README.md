@@ -63,11 +63,11 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 
 | Platform | Download | Size | Checksum (SHA256) |
 |----------|----------|------|-------------------|
-| **macOS ARM64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.zip) | 4.0 MB | `71048bb009...` |
-| **Linux x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz) | 112 MB | `082f1eb063...` |
-| **Windows x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Windows-x86_64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Windows-x86_64.zip) | 17 MB | `66bd10254f...` |
+| **macOS ARM64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip) | 4.0 MB | `71048bb009...` |
+| **Linux x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz) | 112 MB | `082f1eb063...` |
+| **Windows x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.zip) | 17 MB | `66bd10254f...` |
 
-**Verify Checksums:** [Download CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt)
+**Verify Checksums:** [Download CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
 
 ### Each platform includes:
 - `ammocoind` - Core daemon server
@@ -83,9 +83,9 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 #### macOS
 ```bash
 # Download and extract
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.tar.gz
-tar -xzf AMMOcoin-macOS-ARM64.tar.gz
-cd AMMOcoin-macOS-ARM64/bin
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+cd AMMOcoin-v1.1.0-macOS-ARM64/bin
 
 # Start daemon
 ./ammocoind -daemon
@@ -101,8 +101,8 @@ cd AMMOcoin-macOS-ARM64/bin
 #### Linux
 ```bash
 # Download and extract
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
-tar -xzf AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 cd bin
 
 # Install system-wide (optional)

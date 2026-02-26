@@ -44,16 +44,16 @@ mkdir -p "$RELEASE_DIR"
 # Package as tar.gz
 echo "Creating tar.gz archive..."
 cd "$BINARY_DIR"
-tar -czf "$RELEASE_DIR/AMMOcoin-Linux-x86_64.tar.gz" ammocoind ammocoin-cli ammocoin-tx
-echo "✓ Created: $RELEASE_DIR/AMMOcoin-Linux-x86_64.tar.gz"
-ls -lh "$RELEASE_DIR/AMMOcoin-Linux-x86_64.tar.gz"
+tar -czf "$RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz" ammocoind ammocoin-cli ammocoin-tx
+echo "✓ Created: $RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz"
+ls -lh "$RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz"
 echo ""
 
 # Package as zip
 echo "Creating zip archive..."
-zip -q "$RELEASE_DIR/AMMOcoin-Linux-x86_64.zip" ammocoind ammocoin-cli ammocoin-tx
-echo "✓ Created: $RELEASE_DIR/AMMOcoin-Linux-x86_64.zip"
-ls -lh "$RELEASE_DIR/AMMOcoin-Linux-x86_64.zip"
+zip -q "$RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.zip" ammocoind ammocoin-cli ammocoin-tx
+echo "✓ Created: $RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.zip"
+ls -lh "$RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.zip"
 echo ""
 
 # Generate checksums
@@ -61,8 +61,8 @@ echo "Generating checksums..."
 cd "$RELEASE_DIR"
 
 # Linux binaries checksums
-sha256sum AMMOcoin-Linux-x86_64.tar.gz >> CHECKSUMS-Linux.txt
-sha256sum AMMOcoin-Linux-x86_64.zip >> CHECKSUMS-Linux.txt
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz >> CHECKSUMS-Linux.txt
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.zip >> CHECKSUMS-Linux.txt
 
 echo "✓ Checksums written to CHECKSUMS-Linux.txt"
 echo ""
@@ -75,8 +75,8 @@ echo "✅ Linux Binary Packaging Complete!"
 echo "================================================"
 echo ""
 echo "Created files:"
-echo "  📦 $RELEASE_DIR/AMMOcoin-Linux-x86_64.tar.gz"
-echo "  📦 $RELEASE_DIR/AMMOcoin-Linux-x86_64.zip"
+echo "  📦 $RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz"
+echo "  📦 $RELEASE_DIR/AMMOcoin-v1.1.0-Linux-x86_64.zip"
 echo "  🔐 $RELEASE_DIR/CHECKSUMS-Linux.txt"
 echo ""
 echo "Next steps:"
@@ -87,7 +87,7 @@ echo "  4. Create GitHub release with these binaries"
 echo ""
 echo "To add to git:"
 echo "  cd $REPO_ROOT"
-echo "  git add releases/AMMOcoin-Linux-x86_64.*"
+echo "  git add releases/AMMOcoin-v1.1.0-Linux-x86_64.*"
 echo "  git add releases/CHECKSUMS-Linux.txt"
 echo "  git commit -m 'Add Linux x86_64 binaries for v1.1.0'"
 echo "  git push origin main"

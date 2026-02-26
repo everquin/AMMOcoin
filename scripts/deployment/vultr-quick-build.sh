@@ -142,12 +142,12 @@ EOFREADME
 # Create archive
 echo "🗜️  Creating compressed archive..."
 cd ~/ammocoin-linux-release
-tar -czf ~/AMMOcoin-Linux-x86_64.tar.gz .
+tar -czf ~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz .
 
 # Generate checksum
 echo "🔐 Generating SHA256 checksum..."
 cd ~
-sha256sum AMMOcoin-Linux-x86_64.tar.gz > AMMOcoin-Linux-x86_64-CHECKSUM.txt
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz > AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -155,10 +155,10 @@ echo "🎉 BUILD COMPLETE!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 echo "📦 Release Archive:"
-ls -lh ~/AMMOcoin-Linux-x86_64.tar.gz
+ls -lh ~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 echo ""
 echo "🔐 Checksum:"
-cat ~/AMMOcoin-Linux-x86_64-CHECKSUM.txt
+cat ~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 echo ""
 echo "📂 Binary Directory: ~/ammocoin-linux-release/bin/"
 echo ""
@@ -168,7 +168,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo "On your Mac, run:"
 echo ""
-echo "scp root@seed1.ammocoin.build:~/AMMOcoin-Linux-x86_64.tar.gz /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/"
-echo "scp root@seed1.ammocoin.build:~/AMMOcoin-Linux-x86_64-CHECKSUM.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/"
+echo "scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/"
+echo "scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/"
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

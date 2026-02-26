@@ -210,26 +210,26 @@ jobs:
           cp source/dist/bin/ammocoin-cli release-package/bin/
           cp source/dist/bin/ammocoin-tx release-package/bin/
           cd release-package
-          tar -czf ../AMMOcoin-Linux-ARM64.tar.gz bin/
+          tar -czf ../AMMOcoin-v1.1.0-Linux-ARM64.tar.gz bin/
           cd ..
-          zip -r AMMOcoin-Linux-ARM64.zip release-package/bin/
+          zip -r AMMOcoin-v1.1.0-Linux-ARM64.zip release-package/bin/
           echo "Release packages created"
 
       - name: Generate checksums
         run: |
           echo "Generating SHA256 checksums..."
-          sha256sum AMMOcoin-Linux-ARM64.tar.gz > AMMOcoin-Linux-ARM64-CHECKSUM.txt
-          sha256sum AMMOcoin-Linux-ARM64.zip >> AMMOcoin-Linux-ARM64-CHECKSUM.txt
-          cat AMMOcoin-Linux-ARM64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.0-Linux-ARM64.tar.gz > AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.0-Linux-ARM64.zip >> AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+          cat AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
 
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: AMMOcoin-Linux-ARM64
+          name: AMMOcoin-v1.1.0-Linux-ARM64
           path: |
-            AMMOcoin-Linux-ARM64.tar.gz
-            AMMOcoin-Linux-ARM64.zip
-            AMMOcoin-Linux-ARM64-CHECKSUM.txt
+            AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+            AMMOcoin-v1.1.0-Linux-ARM64.zip
+            AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
 
       - name: Upload Individual Binaries
         uses: actions/upload-artifact@v4

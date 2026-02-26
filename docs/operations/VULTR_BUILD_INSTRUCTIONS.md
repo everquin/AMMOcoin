@@ -210,15 +210,15 @@ EOF
 
 # Create archive
 cd ~/ammocoin-linux-release
-tar -czf ../AMMOcoin-Linux-x86_64.tar.gz .
+tar -czf ../AMMOcoin-v1.1.0-Linux-x86_64.tar.gz .
 cd ~
 
 # Verify archive
-ls -lh AMMOcoin-Linux-x86_64.tar.gz
+ls -lh AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Generate checksum
-sha256sum AMMOcoin-Linux-x86_64.tar.gz > AMMOcoin-Linux-x86_64-CHECKSUM.txt
-cat AMMOcoin-Linux-x86_64-CHECKSUM.txt
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz > AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
+cat AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 ```
 
 ---
@@ -232,15 +232,15 @@ cat AMMOcoin-Linux-x86_64-CHECKSUM.txt
 mkdir -p /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/linux-x86_64
 
 # Download from Vultr VM
-scp root@seed1.ammocoin.build:~/AMMOcoin-Linux-x86_64.tar.gz /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
-scp root@seed1.ammocoin.build:~/AMMOcoin-Linux-x86_64-CHECKSUM.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
+scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
+scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
 
 # Or if you want individual binaries:
 scp root@seed1.ammocoin.build:~/ammocoin-linux-release/bin/* /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/linux-x86_64/
 
 # Verify download
-ls -lh /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-Linux-x86_64.tar.gz
-cat /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-Linux-x86_64-CHECKSUM.txt
+ls -lh /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+cat /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 ```
 
 ---
@@ -341,8 +341,8 @@ I've completed the Linux x86_64 build on seed1.ammocoin.build. The binaries are 
 - ~/ammocoin-linux-release/bin/ammocoin-cli
 - ~/ammocoin-linux-release/bin/ammocoin-tx
 
-Archive: ~/AMMOcoin-Linux-x86_64.tar.gz
-Checksum: ~/AMMOcoin-Linux-x86_64-CHECKSUM.txt
+Archive: ~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+Checksum: ~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 
 Genesis hash verified: 00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162
 

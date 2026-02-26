@@ -1,2 +1,2 @@
-66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-Windows-x86_64/AMMOcoin-Windows-x86_64.tar.gz
-533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-Windows-x86_64/AMMOcoin-Windows-x86_64.zip
+66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-v1.1.0-Windows-x86_64/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-v1.1.0-Windows-x86_64/AMMOcoin-v1.1.0-Windows-x86_64.zip

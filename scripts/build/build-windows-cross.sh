@@ -65,7 +65,7 @@ x86_64-w64-mingw32-strip "$OUTPUT_DIR"/*.exe
 echo ""
 echo "Step 6: Creating deployment package..."
 cd "$OUTPUT_DIR"
-zip -r AMMOcoin-Windows-x86_64.zip *.exe
+zip -r AMMOcoin-v1.1.0-Windows-x86_64.zip *.exe
 
 echo ""
 echo "=============================================="
@@ -76,5 +76,5 @@ echo "Output: $OUTPUT_DIR"
 ls -lh "$OUTPUT_DIR"
 echo ""
 echo "✓ Windows x86_64 binaries ready"
-echo "✓ Deployment package: AMMOcoin-Windows-x86_64.zip"
+echo "✓ Deployment package: AMMOcoin-v1.1.0-Windows-x86_64.zip"
 echo ""

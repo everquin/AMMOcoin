@@ -7,11 +7,11 @@ This guide covers the final steps to publish the v1.1.0 release to the public.
 ## Prerequisites
 
 ✅ All binaries built and tested:
-- macOS ARM64: `AMMOcoin-macOS-ARM64.tar.gz` (4 MB) ✅
-- Linux x86_64: `AMMOcoin-Linux-x86_64.tar.gz` (112 MB) ✅
-- Windows x86_64: `AMMOcoin-Windows-x86_64.tar.gz` (17 MB) ✅
+- macOS ARM64: `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz` (4 MB) ✅
+- Linux x86_64: `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz` (112 MB) ✅
+- Windows x86_64: `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz` (17 MB) ✅
 
-✅ Checksums generated: `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt` ✅
+✅ Checksums generated: `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt` ✅
 
 ✅ Release notes prepared: `RELEASE_NOTES_v1.1.0.md` ✅
 
@@ -41,12 +41,12 @@ This will:
 3. Title: `AMMOcoin v1.1.0 - Multi-Platform Release`
 4. Copy-paste content from `RELEASE_NOTES_v1.1.0.md`
 5. Upload these files:
-   - `AMMOcoin-macOS-ARM64.tar.gz`
-   - `AMMOcoin-macOS-ARM64.zip`
-   - `AMMOcoin-Linux-x86_64.tar.gz`
-   - `AMMOcoin-Windows-x86_64.tar.gz`
-   - `AMMOcoin-Windows-x86_64.zip`
-   - `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt`
+   - `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz`
+   - `AMMOcoin-v1.1.0-macOS-ARM64.zip`
+   - `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz`
+   - `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz`
+   - `AMMOcoin-v1.1.0-Windows-x86_64.zip`
+   - `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt`
 6. Click "Publish release"
 
 ---
@@ -59,8 +59,8 @@ After the GitHub Release is created, clean up the local releases folder:
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 
 # Remove binary directories (keep only archives)
-rm -rf AMMOcoin-macOS-ARM64/
-rm -rf AMMOcoin-Windows-x86_64/
+rm -rf AMMOcoin-v1.1.0-macOS-ARM64/
+rm -rf AMMOcoin-v1.1.0-Windows-x86_64/
 rm -rf Windows-Binaries/
 
 # Keep only:
@@ -74,7 +74,7 @@ rm -rf Windows-Binaries/
 **What to keep in /releases:**
 - ✅ `README.md` - User-facing download guide
 - ✅ `RELEASE_NOTES_v1.1.0.md` - Release notes
-- ✅ `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt` - Checksums
+- ✅ `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt` - Checksums
 - ✅ `create-github-release.sh` - Release automation script
 - ✅ `DEPLOYMENT_INSTRUCTIONS.md` - This file
 - ❌ Binary directories (uploaded to GitHub, not needed in repo)

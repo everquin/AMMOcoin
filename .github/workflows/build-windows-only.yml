@@ -255,18 +255,18 @@ jobs:
           cp source/src/ammocoin-tx.exe release-package/bin/
           cp source/src/qt/ammocoin-qt.exe release-package/bin/ 2>/dev/null || true
           cd release-package
-          tar -czf ../AMMOcoin-Windows-x86_64.tar.gz bin/
+          tar -czf ../AMMOcoin-v1.1.0-Windows-x86_64.tar.gz bin/
           cd ..
-          zip -r AMMOcoin-Windows-x86_64.zip release-package/bin/
+          zip -r AMMOcoin-v1.1.0-Windows-x86_64.zip release-package/bin/
           echo "✅ Release packages created"
 
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: AMMOcoin-Windows-x86_64
+          name: AMMOcoin-v1.1.0-Windows-x86_64
           path: |
-            AMMOcoin-Windows-x86_64.tar.gz
-            AMMOcoin-Windows-x86_64.zip
+            AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+            AMMOcoin-v1.1.0-Windows-x86_64.zip
 
       - name: Upload Individual Binaries
         uses: actions/upload-artifact@v4

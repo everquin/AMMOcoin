@@ -12,12 +12,12 @@
 
 **Option 1: tar.gz (Recommended)**
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 ```
 
 **Option 2: zip**
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.zip
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.zip
 ```
 
 **Size:** 72 MB (compressed), ~198 MB (extracted)
@@ -41,7 +41,7 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-Lin
 
 **Verify your download:**
 ```bash
-sha256sum AMMOcoin-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 # Should match: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
 
 # Or automatically verify:
@@ -55,8 +55,8 @@ sha256sum -c CHECKSUMS-Linux.txt --ignore-missing
 ### 1-Line Installation:
 
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz && \
-tar -xzf AMMOcoin-Linux-x86_64.tar.gz && \
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz && \
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz && \
 sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx && \
 ammocoind --version
 ```
@@ -65,8 +65,8 @@ ammocoind --version
 
 ```bash
 # Download and install binaries
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
-tar -xzf AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
 
 # Install dependencies
@@ -172,8 +172,8 @@ cd ~
 
 **Linux x86_64:**
 ```
-082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-Linux-x86_64.tar.gz
-f9b9a7c572c30f5ee811d60e5bb19b77f166ebe86221fba65960f1ea96184d1c  AMMOcoin-Linux-x86_64.zip
+082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+f9b9a7c572c30f5ee811d60e5bb19b77f166ebe86221fba65960f1ea96184d1c  AMMOcoin-v1.1.0-Linux-x86_64.zip
 ```
 
 **Always verify before installing!**

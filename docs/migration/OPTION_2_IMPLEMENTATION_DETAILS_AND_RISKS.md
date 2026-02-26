@@ -538,8 +538,8 @@ ammocoin-cli getbalance
 **URL:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0-genesis-final
 
 **Contains:**
-- AMMOcoin-macOS-ARM64.tar.gz
-- AMMOcoin-macOS-ARM64.zip
+- AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+- AMMOcoin-v1.1.0-macOS-ARM64.zip
 - CHECKSUMS-macOS-ARM64.txt
 
 **Genesis:** 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2

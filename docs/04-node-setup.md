@@ -90,7 +90,7 @@ mkdir ~/Library/Application\ Support/AMMOcoin
 #### Linux Installation (Ubuntu/Debian)
 ```bash
 # Download latest release
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Extract and install
 tar -xzf ammocoind-linux.tar.gz

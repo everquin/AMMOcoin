@@ -33,24 +33,24 @@
 
 #### Download tar.gz (Recommended):
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 ```
 
 #### Download zip (Alternative):
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.zip
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.zip
 ```
 
 #### Verify Checksum:
 ```bash
-sha256sum AMMOcoin-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 # Should match: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
 ```
 
 #### Extract and Install:
 ```bash
 # Extract
-tar -xzf AMMOcoin-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
 
 # Install system-wide
 sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
@@ -73,25 +73,25 @@ ammocoind --version
 
 #### Download tar.gz (Recommended):
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 ```
 
 #### Download zip (Alternative):
 ```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.zip
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip
 ```
 
 #### Verify Checksum:
 ```bash
-shasum -a 256 AMMOcoin-macOS-ARM64.tar.gz
+shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 # Should match: 71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881
 ```
 
 #### Extract and Install:
 ```bash
 # Extract
-tar -xzf AMMOcoin-macOS-ARM64.tar.gz
-cd AMMOcoin-macOS-ARM64
+tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+cd AMMOcoin-v1.1.0-macOS-ARM64
 
 # Install
 sudo cp ammocoind ammocoin-cli ammocoin-tx /usr/local/bin/
@@ -112,7 +112,7 @@ ammocoind --version
 
 ### Windows
 
-Download **AMMOcoin-Windows-x86_64-Setup.exe** from the [GitHub Release](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0). The NSIS installer includes the Qt wallet, daemon, CLI tools, Sapling parameters, and Start Menu shortcuts.
+Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0). The NSIS installer includes the Qt wallet, daemon, CLI tools, Sapling parameters, and Start Menu shortcuts.
 
 ---
 
@@ -122,8 +122,8 @@ Download **AMMOcoin-Windows-x86_64-Setup.exe** from the [GitHub Release](https:/
 
 ### macOS ARM64:
 ```
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-macOS-ARM64.zip
+71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
 ```
 
 Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)

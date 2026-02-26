@@ -57,12 +57,12 @@ cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 ```
 
 This will upload:
-- `AMMOcoin-macOS-ARM64.tar.gz` (4 MB)
-- `AMMOcoin-macOS-ARM64.zip` (4 MB)
-- `AMMOcoin-Linux-x86_64.tar.gz` (112 MB)
-- `AMMOcoin-Windows-x86_64.tar.gz` (17 MB)
-- `AMMOcoin-Windows-x86_64.zip` (17 MB)
-- `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt`
+- `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz` (4 MB)
+- `AMMOcoin-v1.1.0-macOS-ARM64.zip` (4 MB)
+- `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz` (112 MB)
+- `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz` (17 MB)
+- `AMMOcoin-v1.1.0-Windows-x86_64.zip` (17 MB)
+- `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt`
 
 **Expected URL:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 
@@ -333,12 +333,12 @@ AMMOcoin/
 │   ├── README.md                              ← User download guide
 │   ├── RELEASE_NOTES_v1.1.0.md               ← GitHub release notes
 │   ├── DEPLOYMENT_INSTRUCTIONS.md             ← Deployment guide
-│   ├── AMMOcoin-macOS-ARM64.tar.gz    ← macOS binaries
-│   ├── AMMOcoin-macOS-ARM64.zip
-│   ├── AMMOcoin-Linux-x86_64.tar.gz   ← Linux binaries
-│   ├── AMMOcoin-Windows-x86_64.tar.gz ← Windows binaries
-│   ├── AMMOcoin-Windows-x86_64.zip
-│   ├── AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt
+│   ├── AMMOcoin-v1.1.0-macOS-ARM64.tar.gz    ← macOS binaries
+│   ├── AMMOcoin-v1.1.0-macOS-ARM64.zip
+│   ├── AMMOcoin-v1.1.0-Linux-x86_64.tar.gz   ← Linux binaries
+│   ├── AMMOcoin-v1.1.0-Windows-x86_64.tar.gz ← Windows binaries
+│   ├── AMMOcoin-v1.1.0-Windows-x86_64.zip
+│   ├── AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
 │   ├── create-github-release.sh               ← Release automation
 │   └── cleanup-releases.sh                    ← Cleanup script
 ├── docs/

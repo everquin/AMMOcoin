@@ -219,8 +219,8 @@ All files containing old genesis hashes must be updated or marked DEPRECATED:
 - All other .md files with genesis references
 
 ### Binary Release Files to Rebuild
-1. releases/AMMOcoin-Linux-x86_64.tar.gz → REBUILD REQUIRED
-2. releases/AMMOcoin-Linux-x86_64.zip → REBUILD REQUIRED
+1. releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz → REBUILD REQUIRED
+2. releases/AMMOcoin-v1.1.0-Linux-x86_64.zip → REBUILD REQUIRED
 3. releases/CHECKSUMS-Linux.txt → REGENERATE REQUIRED
 4. All macOS binaries → BUILD NEW
 5. All Windows binaries → BUILD NEW
