@@ -22,7 +22,7 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 ### Linux Installation
 ```bash
 # Ubuntu/Debian
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
 tar -xzf ammocoin-qt-linux.tar.gz
 chmod +x ammocoin-qt
 ./ammocoin-qt

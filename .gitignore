@@ -6,6 +6,17 @@ linux-binaries-v1.1.0/
 
 *.log
 
+# Build output binaries
+build-output/
+
+# Release build staging (distributed via GitHub Releases)
+releases/new-builds/*.deb
+
+# DMG background images
+source/background.tiff
+source/background.tiff.png
+source/background.tiff@2x.png
+
 # Build artifacts
 *.o
 *.lo

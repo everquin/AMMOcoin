@@ -15,7 +15,7 @@ STEP 1: Download Complete Instructions
 SSH to seed1.ammocoin.org and run:
 
 cd /tmp
-curl -L -O https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/main/SEED1_AMMOCOIN_ORG_REBUILD.md
+curl -L -O https://raw.githubusercontent.com/everquin/AMMOcoin/main/SEED1_AMMOCOIN_ORG_REBUILD.md
 
 # View the instructions
 cat SEED1_AMMOCOIN_ORG_REBUILD.md | less
@@ -109,8 +109,8 @@ Total: 45-90 minutes
 KEY COMMANDS SUMMARY:
 
 # Clone repo
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin
 git checkout v1.1.0-genesis-final
 
 # Build
@@ -153,7 +153,7 @@ Do not skip any verification steps."
 
 ========================================
 
-REPOSITORY: https://github.com/everquin/AMMOcoin-v1.1.0
+REPOSITORY: https://github.com/everquin/AMMOcoin
 TAG: v1.1.0-genesis-final
 AUTHORITY: V1.1.0_GENESIS_BLOCK_AUTHORITY.md
 

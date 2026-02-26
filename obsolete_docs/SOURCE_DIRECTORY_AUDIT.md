@@ -96,7 +96,7 @@ consensus.hashGenesisBlock = uint256S("0x000000593410213331b5adcc6a79054a984bfc9
 **docs/guides/LINUX_BINARY_DISTRIBUTION_GUIDE.md:**
 ```bash
 # References Vultr VM path:
-/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind
+/opt/AMMOcoin/ammocoin-source/src/ammocoind
 ```
 This is CONFUSING because:
 - Local repository uses `source`
@@ -105,7 +105,7 @@ This is CONFUSING because:
 
 **docs/installation/UBUNTU_UPGRADE_GUIDE.md:**
 ```bash
-sudo git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin-source
+sudo git clone https://github.com/everquin/AMMOcoin.git ammocoin-source
 cd ammocoin-source
 ```
 This instructs users to clone the repo as "ammocoin-source" directory.
@@ -252,13 +252,13 @@ AMMOcoin/
 
 **Remote VM (Production):**
 ```
-/opt/AMMOcoin-v1.1.0/
+/opt/AMMOcoin/
 └── ammocoin-source/  ← Just a different clone name, SAME codebase
 ```
 
 When users clone the repository, they can name it anything:
 ```bash
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git my-custom-name
+git clone https://github.com/everquin/AMMOcoin.git my-custom-name
 ```
 
 The UBUNTU_UPGRADE_GUIDE tells users to clone as "ammocoin-source" which is fine for the VM, but shouldn't create confusion in the repository itself.
@@ -291,7 +291,7 @@ The UBUNTU_UPGRADE_GUIDE tells users to clone as "ammocoin-source" which is fine
 
 3. **Update LINUX_BINARY_DISTRIBUTION_GUIDE.md:**
    - Add note: "VM directory name may differ from local repository structure"
-   - Clarify that `/opt/AMMOcoin-v1.1.0/ammocoin-source/` on VM refers to the cloned repository
+   - Clarify that `/opt/AMMOcoin/ammocoin-source/` on VM refers to the cloned repository
 
 4. **Commit and push:**
    ```

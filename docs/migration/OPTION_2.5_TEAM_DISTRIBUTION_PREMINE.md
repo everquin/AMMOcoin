@@ -232,17 +232,17 @@ rm -rf /tmp/test-genesis
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 
 # Package macOS ARM64
-tar -czf AMMOcoin-v1.1.0-distribution-macOS-ARM64.tar.gz \
+tar -czf AMMOcoin-distribution-macOS-ARM64.tar.gz \
     -C ../source/src \
     ammocoind ammocoin-cli ammocoin-tx
 
-zip AMMOcoin-v1.1.0-distribution-macOS-ARM64.zip \
+zip AMMOcoin-distribution-macOS-ARM64.zip \
     -j ../source/src/ammocoind \
     ../source/src/ammocoin-cli \
     ../source/src/ammocoin-tx
 
 # Generate checksums
-shasum -a 256 AMMOcoin-v1.1.0-distribution-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-distribution.txt
+shasum -a 256 AMMOcoin-distribution-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-distribution.txt
 ```
 
 ### Step 7: Update Documentation (1 hour)
@@ -290,8 +290,8 @@ git push origin v1.1.0-distribution-final
 gh release create v1.1.0-distribution-final \
     --title "AMMOcoin v1.1.0 - Distribution Premine" \
     --notes-file RELEASE_NOTES_DISTRIBUTION.md \
-    releases/AMMOcoin-v1.1.0-distribution-macOS-ARM64.tar.gz \
-    releases/AMMOcoin-v1.1.0-distribution-macOS-ARM64.zip \
+    releases/AMMOcoin-distribution-macOS-ARM64.tar.gz \
+    releases/AMMOcoin-distribution-macOS-ARM64.zip \
     releases/CHECKSUMS-macOS-ARM64-distribution.txt
 ```
 

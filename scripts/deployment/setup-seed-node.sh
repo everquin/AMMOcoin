@@ -210,7 +210,7 @@ if [ -d "$AMMOCOIN_DIR" ]; then
 else
     echo "Cloning repository..."
     cd "$USER_HOME"
-    sudo -u $ACTUAL_USER git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin
+    sudo -u $ACTUAL_USER git clone https://github.com/everquin/AMMOcoin.git ammocoin
     cd "$AMMOCOIN_DIR"
 fi
 

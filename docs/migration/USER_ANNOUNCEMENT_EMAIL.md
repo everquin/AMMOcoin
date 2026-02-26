@@ -247,7 +247,7 @@ A: Migration is completely free. Standard transaction fees apply for normal oper
 - seed3.ammocoin.org:37020
 
 **GitHub Repository:**
-- https://github.com/everquin/AMMOcoin-v1.1.0
+- https://github.com/everquin/AMMOcoin
 
 ## Thank You
 
@@ -268,7 +268,7 @@ Best regards,
 - Downloads: https://ammocoin.org/downloads
 - Migration Guide: https://ammocoin.org/migration
 - Support: support@ammocoin.org
-- GitHub: https://github.com/everquin/AMMOcoin-v1.1.0
+- GitHub: https://github.com/everquin/AMMOcoin
 
 ---
 

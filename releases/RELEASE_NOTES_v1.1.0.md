@@ -34,31 +34,31 @@ AMMOcoin v1.1.0 is a major release featuring a new genesis block and multi-platf
 - **Binaries:** ammocoind, ammocoin-cli, ammocoin-tx
 - **Minimum OS:** macOS 11 (Big Sur) or later
 - **Download:**
-  - [AMMOcoin-v1.1.0-macOS-ARM64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz)
-  - [AMMOcoin-v1.1.0-macOS-ARM64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip)
+  - [AMMOcoin-macOS-ARM64.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.tar.gz)
+  - [AMMOcoin-macOS-ARM64.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.zip)
 
 ### Linux x86_64
 - **Size:** 112 MB (tar.gz)
 - **Binaries:** ammocoind, ammocoin-cli, ammocoin-tx
 - **Minimum OS:** Ubuntu 20.04, Debian 11, RHEL 8, or equivalent
 - **Download:**
-  - [AMMOcoin-v1.1.0-Linux-x86_64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz)
+  - [AMMOcoin-Linux-x86_64.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz)
 
 ### Windows x86_64
 - **Size:** 17 MB (tar.gz), 17 MB (zip)
 - **Binaries:** ammocoind.exe, ammocoin-cli.exe, ammocoin-tx.exe
 - **Minimum OS:** Windows 10 64-bit or Windows 11
 - **Download:**
-  - [AMMOcoin-v1.1.0-Windows-x86_64.tar.gz](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz)
-  - [AMMOcoin-v1.1.0-Windows-x86_64.zip](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.zip)
+  - [AMMOcoin-Windows-x86_64.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Windows-x86_64.tar.gz)
+  - [AMMOcoin-Windows-x86_64.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Windows-x86_64.zip)
 
 ## Installation
 
 ### macOS ARM64
 ```bash
 # Extract the archive
-tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-cd AMMOcoin-v1.1.0-macOS-ARM64/bin
+tar -xzf AMMOcoin-macOS-ARM64.tar.gz
+cd AMMOcoin-macOS-ARM64/bin
 
 # Run the daemon
 ./ammocoind -daemon
@@ -70,7 +70,7 @@ cd AMMOcoin-v1.1.0-macOS-ARM64/bin
 ### Linux x86_64
 ```bash
 # Extract the archive
-tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-Linux-x86_64.tar.gz
 cd bin
 
 # Run the daemon
@@ -98,15 +98,15 @@ To verify the integrity of your download:
 
 ### macOS/Linux
 ```bash
-sha256sum AMMOcoin-v1.1.0-<platform>.tar.gz
+sha256sum AMMOcoin-<platform>.tar.gz
 ```
 
 ### Windows
 ```powershell
-certutil -hashfile AMMOcoin-v1.1.0-Windows-x86_64.zip SHA256
+certutil -hashfile AMMOcoin-Windows-x86_64.zip SHA256
 ```
 
-Compare the output with the checksums in [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
+Compare the output with the checksums in [AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt)
 
 ## Configuration
 
@@ -154,7 +154,7 @@ This is a fresh start. You will need to:
 
 ### macOS: "Cannot be opened because the developer cannot be verified"
 ```bash
-sudo xattr -r -d com.apple.quarantine /path/to/AMMOcoin-v1.1.0-macOS-ARM64
+sudo xattr -r -d com.apple.quarantine /path/to/AMMOcoin-macOS-ARM64
 ```
 
 ### Linux: "Permission denied"
@@ -189,20 +189,20 @@ Install Visual C++ Redistributable from Microsoft.
 
 ```
 # macOS ARM64
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
+71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-macOS-ARM64.tar.gz
+c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-macOS-ARM64.zip
 
 # Linux x86_64
-082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-Linux-x86_64.tar.gz
 
 # Windows x86_64
-66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
-533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-v1.1.0-Windows-x86_64.zip
+66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-Windows-x86_64.tar.gz
+533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-Windows-x86_64.zip
 ```
 
 ## Support
 
-- **GitHub Issues:** https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
 - **Documentation:** See the `docs/` directory in the repository
 
 ## Contributors

@@ -8,7 +8,7 @@ echo "=============================================="
 
 # Check if we're in the right directory
 if [ ! -d "ammocoin-source" ] || [ ! -d "source" ]; then
-    echo "❌ Error: Please run this script from the AMMOcoin-v1.1.0-Emergency-Release directory"
+    echo "❌ Error: Please run this script from the AMMOcoin-Emergency-Release directory"
     exit 1
 fi
 

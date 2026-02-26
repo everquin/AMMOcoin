@@ -31,7 +31,7 @@ export class AMMOcoinRPC {
    */
   async call<T = any>(method: string, params: any[] = []): Promise<T> {
     const requestBody = {
-      jsonrpc: "2.0",
+      jsonrpc: "1.0",
       id: this.requestId++,
       method,
       params,
@@ -43,17 +43,17 @@ export class AMMOcoinRPC {
       const response = await fetch(this.config.url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
           'Authorization': `Basic ${auth}`,
         },
         body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) {
+      // Bitcoin/PIVX-based daemons may return 404 for unknown methods
+      // or 500 for RPC errors - still try to parse the JSON response
+      const data: RPCResponse<T> = await response.json().catch(() => {
         throw new Error(`RPC request failed: ${response.status} ${response.statusText}`);
-      }
-
-      const data: RPCResponse<T> = await response.json();
+      });
 
       if (data.error) {
         throw new Error(`RPC Error ${data.error.code}: ${data.error.message}`);
@@ -113,7 +113,7 @@ export class AMMOcoinRPC {
   }
 
   async getTxOutProof(txids: string[], blockHash?: string) {
-    const params = [txids];
+    const params: any[] = [txids];
     if (blockHash) params.push(blockHash);
     return this.call('gettxoutproof', params);
   }

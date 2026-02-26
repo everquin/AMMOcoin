@@ -19,10 +19,10 @@ This directory contains Docker-based cross-compilation infrastructure for buildi
 ./build-all-platforms.sh
 
 # Output will be in ../releases/ directory
-# - AMMOcoin-v1.1.0-linux-x64.zip
-# - AMMOcoin-v1.1.0-windows-x64.zip
-# - AMMOcoin-v1.1.0-arm64.zip
-# - AMMOcoin-v1.1.0-MultiPlatform.zip
+# - AMMOcoin-linux-x64.zip
+# - AMMOcoin-windows-x64.zip
+# - AMMOcoin-arm64.zip
+# - AMMOcoin-MultiPlatform.zip
 ```
 
 ### Build Specific Platform
@@ -122,10 +122,10 @@ releases/
 │   ├── ammocoind
 │   ├── ammocoin-cli
 │   └── ammocoin-tx
-├── AMMOcoin-v1.1.0-linux-x64.zip
-├── AMMOcoin-v1.1.0-windows-x64.zip
-├── AMMOcoin-v1.1.0-arm64.zip
-├── AMMOcoin-v1.1.0-MultiPlatform.zip
+├── AMMOcoin-linux-x64.zip
+├── AMMOcoin-windows-x64.zip
+├── AMMOcoin-arm64.zip
+├── AMMOcoin-MultiPlatform.zip
 └── VERSION.txt
 ```
 

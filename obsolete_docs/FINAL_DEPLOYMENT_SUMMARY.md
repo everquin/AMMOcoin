@@ -57,14 +57,14 @@ cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 ```
 
 This will upload:
-- `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz` (4 MB)
-- `AMMOcoin-v1.1.0-macOS-ARM64.zip` (4 MB)
-- `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz` (112 MB)
-- `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz` (17 MB)
-- `AMMOcoin-v1.1.0-Windows-x86_64.zip` (17 MB)
-- `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt`
+- `AMMOcoin-macOS-ARM64.tar.gz` (4 MB)
+- `AMMOcoin-macOS-ARM64.zip` (4 MB)
+- `AMMOcoin-Linux-x86_64.tar.gz` (112 MB)
+- `AMMOcoin-Windows-x86_64.tar.gz` (17 MB)
+- `AMMOcoin-Windows-x86_64.zip` (17 MB)
+- `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt`
 
-**Expected URL:** https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+**Expected URL:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 
 ---
 
@@ -80,12 +80,12 @@ This will upload:
 
 **Current (incorrect):**
 ```html
-<a href="https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md" ...>
+<a href="https://github.com/everquin/AMMOcoin/blob/main/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md" ...>
 ```
 
 **Update to:**
 ```html
-<a href="https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md" ...>
+<a href="https://github.com/everquin/AMMOcoin/blob/main/docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md" ...>
 ```
 
 **Fix command:**
@@ -146,7 +146,7 @@ git push origin main
 ### Step 5: Verify Deployment
 
 #### A. GitHub Release
-- [ ] Visit https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+- [ ] Visit https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 - [ ] Verify all 6 files are attached
 - [ ] Test download links
 - [ ] Verify checksums display correctly
@@ -177,9 +177,9 @@ Add prominent download section:
 ## 📥 Download AMMOcoin v1.1.0
 
 Pre-built binaries available for:
-- **macOS** (Apple Silicon M1/M2/M3) - [Download](https://github.com/everquin/AMMOcoin-v1.1.0/releases/latest)
-- **Linux** (Ubuntu 20.04+, Debian 11+) - [Download](https://github.com/everquin/AMMOcoin-v1.1.0/releases/latest)
-- **Windows** (Windows 10/11 64-bit) - [Download](https://github.com/everquin/AMMOcoin-v1.1.0/releases/latest)
+- **macOS** (Apple Silicon M1/M2/M3) - [Download](https://github.com/everquin/AMMOcoin/releases/latest)
+- **Linux** (Ubuntu 20.04+, Debian 11+) - [Download](https://github.com/everquin/AMMOcoin/releases/latest)
+- **Windows** (Windows 10/11 64-bit) - [Download](https://github.com/everquin/AMMOcoin/releases/latest)
 
 See [Installation Guide](releases/README.md) for complete instructions.
 ```
@@ -199,7 +199,7 @@ See [Installation Guide](releases/README.md) for complete instructions.
 ✅ Enhanced security and privacy features
 ✅ Complete migration guide
 
-Download: https://github.com/everquin/AMMOcoin-v1.1.0/releases
+Download: https://github.com/everquin/AMMOcoin/releases
 Website: https://ammocoin.org
 Migration Guide: https://ammocoin.org/migration.html
 
@@ -328,17 +328,17 @@ This release was made possible by extensive troubleshooting and problem-solving:
 ## 📂 Repository Structure
 
 ```
-AMMOcoin-v1.1.0/
+AMMOcoin/
 ├── releases/
 │   ├── README.md                              ← User download guide
 │   ├── RELEASE_NOTES_v1.1.0.md               ← GitHub release notes
 │   ├── DEPLOYMENT_INSTRUCTIONS.md             ← Deployment guide
-│   ├── AMMOcoin-v1.1.0-macOS-ARM64.tar.gz    ← macOS binaries
-│   ├── AMMOcoin-v1.1.0-macOS-ARM64.zip
-│   ├── AMMOcoin-v1.1.0-Linux-x86_64.tar.gz   ← Linux binaries
-│   ├── AMMOcoin-v1.1.0-Windows-x86_64.tar.gz ← Windows binaries
-│   ├── AMMOcoin-v1.1.0-Windows-x86_64.zip
-│   ├── AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
+│   ├── AMMOcoin-macOS-ARM64.tar.gz    ← macOS binaries
+│   ├── AMMOcoin-macOS-ARM64.zip
+│   ├── AMMOcoin-Linux-x86_64.tar.gz   ← Linux binaries
+│   ├── AMMOcoin-Windows-x86_64.tar.gz ← Windows binaries
+│   ├── AMMOcoin-Windows-x86_64.zip
+│   ├── AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt
 │   ├── create-github-release.sh               ← Release automation
 │   └── cleanup-releases.sh                    ← Cleanup script
 ├── docs/
@@ -357,12 +357,12 @@ AMMOcoin-v1.1.0/
 
 ## 🔗 Important Links
 
-**Repository:** https://github.com/everquin/AMMOcoin-v1.1.0
-**Releases:** https://github.com/everquin/AMMOcoin-v1.1.0/releases
+**Repository:** https://github.com/everquin/AMMOcoin
+**Releases:** https://github.com/everquin/AMMOcoin/releases
 **Website:** https://ammocoin.org
 **Downloads:** https://ammocoin.org/downloads.html
 **Migration:** https://ammocoin.org/migration.html
-**Whitepaper:** https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md
+**Whitepaper:** https://github.com/everquin/AMMOcoin/blob/main/docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md
 
 ---
 

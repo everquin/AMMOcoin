@@ -92,18 +92,18 @@ Transaction History: (optional, helps verification)
 #### Download v1.1.0
 ```bash
 # Download from GitHub release
-# https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0-genesis-final
+# https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0-genesis-final
 
 # For macOS ARM64:
-curl -L -O https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0-genesis-final/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+curl -L -O https://github.com/everquin/AMMOcoin/releases/download/v1.1.0-genesis-final/AMMOcoin-macOS-ARM64.tar.gz
 
 # Verify checksum
-shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+shasum -a 256 AMMOcoin-macOS-ARM64.tar.gz
 # Should match: 8e37a2349b556c78aa8d98f56cc7849716d0f857a055646fd10a60bb024c9ab1
 
 # Extract
-tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-cd AMMOcoin-v1.1.0-macOS-ARM64/
+tar -xzf AMMOcoin-macOS-ARM64.tar.gz
+cd AMMOcoin-macOS-ARM64/
 ```
 
 #### Start v1.1.0 Node
@@ -483,7 +483,7 @@ If multiple people claim same v1.0 address:
 
 **Get Help:**
 - Discord/Telegram: [Community channels]
-- GitHub: https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- GitHub: https://github.com/everquin/AMMOcoin/issues
 - Documentation: See repository guides
 
 ### For Team

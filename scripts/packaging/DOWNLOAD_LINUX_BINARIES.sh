@@ -11,9 +11,9 @@ echo "Downloading Linux binaries from VM..."
 mkdir -p "$LOCAL_DIR"
 
 # Download all three binaries
-scp root@$VM_IP:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind "$LOCAL_DIR/"
-scp root@$VM_IP:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-cli "$LOCAL_DIR/"
-scp root@$VM_IP:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-tx "$LOCAL_DIR/"
+scp root@$VM_IP:/opt/AMMOcoin/ammocoin-source/src/ammocoind "$LOCAL_DIR/"
+scp root@$VM_IP:/opt/AMMOcoin/ammocoin-source/src/ammocoin-cli "$LOCAL_DIR/"
+scp root@$VM_IP:/opt/AMMOcoin/ammocoin-source/src/ammocoin-tx "$LOCAL_DIR/"
 
 echo ""
 echo "Download complete! Verifying..."

@@ -32,21 +32,25 @@ export async function getNetworkStats(): Promise<NetworkStats> {
   if (cached) return cached;
 
   try {
-    const [
-      blockchainInfo,
-      networkInfo,
-      miningInfo,
-      masternodeCount,
-      mempoolInfo,
-      connectionCount
-    ] = await Promise.all([
+    // Use Promise.allSettled to handle methods that may not exist in this fork
+    const results = await Promise.allSettled([
       rpcClient.getBlockchainInfo(),
       rpcClient.getNetworkInfo(),
-      rpcClient.getMiningInfo(),
-      rpcClient.getMasternodeCount(),
-      rpcClient.getMempoolInfo(),
-      rpcClient.getConnectionCount(),
+      rpcClient.getMiningInfo().catch(() => ({ networkhashps: 0 })),
+      rpcClient.getMasternodeCount().catch(() => ({ total: 0, enabled: 0 })),
+      rpcClient.getMempoolInfo().catch(() => ({ size: 0, bytes: 0, usage: 0, maxmempool: 0, mempoolminfee: 0 })),
+      rpcClient.getConnectionCount().catch(() => 0),
     ]);
+
+    const getValue = <T>(r: PromiseSettledResult<T>, fallback: T): T =>
+      r.status === 'fulfilled' ? r.value : fallback;
+
+    const blockchainInfo = getValue(results[0], { blocks: 0, difficulty: 0, bestblockhash: '', chain: 'main', headers: 0, mediantime: 0, verificationprogress: 1, chainwork: '', size_on_disk: 0, moneysupply: 0 } as any);
+    const networkInfo = getValue(results[1], {} as any);
+    const miningInfo = getValue(results[2], { networkhashps: 0 } as any);
+    const masternodeCount = getValue(results[3], { total: 0, enabled: 0 } as any);
+    const mempoolInfo = getValue(results[4], { size: 0, bytes: 0, usage: 0, maxmempool: 0, mempoolminfee: 0 } as any);
+    const connectionCount = getValue(results[5], 0 as any);
 
     const stats: NetworkStats = {
       height: blockchainInfo.blocks,
@@ -54,10 +58,10 @@ export async function getNetworkStats(): Promise<NetworkStats> {
       hashrate: miningInfo.networkhashps || 0,
       totalSupply: blockchainInfo.moneysupply || 0,
       circulatingSupply: blockchainInfo.moneysupply || 0,
-      nodes: connectionCount,
+      nodes: typeof connectionCount === 'number' ? connectionCount : 0,
       mempool: {
-        size: mempoolInfo.size,
-        bytes: mempoolInfo.bytes,
+        size: mempoolInfo.size || 0,
+        bytes: mempoolInfo.bytes || 0,
         usage: mempoolInfo.usage || 0,
         maxmempool: mempoolInfo.maxmempool || 0,
         mempoolminfee: mempoolInfo.mempoolminfee || 0,
@@ -216,8 +220,8 @@ export async function getTransaction(txid: string): Promise<Transaction> {
       status: txData.confirmations > 0 ? 'confirmed' : 'pending',
       inputs,
       outputs,
-      totalInput: inputs.reduce((sum, input) => sum + input.value, 0),
-      totalOutput: outputs.reduce((sum, output) => sum + output.value, 0),
+      totalInput: inputs.reduce((sum, input) => sum + (input.value || 0), 0),
+      totalOutput: outputs.reduce((sum, output) => sum + (output.value || 0), 0),
     };
 
     setCache(cacheKey, transaction);

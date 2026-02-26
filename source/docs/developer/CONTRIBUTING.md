@@ -22,11 +22,11 @@ We welcome contributions to AMMOcoin! This document explains the process and gui
 ### Setting Up Development Environment
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/yourusername/AMMOcoin.git
+cd AMMOcoin
 
 # Add upstream remote
-git remote add upstream https://github.com/everquin/AMMOcoin-v1.1.0.git
+git remote add upstream https://github.com/everquin/AMMOcoin.git
 
 # Create development branch
 git checkout -b feature/your-feature-name

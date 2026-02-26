@@ -79,8 +79,8 @@ rustup default 1.92.0
 ### 1. Clone Repository (if not already cloned)
 ```bash
 cd /tmp
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin
 ```
 
 ### 2. Pull Latest Code
@@ -224,40 +224,40 @@ rm -rf /tmp/ammocoin-genesis-test
 
 ### 1. Create Release Directory
 ```bash
-mkdir -p AMMOcoin-v1.1.0-Linux-x86_64
+mkdir -p AMMOcoin-Linux-x86_64
 ```
 
 ### 2. Copy Binaries
 ```bash
-cp src/ammocoind src/ammocoin-cli src/ammocoin-tx AMMOcoin-v1.1.0-Linux-x86_64/
+cp src/ammocoind src/ammocoin-cli src/ammocoin-tx AMMOcoin-Linux-x86_64/
 ```
 
 ### 3. Add Documentation
 ```bash
-cp ../V1.1.0_GENESIS_BLOCK_AUTHORITY.md AMMOcoin-v1.1.0-Linux-x86_64/README.md
-cp ../COPYING AMMOcoin-v1.1.0-Linux-x86_64/ 2>/dev/null || echo "No COPYING file"
+cp ../V1.1.0_GENESIS_BLOCK_AUTHORITY.md AMMOcoin-Linux-x86_64/README.md
+cp ../COPYING AMMOcoin-Linux-x86_64/ 2>/dev/null || echo "No COPYING file"
 ```
 
 ### 4. Strip Debug Symbols (Reduce Size)
 ```bash
-strip AMMOcoin-v1.1.0-Linux-x86_64/ammocoind
-strip AMMOcoin-v1.1.0-Linux-x86_64/ammocoin-cli
-strip AMMOcoin-v1.1.0-Linux-x86_64/ammocoin-tx
+strip AMMOcoin-Linux-x86_64/ammocoind
+strip AMMOcoin-Linux-x86_64/ammocoin-cli
+strip AMMOcoin-Linux-x86_64/ammocoin-tx
 ```
 
 ### 5. Create Compressed Archives
 ```bash
 # Create tar.gz
-tar -czf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz AMMOcoin-v1.1.0-Linux-x86_64/
+tar -czf AMMOcoin-Linux-x86_64.tar.gz AMMOcoin-Linux-x86_64/
 
 # Create zip
-zip -r AMMOcoin-v1.1.0-Linux-x86_64.zip AMMOcoin-v1.1.0-Linux-x86_64/
+zip -r AMMOcoin-Linux-x86_64.zip AMMOcoin-Linux-x86_64/
 ```
 
 ### 6. Generate SHA256 Checksums
 ```bash
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz > CHECKSUMS-Linux.txt
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.zip >> CHECKSUMS-Linux.txt
+sha256sum AMMOcoin-Linux-x86_64.tar.gz > CHECKSUMS-Linux.txt
+sha256sum AMMOcoin-Linux-x86_64.zip >> CHECKSUMS-Linux.txt
 ```
 
 ### 7. Verify Checksums
@@ -267,8 +267,8 @@ cat CHECKSUMS-Linux.txt
 
 **Example output:**
 ```
-abc123def456... AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-def789ghi012... AMMOcoin-v1.1.0-Linux-x86_64.zip
+abc123def456... AMMOcoin-Linux-x86_64.tar.gz
+def789ghi012... AMMOcoin-Linux-x86_64.zip
 ```
 
 ---
@@ -281,9 +281,9 @@ def789ghi012... AMMOcoin-v1.1.0-Linux-x86_64.zip
 # Download the files from build server first
 
 # Then move to releases directory
-cd /path/to/AMMOcoin-v1.1.0
-mv AMMOcoin-v1.1.0-Linux-x86_64.tar.gz releases/
-mv AMMOcoin-v1.1.0-Linux-x86_64.zip releases/
+cd /path/to/AMMOcoin
+mv AMMOcoin-Linux-x86_64.tar.gz releases/
+mv AMMOcoin-Linux-x86_64.zip releases/
 mv CHECKSUMS-Linux.txt releases/
 ```
 
@@ -300,8 +300,8 @@ Build date: $(date -u +%Y-%m-%d)
 Source commit: $(git rev-parse --short HEAD)
 
 Files:
-- AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-- AMMOcoin-v1.1.0-Linux-x86_64.zip
+- AMMOcoin-Linux-x86_64.tar.gz
+- AMMOcoin-Linux-x86_64.zip
 - CHECKSUMS-Linux.txt"
 
 git push origin main
@@ -313,8 +313,8 @@ git push origin main
 gh release create v1.1.0-genesis-final \
     --title "AMMOcoin v1.1.0 - Official Release" \
     --notes "See V1.1.0_GENESIS_BLOCK_AUTHORITY.md for genesis block details" \
-    releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz \
-    releases/AMMOcoin-v1.1.0-Linux-x86_64.zip \
+    releases/AMMOcoin-Linux-x86_64.tar.gz \
+    releases/AMMOcoin-Linux-x86_64.zip \
     releases/CHECKSUMS-Linux.txt
 ```
 

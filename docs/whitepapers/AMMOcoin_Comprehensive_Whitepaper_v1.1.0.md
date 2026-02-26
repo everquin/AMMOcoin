@@ -907,7 +907,7 @@ def lwma_difficulty_adjustment(timestamps, difficulties):
 
 - **Official Website**: Visit our main portal for updates and information
 - **Community Platform**: Join discussions and earn AMMO at [glibz.com](https://glibz.com)
-- **GitHub Repository**: https://github.com/everquin/AMMOcoin-v1.1.0
+- **GitHub Repository**: https://github.com/everquin/AMMOcoin
 - **Developer Documentation**: Comprehensive guides for developers
 - **Social Media**: Follow official channels for announcements
 

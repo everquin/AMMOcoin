@@ -90,7 +90,7 @@ mkdir ~/Library/Application\ Support/AMMOcoin
 #### Linux Installation (Ubuntu/Debian)
 ```bash
 # Download latest release
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
 
 # Extract and install
 tar -xzf ammocoind-linux.tar.gz
@@ -113,7 +113,7 @@ sudo apt install libssl-dev libevent-dev bsdmainutils python3
 sudo apt install libboost-all-dev libdb4.8-dev libdb4.8++-dev
 
 # Clone repository
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
+git clone https://github.com/everquin/AMMOcoin.git
 cd ammocoin
 
 # Build

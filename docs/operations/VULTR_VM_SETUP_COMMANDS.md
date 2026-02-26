@@ -12,7 +12,7 @@
 
 Use the automated migration script instead:
 ```bash
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ~/ammocoin
+git clone https://github.com/everquin/AMMOcoin.git ~/ammocoin
 cd ~/ammocoin
 sudo bash scripts/setup-seed-node.sh
 ```
@@ -78,7 +78,7 @@ See `V1.0_TO_V1.1.0_NODE_MIGRATION.md` for detailed explanation. This patch is s
 ## Step 4: Clone Repository (1 minute)
 
 ```bash
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ~/ammocoin
+git clone https://github.com/everquin/AMMOcoin.git ~/ammocoin
 cd ~/ammocoin/source
 ```
 

@@ -147,7 +147,7 @@ g++ --version  # Should show g++ (Ubuntu 9.x)
 ```bash
 # Clone repository
 cd ~
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git ammocoin-v1.1.0
 cd ammocoin-v1.1.0/source
 
 # Generate build scripts

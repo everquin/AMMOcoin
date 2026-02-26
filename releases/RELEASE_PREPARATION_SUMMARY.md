@@ -37,18 +37,18 @@
 Located in: `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/`
 
 #### macOS ARM64
-- `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz` (3.9 MB)
-- `AMMOcoin-v1.1.0-macOS-ARM64.zip` (3.9 MB)
+- `AMMOcoin-macOS-ARM64.tar.gz` (3.9 MB)
+- `AMMOcoin-macOS-ARM64.zip` (3.9 MB)
 
 #### Linux x86_64
-- `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz` (112 MB)
+- `AMMOcoin-Linux-x86_64.tar.gz` (112 MB)
 
 #### Windows x86_64
-- `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz` (17 MB)
-- `AMMOcoin-v1.1.0-Windows-x86_64.zip` (17 MB)
+- `AMMOcoin-Windows-x86_64.tar.gz` (17 MB)
+- `AMMOcoin-Windows-x86_64.zip` (17 MB)
 
 #### Checksums
-- `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt` (All platform checksums)
+- `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt` (All platform checksums)
 
 #### Documentation
 - `RELEASE_NOTES_v1.1.0.md` (Comprehensive release notes)
@@ -59,19 +59,19 @@ Located in: `/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/`
 
 ### macOS ARM64
 ```
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
+71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-macOS-ARM64.tar.gz
+c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-macOS-ARM64.zip
 ```
 
 ### Linux x86_64
 ```
-082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509  AMMOcoin-Linux-x86_64.tar.gz
 ```
 
 ### Windows x86_64
 ```
-66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
-533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-v1.1.0-Windows-x86_64.zip
+66bd10254f2a43cf48b27e8a14699cf44e12ce4fdc3eb7bbfc3d6a2d9e1603ae  AMMOcoin-Windows-x86_64.tar.gz
+533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d  AMMOcoin-Windows-x86_64.zip
 ```
 
 ---
@@ -146,7 +146,7 @@ This will:
 
 If you prefer to create the release manually:
 
-1. Go to: https://github.com/everquin/AMMOcoin-v1.1.0/releases/new
+1. Go to: https://github.com/everquin/AMMOcoin/releases/new
 
 2. Set tag: `v1.1.0`
 
@@ -155,12 +155,12 @@ If you prefer to create the release manually:
 4. Copy/paste contents from `RELEASE_NOTES_v1.1.0.md` into description
 
 5. Upload these files:
-   - AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-   - AMMOcoin-v1.1.0-macOS-ARM64.zip
-   - AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-   - AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
-   - AMMOcoin-v1.1.0-Windows-x86_64.zip
-   - AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
+   - AMMOcoin-macOS-ARM64.tar.gz
+   - AMMOcoin-macOS-ARM64.zip
+   - AMMOcoin-Linux-x86_64.tar.gz
+   - AMMOcoin-Windows-x86_64.tar.gz
+   - AMMOcoin-Windows-x86_64.zip
+   - AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt
 
 6. Click "Publish release"
 
@@ -206,9 +206,9 @@ If you prefer to create the release manually:
 
 ## Support Resources
 
-- GitHub Issues: https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- GitHub Issues: https://github.com/everquin/AMMOcoin/issues
 - Release Notes: `RELEASE_NOTES_v1.1.0.md`
-- Checksums: `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt`
+- Checksums: `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt`
 - Migration Docs: Available in repository `docs/` directory
 
 ---

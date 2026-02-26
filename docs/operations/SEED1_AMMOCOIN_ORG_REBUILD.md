@@ -158,8 +158,8 @@ rustc --version
 ### Step 1: Clone Repository
 ```bash
 cd /tmp
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin
 ```
 
 ### Step 2: Checkout Correct Tag
@@ -179,7 +179,7 @@ git log -1 --oneline
 ```bash
 cd source
 pwd
-# Should show: /tmp/AMMOcoin-v1.1.0/source
+# Should show: /tmp/AMMOcoin/source
 ```
 
 ### Step 4: Generate Configure Script
@@ -657,7 +657,7 @@ ammocoind -printtoconsole
 ```bash
 # This is CRITICAL - do not proceed
 # Verify source:
-cd /tmp/AMMOcoin-v1.1.0
+cd /tmp/AMMOcoin
 git log -1 --oneline
 git describe --tags
 
@@ -703,7 +703,7 @@ Genesis: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 P2P Port: 37020
 
 Connect your v1.1.0 nodes:
-- Download: https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+- Download: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 - Add seed node: ammocoin-cli addnode "seed1.ammocoin.org:37020" "add"
 
 Remember to delete old blockchain data before connecting!

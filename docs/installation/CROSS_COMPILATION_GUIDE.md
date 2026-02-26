@@ -239,7 +239,7 @@ sudo apt-get install -y \
 ## Build Output Structure
 
 ```
-AMMOcoin-v1.1.0-binaries/
+AMMOcoin-binaries/
 ├── linux-arm64/
 │   ├── ammocoind
 │   ├── ammocoin-cli

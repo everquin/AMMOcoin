@@ -3,7 +3,7 @@
 **Complete production upgrade guide from Ubuntu 18.04 + AMMOcoin v1.0 to Ubuntu 24.04 LTS + AMMOcoin v1.1.0**
 
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-18.04%20→%2024.04%20LTS-orange)](https://ubuntu.com/)
-[![AMMOcoin](https://img.shields.io/badge/AMMOcoin-v1.0%20→%20v1.1.0-brightgreen)](https://github.com/everquin/AMMOcoin-v1.1.0)
+[![AMMOcoin](https://img.shields.io/badge/AMMOcoin-v1.0%20→%20v1.1.0-brightgreen)](https://github.com/everquin/AMMOcoin)
 [![Tested](https://img.shields.io/badge/tested-Vultr%20VPS-blue)](https://vultr.com/)
 
 ---
@@ -299,13 +299,13 @@ cargo --version
 ### **5.1 Download AMMOcoin v1.1.0 Source**
 ```bash
 # Create build directory
-sudo mkdir -p /opt/AMMOcoin-v1.1.0
-cd /opt/AMMOcoin-v1.1.0
+sudo mkdir -p /opt/AMMOcoin
+cd /opt/AMMOcoin
 
 # Clone the official repository
 # Note: "ammocoin-source" is the directory name for deployment.
 # The repository itself uses "source" as the primary source directory.
-sudo git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin-source
+sudo git clone https://github.com/everquin/AMMOcoin.git ammocoin-source
 cd ammocoin-source
 
 # Verify download
@@ -355,7 +355,7 @@ sudo make -j1
 # watch -n 5 'free -h'
 
 # Expected final output:
-# "make[1]: Leaving directory '/opt/AMMOcoin-v1.1.0/ammocoin-source'"
+# "make[1]: Leaving directory '/opt/AMMOcoin/ammocoin-source'"
 ```
 
 ### **5.5 Monitor Compilation Progress**
@@ -516,7 +516,7 @@ cat /proc/meminfo | grep -E "(MemTotal|MemFree|SwapTotal|SwapFree)"
 ### **8.3 Cleanup Build Files**
 ```bash
 # Remove build directory to save space (optional)
-sudo rm -rf /opt/AMMOcoin-v1.1.0/ammocoin-source
+sudo rm -rf /opt/AMMOcoin/ammocoin-source
 
 # Clean package cache
 sudo apt autoremove -y
@@ -655,7 +655,7 @@ ammocoin-cli -testnet importwallet /path/to/backup/wallet.dat
 ## 📞 **Support and Resources**
 
 ### **If You Need Help**
-- **GitHub Issues**: [AMMOcoin v1.1.0 Issues](https://github.com/everquin/AMMOcoin-v1.1.0/issues)
+- **GitHub Issues**: [AMMOcoin v1.1.0 Issues](https://github.com/everquin/AMMOcoin/issues)
 - **Community Discord**: [Join AMMOcoin Discord](https://discord.gg/ammocoin)
 - **Documentation**: [Complete AMMOcoin Docs](https://docs.ammocoin.org)
 

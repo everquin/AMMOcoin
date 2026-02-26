@@ -24,7 +24,7 @@ cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 ./create-github-release.sh
 ```
 
-**Result:** https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+**Result:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 
 ---
 
@@ -74,20 +74,20 @@ git push origin main
 ### Step 5: Verify & Announce (20 min)
 
 #### A. Test Downloads (10 min)
-Visit: https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+Visit: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 
 Download each platform and verify:
 ```bash
 # macOS
-sha256sum AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+sha256sum AMMOcoin-macOS-ARM64.tar.gz
 # Should match: 71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881
 
 # Linux
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-Linux-x86_64.tar.gz
 # Should match: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
 
 # Windows
-certutil -hashfile AMMOcoin-v1.1.0-Windows-x86_64.zip SHA256
+certutil -hashfile AMMOcoin-Windows-x86_64.zip SHA256
 # Should match: 533e5160cdf5c59e8a61e20628f25c67fc5f74a260928ab9faa02f4464861f0d
 ```
 
@@ -106,7 +106,7 @@ certutil -hashfile AMMOcoin-v1.1.0-Windows-x86_64.zip SHA256
 ✅ Enhanced security & privacy
 ✅ New genesis block
 
-Download: https://github.com/everquin/AMMOcoin-v1.1.0/releases
+Download: https://github.com/everquin/AMMOcoin/releases
 Guide: https://ammocoin.org/migration.html
 
 #AMMOcoin #Crypto
@@ -125,7 +125,7 @@ If critical issues found:
 
 ```bash
 # Mark release as pre-release
-gh release edit v1.1.0 --prerelease --repo everquin/AMMOcoin-v1.1.0
+gh release edit v1.1.0 --prerelease --repo everquin/AMMOcoin
 
 # Add warning to website
 # Edit /Volumes/CRUCIAL_2TB/GITHUB/website_ammocoin/index.html
@@ -146,7 +146,7 @@ After deployment, monitor:
 
 ## 🔗 Quick Links
 
-**Release:** https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+**Release:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 **Website:** https://ammocoin.org
 **Downloads:** https://ammocoin.org/downloads.html
 **Migration:** https://ammocoin.org/migration.html

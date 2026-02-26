@@ -12,9 +12,9 @@
 
 The compiled Linux binaries are located at:
 ```
-/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind
-/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-cli
-/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-tx
+/opt/AMMOcoin/ammocoin-source/src/ammocoind
+/opt/AMMOcoin/ammocoin-source/src/ammocoin-cli
+/opt/AMMOcoin/ammocoin-source/src/ammocoin-tx
 ```
 
 ---
@@ -28,9 +28,9 @@ The compiled Linux binaries are located at:
 ./scripts/packaging/DOWNLOAD_LINUX_BINARIES.sh
 
 # Or download manually:
-scp root@48.141.194.140:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind ./binaries-linux-v1.1.0/
-scp root@48.141.194.140:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-cli ./binaries-linux-v1.1.0/
-scp root@48.141.194.140:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-tx ./binaries-linux-v1.1.0/
+scp root@48.141.194.140:/opt/AMMOcoin/ammocoin-source/src/ammocoind ./binaries-linux-v1.1.0/
+scp root@48.141.194.140:/opt/AMMOcoin/ammocoin-source/src/ammocoin-cli ./binaries-linux-v1.1.0/
+scp root@48.141.194.140:/opt/AMMOcoin/ammocoin-source/src/ammocoin-tx ./binaries-linux-v1.1.0/
 ```
 
 ---
@@ -45,7 +45,7 @@ scp root@48.141.194.140:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-tx ./b
 - Running `ammocoind` executes: v1.0
 
 **v1.1.0 Installation:**
-- Location: `/opt/AMMOcoin-v1.1.0/ammocoin-source/src/`
+- Location: `/opt/AMMOcoin/ammocoin-source/src/`
 - In system PATH: NO
 - Running `ammocoind` executes: v1.0 (NOT v1.1.0!)
 
@@ -56,10 +56,10 @@ scp root@48.141.194.140:/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoin-tx ./b
 ammocoind
 
 # ✅ CORRECT - This runs v1.1.0:
-/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind
+/opt/AMMOcoin/ammocoin-source/src/ammocoind
 
 # Best practice: Use absolute path or create alias
-alias ammocoind-v1.1.0='/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind'
+alias ammocoind-v1.1.0='/opt/AMMOcoin/ammocoin-source/src/ammocoind'
 ```
 
 ### Separate Data Directories:
@@ -79,7 +79,7 @@ alias ammocoind-v1.1.0='/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind'
 ammocoind -datadir=/root/.ammocoin -port=37021 -rpcport=51474 -daemon
 
 # v1.1.0 (on standard ports)
-/opt/AMMOcoin-v1.1.0/ammocoin-source/src/ammocoind \
+/opt/AMMOcoin/ammocoin-source/src/ammocoind \
   -datadir=/root/.ammocoin-v1.1.0 \
   -port=37020 \
   -rpcport=51473 \
@@ -120,15 +120,15 @@ After downloading, create distribution packages:
 ```bash
 # Create tar.gz archive
 cd binaries-linux-v1.1.0/
-tar -czf ../releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz ammocoind ammocoin-cli ammocoin-tx
+tar -czf ../releases/AMMOcoin-Linux-x86_64.tar.gz ammocoind ammocoin-cli ammocoin-tx
 
 # Create zip archive
-zip ../releases/AMMOcoin-v1.1.0-Linux-x86_64.zip ammocoind ammocoin-cli ammocoin-tx
+zip ../releases/AMMOcoin-Linux-x86_64.zip ammocoind ammocoin-cli ammocoin-tx
 
 # Generate checksums
 cd ../releases/
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz >> CHECKSUMS.txt
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.zip >> CHECKSUMS.txt
+sha256sum AMMOcoin-Linux-x86_64.tar.gz >> CHECKSUMS.txt
+sha256sum AMMOcoin-Linux-x86_64.zip >> CHECKSUMS.txt
 ```
 
 ---
@@ -141,14 +141,14 @@ Users downloading these binaries should follow this process:
 
 ```bash
 # Download from GitHub releases
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
 
 # Verify checksum
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-Linux-x86_64.tar.gz
 # Compare with CHECKSUMS.txt
 
 # Extract
-tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-Linux-x86_64.tar.gz
 ```
 
 ### 2. Install Binaries
@@ -271,7 +271,7 @@ Always verify checksums before installation:
 
 ```bash
 # Download checksum file
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS.txt
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS.txt
 
 # Verify
 sha256sum -c CHECKSUMS.txt --ignore-missing

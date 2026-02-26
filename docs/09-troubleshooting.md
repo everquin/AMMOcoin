@@ -799,7 +799,7 @@ ammocoind
 - **Discord**: #technical-support
 - **Telegram**: @AMMOcoinSupport
 - **Forum**: forum.ammocoin.org/support
-- **GitHub**: github.com/everquin/AMMOcoin-v1.1.0/issues
+- **GitHub**: github.com/everquin/AMMOcoin/issues
 
 ### Emergency Situations
 - **Wallet won't start**: Try emergency fixes first

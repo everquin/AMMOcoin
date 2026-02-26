@@ -1,74 +1,63 @@
-import { Activity, Blocks, Users, TrendingUp, Clock, Shield, Zap, Eye } from "lucide-react";
+"use client";
+
+import { Activity, Blocks, Users, Shield, Clock, Zap, Eye } from "lucide-react";
 import Link from "next/link";
 import { SearchBar } from "@/components/ui/SearchBar";
+import { useEffect, useState } from "react";
 
-// Mock data - in a real app, this would come from your blockchain API
-const mockStats = {
-  currentHeight: 55881,
-  totalTransactions: 1234567,
-  totalAddresses: 89432,
-  networkHashrate: "12.5 GH/s",
-  blockTime: "60s",
-  totalSupply: "99,876,543 AMMO",
-  circulatingSupply: "89,123,456 AMMO",
-  masternodes: 1247,
-};
+interface NetworkStats {
+  height: number;
+  difficulty: number;
+  hashrate: number;
+  totalSupply: number;
+  circulatingSupply: number;
+  nodes: number;
+  mempool: {
+    size: number;
+    bytes: number;
+  };
+  blockchain: {
+    chain: string;
+    blocks: number;
+    headers: number;
+    bestblockhash: string;
+    mediantime: number;
+    verificationprogress: number;
+  };
+}
 
-const mockRecentBlocks = [
-  {
-    height: 55881,
-    hash: "0000000000000000000f3b2b2c5d8e9a7b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8",
-    timestamp: Date.now() - 60000,
-    transactions: 8,
-    size: 1234,
-  },
-  {
-    height: 55880,
-    hash: "0000000000000000000e2a1b1d4c7e8a6b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7",
-    timestamp: Date.now() - 120000,
-    transactions: 12,
-    size: 2156,
-  },
-  {
-    height: 55879,
-    hash: "0000000000000000000d1a0b0c3d6e7a5b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6",
-    timestamp: Date.now() - 180000,
-    transactions: 5,
-    size: 867,
-  },
-];
+interface BlockSummary {
+  height: number;
+  hash: string;
+  time?: number;
+  timestamp?: number;
+  tx?: number;
+  transactionCount?: number;
+  size: number;
+}
 
-const mockRecentTransactions = [
-  {
-    txid: "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
-    timestamp: Date.now() - 30000,
-    value: 125.75,
-    fee: 0.001,
-  },
-  {
-    txid: "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
-    timestamp: Date.now() - 45000,
-    value: 50.25,
-    fee: 0.001,
-  },
-  {
-    txid: "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4",
-    timestamp: Date.now() - 90000,
-    value: 1000.0,
-    fee: 0.002,
-  },
-];
+interface TxSummary {
+  txid: string;
+  time?: number;
+  timestamp?: number;
+  vout?: { value: number }[];
+  totalOutput?: number;
+}
 
 function formatTimeAgo(timestamp: number) {
-  const now = Date.now();
+  const now = Math.floor(Date.now() / 1000);
   const diff = now - timestamp;
-  const minutes = Math.floor(diff / 60000);
-  if (minutes === 0) return "Just now";
+  if (diff < 60) return "Just now";
+  const minutes = Math.floor(diff / 60);
   if (minutes === 1) return "1 minute ago";
-  return `${minutes} minutes ago`;
+  if (minutes < 60) return `${minutes} minutes ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours === 1) return "1 hour ago";
+  return `${hours} hours ago`;
 }
 
 function formatHash(hash: string, length = 16) {
+  if (!hash) return "...";
   return `${hash.slice(0, length)}...`;
 }
 
@@ -76,7 +65,49 @@ function formatNumber(num: number) {
   return new Intl.NumberFormat().format(num);
 }
 
+function formatSupply(num: number) {
+  if (num <= 0) return "—";
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M AMMO`;
+  return `${formatNumber(Math.floor(num))} AMMO`;
+}
+
 export default function HomePage() {
+  const [stats, setStats] = useState<NetworkStats | null>(null);
+  const [recentBlocks, setRecentBlocks] = useState<BlockSummary[]>([]);
+  const [recentTxs, setRecentTxs] = useState<TxSummary[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [statsRes, blocksRes, txsRes] = await Promise.all([
+          fetch("/api/stats").then((r) => r.json()).catch(() => null),
+          fetch("/api/blocks").then((r) => r.json()).catch(() => null),
+          fetch("/api/transactions").then((r) => r.json()).catch(() => null),
+        ]);
+
+        if (statsRes?.success) setStats(statsRes.data);
+        if (blocksRes?.success) setRecentBlocks(blocksRes.data?.blocks?.slice(0, 5) || blocksRes.data?.slice?.(0, 5) || []);
+        if (txsRes?.success) setRecentTxs(txsRes.data?.transactions?.slice(0, 5) || txsRes.data?.slice?.(0, 5) || []);
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+    const interval = setInterval(fetchData, 30000); // refresh every 30s
+    return () => clearInterval(interval);
+  }, []);
+
+  const blockHeight = stats?.height || 0;
+  const totalNodes = stats?.nodes || 0;
+  const difficulty = stats?.difficulty || 0;
+  const mempoolSize = stats?.mempool?.size || 0;
+  const totalSupply = stats?.totalSupply || 0;
+  const bestHash = stats?.blockchain?.bestblockhash || "";
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
@@ -85,17 +116,17 @@ export default function HomePage() {
           AMMOcoin Explorer
         </h1>
         <p className="text-xl text-ammocoin-gray-300 mb-8 max-w-3xl mx-auto">
-          Explore the AMMOcoin blockchain with privacy-focused features, Sapling transactions,
+          Explore the AMMOcoin blockchain with privacy-focused features, shielded transactions,
           and real-time network statistics.
         </p>
         <div className="max-w-2xl mx-auto">
           <SearchBar placeholder="Search blocks, transactions, addresses..." />
         </div>
         <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-ammocoin-gray-400">
-          <span>• Block Height: {formatNumber(mockStats.currentHeight)}</span>
+          <span>• Block Height: {loading ? "..." : formatNumber(blockHeight)}</span>
           <span>• Network: Mainnet</span>
           <span>• Consensus: Proof of Stake</span>
-          <span>• Privacy: Sapling Protocol</span>
+          <span>• Privacy: Shielded Transactions</span>
         </div>
       </section>
 
@@ -109,7 +140,7 @@ export default function HomePage() {
               <span className="text-xs text-ammocoin-gray-400">BLOCKS</span>
             </div>
             <div className="text-2xl font-bold text-ammocoin-white">
-              {formatNumber(mockStats.currentHeight)}
+              {loading ? "..." : formatNumber(blockHeight)}
             </div>
             <div className="text-sm text-ammocoin-gray-400">Current Height</div>
           </div>
@@ -117,23 +148,23 @@ export default function HomePage() {
           <div className="stat-card">
             <div className="flex items-center justify-between mb-2">
               <Activity className="w-5 h-5 text-ammocoin-primary" />
-              <span className="text-xs text-ammocoin-gray-400">TXS</span>
+              <span className="text-xs text-ammocoin-gray-400">DIFFICULTY</span>
             </div>
             <div className="text-2xl font-bold text-ammocoin-white">
-              {formatNumber(mockStats.totalTransactions)}
+              {loading ? "..." : difficulty.toFixed(6)}
             </div>
-            <div className="text-sm text-ammocoin-gray-400">Total Transactions</div>
+            <div className="text-sm text-ammocoin-gray-400">Network Difficulty</div>
           </div>
 
           <div className="stat-card">
             <div className="flex items-center justify-between mb-2">
               <Users className="w-5 h-5 text-ammocoin-primary" />
-              <span className="text-xs text-ammocoin-gray-400">ADDR</span>
+              <span className="text-xs text-ammocoin-gray-400">MEMPOOL</span>
             </div>
             <div className="text-2xl font-bold text-ammocoin-white">
-              {formatNumber(mockStats.totalAddresses)}
+              {loading ? "..." : formatNumber(mempoolSize)}
             </div>
-            <div className="text-sm text-ammocoin-gray-400">Total Addresses</div>
+            <div className="text-sm text-ammocoin-gray-400">Pending Transactions</div>
           </div>
 
           <div className="stat-card">
@@ -142,9 +173,9 @@ export default function HomePage() {
               <span className="text-xs text-ammocoin-gray-400">NODES</span>
             </div>
             <div className="text-2xl font-bold text-ammocoin-white">
-              {formatNumber(mockStats.masternodes)}
+              {loading ? "..." : formatNumber(totalNodes)}
             </div>
-            <div className="text-sm text-ammocoin-gray-400">Masternodes</div>
+            <div className="text-sm text-ammocoin-gray-400">Connected Peers</div>
           </div>
         </div>
       </section>
@@ -157,7 +188,7 @@ export default function HomePage() {
             <Shield className="w-8 h-8 text-ammocoin-primary mb-4" />
             <h3 className="text-lg font-semibold text-ammocoin-white mb-2">Privacy First</h3>
             <p className="text-ammocoin-gray-400 text-sm">
-              Sapling protocol enables completely private transactions with zero-knowledge proofs.
+              Shielded transactions enable completely private transfers with advanced cryptographic privacy.
             </p>
           </div>
 
@@ -201,34 +232,45 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="space-y-4">
-            {mockRecentBlocks.map((block) => (
-              <div key={block.height} className="block-card">
-                <div className="flex items-center justify-between mb-2">
-                  <Link
-                    href={`/block/${block.height}`}
-                    className="text-ammocoin-primary hover:text-ammocoin-hover font-mono text-lg"
-                  >
-                    #{formatNumber(block.height)}
-                  </Link>
-                  <span className="text-sm text-ammocoin-gray-400">
-                    {formatTimeAgo(block.timestamp)}
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  <div className="hash-display">
-                    {formatHash(block.hash)}
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-ammocoin-gray-400">
-                      {block.transactions} transactions
-                    </span>
-                    <span className="text-ammocoin-gray-400">
-                      {formatNumber(block.size)} bytes
-                    </span>
-                  </div>
-                </div>
+            {loading ? (
+              <div className="block-card text-center text-ammocoin-gray-400 py-8">
+                <div className="spinner mx-auto mb-3"></div>
+                Loading blocks...
               </div>
-            ))}
+            ) : recentBlocks.length === 0 ? (
+              <div className="block-card text-center text-ammocoin-gray-400 py-8">
+                No blocks available
+              </div>
+            ) : (
+              recentBlocks.map((block) => (
+                <div key={block.height} className="block-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <Link
+                      href={`/block/${block.height}`}
+                      className="text-ammocoin-primary hover:text-ammocoin-hover font-mono text-lg"
+                    >
+                      #{formatNumber(block.height)}
+                    </Link>
+                    <span className="text-sm text-ammocoin-gray-400">
+                      {formatTimeAgo(block.timestamp || block.time || 0)}
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="hash-display">
+                      {formatHash(block.hash)}
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-ammocoin-gray-400">
+                        {block.transactionCount || block.tx || 0} transaction{(block.transactionCount || block.tx || 0) !== 1 ? "s" : ""}
+                      </span>
+                      <span className="text-ammocoin-gray-400">
+                        {formatNumber(block.size)} bytes
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </section>
 
@@ -244,29 +286,42 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="space-y-4">
-            {mockRecentTransactions.map((tx) => (
-              <div key={tx.txid} className="block-card">
-                <div className="flex items-center justify-between mb-2">
-                  <Link
-                    href={`/tx/${tx.txid}`}
-                    className="text-ammocoin-primary hover:text-ammocoin-hover font-mono"
-                  >
-                    {formatHash(tx.txid, 12)}
-                  </Link>
-                  <span className="text-sm text-ammocoin-gray-400">
-                    {formatTimeAgo(tx.timestamp)}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-ammocoin-white font-semibold">
-                    {tx.value.toFixed(2)} AMMO
-                  </span>
-                  <span className="text-xs text-ammocoin-gray-400">
-                    Fee: {tx.fee} AMMO
-                  </span>
-                </div>
+            {loading ? (
+              <div className="block-card text-center text-ammocoin-gray-400 py-8">
+                <div className="spinner mx-auto mb-3"></div>
+                Loading transactions...
               </div>
-            ))}
+            ) : recentTxs.length === 0 ? (
+              <div className="block-card text-center text-ammocoin-gray-400 py-8">
+                No recent transactions
+              </div>
+            ) : (
+              recentTxs.map((tx) => (
+                <div key={tx.txid} className="block-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <Link
+                      href={`/tx/${tx.txid}`}
+                      className="text-ammocoin-primary hover:text-ammocoin-hover font-mono"
+                    >
+                      {formatHash(tx.txid, 12)}
+                    </Link>
+                    <span className="text-sm text-ammocoin-gray-400">
+                      {formatTimeAgo(tx.timestamp || tx.time || 0)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-ammocoin-white font-semibold">
+                      {tx.totalOutput
+                        ? tx.totalOutput.toFixed(2)
+                        : tx.vout
+                        ? tx.vout.reduce((sum: number, o: { value: number }) => sum + (o.value || 0), 0).toFixed(2)
+                        : "0.00"}{" "}
+                      AMMO
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </section>
       </div>
@@ -277,21 +332,21 @@ export default function HomePage() {
         <div className="grid md:grid-cols-3 gap-6">
           <div className="stat-card">
             <div className="text-2xl font-bold text-ammocoin-primary mb-2">
-              {mockStats.totalSupply}
+              {loading ? "..." : formatSupply(totalSupply)}
             </div>
             <div className="text-sm text-ammocoin-gray-400">Total Supply</div>
           </div>
           <div className="stat-card">
             <div className="text-2xl font-bold text-ammocoin-primary mb-2">
-              {mockStats.circulatingSupply}
+              {loading ? "..." : bestHash ? formatHash(bestHash, 20) : "—"}
             </div>
-            <div className="text-sm text-ammocoin-gray-400">Circulating Supply</div>
+            <div className="text-sm text-ammocoin-gray-400">Best Block Hash</div>
           </div>
           <div className="stat-card">
             <div className="text-2xl font-bold text-ammocoin-primary mb-2">
-              {mockStats.blockTime}
+              60s
             </div>
-            <div className="text-sm text-ammocoin-gray-400">Average Block Time</div>
+            <div className="text-sm text-ammocoin-gray-400">Target Block Time</div>
           </div>
         </div>
       </section>

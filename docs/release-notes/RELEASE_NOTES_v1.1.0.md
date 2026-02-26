@@ -21,7 +21,7 @@
 - ✅ **NEVER delete** your v1.0 wallet - proof of ownership required for claims
 - ✅ **Secure genesis:** New wallet generated with no private key exposure
 
-📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
+📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
 
 ---
 
@@ -33,24 +33,24 @@
 
 #### Download tar.gz (Recommended):
 ```bash
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
 ```
 
 #### Download zip (Alternative):
 ```bash
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.zip
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.zip
 ```
 
 #### Verify Checksum:
 ```bash
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-Linux-x86_64.tar.gz
 # Should match: 082f1eb063b3098d0deaef9a8550a9965cb341d771140c4222fd33944c0f5509
 ```
 
 #### Extract and Install:
 ```bash
 # Extract
-tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-Linux-x86_64.tar.gz
 
 # Install system-wide
 sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
@@ -73,25 +73,25 @@ ammocoind --version
 
 #### Download tar.gz (Recommended):
 ```bash
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.tar.gz
 ```
 
 #### Download zip (Alternative):
 ```bash
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-macOS-ARM64.zip
 ```
 
 #### Verify Checksum:
 ```bash
-shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+shasum -a 256 AMMOcoin-macOS-ARM64.tar.gz
 # Should match: 71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881
 ```
 
 #### Extract and Install:
 ```bash
 # Extract
-tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-cd AMMOcoin-v1.1.0-macOS-ARM64
+tar -xzf AMMOcoin-macOS-ARM64.tar.gz
+cd AMMOcoin-macOS-ARM64
 
 # Install
 sudo cp ammocoind ammocoin-cli ammocoin-tx /usr/local/bin/
@@ -112,7 +112,7 @@ ammocoind --version
 
 ### Windows
 
-Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0). The NSIS installer includes the Qt wallet, daemon, CLI tools, Sapling parameters, and Start Menu shortcuts.
+Download **AMMOcoin-Windows-x86_64-Setup.exe** from the [GitHub Release](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0). The NSIS installer includes the Qt wallet, daemon, CLI tools, Sapling parameters, and Start Menu shortcuts.
 
 ---
 
@@ -122,11 +122,11 @@ Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](
 
 ### macOS ARM64:
 ```
-71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-v1.1.0-macOS-ARM64.zip
+71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881  AMMOcoin-macOS-ARM64.tar.gz
+c2359866e4738e9f0230b2f4dada18acb4b45afae645630ce576244bc3093ec6  AMMOcoin-macOS-ARM64.zip
 ```
 
-Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)
+Download complete checksums: [CHECKSUMS-macOS-ARM64.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-macOS-ARM64.txt)
 
 ### Linux x86_64:
 **Note:** Linux binaries released February 22, 2026. See checksums above for verification.
@@ -247,17 +247,17 @@ If you prefer to compile from source or need a different platform:
 ### Automated Setup Script (Ubuntu/Debian):
 
 ```bash
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin
 sudo bash scripts/setup-seed-node.sh
 ```
 
 ### Manual Compilation:
 
 See detailed guides:
-- **Linux:** [SEED_NODE_QUICK_START.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/SEED_NODE_QUICK_START.md)
-- **Ubuntu Commands:** [VULTR_VM_SETUP_COMMANDS.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/VULTR_VM_SETUP_COMMANDS.md)
-- **Binary Guide:** [LINUX_BINARY_DISTRIBUTION_GUIDE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/LINUX_BINARY_DISTRIBUTION_GUIDE.md)
+- **Linux:** [SEED_NODE_QUICK_START.md](https://github.com/everquin/AMMOcoin/blob/main/SEED_NODE_QUICK_START.md)
+- **Ubuntu Commands:** [VULTR_VM_SETUP_COMMANDS.md](https://github.com/everquin/AMMOcoin/blob/main/VULTR_VM_SETUP_COMMANDS.md)
+- **Binary Guide:** [LINUX_BINARY_DISTRIBUTION_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/LINUX_BINARY_DISTRIBUTION_GUIDE.md)
 
 ---
 
@@ -285,9 +285,9 @@ See detailed guides:
 - ✅ Can handle edge cases individually
 - ✅ Prevents unclaimed funds from being lost
 
-📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
+📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
 
-📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/DISTRIBUTION_PROCESS_GUIDE.md)
+📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/DISTRIBUTION_PROCESS_GUIDE.md)
 
 **CRITICAL:** Your v1.0 `wallet.dat` contains proof of ownership needed to claim v1.1.0 balances. NEVER delete it!
 
@@ -363,7 +363,7 @@ See detailed guides:
 
 ```bash
 # Download checksum file
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/CHECKSUMS-Linux.txt
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-Linux.txt
 
 # Verify your download
 sha256sum -c CHECKSUMS-Linux.txt --ignore-missing
@@ -383,20 +383,20 @@ If you discover a security vulnerability, please email: security@ammocoin.org (o
 ## 📚 Documentation
 
 ### User Guides:
-- [User Migration Guide](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
-- [Node Operator Migration](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
-- [Network Bootstrap Guide](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/NETWORK_BOOTSTRAP_GUIDE.md)
+- [User Migration Guide](https://github.com/everquin/AMMOcoin/blob/main/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
+- [Node Operator Migration](https://github.com/everquin/AMMOcoin/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
+- [Network Bootstrap Guide](https://github.com/everquin/AMMOcoin/blob/main/NETWORK_BOOTSTRAP_GUIDE.md)
 
 ### Technical Guides:
-- [Linux Binary Distribution](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/LINUX_BINARY_DISTRIBUTION_GUIDE.md)
-- [Seed Node Quick Start](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/SEED_NODE_QUICK_START.md)
-- [Vultr VM Setup Commands](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/VULTR_VM_SETUP_COMMANDS.md)
-- [GitHub Release Strategy](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/GITHUB_BINARY_RELEASE_STRATEGY.md)
+- [Linux Binary Distribution](https://github.com/everquin/AMMOcoin/blob/main/LINUX_BINARY_DISTRIBUTION_GUIDE.md)
+- [Seed Node Quick Start](https://github.com/everquin/AMMOcoin/blob/main/SEED_NODE_QUICK_START.md)
+- [Vultr VM Setup Commands](https://github.com/everquin/AMMOcoin/blob/main/VULTR_VM_SETUP_COMMANDS.md)
+- [GitHub Release Strategy](https://github.com/everquin/AMMOcoin/blob/main/GITHUB_BINARY_RELEASE_STRATEGY.md)
 
 ### Development Docs:
-- [Repository Audit](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/20251228_COMPREHENSIVE_REPOSITORY_AUDIT.md)
-- [Implementation Plan](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/docs/20251228_NEXT_STEPS_IMPLEMENTATION_PLAN.md)
-- [Distribution Scripts](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/DISTRIBUTION_SCRIPTS_README.md)
+- [Repository Audit](https://github.com/everquin/AMMOcoin/blob/main/docs/20251228_COMPREHENSIVE_REPOSITORY_AUDIT.md)
+- [Implementation Plan](https://github.com/everquin/AMMOcoin/blob/main/docs/20251228_NEXT_STEPS_IMPLEMENTATION_PLAN.md)
+- [Distribution Scripts](https://github.com/everquin/AMMOcoin/blob/main/DISTRIBUTION_SCRIPTS_README.md)
 
 ---
 
@@ -406,7 +406,7 @@ If you discover a security vulnerability, please email: security@ammocoin.org (o
 
 ### Reporting Issues:
 
-- **GitHub Issues:** https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
 - **Security Issues:** Create private security advisory or email security@ammocoin.org
 
 When reporting issues, please include:
@@ -431,7 +431,7 @@ When reporting issues, please include:
 5. ✅ Configure and start v1.1.0 node
 6. ✅ Wait for distribution or claim from migration fund
 
-📖 **Complete Guide:** [V1.0_TO_V1.1.0_NODE_MIGRATION.md](https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
+📖 **Complete Guide:** [V1.0_TO_V1.1.0_NODE_MIGRATION.md](https://github.com/everquin/AMMOcoin/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
 
 **DO NOT:**
 - ❌ Delete v1.0 wallet before claiming v1.1.0 balances
@@ -443,12 +443,12 @@ When reporting issues, please include:
 ## 📞 Support
 
 ### Community:
-- **GitHub Discussions:** https://github.com/everquin/AMMOcoin-v1.1.0/discussions
-- **Issues:** https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- **GitHub Discussions:** https://github.com/everquin/AMMOcoin/discussions
+- **Issues:** https://github.com/everquin/AMMOcoin/issues
 
 ### Resources:
 - **Website:** https://www.ammocoin.org
-- **Documentation:** https://github.com/everquin/AMMOcoin-v1.1.0
+- **Documentation:** https://github.com/everquin/AMMOcoin
 - **Seed Nodes:** seed1.ammocoin.org, seed2.ammocoin.org
 
 ---

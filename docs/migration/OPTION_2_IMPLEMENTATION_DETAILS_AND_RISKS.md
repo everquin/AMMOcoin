@@ -213,10 +213,10 @@ strings src/ammocoind | grep "00000f14"
 **macOS:**
 ```bash
 cd releases
-tar -czf AMMOcoin-v1.1.0-snapshot-macOS-ARM64.tar.gz -C ../source/src ammocoind ammocoin-cli ammocoin-tx
-zip AMMOcoin-v1.1.0-snapshot-macOS-ARM64.zip -j ../source/src/ammocoind ../source/src/ammocoin-cli ../source/src/ammocoin-tx
+tar -czf AMMOcoin-snapshot-macOS-ARM64.tar.gz -C ../source/src ammocoind ammocoin-cli ammocoin-tx
+zip AMMOcoin-snapshot-macOS-ARM64.zip -j ../source/src/ammocoind ../source/src/ammocoin-cli ../source/src/ammocoin-tx
 
-shasum -a 256 AMMOcoin-v1.1.0-snapshot-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-snapshot.txt
+shasum -a 256 AMMOcoin-snapshot-macOS-ARM64.* > CHECKSUMS-macOS-ARM64-snapshot.txt
 ```
 
 **Time:** 15 minutes
@@ -535,11 +535,11 @@ ammocoin-cli getbalance
 ### Current State
 
 **GitHub Release:** v1.1.0-genesis-final
-**URL:** https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0-genesis-final
+**URL:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0-genesis-final
 
 **Contains:**
-- AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-- AMMOcoin-v1.1.0-macOS-ARM64.zip
+- AMMOcoin-macOS-ARM64.tar.gz
+- AMMOcoin-macOS-ARM64.zip
 - CHECKSUMS-macOS-ARM64.txt
 
 **Genesis:** 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2

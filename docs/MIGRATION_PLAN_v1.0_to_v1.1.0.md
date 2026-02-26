@@ -244,15 +244,15 @@ getbalance
 
 **Linux:**
 ```bash
-wget https://github.com/everquin/AMMOcoin-v1.1.0/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-tar -xzf AMMOcoin-v1.1.0-Linux.tar.gz
-cd AMMOcoin-v1.1.0/
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-Linux-x86_64.tar.gz
+tar -xzf AMMOcoin-Linux.tar.gz
+cd AMMOcoin/
 ./ammocoind -daemon
 ```
 
 **Windows:**
 ```
-Download AMMOcoin-v1.1.0-Setup.exe
+Download AMMOcoin-Setup.exe
 Run installer
 Launch AMMOcoin v1.1.0
 ```

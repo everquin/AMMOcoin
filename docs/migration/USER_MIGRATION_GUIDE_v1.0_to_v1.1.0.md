@@ -61,7 +61,7 @@ You have **3 options** to migrate. Choose the one that works best for you:
 **Best for:** Most users
 
 1. **Install v1.1.0:**
-   - Download from: [AMMOcoin Releases](https://github.com/everquin/AMMOcoin-v1.1.0/releases)
+   - Download from: [AMMOcoin Releases](https://github.com/everquin/AMMOcoin/releases)
    - Install for your platform (Windows/macOS/Linux)
 
 2. **Stop both daemons:**
@@ -270,7 +270,7 @@ ammocoin-cli importwallet ~/wallet-export.txt
 - Email: support@ammocoin.org
 - Discord: [Link]
 - Telegram: [Link]
-- GitHub Issues: https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- GitHub Issues: https://github.com/everquin/AMMOcoin/issues
 
 **Migration Support Hours:**
 - Available 24/7 during migration period

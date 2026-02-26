@@ -48,8 +48,8 @@ The definitive genesis block parameters are documented in the root directory:
 
 ## Getting Help
 
-- **GitHub Issues:** https://github.com/everquin/AMMOcoin-v1.1.0/issues
-- **GitHub Discussions:** https://github.com/everquin/AMMOcoin-v1.1.0/discussions
+- **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
+- **GitHub Discussions:** https://github.com/everquin/AMMOcoin/discussions
 
 ## Contributing
 

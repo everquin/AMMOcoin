@@ -15,7 +15,6 @@ export function Navbar() {
   const navigation = [
     { name: "Blocks", href: "/blocks", icon: Coins },
     { name: "Transactions", href: "/transactions", icon: Activity },
-    { name: "Addresses", href: "/addresses", icon: Users },
     { name: "Stats", href: "/stats", icon: BarChart3 },
   ];
 

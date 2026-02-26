@@ -21,8 +21,8 @@ Thank you for your interest in contributing to AMMOcoin! This project welcomes c
 ### 2. **Set Up Development Environment**
 ```bash
 # Fork and clone
-git clone https://github.com/yourusername/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/yourusername/AMMOcoin.git
+cd AMMOcoin
 
 # Install dependencies (macOS)
 brew install boost berkeley-db@4 libevent libsodium zeromq gmp openssl rust
@@ -119,7 +119,7 @@ Contributors are recognized through:
 ## 📞 **Getting Help**
 
 ### **Technical Questions**
-- [GitHub Discussions](https://github.com/everquin/AMMOcoin-v1.1.0/discussions)
+- [GitHub Discussions](https://github.com/everquin/AMMOcoin/discussions)
 - [Developer Documentation](docs/developer/)
 - [Build Instructions](docs/developer/BUILD.md)
 

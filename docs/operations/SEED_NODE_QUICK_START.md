@@ -28,8 +28,8 @@ v1.1.0 is a **completely new blockchain**. Your v1.0 wallet contains private key
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin
 
 # 2. Run the setup script
 sudo bash scripts/setup-seed-node.sh
@@ -82,7 +82,7 @@ sudo make install
 ### Step 4: Clone Repository
 ```bash
 cd ~
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git ammocoin
+git clone https://github.com/everquin/AMMOcoin.git ammocoin
 cd ammocoin/source
 ```
 

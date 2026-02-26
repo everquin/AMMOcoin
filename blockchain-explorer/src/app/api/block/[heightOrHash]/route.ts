@@ -3,10 +3,10 @@ import { getBlock } from '@/lib/api';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { heightOrHash: string } }
+  { params }: { params: Promise<{ heightOrHash: string }> }
 ) {
   try {
-    const { heightOrHash } = params;
+    const { heightOrHash } = await params;
 
     if (!heightOrHash) {
       return NextResponse.json(

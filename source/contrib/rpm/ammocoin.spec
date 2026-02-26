@@ -24,18 +24,18 @@ URL:		https://ammocoin.org/
 Source0:	https://ammocoin.org/bin/ammocoin-core-%{version}/ammocoin-%{version}.tar.gz
 Source1:	http://download.oracle.com/berkeley-db/db-%{bdbv}.NC.tar.gz
 
-Source10:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/contrib/debian/examples/ammocoin.conf
+Source10:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/contrib/debian/examples/ammocoin.conf
 
 #man pages
-Source20:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/doc/man/ammocoind.1
-Source21:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/doc/man/ammocoin-cli.1
-Source22:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/doc/man/ammocoin-qt.1
+Source20:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/doc/man/ammocoind.1
+Source21:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/doc/man/ammocoin-cli.1
+Source22:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/doc/man/ammocoin-qt.1
 
 #selinux
-Source30:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/contrib/rpm/ammocoin.te
+Source30:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/contrib/rpm/ammocoin.te
 # Source31 - what about ammocoin-tx and bench_ammocoin ???
-Source31:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/contrib/rpm/ammocoin.fc
-Source32:	https://raw.githubusercontent.com/everquin/AMMOcoin-v1.1.0/v%{version}/contrib/rpm/ammocoin.if
+Source31:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/contrib/rpm/ammocoin.fc
+Source32:	https://raw.githubusercontent.com/everquin/AMMOcoin/v%{version}/contrib/rpm/ammocoin.if
 
 Source100:	https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg
 

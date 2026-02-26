@@ -62,7 +62,7 @@ else
     error "ammocoind not found in PATH"
     echo "Please install binaries first:"
     echo "  Option 1: Download from GitHub Release"
-    echo "  Option 2: Use binaries in /opt/AMMOcoin-v1.1.0/ammocoin-source/src/"
+    echo "  Option 2: Use binaries in /opt/AMMOcoin/ammocoin-source/src/"
     exit 1
 fi
 echo ""

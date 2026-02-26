@@ -1,44 +1,51 @@
+"use client";
+
 import Link from "next/link";
 import { Github, ExternalLink, Heart } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [height, setHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setHeight(d.data.height); })
+      .catch(() => {});
+  }, []);
 
   const footerLinks = [
     {
       title: "Explorer",
       links: [
-        { name: "Latest Blocks", href: "/blocks" },
-        { name: "Latest Transactions", href: "/transactions" },
-        { name: "Top Addresses", href: "/addresses" },
-        { name: "Network Stats", href: "/stats" },
+        { name: "Latest Blocks", href: "/blocks", external: false },
+        { name: "Latest Transactions", href: "/transactions", external: false },
+        { name: "Network Stats", href: "/stats", external: false },
       ],
     },
     {
       title: "AMMOcoin",
       links: [
         { name: "Official Website", href: "https://ammocoin.org", external: true },
-        { name: "Whitepaper", href: "/whitepaper", external: false },
-        { name: "Privacy Features", href: "/privacy", external: false },
-        { name: "Masternode Guide", href: "/masternodes", external: false },
+        { name: "Downloads", href: "https://ammocoin.org/downloads", external: true },
+        { name: "Whitepaper", href: "https://ammocoin.org/whitepaper", external: true },
       ],
     },
     {
-      title: "Resources",
+      title: "Development",
       links: [
-        { name: "API Documentation", href: "/api", external: false },
-        { name: "Block Height", href: "/block/latest", external: false },
-        { name: "Mempool", href: "/mempool", external: false },
-        { name: "Rich List", href: "/richlist", external: false },
+        { name: "GitHub", href: "https://github.com/everquin/AMMOcoin", external: true },
+        { name: "Release Notes", href: "https://github.com/everquin/AMMOcoin/releases", external: true },
+        { name: "Build Guide", href: "https://github.com/everquin/AMMOcoin/blob/main/docs/installation/LINUX_BUILD_INSTRUCTIONS_v1.1.0.md", external: true },
       ],
     },
     {
-      title: "Community",
+      title: "Network",
       links: [
-        { name: "GitHub", href: "https://github.com/ammocoin", external: true },
-        { name: "Discord", href: "#", external: true },
-        { name: "Telegram", href: "#", external: true },
-        { name: "Twitter", href: "#", external: true },
+        { name: "Seed Nodes", href: "https://ammocoin.org", external: true },
+        { name: "Genesis Block", href: "/block/0", external: false },
+        { name: "API: /api/stats", href: "/api/stats", external: false },
       ],
     },
   ];
@@ -69,7 +76,7 @@ export function Footer() {
               </p>
               <div className="flex space-x-3">
                 <a
-                  href="https://github.com/ammocoin"
+                  href="https://github.com/everquin/AMMOcoin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-ammocoin-gray-400 hover:text-ammocoin-primary transition-colors"
@@ -128,7 +135,7 @@ export function Footer() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div className="stat-card">
                 <div className="text-2xl font-bold text-ammocoin-primary">
-                  55,881
+                  {height !== null ? height.toLocaleString() : "..."}
                 </div>
                 <div className="text-sm text-ammocoin-gray-400">
                   Current Height
@@ -144,10 +151,10 @@ export function Footer() {
               </div>
               <div className="stat-card">
                 <div className="text-2xl font-bold text-ammocoin-primary">
-                  ~100M
+                  250M
                 </div>
                 <div className="text-sm text-ammocoin-gray-400">
-                  Total Supply
+                  Premine Supply
                 </div>
               </div>
               <div className="stat-card">
@@ -164,25 +171,20 @@ export function Footer() {
           {/* Bottom Section */}
           <div className="border-t border-ammocoin-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-ammocoin-gray-400 mb-4 md:mb-0">
-              © {currentYear} AMMOcoin Explorer. Built with{" "}
+              &copy; {currentYear} AMMOcoin Explorer. Built with{" "}
               <Heart className="w-4 h-4 inline text-ammocoin-primary" /> for the AMMOcoin community.
             </div>
             <div className="text-sm text-ammocoin-gray-400">
               <span className="mr-4">v1.1.0</span>
-              <span className="mr-4">•</span>
-              <Link
-                href="/privacy"
+              <span className="mr-4">&middot;</span>
+              <a
+                href="https://ammocoin.org"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-ammocoin-primary transition-colors"
               >
-                Privacy Policy
-              </Link>
-              <span className="mx-4">•</span>
-              <Link
-                href="/terms"
-                className="hover:text-ammocoin-primary transition-colors"
-              >
-                Terms of Service
-              </Link>
+                ammocoin.org
+              </a>
             </div>
           </div>
         </div>

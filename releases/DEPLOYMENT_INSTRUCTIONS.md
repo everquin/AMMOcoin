@@ -7,11 +7,11 @@ This guide covers the final steps to publish the v1.1.0 release to the public.
 ## Prerequisites
 
 ✅ All binaries built and tested:
-- macOS ARM64: `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz` (4 MB) ✅
-- Linux x86_64: `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz` (112 MB) ✅
-- Windows x86_64: `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz` (17 MB) ✅
+- macOS ARM64: `AMMOcoin-macOS-ARM64.tar.gz` (4 MB) ✅
+- Linux x86_64: `AMMOcoin-Linux-x86_64.tar.gz` (112 MB) ✅
+- Windows x86_64: `AMMOcoin-Windows-x86_64.tar.gz` (17 MB) ✅
 
-✅ Checksums generated: `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt` ✅
+✅ Checksums generated: `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt` ✅
 
 ✅ Release notes prepared: `RELEASE_NOTES_v1.1.0.md` ✅
 
@@ -36,17 +36,17 @@ This will:
 
 ### Option B: Manual Upload via GitHub Web Interface
 
-1. Go to: https://github.com/everquin/AMMOcoin-v1.1.0/releases/new
+1. Go to: https://github.com/everquin/AMMOcoin/releases/new
 2. Tag: `v1.1.0`
 3. Title: `AMMOcoin v1.1.0 - Multi-Platform Release`
 4. Copy-paste content from `RELEASE_NOTES_v1.1.0.md`
 5. Upload these files:
-   - `AMMOcoin-v1.1.0-macOS-ARM64.tar.gz`
-   - `AMMOcoin-v1.1.0-macOS-ARM64.zip`
-   - `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz`
-   - `AMMOcoin-v1.1.0-Windows-x86_64.tar.gz`
-   - `AMMOcoin-v1.1.0-Windows-x86_64.zip`
-   - `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt`
+   - `AMMOcoin-macOS-ARM64.tar.gz`
+   - `AMMOcoin-macOS-ARM64.zip`
+   - `AMMOcoin-Linux-x86_64.tar.gz`
+   - `AMMOcoin-Windows-x86_64.tar.gz`
+   - `AMMOcoin-Windows-x86_64.zip`
+   - `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt`
 6. Click "Publish release"
 
 ---
@@ -59,8 +59,8 @@ After the GitHub Release is created, clean up the local releases folder:
 cd /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases
 
 # Remove binary directories (keep only archives)
-rm -rf AMMOcoin-v1.1.0-macOS-ARM64/
-rm -rf AMMOcoin-v1.1.0-Windows-x86_64/
+rm -rf AMMOcoin-macOS-ARM64/
+rm -rf AMMOcoin-Windows-x86_64/
 rm -rf Windows-Binaries/
 
 # Keep only:
@@ -74,7 +74,7 @@ rm -rf Windows-Binaries/
 **What to keep in /releases:**
 - ✅ `README.md` - User-facing download guide
 - ✅ `RELEASE_NOTES_v1.1.0.md` - Release notes
-- ✅ `AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt` - Checksums
+- ✅ `AMMOcoin-ALL-PLATFORMS-CHECKSUMS.txt` - Checksums
 - ✅ `create-github-release.sh` - Release automation script
 - ✅ `DEPLOYMENT_INSTRUCTIONS.md` - This file
 - ❌ Binary directories (uploaded to GitHub, not needed in repo)
@@ -91,7 +91,7 @@ The website currently links to an old whitepaper from 2022. Update it:
 
 The site already links to the new whitepaper at:
 ```
-https://github.com/everquin/AMMOcoin-v1.1.0/blob/main/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md
+https://github.com/everquin/AMMOcoin/blob/main/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md
 ```
 
 This is correct! ✅
@@ -132,7 +132,7 @@ Cloudflare Pages will automatically deploy from the `main` branch.
 ## Step 5: Verify Deployment
 
 ### Check GitHub Release
-1. Visit: https://github.com/everquin/AMMOcoin-v1.1.0/releases/tag/v1.1.0
+1. Visit: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 2. Verify all 6 files are attached
 3. Verify release notes display correctly
 4. Test download links
@@ -148,7 +148,7 @@ Cloudflare Pages will automatically deploy from the `main` branch.
 ```bash
 # Download each binary from GitHub
 # Verify checksums match
-sha256sum AMMOcoin-v1.1.0-*.tar.gz
+sha256sum AMMOcoin-*.tar.gz
 ```
 
 ---
@@ -183,7 +183,7 @@ Pre-built binaries are available for:
 - **Linux x86_64** (Ubuntu 20.04+, Debian 11+)
 - **Windows x86_64** (Windows 10/11)
 
-[Download from GitHub Releases](https://github.com/everquin/AMMOcoin-v1.1.0/releases/latest)
+[Download from GitHub Releases](https://github.com/everquin/AMMOcoin/releases/latest)
 ```
 
 ### Announcement Channels

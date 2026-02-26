@@ -1,9 +1,9 @@
 AMMOcoin Core v1.1.0
 ====================
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/everquin/AMMOcoin-v1.1.0)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/everquin/AMMOcoin-v1.1.0?color=%23FFD700&cacheSeconds=3600)](https://github.com/everquin/AMMOcoin-v1.1.0/releases)
-[![Platform](https://img.shields.io/badge/platform-macOS%20ARM64-blue)](https://github.com/everquin/AMMOcoin-v1.1.0)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/everquin/AMMOcoin)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/everquin/AMMOcoin?color=%23FFD700&cacheSeconds=3600)](https://github.com/everquin/AMMOcoin/releases)
+[![Platform](https://img.shields.io/badge/platform-macOS%20ARM64-blue)](https://github.com/everquin/AMMOcoin)
 
 ## What is AMMOcoin?
 
@@ -50,8 +50,8 @@ For detailed specifications and community resources, visit [AMMOcoin.org](https:
 
 ```bash
 # Clone the repository
-git clone https://github.com/everquin/AMMOcoin-v1.1.0.git
-cd AMMOcoin-v1.1.0
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin
 
 # Install dependencies
 brew install boost berkeley-db@4 libevent libsodium zeromq gmp openssl
@@ -235,9 +235,9 @@ AMMOcoin Core is released under the terms of the MIT license. See [COPYING](COPY
 ## Community & Support
 
 - **Website**: https://www.ammocoin.org/
-- **GitHub**: https://github.com/everquin/AMMOcoin-v1.1.0
+- **GitHub**: https://github.com/everquin/AMMOcoin
 - **Documentation**: [deployment/docs/](deployment/docs/)
-- **Issues**: https://github.com/everquin/AMMOcoin-v1.1.0/issues
+- **Issues**: https://github.com/everquin/AMMOcoin/issues
 
 ## Acknowledgments
 
