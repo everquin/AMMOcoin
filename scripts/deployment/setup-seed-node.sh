@@ -4,14 +4,16 @@
 # For Ubuntu 20.04/22.04/24.04 LTS
 #
 # This script sets up a complete AMMOcoin seed node with:
-# - All build dependencies
-# - Berkeley DB 4.8 (with modern GCC compatibility patch)
-# - Compiled v1.1.0 binaries
+# - Pre-built binaries from GitHub releases (default, fast)
+#   OR compiled from source (--build-from-source)
 # - Configured daemon with separate data directory
 # - v1.0 wallet backup (if upgrading from existing node)
 # - Systemd service for auto-start
+# - Security hardening (SSH, fail2ban, firewall, unattended-upgrades)
 #
-# Usage: sudo bash setup-seed-node.sh
+# Usage:
+#   sudo bash setup-seed-node.sh                  # Install pre-built .deb (recommended)
+#   sudo bash setup-seed-node.sh --build-from-source  # Compile from source
 #
 # IMPORTANT: If you have an existing v1.0 node with wallet balances,
 #            this script will automatically backup your v1.0 data before
@@ -20,9 +22,25 @@
 
 set -e  # Exit on error
 
+# Parse arguments
+INSTALL_METHOD="prebuilt"
+AMMOCOIN_VERSION="v1.1.0"
+GITHUB_REPO="everquin/AMMOcoin"
+
+for arg in "$@"; do
+    case $arg in
+        --build-from-source)
+            INSTALL_METHOD="source"
+            shift
+            ;;
+    esac
+done
+
 echo "========================================"
 echo "AMMOcoin v1.1.0 Seed Node Setup"
 echo "========================================"
+echo ""
+echo "Install method: $INSTALL_METHOD"
 echo ""
 
 # Check if running as root
@@ -79,84 +97,6 @@ apt-get update
 apt-get upgrade -y
 echo ""
 
-# Install build dependencies
-echo "=== Installing Build Dependencies ==="
-apt-get install -y \
-    build-essential \
-    libtool \
-    autotools-dev \
-    automake \
-    pkg-config \
-    libssl-dev \
-    libevent-dev \
-    bsdmainutils \
-    python3 \
-    libboost-all-dev \
-    libminiupnpc-dev \
-    libzmq3-dev \
-    libqrencode-dev \
-    libgmp-dev \
-    libsodium-dev \
-    cargo \
-    rustc \
-    git \
-    wget \
-    curl \
-    unzip \
-    autoconf-archive \
-    patch
-
-echo ""
-echo "=== Installing BerkeleyDB 4.8 ==="
-echo "Note: Applying compatibility patch for modern GCC"
-echo ""
-
-# BerkeleyDB 4.8 for wallet compatibility
-cd /tmp
-wget -q http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
-tar -xzf db-4.8.30.NC.tar.gz
-cd db-4.8.30.NC
-
-# Apply atomic.h patch for modern GCC compatibility
-# This fixes __atomic_compare_exchange naming conflict
-echo "Applying atomic.h compatibility patch..."
-cat > atomic.patch << 'EOF'
---- dbinc/atomic.h.orig	2025-01-01 00:00:00.000000000 +0000
-+++ dbinc/atomic.h	2025-01-01 00:00:00.000000000 +0000
-@@ -144,7 +144,7 @@
- #define	atomic_inc(env, p)	__atomic_inc(p)
- #define	atomic_dec(env, p)	__atomic_dec(p)
- #define	atomic_compare_exchange(env, p, o, n)	\
--	__atomic_compare_exchange((p), (o), (n))
-+	__atomic_compare_exchange_db((p), (o), (n))
- static inline int __atomic_inc(db_atomic_t *p)
- {
- 	int	temp;
-@@ -176,7 +176,7 @@
-  * http://gcc.gnu.org/onlinedocs/gcc-4.1.0/gcc/Atomic-Builtins.html
-  * which configure could be changed to use.
-  */
--static inline int __atomic_compare_exchange(
-+static inline int __atomic_compare_exchange_db(
- 	db_atomic_t *p, atomic_value_t oldval, atomic_value_t newval)
- {
- 	atomic_value_t was;
-EOF
-
-patch -p0 < atomic.patch
-echo "✓ Patch applied successfully"
-echo ""
-
-# Build and install Berkeley DB
-cd build_unix
-../dist/configure --enable-cxx --disable-shared --with-pic --prefix=/usr/local
-make -j$(nproc)
-make install
-cd /tmp
-rm -rf db-4.8.30.NC*
-echo "✓ BerkeleyDB 4.8 installed"
-echo ""
-
 # Backup v1.0 data if needed
 if [ "$V1_BACKUP_NEEDED" = true ]; then
     echo "=== Backing Up v1.0 Data ==="
@@ -199,74 +139,199 @@ if [ "$V1_BACKUP_NEEDED" = true ]; then
     echo ""
 fi
 
-# Clone or update repository
-echo "=== Setting up AMMOcoin Repository ==="
-AMMOCOIN_DIR="$USER_HOME/ammocoin"
+# ============================================================
+# Install AMMOcoin binaries
+# ============================================================
 
-if [ -d "$AMMOCOIN_DIR" ]; then
-    echo "Repository exists, updating..."
-    cd "$AMMOCOIN_DIR"
-    sudo -u $ACTUAL_USER git pull
+if [ "$INSTALL_METHOD" = "prebuilt" ]; then
+    # ----------------------------------------------------------
+    # Option A: Install pre-built .deb from GitHub releases (fast)
+    # ----------------------------------------------------------
+    echo "=== Installing Pre-built Binaries ==="
+    echo "Downloading AMMOcoin $AMMOCOIN_VERSION from GitHub releases..."
+
+    # Install minimal dependencies
+    apt-get install -y wget curl git
+
+    # Detect architecture
+    ARCH=$(dpkg --print-architecture)
+    case $ARCH in
+        amd64)
+            DEB_FILE="AMMOcoin-${AMMOCOIN_VERSION}-Linux-amd64.deb"
+            ;;
+        arm64)
+            DEB_FILE="AMMOcoin-${AMMOCOIN_VERSION}-Linux-arm64.deb"
+            ;;
+        *)
+            echo "ERROR: No pre-built binary for architecture: $ARCH"
+            echo "       Use --build-from-source instead"
+            exit 1
+            ;;
+    esac
+
+    DEB_URL="https://github.com/${GITHUB_REPO}/releases/download/${AMMOCOIN_VERSION}/${DEB_FILE}"
+
+    # Download and install
+    cd /tmp
+    wget -q --show-progress "$DEB_URL"
+    dpkg -i "$DEB_FILE" || apt-get install -f -y
+    rm -f "$DEB_FILE"
+
+    echo "✓ Pre-built binaries installed from GitHub release"
+    echo ""
+
 else
-    echo "Cloning repository..."
-    cd "$USER_HOME"
-    sudo -u $ACTUAL_USER git clone https://github.com/everquin/AMMOcoin.git ammocoin
-    cd "$AMMOCOIN_DIR"
+    # ----------------------------------------------------------
+    # Option B: Build from source (slow, requires build deps)
+    # ----------------------------------------------------------
+    echo "=== Installing Build Dependencies ==="
+    apt-get install -y \
+        build-essential \
+        libtool \
+        autotools-dev \
+        automake \
+        pkg-config \
+        libssl-dev \
+        libevent-dev \
+        bsdmainutils \
+        python3 \
+        libboost-all-dev \
+        libminiupnpc-dev \
+        libzmq3-dev \
+        libqrencode-dev \
+        libgmp-dev \
+        libsodium-dev \
+        cargo \
+        rustc \
+        git \
+        wget \
+        curl \
+        unzip \
+        autoconf-archive \
+        patch
+
+    echo ""
+    echo "=== Installing BerkeleyDB 4.8 ==="
+    echo "Note: Applying compatibility patch for modern GCC"
+    echo ""
+
+    # BerkeleyDB 4.8 for wallet compatibility
+    cd /tmp
+    wget -q http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
+    tar -xzf db-4.8.30.NC.tar.gz
+    cd db-4.8.30.NC
+
+    # Apply atomic.h patch for modern GCC compatibility
+    # This fixes __atomic_compare_exchange naming conflict
+    echo "Applying atomic.h compatibility patch..."
+    cat > atomic.patch << 'EOF'
+--- dbinc/atomic.h.orig	2025-01-01 00:00:00.000000000 +0000
++++ dbinc/atomic.h	2025-01-01 00:00:00.000000000 +0000
+@@ -144,7 +144,7 @@
+ #define	atomic_inc(env, p)	__atomic_inc(p)
+ #define	atomic_dec(env, p)	__atomic_dec(p)
+ #define	atomic_compare_exchange(env, p, o, n)	\
+-	__atomic_compare_exchange((p), (o), (n))
++	__atomic_compare_exchange_db((p), (o), (n))
+ static inline int __atomic_inc(db_atomic_t *p)
+ {
+ 	int	temp;
+@@ -176,7 +176,7 @@
+  * http://gcc.gnu.org/onlinedocs/gcc-4.1.0/gcc/Atomic-Builtins.html
+  * which configure could be changed to use.
+  */
+-static inline int __atomic_compare_exchange(
++static inline int __atomic_compare_exchange_db(
+ 	db_atomic_t *p, atomic_value_t oldval, atomic_value_t newval)
+ {
+ 	atomic_value_t was;
+EOF
+
+    patch -p0 < atomic.patch
+    echo "✓ Patch applied successfully"
+    echo ""
+
+    # Build and install Berkeley DB
+    cd build_unix
+    ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=/usr/local
+    make -j$(nproc)
+    make install
+    cd /tmp
+    rm -rf db-4.8.30.NC*
+    echo "✓ BerkeleyDB 4.8 installed"
+    echo ""
+
+    # Clone or update repository
+    echo "=== Setting up AMMOcoin Repository ==="
+    AMMOCOIN_DIR="$USER_HOME/ammocoin"
+
+    if [ -d "$AMMOCOIN_DIR" ]; then
+        echo "Repository exists, updating..."
+        cd "$AMMOCOIN_DIR"
+        sudo -u $ACTUAL_USER git pull
+    else
+        echo "Cloning repository..."
+        cd "$USER_HOME"
+        sudo -u $ACTUAL_USER git clone https://github.com/${GITHUB_REPO}.git ammocoin
+        cd "$AMMOCOIN_DIR"
+    fi
+
+    # Verify we're on the correct version
+    echo ""
+    echo "Verifying repository..."
+    CURRENT_COMMIT=$(git rev-parse --short HEAD)
+    echo "Current commit: $CURRENT_COMMIT"
+
+    # Check for v1.1.0 genesis block
+    if grep -q "0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp; then
+        echo "✓ v1.1.0 genesis block confirmed (Path A)"
+    else
+        echo "⚠️  WARNING: Genesis block mismatch!"
+        echo "   Expected v1.1.0 genesis (Path A)"
+    fi
+    echo ""
+
+    echo "=== Building AMMOcoin v1.1.0 ==="
+    cd "$AMMOCOIN_DIR/source"
+
+    # Clean previous build
+    make clean 2>/dev/null || true
+
+    # Run autogen
+    sudo -u $ACTUAL_USER ./autogen.sh
+
+    # Configure
+    sudo -u $ACTUAL_USER ./configure \
+        --disable-tests \
+        --disable-bench \
+        --without-gui \
+        --with-incompatible-bdb \
+        LDFLAGS="-L/usr/local/lib/" \
+        CPPFLAGS="-I/usr/local/include/"
+
+    # Build (use all cores)
+    echo "Building with $(nproc) cores (this may take 10-20 minutes)..."
+    sudo -u $ACTUAL_USER make -j$(nproc)
+
+    echo ""
+    echo "=== Installing Binaries ==="
+
+    # Remove old v1.0 binaries if they exist
+    if [ -f "/usr/local/bin/ammocoind" ]; then
+        echo "Removing old binaries..."
+        rm -f /usr/local/bin/ammocoind
+        rm -f /usr/local/bin/ammocoin-cli
+        rm -f /usr/local/bin/ammocoin-tx
+    fi
+
+    # Install v1.1.0 binaries
+    make install
+
+    echo "✓ Built and installed from source"
+    echo ""
 fi
-
-# Verify we're on the correct version
-echo ""
-echo "Verifying repository..."
-CURRENT_COMMIT=$(git rev-parse --short HEAD)
-echo "Current commit: $CURRENT_COMMIT"
-
-# Check for v1.1.0 genesis block
-if grep -q "0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp; then
-    echo "✓ v1.1.0 genesis block confirmed (Path A)"
-else
-    echo "⚠️  WARNING: Genesis block mismatch!"
-    echo "   Expected v1.1.0 genesis (Path A)"
-fi
-echo ""
-
-echo "=== Building AMMOcoin v1.1.0 ==="
-cd "$AMMOCOIN_DIR/source"
-
-# Clean previous build
-make clean 2>/dev/null || true
-
-# Run autogen
-sudo -u $ACTUAL_USER ./autogen.sh
-
-# Configure
-sudo -u $ACTUAL_USER ./configure \
-    --disable-tests \
-    --disable-bench \
-    --without-gui \
-    --with-incompatible-bdb \
-    LDFLAGS="-L/usr/local/lib/" \
-    CPPFLAGS="-I/usr/local/include/"
-
-# Build (use all cores)
-echo "Building with $(nproc) cores (this may take 10-20 minutes)..."
-sudo -u $ACTUAL_USER make -j$(nproc)
-
-echo ""
-echo "=== Installing Binaries ==="
-
-# Remove old v1.0 binaries if they exist
-if [ -f "/usr/local/bin/ammocoind" ]; then
-    echo "Removing old binaries..."
-    rm -f /usr/local/bin/ammocoind
-    rm -f /usr/local/bin/ammocoin-cli
-    rm -f /usr/local/bin/ammocoin-tx
-fi
-
-# Install v1.1.0 binaries
-make install
 
 # Verify installation
-echo ""
 echo "=== Verifying Installation ==="
 which ammocoind
 which ammocoin-cli
@@ -350,6 +415,10 @@ maxmempool=300
 # Logging
 debug=0
 shrinkdebugfile=1
+
+# Seed nodes
+addnode=seed1.ammocoin.org
+addnode=seed2.ammocoin.org
 
 # Staking (enable if you want this node to stake)
 # staking=1
