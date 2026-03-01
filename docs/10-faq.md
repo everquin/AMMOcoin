@@ -393,6 +393,35 @@ Depends on your situation:
 ### Is there a bug bounty program?
 Check the official website and GitHub for current bug bounty programs. Serious security vulnerabilities should be reported privately to security@ammocoin.org.
 
+## 🔄 Migration (v1.0 → v1.1.0)
+
+### How do I claim my v1.0 balance on v1.1.0?
+AMMOcoin v1.1.0 is a completely new blockchain — balances do not transfer automatically. To claim your v1.0 coins:
+
+1. **Back up** your v1.0 wallet.dat
+2. **Install v1.1.0** (pre-built binaries available for all platforms)
+3. **Import** your v1.0 private keys into v1.1.0
+4. **Sign a message** with your v1.0 address to prove ownership
+5. **Email** your claim to support@ammocoin.org (include v1.0 address, signature, and v1.1.0 receiving address)
+6. **Receive** your coins within 24-48 hours
+
+See the full [User Migration Guide](migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md) for detailed instructions.
+
+### What is the migration deadline?
+The claim period closes **April 3, 2026** (90 days from the v1.1.0 network launch on January 3, 2026). After this date, unclaimed funds return to the community treasury. Contact support@ammocoin.org if you need an extension.
+
+### What about masternodes?
+v1.0 masternode configurations do not carry over. After claiming your v1.0 balance (you need at least 10,000 AMMO collateral), you must set up a **fresh masternode** on v1.1.0. Contact support@ammocoin.org for masternode setup assistance.
+
+### What happens to unclaimed funds?
+After the claim period closes (April 3, 2026), unclaimed balances are returned to the community treasury. The team may consider late claims on a case-by-case basis, but this is not guaranteed.
+
+### Will importing my v1.0 wallet restore my balance?
+**No.** Importing v1.0 keys into v1.1.0 only adds your addresses to the wallet — it does NOT restore balances. You must complete the signed-message claim process to receive your coins.
+
+### Where can I download v1.1.0?
+Pre-built binaries for all platforms (macOS, Windows, Linux x86_64, Linux ARM64) are available on the [GitHub Releases page](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0) and the [AMMOcoin Downloads page](https://www.ammocoin.org/downloads.html).
+
 ---
 
 ## 🔍 Still Need Help?

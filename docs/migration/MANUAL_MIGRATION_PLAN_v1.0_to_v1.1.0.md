@@ -27,9 +27,9 @@ Since v1.1.0 is a **fresh blockchain** (not a continuation of v1.0), balances ca
 - Active users (>0 balance): ~20
 - Total supply: 232,397,748 AMMO
 
-### Phase 2: User Claims (30 days)
-**Claim Period:** 90 days from network launch
-- Users have 30 days to submit claims
+### Phase 2: User Claims (90 days)
+**Claim Period:** 90 days from network launch (January 3, 2026 — April 3, 2026)
+- Users have 90 days to submit claims
 - Proof of ownership required
 - Must provide v1.1.0 receiving address
 
@@ -99,7 +99,7 @@ curl -L -O https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoi
 
 # Verify checksum
 shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: feea58d2ec34d7758eefa8d4ca04eb5a3d6e5a98a5d67d19f1d2ff69d07cdeb3
+# Should match: f314ff670ad1088cc64516be4b2f7667974f9937a3c2e1683844e5500cb709dd
 
 # Extract
 tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
@@ -163,7 +163,7 @@ Proof of Ownership (Signed Message):
 Message: "I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: 2026-01-15"
 Signature: INsQ7k9R3m...
 
-Contact Email: support@ammocoin.com (for verification)
+Contact Email: support@ammocoin.org (for verification)
 Submission Date: 2026-01-15
 
 Optional: Transaction IDs showing balance history
@@ -369,53 +369,6 @@ Pending Claims: 2
 
 ---
 
-## Migration Supply Management
-
-### Total Supply Considerations
-
-**v1.0 Snapshot:**
-- Total supply: 232,397,748 AMMO
-- Active holder addresses: ~20
-- Distribution needed: 232M+ AMMO
-
-### Creating Distribution Supply
-
-#### Scenario 1: Use Genesis + Mining
-```
-Genesis reward: 1,000 AMMO
-Mining for 30 days: ~X AMMO (depends on block time/rewards)
-Total available: 1,000 + X AMMO
-```
-
-**Process:**
-1. Use genesis 250M AMMO for small claims first
-2. Mine blocks to create additional supply
-3. Distribute to larger claims as supply builds
-
-#### Scenario 2: Staged Distribution
-```
-Week 1: Distribute first 1,000 AMMO to smallest claims
-Week 2-4: Mine and distribute to medium claims
-Month 2: Complete large holder distributions
-```
-
-#### Scenario 3: Proportional Initial Distribution
-If total supply < total claims:
-```
-Distribution % = Available Supply / Total Claims
-Each user gets: Claimed Amount * Distribution %
-Remaining distributed as more is mined
-```
-
-**Example:**
-- Available: 10,000 AMMO mined
-- Total claims: 232,397,748 AMMO
-- Distribution: 0.0043% initially
-- User claiming 50,000 gets: 50,000 * 0.0043% = 2.15 AMMO
-- Rest comes later as more is mined
-
----
-
 ## Security and Fraud Prevention
 
 ### Red Flags to Watch For
@@ -466,7 +419,7 @@ If multiple people claim same v1.0 address:
 **A:** Unfortunately, without private keys you cannot prove ownership. No exception can be made.
 
 ### Q: Is there a deadline?
-**A:** Yes, claim period is 30 days. Late claims may be considered case-by-case but not guaranteed.
+**A:** Yes, the claim period is 90 days (closing April 3, 2026). Late claims may be considered case-by-case but are not guaranteed.
 
 ### Q: What happens to unclaimed balances?
 **A:** After claim period, unclaimed balances may be burned or returned to development fund. Team will announce policy.
@@ -502,8 +455,8 @@ If multiple people claim same v1.0 address:
 | Snapshot Taken | December 22, 2025 | ✅ Complete |
 | v1.1.0 Launch | January 3, 2026 | ✅ Complete |
 | Claim Period Opens | January 3, 2026 | ✅ Complete |
-| Claim Period Closes | January 31, 2026 | ⏳ Pending |
-| Distribution Complete | February 28, 2026 | ⏳ Pending |
+| Claim Period Closes | April 3, 2026 | ⏳ Pending |
+| Distribution Complete | May 2026 | ⏳ Pending |
 
 ---
 
@@ -544,6 +497,6 @@ done < "$CLAIMS_FILE"
 
 ---
 
-**Last Updated:** December 30, 2025
+**Last Updated:** March 1, 2026
 **Status:** Active Migration Plan
 **Questions?** Contact team at migration@ammocoin.org

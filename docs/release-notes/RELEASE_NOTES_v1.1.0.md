@@ -21,7 +21,7 @@
 - ✅ **NEVER delete** your v1.0 wallet - proof of ownership required for claims
 - ✅ **Secure genesis:** New wallet generated with no private key exposure
 
-📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
+📖 **Distribution Details:** [Distribution Process Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
 
 ---
 
@@ -31,23 +31,22 @@
 
 **Recommended for fastest setup (saves ~30 minutes compilation time)**
 
-#### Download tar.gz (Recommended):
+#### Download .deb package (Recommended for Ubuntu/Debian):
+```bash
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-amd64.deb
+sha256sum AMMOcoin-v1.1.0-Linux-amd64.deb
+# Should match: ae32a07effe874cf925e9e7c8dc604189f38113c54264ac47564a4e88fb53259
+sudo dpkg -i AMMOcoin-v1.1.0-Linux-amd64.deb
+```
+
+#### Download tar.gz (Alternative):
 ```bash
 wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-```
-
-#### Download zip (Alternative):
-```bash
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.zip
-```
-
-#### Verify Checksum:
-```bash
 sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-# Should match: 63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a
+# Should match: 41111899895744cf945079c544766199cc9e30398d2e239d76adf742a37f0b40
 ```
 
-#### Extract and Install:
+#### Extract and Install (tar.gz):
 ```bash
 # Extract
 tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
@@ -61,9 +60,9 @@ ammocoind --version
 ```
 
 **File Sizes:**
-- tar.gz: 72 MB (compressed)
-- zip: 72 MB (compressed)
-- Extracted: ~198 MB (with debug symbols)
+- .deb: 7.8 MB
+- tar.gz: 11.3 MB (compressed)
+- zip: 11.3 MB (compressed)
 
 ---
 
@@ -84,7 +83,7 @@ wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1
 #### Verify Checksum:
 ```bash
 shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: 71048bb0096c421bdbe331705a2cb9b00b46b0642e2cbf81ed6bfb025076e881
+# Should match: f314ff670ad1088cc64516be4b2f7667974f9937a3c2e1683844e5500cb709dd
 ```
 
 #### Extract and Install:
@@ -102,9 +101,9 @@ ammocoind --version
 ```
 
 **File Sizes:**
-- tar.gz: 4.5 MB (compressed)
-- zip: 9.1 MB (compressed)
-- Binaries: ~13 MB total (ammocoind: 11MB, ammocoin-cli: 382KB, ammocoin-tx: 1.4MB)
+- .dmg: 80 MB (installer with Qt wallet)
+- tar.gz: 4.5 MB (compressed, CLI only)
+- zip: 15.3 MB (compressed)
 
 **Note:** Intel Mac (x86_64) users should compile from source. See build guide below.
 
@@ -122,15 +121,30 @@ Download **AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe** from the [GitHub Release](
 
 ### macOS ARM64:
 ```
-feea58d2ec34d7758eefa8d4ca04eb5a3d6e5a98a5d67d19f1d2ff69d07cdeb3  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
 08dfb0be819eba85c3238f916e7c2464d1333f97a71a4c1caa0d9ebcea6fd7b6  AMMOcoin-v1.1.0-macOS-ARM64.dmg
-682e51a856c026bcf2a9bd2df3dcb234a67af5c130af0a1294855575bc0e3d50  AMMOcoin-v1.1.0-macOS-ARM64.zip
+f314ff670ad1088cc64516be4b2f7667974f9937a3c2e1683844e5500cb709dd  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+2724fcd9aeff0896b1785fb935c95dc228d8ea9856b29041e4cb931b70bd367b  AMMOcoin-v1.1.0-macOS-ARM64.zip
 ```
 
 ### Linux x86_64:
 ```
-63f9506060cb1405846189e8e19b4950f2246c143148a9c929df639db5ebf86a  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-801b371e41bd1d6d4a78c7883a04f6b6f300e610189a7f56e020f3d82ad81f6d  AMMOcoin-v1.1.0-Linux-amd64.deb
+41111899895744cf945079c544766199cc9e30398d2e239d76adf742a37f0b40  AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+582ab59221ba97046492e0d54fe76fbc62ac38a0acb99d72b9e51db4e788297a  AMMOcoin-v1.1.0-Linux-x86_64.zip
+ae32a07effe874cf925e9e7c8dc604189f38113c54264ac47564a4e88fb53259  AMMOcoin-v1.1.0-Linux-amd64.deb
+```
+
+### Linux ARM64:
+```
+42678ae20253b9acaa35732835a2a2a0ee552bb9a6b809ee683b5377d3f45014  AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+106eb73d750161ef1cc63cb846b79a7a88f99d8b37e4745b9b912c96fffd4c6f  AMMOcoin-v1.1.0-Linux-ARM64.zip
+d4ded3c4d368ce1fe7f40d998c924a61419c481242e7420fcdf2ac7925b073f3  AMMOcoin-v1.1.0-Linux-arm64.deb
+```
+
+### Windows x86_64:
+```
+82f7a652b0c388e69f1a03be8eff11a514195c02f5f91357cf588f7a698a31c8  AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
+34253f343617d116ffe5441f7517dc63a864747160c2f591140f227e7c81a0b8  AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
+d3a0478c82a2437197ccff4b8d6e49a6278fdffa446da7b68469818ec66ba440  AMMOcoin-v1.1.0-Windows-x86_64.zip
 ```
 
 Download complete checksums: [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
@@ -289,7 +303,7 @@ See detailed guides:
 - ✅ Can handle edge cases individually
 - ✅ Prevents unclaimed funds from being lost
 
-📖 **Distribution Details:** [OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md](https://github.com/everquin/AMMOcoin/blob/main/OPTION_2.5_TEAM_DISTRIBUTION_PREMINE.md)
+📖 **Distribution Details:** [Distribution Process Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
 
 📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/DISTRIBUTION_PROCESS_GUIDE.md)
 

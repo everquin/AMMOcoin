@@ -1,41 +1,30 @@
-# AMMOcoin v1.0 → v1.1.0 User Migration Guide
+# AMMOcoin v1.0 to v1.1.0 User Migration Guide
 
-**Migration Date:** December 2025
-**User Count:** ~20 users
-**Migration Method:** Private Key Import (Compatible Addresses)
+**Network Launch:** January 3, 2026
+**Migration Deadline:** April 3, 2026 (90 days)
+**Migration Method:** Signed-message claim process
 
 ---
 
 ## Overview
 
-AMMOcoin v1.1.0 is a major upgrade that provides:
-- ✅ Modern PIVX 5.x codebase
-- ✅ Enhanced privacy (Sapling)
-- ✅ Improved performance
-- ✅ Multi-platform support (Windows, macOS, Linux, ARM64)
-- ✅ Better security
+AMMOcoin v1.1.0 is a **completely new blockchain** — it is NOT an upgrade of v1.0. The two networks are separate and incompatible.
 
-**Good News:** Your v1.0 private keys work directly in v1.1.0! Migration is simple.
+A **250,000,000 AMMO distribution fund** in the v1.1.0 genesis block covers all v1.0 balances (snapshot taken at block 434,881 on December 22, 2025). To receive your coins on v1.1.0, you must complete a claim process that proves you owned a v1.0 address.
 
----
-
-## Migration Snapshot
-
-**Snapshot taken at:**
-- Block Height: **434,881**
-- Date: **December 22, 2025**
-- Total Addresses: **10,080**
-- Total Supply: **232,397,748 AMMO**
-
-All balances at this block height will be preserved when you import your private keys.
+**What v1.1.0 brings:**
+- Modern PIVX 5.x codebase
+- Sapling privacy (zkSNARK shielded transactions)
+- Improved performance and security
+- Pre-built binaries for all platforms (macOS, Windows, Linux x86_64, ARM64)
 
 ---
 
 ## Before You Start
 
-### ⚠️ Critical: Back Up Your Wallet
+### Back Up Your v1.0 Wallet
 
-**BEFORE doing anything, back up your v1.0 wallet:**
+**Without your v1.0 wallet.dat, you cannot prove ownership and will lose your coins permanently.**
 
 ```bash
 # Stop v1.0 daemon
@@ -48,324 +37,325 @@ cp ~/.ammocoin/wallet.dat ~/ammocoin-v1.0-wallet-backup-$(date +%Y%m%d).dat
 ls -lh ~/ammocoin-v1.0-wallet-backup-*.dat
 ```
 
-**Store this backup securely!** Keep multiple copies (USB drive, encrypted cloud storage, etc.)
+Store copies in multiple safe locations (USB drive, encrypted cloud storage, etc.).
 
 ---
 
-## Migration Methods
+## Step 1: Download and Install v1.1.0
 
-You have **3 options** to migrate. Choose the one that works best for you:
+Pre-built binaries are available for all platforms. Download from the [GitHub Release page](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0) or the [AMMOcoin Downloads page](https://www.ammocoin.org/downloads.html).
 
-### Option 1: Import Entire Wallet File (Easiest)
+### macOS (Apple Silicon)
 
-**Best for:** Most users
+Download and open the `.dmg` installer:
+```
+AMMOcoin-v1.1.0-macOS-ARM64.dmg
+SHA256: 08dfb0be819eba85c3238f916e7c2464d1333f97a71a4c1caa0d9ebcea6fd7b6
+```
+Drag AMMOcoin to your Applications folder.
 
-1. **Install v1.1.0:**
-   - Download from: [AMMOcoin Releases](https://github.com/everquin/AMMOcoin/releases)
-   - Install for your platform (Windows/macOS/Linux)
+Or use the `.tar.gz` for CLI-only:
+```bash
+curl -LO https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+# Expected: f314ff670ad1088cc64516be4b2f7667974f9937a3c2e1683844e5500cb709dd
+tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+sudo cp AMMOcoin-v1.1.0-macOS-ARM64/ammocoind AMMOcoin-v1.1.0-macOS-ARM64/ammocoin-cli /usr/local/bin/
+```
 
-2. **Stop both daemons:**
-   ```bash
-   # Stop v1.0 (if running)
-   ammocoin-cli stop
+### Windows
 
-   # Stop v1.1.0 (if running)
-   ammocoin-cli stop
-   ```
+Download and run the installer:
+```
+AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
+SHA256: 82f7a652b0c388e69f1a03be8eff11a514195c02f5f91357cf588f7a698a31c8
+```
+The NSIS installer includes the Qt wallet, daemon, CLI tools, Sapling parameters, and Start Menu shortcuts.
 
-3. **Copy your v1.0 wallet to v1.1.0:**
-   ```bash
-   # Backup v1.1.0 directory first (if it exists)
-   mv ~/.ammocoin ~/.ammocoin-v1.1.0-empty-backup
+### Linux x86_64
 
-   # Copy entire v1.0 data directory
-   cp -r ~/.ammocoin-v1.0 ~/.ammocoin
+**Option A: .deb package (Ubuntu/Debian — recommended)**
+```bash
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-amd64.deb
+sha256sum AMMOcoin-v1.1.0-Linux-amd64.deb
+# Expected: ae32a07effe874cf925e9e7c8dc604189f38113c54264ac47564a4e88fb53259
+sudo dpkg -i AMMOcoin-v1.1.0-Linux-amd64.deb
+```
 
-   # Or just copy the wallet file
-   mkdir -p ~/.ammocoin
-   cp ~/.ammocoin-v1.0/wallet.dat ~/.ammocoin/wallet.dat
-   ```
+**Option B: .tar.gz**
+```bash
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+# Expected: 41111899895744cf945079c544766199cc9e30398d2e239d76adf742a37f0b40
+tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
+```
 
-4. **Start v1.1.0 daemon:**
-   ```bash
-   ammocoind -daemon
+### Linux ARM64 (Raspberry Pi 4/5)
 
-   # Wait for sync (this may take hours)
-   watch ammocoin-cli getinfo
-   ```
+**Option A: .deb package**
+```bash
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-arm64.deb
+sha256sum AMMOcoin-v1.1.0-Linux-arm64.deb
+# Expected: d4ded3c4d368ce1fe7f40d998c924a61419c481242e7420fcdf2ac7925b073f3
+sudo dpkg -i AMMOcoin-v1.1.0-Linux-arm64.deb
+```
 
-5. **Verify your balance:**
-   ```bash
-   ammocoin-cli getbalance
-   ammocoin-cli listaddressgroupings
-   ```
+**Option B: .tar.gz**
+```bash
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+sha256sum AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+# Expected: 42678ae20253b9acaa35732835a2a2a0ee552bb9a6b809ee683b5377d3f45014
+tar -xzf AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
+sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
+```
 
-Your funds should appear once the blockchain is fully synced!
+### All Checksums
 
----
+See [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt) for a complete list.
 
-### Option 2: Import Private Keys (Advanced)
+### Start the v1.1.0 Node
 
-**Best for:** Users who want a fresh wallet or only need specific addresses
+```bash
+# Start daemon
+ammocoind -daemon
 
-1. **Export private keys from v1.0:**
-   ```bash
-   # Start v1.0 daemon
-   ammocoind-v1.0 -daemon
-
-   # Get all addresses
-   ammocoin-cli listreceivedbyaddress 0 true
-
-   # Export private key for each address
-   ammocoin-cli dumpprivkey "YOUR_ADDRESS_HERE"
-
-   # Save these keys securely!
-   ```
-
-2. **Import into v1.1.0:**
-   ```bash
-   # Start v1.1.0 daemon
-   ammocoind -daemon
-
-   # Import each private key
-   ammocoin-cli importprivkey "YOUR_PRIVATE_KEY_HERE" "label" false
-
-   # After importing all keys, rescan blockchain
-   ammocoin-cli stop
-   ammocoind -daemon -rescan
-   ```
-
-3. **Wait for rescan and verify balance:**
-   ```bash
-   ammocoin-cli getbalance
-   ```
+# Wait for startup, then verify correct genesis block
+ammocoin-cli getblockhash 0
+# Must return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
+```
 
 ---
 
-### Option 3: Use Wallet Import Function
+## Step 2: Import v1.0 Keys into v1.1.0
 
-**Best for:** Users comfortable with wallet files
+You need your v1.0 private keys in the v1.1.0 wallet so you can sign messages proving ownership. Choose one of three methods:
 
-1. **Export v1.0 wallet:**
-   ```bash
-   ammocoin-cli dumpwallet ~/v1.0-wallet-export.txt
-   ```
+### Method A: Copy wallet.dat (easiest)
 
-2. **Import into v1.1.0:**
-   ```bash
-   ammocoin-cli importwallet ~/v1.0-wallet-export.txt
-   ```
+```bash
+# Stop v1.1.0 daemon
+ammocoin-cli stop
+
+# Copy v1.0 wallet file into v1.1.0 data directory
+cp ~/ammocoin-v1.0-wallet-backup-*.dat ~/.ammocoin/wallet.dat
+
+# Restart with rescan
+ammocoind -daemon -rescan
+```
+
+### Method B: Import individual private keys
+
+```bash
+# From v1.0: export a private key
+/path/to/v1.0/ammocoin-cli dumpprivkey "YOUR_V1.0_ADDRESS"
+
+# In v1.1.0: import it (rescan=false for speed, rescan after all imports)
+ammocoin-cli importprivkey "PRIVATE_KEY_HERE" "v1.0 import" false
+
+# After importing all keys, rescan once
+ammocoin-cli stop
+ammocoind -daemon -rescan
+```
+
+### Method C: Dump/import entire wallet
+
+```bash
+# From v1.0: export all keys
+/path/to/v1.0/ammocoin-cli dumpwallet ~/v1.0-wallet-export.txt
+
+# In v1.1.0: import all keys
+ammocoin-cli importwallet ~/v1.0-wallet-export.txt
+
+# Delete the export file after import (contains private keys!)
+rm ~/v1.0-wallet-export.txt
+```
+
+**IMPORTANT: Importing keys does NOT restore your balance.** The v1.1.0 blockchain has no record of v1.0 transactions. Your balance will show 0 until you complete the claim process below.
+
+---
+
+## Step 3: Generate a v1.1.0 Receiving Address
+
+Create a new address where your claimed coins will be sent:
+
+```bash
+ammocoin-cli getnewaddress "Migration Claim"
+# Example output: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n
+```
+
+Back up your v1.1.0 wallet after generating the address:
+```bash
+ammocoin-cli backupwallet ~/ammocoin-v1.1.0-wallet-backup.dat
+```
+
+---
+
+## Step 4: Prove Ownership of Your v1.0 Address
+
+Sign a message with your v1.0 address (now available in v1.1.0 after Step 2):
+
+```bash
+# If wallet is encrypted, unlock it first
+ammocoin-cli walletpassphrase "your_passphrase" 300
+
+# Sign the claim message
+ammocoin-cli signmessage "YOUR_V1.0_ADDRESS" "I am migrating to AMMOcoin v1.1.0"
+
+# Returns a signature like: INsQ7k9R3m... (long base64 string)
+```
+
+Save the signature — you will need it for the claim submission.
+
+---
+
+## Step 5: Submit Your Claim
+
+Email **support@ammocoin.org** with the subject line: **Migration Claim - [Your v1.0 Address]**
+
+Include:
+1. **v1.0 Address:** (the address you signed with)
+2. **Message signed:** `I am migrating to AMMOcoin v1.1.0`
+3. **Signature:** (the base64 string from Step 4)
+4. **v1.1.0 Receiving Address:** (from Step 3)
+
+If you have multiple v1.0 addresses, submit a separate claim for each, or include all addresses with their signatures in one email.
+
+---
+
+## Step 6: Receive Your Coins
+
+Claims are typically processed within **24-48 hours**. Once approved, you will receive v1.1.0 AMMO matching your v1.0 snapshot balance at block 434,881.
+
+```bash
+# Check your balance
+ammocoin-cli getbalance
+
+# View recent transactions
+ammocoin-cli listtransactions "*" 10
+```
+
+---
+
+## Masternode Operators
+
+If you ran a masternode on v1.0, you must set up a **fresh masternode on v1.1.0** after claiming your collateral:
+
+1. **Claim your v1.0 balance** (follow Steps 1-6 above — you need at least 10,000 AMMO)
+2. **Set up a new VPS** running v1.1.0 (or upgrade your existing VPS)
+3. **Configure the masternode** following the standard v1.1.0 masternode setup process
+4. **Lock collateral** (10,000 AMMO) in your v1.1.0 wallet
+5. **Start the masternode**
+
+Your v1.0 masternode configuration does not carry over. Contact support@ammocoin.org if you need help with masternode setup.
 
 ---
 
 ## Verification Checklist
 
-After migration, verify everything:
+After completing migration:
 
-- [ ] **Balance matches v1.0:**
-  ```bash
-  ammocoin-cli getbalance
-  ```
-
-- [ ] **All addresses present:**
-  ```bash
-  ammocoin-cli listreceivedbyaddress 0 true
-  ```
-
-- [ ] **Transaction history visible:**
-  ```bash
-  ammocoin-cli listtransactions "*" 100
-  ```
-
-- [ ] **Can create new address:**
-  ```bash
-  ammocoin-cli getnewaddress
-  ```
-
-- [ ] **Wallet is encrypted (if it was before):**
-  ```bash
-  ammocoin-cli getwalletinfo
-  ```
-
----
-
-## Important Notes
-
-### Network Timing
-
-- **v1.0 network:** No longer maintained
-- **v1.1.0 network launched:** January 3, 2026
-- **Migration window:** 90 days
-- **After migration window:** v1.0 network may be shut down
-
-### What Happens to Transaction History?
-
-- ❌ **Transaction history is NOT preserved** (new blockchain)
-- ✅ **Balances ARE preserved** (from snapshot at block 434,881)
-- ✅ **All future transactions** will be on v1.1.0 blockchain
-
-### Address Compatibility
-
-- ✅ **v1.0 and v1.1.0 use identical address format** (both start with 'A')
-- ✅ **Private keys can be imported into v1.1.0**
-- ⚠️ **wallet.dat files are NOT directly compatible** — use `dumpwallet`/`importwallet` or `dumpprivkey`/`importprivkey` to migrate keys
-- ✅ **You can verify addresses match before migrating**
-
-### What If I Don't Migrate?
-
-If you don't migrate within 90 days:
-1. Your v1.0 node will stop working when network shuts down
-2. Your funds remain safe in your private keys
-3. Contact support for manual migration assistance
-4. You can ALWAYS recover funds if you have your private keys
+- [ ] v1.1.0 node running and synced (`ammocoin-cli getblockchaininfo`)
+- [ ] Balance received matches v1.0 snapshot balance (`ammocoin-cli getbalance`)
+- [ ] Can create new addresses (`ammocoin-cli getnewaddress`)
+- [ ] Can send a small test transaction
+- [ ] Wallet encrypted (`ammocoin-cli encryptwallet "passphrase"` if not already)
+- [ ] v1.1.0 wallet backed up
+- [ ] v1.0 wallet backup stored safely (keep it!)
 
 ---
 
 ## Troubleshooting
 
-### "Balance shows zero after import"
+### "Balance shows zero after importing keys"
 
-**Solution:** The blockchain hasn't fully synced yet.
-```bash
-# Check sync status
-ammocoin-cli getblockchaininfo
-
-# Look for "verificationprogress" - should be 0.99999+ when synced
-```
+This is expected. Importing keys only adds addresses to your wallet — it does not restore balances. You must complete the claim process (Steps 4-6) to receive your v1.1.0 coins.
 
 ### "Error: Wallet is encrypted"
 
-**Solution:** Unlock wallet first:
+Unlock your wallet before signing:
 ```bash
-ammocoin-cli walletpassphrase "your_passphrase" 3600
+ammocoin-cli walletpassphrase "your_passphrase" 300
 ```
 
-### "Cannot import private key"
+### "signmessage: Private key not available"
 
-**Solution:** Start v1.1.0 daemon without rescan, import all keys, then rescan:
+The v1.0 address was not imported correctly. Try importing the key again:
+```bash
+ammocoin-cli importprivkey "YOUR_V1.0_PRIVATE_KEY" "v1.0 import" true
+```
+
+### "Cannot connect to daemon"
+
+Ensure v1.1.0 is running:
 ```bash
 ammocoind -daemon
-# Import all keys with rescan=false
-ammocoin-cli importprivkey "KEY" "label" false
-# After all imports
-ammocoin-cli stop
-ammocoind -daemon -rescan
+sleep 5
+ammocoin-cli getinfo
 ```
 
-### "Wallet version error"
+### Node not syncing / no peers
 
-**Solution:** v1.1.0 uses a newer wallet format. Use `dumpwallet`/`importwallet` instead:
-```bash
-# In v1.0
-ammocoin-cli dumpwallet ~/wallet-export.txt
-
-# In v1.1.0
-ammocoin-cli importwallet ~/wallet-export.txt
+Add seed nodes to your config file (`~/.ammocoin/ammocoin.conf`):
 ```
-
----
-
-## Getting Help
-
-**Support Channels:**
-- Email: support@ammocoin.org
-- Discord: [Link]
-- Telegram: [Link]
-- GitHub Issues: https://github.com/everquin/AMMOcoin/issues
-
-**Migration Support Hours:**
-- Available 24/7 during migration period
-- Average response time: <4 hours
-- 1-on-1 assistance available for all users
-
----
-
-## Migration Timeline
-
-### Week 1-2: Testing Phase
-- [ ] Download v1.1.0 binaries
-- [ ] Test on secondary machine
-- [ ] Verify balance import works
-
-### Week 3-4: Migration Window Opens
-- [ ] Official migration begins
-- [ ] v1.0 and v1.1.0 networks both running
-- [ ] Support team available 24/7
-
-### Week 5-12: Migration Period
-- [ ] All users migrate at their own pace
-- [ ] Both networks remain operational
-- [ ] Regular check-ins with users
-
-### Week 13: v1.0 Sunset Notice
-- [ ] Final reminder to migrate
-- [ ] Assisted migration for remaining users
-- [ ] Prepare for v1.0 shutdown
-
-### Week 14+: v1.1.0 Only
-- [ ] v1.0 network shutdown
-- [ ] All users on v1.1.0
-- [ ] Migration complete
-
----
-
-## Security Best Practices
-
-1. **Never share your private keys**
-2. **Always backup before making changes**
-3. **Test with small amounts first**
-4. **Verify checksums of downloaded binaries**
-5. **Use encrypted backups**
-6. **Keep multiple backup copies**
-7. **Store backups in different physical locations**
+addnode=seed1.ammocoin.org:37020
+addnode=seed2.ammocoin.org:37020
+```
 
 ---
 
 ## FAQ
 
-**Q: Will I lose my coins?**
-A: No. If you have your private keys, your coins are safe forever.
+**Q: Will importing my v1.0 wallet restore my balance?**
+A: No. v1.1.0 is a separate blockchain. Importing keys lets you prove ownership — you must then submit a claim to receive your coins.
 
-**Q: Can I run both v1.0 and v1.1.0 at the same time?**
-A: Yes, but use different data directories (`-datadir` flag).
+**Q: Can I run both v1.0 and v1.1.0?**
+A: Yes, but use different data directories (e.g., `-datadir=~/.ammocoin-v1.0` for v1.0).
 
 **Q: What if I'm running a masternode?**
-A: You'll need to set up a new masternode on v1.1.0. Contact support for masternode migration guide.
+A: You must set up a fresh masternode on v1.1.0 after claiming your collateral. See the Masternode Operators section above.
 
 **Q: Do I need to re-download the entire blockchain?**
-A: Yes, v1.1.0 is a new blockchain starting from the new genesis block.
+A: Yes, v1.1.0 is a new blockchain starting from a new genesis block.
 
 **Q: Will my address change?**
-A: No, addresses use the same format and will remain identical.
+A: Your v1.0 addresses can be imported into v1.1.0 (same format), but you need a new v1.1.0 receiving address for the claim.
 
-**Q: Can I send coins between v1.0 and v1.1.0?**
-A: No, they are separate networks. Migration is one-way via private key import.
+**Q: What if I miss the deadline?**
+A: The claim period closes April 3, 2026. After that, unclaimed funds return to the community treasury. Contact support@ammocoin.org if you need an extension.
 
----
-
-## Final Checklist
-
-Before migration:
-- [ ] Back up v1.0 wallet.dat
-- [ ] Back up private keys
-- [ ] Verify backup works (test restore)
-- [ ] Download v1.1.0 binaries
-- [ ] Verify binary checksums
-
-During migration:
-- [ ] Import wallet or private keys
-- [ ] Wait for full blockchain sync
-- [ ] Verify balance matches
-
-After migration:
-- [ ] Test sending small amount
-- [ ] Encrypt wallet (if not already)
-- [ ] Create new backup of v1.1.0 wallet
-- [ ] Keep v1.0 backup safe (just in case)
+**Q: What happens to transaction history?**
+A: v1.0 transaction history does not carry over. The v1.1.0 blockchain starts fresh.
 
 ---
 
-**Migration Status:** Ready to begin
+## Security Best Practices
+
+1. **Never share your private keys** with anyone
+2. **Verify checksums** of all downloaded binaries before installing
+3. **Back up before making changes** — both v1.0 and v1.1.0 wallets
+4. **Test with a small amount first** if you have multiple addresses
+5. **Delete exported key files** after import (`dumpwallet` output contains private keys)
+6. **Keep your v1.0 wallet backup** even after successful migration
+
+---
+
+## Timeline
+
+| Milestone | Date | Status |
+|-----------|------|--------|
+| v1.0 Snapshot (Block 434,881) | December 22, 2025 | Complete |
+| v1.1.0 Network Launch | January 3, 2026 | Complete |
+| Claim Period Opens | January 3, 2026 | Complete |
+| **Claim Period Closes** | **April 3, 2026** | Active |
+| Distribution Complete | May 2026 | Pending |
+
+---
+
+## Getting Help
+
+- **Email:** support@ammocoin.org
+- **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
+- **Documentation:** [Migration docs](https://github.com/everquin/AMMOcoin/tree/main/docs/migration)
+
 **Questions?** Contact support@ammocoin.org
-
-🚀 **Welcome to AMMOcoin v1.1.0!**
