@@ -238,11 +238,68 @@ jobs:
           zip -r AMMOcoin-v1.1.0-Linux-x86_64.zip release-package/bin/
           echo "✅ Release packages created"
 
+      - name: Build Debian Package
+        run: |
+          echo "📦 Building .deb package (amd64)..."
+          DEB_ROOT="deb-staging/ammocoin_1.1.0-1_amd64"
+          mkdir -p "$DEB_ROOT/DEBIAN"
+          mkdir -p "$DEB_ROOT/usr/bin"
+          mkdir -p "$DEB_ROOT/etc/ammocoin"
+          mkdir -p "$DEB_ROOT/lib/systemd/system"
+
+          # Copy binaries
+          cp source/dist/bin/ammocoind "$DEB_ROOT/usr/bin/"
+          cp source/dist/bin/ammocoin-cli "$DEB_ROOT/usr/bin/"
+          cp source/dist/bin/ammocoin-tx "$DEB_ROOT/usr/bin/"
+
+          # Copy systemd service
+          cp source/contrib/debian/ammocoind.service "$DEB_ROOT/lib/systemd/system/"
+
+          # Copy example config
+          cp source/contrib/debian/examples/ammocoin.conf "$DEB_ROOT/etc/ammocoin/"
+
+          # Copy maintainer scripts
+          cp source/contrib/debian/ammocoind.postinst "$DEB_ROOT/DEBIAN/postinst"
+          cp source/contrib/debian/ammocoind.postrm "$DEB_ROOT/DEBIAN/postrm"
+          chmod 755 "$DEB_ROOT/DEBIAN/postinst" "$DEB_ROOT/DEBIAN/postrm"
+
+          # Calculate installed size
+          INSTALLED_SIZE=$(du -sk "$DEB_ROOT" | cut -f1)
+
+          # Create control file
+          cat > "$DEB_ROOT/DEBIAN/control" << EOF
+          Package: ammocoin
+          Version: 1.1.0-1
+          Architecture: amd64
+          Maintainer: AMMOcoin Core <dev@ammocoin.org>
+          Depends: libc6 (>= 2.31)
+          Section: net
+          Priority: optional
+          Homepage: https://www.ammocoin.org
+          Installed-Size: ${INSTALLED_SIZE}
+          Description: AMMOcoin daemon and CLI tools
+           AMMOcoin is a cryptocurrency focused on community and mining.
+           This package provides the headless daemon (ammocoind),
+           command-line interface (ammocoin-cli), and transaction
+           utility (ammocoin-tx) with systemd service integration.
+          EOF
+
+          # Remove leading spaces from control file (heredoc indentation)
+          sed -i 's/^          //' "$DEB_ROOT/DEBIAN/control"
+
+          # Build the deb
+          dpkg-deb --build "$DEB_ROOT"
+          mv "deb-staging/ammocoin_1.1.0-1_amd64.deb" "AMMOcoin-v1.1.0-Linux-amd64.deb"
+          echo "✅ .deb package created"
+          ls -lh AMMOcoin-v1.1.0-Linux-amd64.deb
+          dpkg -c AMMOcoin-v1.1.0-Linux-amd64.deb
+
       - name: Generate checksums
         run: |
           echo "🔐 Generating SHA256 checksums..."
           sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz > AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
           sha256sum AMMOcoin-v1.1.0-Linux-x86_64.zip >> AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.0-Linux-amd64.deb >> AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
           cat AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 
       - name: Upload Release Artifacts
@@ -252,6 +309,7 @@ jobs:
           path: |
             AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
             AMMOcoin-v1.1.0-Linux-x86_64.zip
+            AMMOcoin-v1.1.0-Linux-amd64.deb
             AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 
       - name: Upload Individual Binaries

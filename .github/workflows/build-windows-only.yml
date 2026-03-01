@@ -260,6 +260,35 @@ jobs:
           zip -r AMMOcoin-v1.1.0-Windows-x86_64.zip release-package/bin/
           echo "✅ Release packages created"
 
+      - name: Build NSIS Installer
+        run: |
+          echo "📦 Building Windows NSIS installer..."
+          WORKSPACE="$GITHUB_WORKSPACE"
+
+          # Stage binaries where setup.nsi expects them
+          mkdir -p source/release
+          cp source/src/qt/ammocoin-qt.exe source/release/ 2>/dev/null || true
+          cp source/src/ammocoind.exe source/release/
+          cp source/src/ammocoin-cli.exe source/release/
+
+          # Create CI-compatible setup.nsi with workspace-relative paths
+          sed \
+            -e "s|/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source|${WORKSPACE}/source|g" \
+            source/share/setup.nsi > source/share/setup-ci.nsi
+
+          # Build the installer
+          makensis source/share/setup-ci.nsi
+
+          # Find and rename the output
+          INSTALLER=$(find source -maxdepth 1 -name "ammocoin-*-setup*.exe" | head -1)
+          if [ -n "$INSTALLER" ]; then
+            cp "$INSTALLER" AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
+            echo "✅ NSIS installer created: AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe"
+            ls -lh AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
+          else
+            echo "⚠️  NSIS installer output not found, skipping"
+          fi
+
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -267,6 +296,7 @@ jobs:
           path: |
             AMMOcoin-v1.1.0-Windows-x86_64.tar.gz
             AMMOcoin-v1.1.0-Windows-x86_64.zip
+            AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe
 
       - name: Upload Individual Binaries
         uses: actions/upload-artifact@v4
