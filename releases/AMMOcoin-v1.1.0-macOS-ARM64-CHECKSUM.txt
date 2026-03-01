@@ -1,0 +1,3 @@
+bf3f550078034771f8d95874dcf44ff83b201cb21fe6a5bc0eefccc9ef14f504  AMMOcoin-v1.1.0-macOS-ARM64.dmg
+98ee1d4bfe95760b8d36fe7cee35e8767cb617bf79effb1c7a35ae7f19cd5da7  AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
+4869cb432799c862f4bf27f7f1fa0f130fbb40bf5eb9affcf635c77ae6199616  AMMOcoin-v1.1.0-macOS-ARM64.zip
