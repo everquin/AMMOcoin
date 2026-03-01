@@ -256,9 +256,9 @@ const CBlockIndex* LastCommonAncestor(const CBlockIndex* pa, const CBlockIndex* 
 
 /** Used to marshal pointers into hashes for db storage. */
 
-// New serialization introduced with 4.0.99
-static const int DBI_OLD_SER_VERSION = 4009900;
-static const int DBI_SER_VERSION_NO_ZC = 4009902;   // removes mapZerocoinSupply, nMoneySupply
+// Serialization version thresholds (adjusted for AMMOcoin version scheme)
+static const int DBI_OLD_SER_VERSION = 0;
+static const int DBI_SER_VERSION_NO_ZC = 0;          // AMMOcoin never had zerocoin, always use modern format
 
 class CDiskBlockIndex : public CBlockIndex
 {
