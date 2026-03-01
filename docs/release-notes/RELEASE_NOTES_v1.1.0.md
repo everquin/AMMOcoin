@@ -273,9 +273,9 @@ sudo bash scripts/setup-seed-node.sh
 ### Manual Compilation:
 
 See detailed guides:
-- **Linux:** [SEED_NODE_QUICK_START.md](https://github.com/everquin/AMMOcoin/blob/main/SEED_NODE_QUICK_START.md)
-- **Ubuntu Commands:** [VULTR_VM_SETUP_COMMANDS.md](https://github.com/everquin/AMMOcoin/blob/main/VULTR_VM_SETUP_COMMANDS.md)
-- **Binary Guide:** [LINUX_BINARY_DISTRIBUTION_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/LINUX_BINARY_DISTRIBUTION_GUIDE.md)
+- **Linux:** [Seed Node Quick Start](https://github.com/everquin/AMMOcoin/blob/main/docs/operations/SEED_NODE_QUICK_START.md)
+- **Ubuntu Commands:** [Vultr VM Setup Commands](https://github.com/everquin/AMMOcoin/blob/main/docs/operations/VULTR_VM_SETUP_COMMANDS.md)
+- **Linux Build:** [Linux Build Instructions](https://github.com/everquin/AMMOcoin/blob/main/docs/installation/LINUX_BUILD_INSTRUCTIONS_v1.1.0.md)
 
 ---
 
@@ -303,9 +303,7 @@ See detailed guides:
 - ✅ Can handle edge cases individually
 - ✅ Prevents unclaimed funds from being lost
 
-📖 **Distribution Details:** [Distribution Process Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
-
-📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/DISTRIBUTION_PROCESS_GUIDE.md)
+📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
 
 **CRITICAL:** Your v1.0 `wallet.dat` contains proof of ownership needed to claim v1.1.0 balances. NEVER delete it!
 
@@ -381,10 +379,10 @@ See detailed guides:
 
 ```bash
 # Download checksum file
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/CHECKSUMS-Linux.txt
+wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
 
 # Verify your download
-sha256sum -c CHECKSUMS-Linux.txt --ignore-missing
+sha256sum -c AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt --ignore-missing
 ```
 
 ### Future Enhancements:
@@ -401,20 +399,17 @@ If you discover a security vulnerability, please email: security@ammocoin.org (o
 ## 📚 Documentation
 
 ### User Guides:
-- [User Migration Guide](https://github.com/everquin/AMMOcoin/blob/main/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
-- [Node Operator Migration](https://github.com/everquin/AMMOcoin/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
-- [Network Bootstrap Guide](https://github.com/everquin/AMMOcoin/blob/main/NETWORK_BOOTSTRAP_GUIDE.md)
+- [User Migration Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
+- [Manual Migration Plan](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md)
+- [Distribution Process Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
+- [Side-by-Side Operation Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/SIDE_BY_SIDE_OPERATION_GUIDE.md)
 
 ### Technical Guides:
-- [Linux Binary Distribution](https://github.com/everquin/AMMOcoin/blob/main/LINUX_BINARY_DISTRIBUTION_GUIDE.md)
-- [Seed Node Quick Start](https://github.com/everquin/AMMOcoin/blob/main/SEED_NODE_QUICK_START.md)
-- [Vultr VM Setup Commands](https://github.com/everquin/AMMOcoin/blob/main/VULTR_VM_SETUP_COMMANDS.md)
-- [GitHub Release Strategy](https://github.com/everquin/AMMOcoin/blob/main/GITHUB_BINARY_RELEASE_STRATEGY.md)
-
-### Development Docs:
-- [Repository Audit](https://github.com/everquin/AMMOcoin/blob/main/docs/20251228_COMPREHENSIVE_REPOSITORY_AUDIT.md)
-- [Implementation Plan](https://github.com/everquin/AMMOcoin/blob/main/docs/20251228_NEXT_STEPS_IMPLEMENTATION_PLAN.md)
-- [Distribution Scripts](https://github.com/everquin/AMMOcoin/blob/main/DISTRIBUTION_SCRIPTS_README.md)
+- [Linux Build Instructions](https://github.com/everquin/AMMOcoin/blob/main/docs/installation/LINUX_BUILD_INSTRUCTIONS_v1.1.0.md)
+- [macOS Installation](https://github.com/everquin/AMMOcoin/blob/main/docs/installation/INSTALL_MACOS.md)
+- [Seed Node Quick Start](https://github.com/everquin/AMMOcoin/blob/main/docs/operations/SEED_NODE_QUICK_START.md)
+- [Vultr VM Setup Commands](https://github.com/everquin/AMMOcoin/blob/main/docs/operations/VULTR_VM_SETUP_COMMANDS.md)
+- [Vultr VPS Deployment](https://github.com/everquin/AMMOcoin/blob/main/docs/operations/VULTR_VPS_DEPLOYMENT.md)
 
 ---
 
@@ -449,7 +444,7 @@ When reporting issues, please include:
 5. ✅ Configure and start v1.1.0 node
 6. ✅ Wait for distribution or claim from migration fund
 
-📖 **Complete Guide:** [V1.0_TO_V1.1.0_NODE_MIGRATION.md](https://github.com/everquin/AMMOcoin/blob/main/V1.0_TO_V1.1.0_NODE_MIGRATION.md)
+📖 **Complete Guide:** [User Migration Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
 
 **DO NOT:**
 - ❌ Delete v1.0 wallet before claiming v1.1.0 balances
