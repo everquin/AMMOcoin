@@ -267,7 +267,7 @@ If you prefer to compile from source or need a different platform:
 ```bash
 git clone https://github.com/everquin/AMMOcoin.git
 cd AMMOcoin
-sudo bash scripts/setup-seed-node.sh
+sudo bash scripts/deployment/setup-seed-node.sh
 ```
 
 ### Manual Compilation:
