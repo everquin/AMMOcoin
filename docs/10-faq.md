@@ -395,29 +395,32 @@ Check the official website and GitHub for current bug bounty programs. Serious s
 
 ## 🔄 Migration (v1.0 → v1.1.0)
 
-### How do I claim my v1.0 balance on v1.1.0?
-AMMOcoin v1.1.0 is a completely new blockchain — balances do not transfer automatically. To claim your v1.0 coins:
+### How do I transfer my v1.0 balance to v1.1.0?
+AMMOcoin v1.1.0 is a completely new blockchain — balances do not transfer automatically. To migrate your v1.0 coins:
 
 1. **Back up** your v1.0 wallet.dat
 2. **Install v1.1.0** (pre-built binaries available for all platforms)
-3. **Import** your v1.0 private keys into v1.1.0
-4. **Sign a message** with your v1.0 address to prove ownership
-5. **Email** your claim to support@ammocoin.org (include v1.0 address, signature, and v1.1.0 receiving address)
-6. **Receive** your coins within 24-48 hours
+3. **Generate** v1.1.0 receiving address(es)
+4. **Email** transfermy@ammocoin.org with the amount you'll send and your v1.1.0 address(es)
+5. **Send** your v1.0 AMMO to the disposal wallet address provided by the team
+6. **Receive** equivalent v1.1.0 AMMO within 24-48 hours
 
-See the full [User Migration Guide](migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md) for detailed instructions.
+Both transactions are recorded on-chain — immutable proof on both blockchains. See the full [User Migration Guide](migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md) for detailed instructions.
+
+### Can I split my balance across multiple v1.1.0 addresses?
+**Yes.** In your email to transfermy@ammocoin.org, specify each v1.1.0 address and the amount to send to each. You can also send multiple v1.0 transfers if you prefer.
 
 ### What is the migration deadline?
-The claim period closes **April 3, 2026** (90 days from the v1.1.0 network launch on January 3, 2026). After this date, unclaimed funds return to the community treasury. Contact support@ammocoin.org if you need an extension.
+The migration period closes **April 3, 2026** (90 days from the v1.1.0 network launch on January 3, 2026). After this date, remaining distribution funds return to the community treasury. Contact transfermy@ammocoin.org if you need an extension.
 
 ### What about masternodes?
-v1.0 masternode configurations do not carry over. After claiming your v1.0 balance (you need at least 10,000 AMMO collateral), you must set up a **fresh masternode** on v1.1.0. Contact support@ammocoin.org for masternode setup assistance.
+v1.0 masternode configurations do not carry over. After transferring your v1.0 balance (you need at least 10,000 AMMO collateral), you must set up a **fresh masternode** on v1.1.0. In your transfer email, specify a dedicated masternode collateral address. Contact transfermy@ammocoin.org for setup assistance.
 
-### What happens to unclaimed funds?
-After the claim period closes (April 3, 2026), unclaimed balances are returned to the community treasury. The team may consider late claims on a case-by-case basis, but this is not guaranteed.
+### What happens to untransferred funds?
+After the migration period closes (April 3, 2026), remaining distribution fund balances are returned to the community treasury. Late transfers may be considered case-by-case but are not guaranteed.
 
-### Will importing my v1.0 wallet restore my balance?
-**No.** Importing v1.0 keys into v1.1.0 only adds your addresses to the wallet — it does NOT restore balances. You must complete the signed-message claim process to receive your coins.
+### What happens to my v1.0 coins after I send them?
+They remain in the disposal wallet permanently on the v1.0 chain as an immutable record of your migration. The v1.0 network will eventually be shut down.
 
 ### Where can I download v1.1.0?
 Pre-built binaries for all platforms (macOS, Windows, Linux x86_64, Linux ARM64) are available on the [GitHub Releases page](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0) and the [AMMOcoin Downloads page](https://www.ammocoin.org/downloads.html).

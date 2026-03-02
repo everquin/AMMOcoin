@@ -18,7 +18,7 @@
 - ❌ v1.0 and v1.1.0 are **separate, incompatible blockchains**
 - ❌ Your v1.0 balances will **NOT automatically appear** in v1.1.0
 - ✅ **Team-controlled distribution:** 250,000,000 AMMO in genesis will be manually distributed to verified v1.0 users
-- ✅ **NEVER delete** your v1.0 wallet - proof of ownership required for claims
+- ✅ **NEVER delete** your v1.0 wallet - required to send coins to the disposal wallet for migration
 - ✅ **Secure genesis:** New wallet generated with no private key exposure
 
 📖 **Distribution Details:** [Distribution Process Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
@@ -291,21 +291,21 @@ See detailed guides:
 ### Distribution Process:
 
 **For v1.0 Holders:**
-1. Submit claim with proof of v1.0 wallet ownership
-2. Team verifies v1.0 balance via snapshot
-3. Equivalent v1.1.0 AMMO sent from team wallet
-4. Claim window: 90 days from network launch
+1. Email transfermy@ammocoin.org with amount and v1.1.0 receiving address(es)
+2. Send v1.0 AMMO to team-provided disposal wallet address
+3. Team verifies on-chain receipt, sends equivalent v1.1.0 AMMO
+4. Migration window: 90 days from network launch (closes April 3, 2026)
 
 **Advantages:**
-- ✅ No complex multi-output genesis
-- ✅ Full team control over distribution
-- ✅ Flexible claim verification process
-- ✅ Can handle edge cases individually
-- ✅ Prevents unclaimed funds from being lost
+- ✅ On-chain proof on both blockchains — immutable and independently verifiable
+- ✅ Amount is self-verifying from the v1.0 transaction itself
+- ✅ Simple for users — just send coins, no CLI signing commands
+- ✅ Flexible — send any amount, split across multiple v1.1.0 addresses
+- ✅ Clean audit trail: every v1.0 disposal tx maps to a v1.1.0 distribution tx
 
 📖 **Distribution Process Guide:** [DISTRIBUTION_PROCESS_GUIDE.md](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
 
-**CRITICAL:** Your v1.0 `wallet.dat` contains proof of ownership needed to claim v1.1.0 balances. NEVER delete it!
+**CRITICAL:** Your v1.0 `wallet.dat` is needed to send coins to the disposal wallet for migration. NEVER delete it!
 
 ---
 
@@ -437,17 +437,17 @@ When reporting issues, please include:
 **IMPORTANT:** This is NOT a simple upgrade! Path A is a complete blockchain restart.
 
 **Required Steps:**
-1. ✅ Backup v1.0 wallet (CRITICAL - contains claim keys!)
-2. ✅ Stop v1.0 daemon
-3. ✅ Install v1.1.0 binaries (see above)
-4. ✅ Create separate v1.1.0 data directory
-5. ✅ Configure and start v1.1.0 node
-6. ✅ Wait for distribution or claim from migration fund
+1. ✅ Backup v1.0 wallet (CRITICAL - needed to send to disposal wallet!)
+2. ✅ Install v1.1.0 binaries (see above)
+3. ✅ Generate v1.1.0 receiving address(es)
+4. ✅ Email transfermy@ammocoin.org with amount and v1.1.0 address(es)
+5. ✅ Send v1.0 AMMO to the disposal wallet
+6. ✅ Receive equivalent v1.1.0 AMMO from distribution fund
 
 📖 **Complete Guide:** [User Migration Guide](https://github.com/everquin/AMMOcoin/blob/main/docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
 
 **DO NOT:**
-- ❌ Delete v1.0 wallet before claiming v1.1.0 balances
+- ❌ Delete v1.0 wallet before transferring to disposal wallet
 - ❌ Overwrite v1.0 data directory
 - ❌ Expect v1.0 balances to appear automatically
 
@@ -478,8 +478,8 @@ When reporting issues, please include:
 | GitHub Release v1.1.0 | ✅ Complete | February 22, 2026 |
 | Seed nodes deployed | ✅ Complete | January 3, 2026 |
 | Network launch | ✅ Complete | January 3, 2026 |
-| Team distribution claims open | ✅ Complete | January 3, 2026 |
-| Claim window closes | ⏸️ Pending | 90 days after opening |
+| Migration transfers open | ✅ Complete | January 3, 2026 |
+| Migration window closes | ⏸️ Pending | April 3, 2026 |
 
 ---
 
@@ -487,12 +487,12 @@ When reporting issues, please include:
 
 1. ⚠️ **v1.1.0 is a NEW blockchain**, not an upgrade of v1.0
 2. 💰 **250M AMMO team distribution** - manually distributed to verified v1.0 users
-3. 🔑 **Your v1.0 wallet** is proof of ownership for claims
-4. 🚫 **NEVER delete v1.0 wallet** before claiming
+3. 🔑 **Your v1.0 wallet** is needed to send coins to the disposal wallet
+4. 🚫 **NEVER delete v1.0 wallet** before completing your transfer
 5. 🔒 **Secure genesis** - no private keys exposed in code
 6. 📦 **All platform binaries** available (macOS, Windows, Linux x86_64, ARM64)
 7. ✅ **Verify checksums** before installation
-8. 📖 **Read distribution guide** for claim process
+8. 📖 **Read migration guide** for transfer process
 
 ---
 

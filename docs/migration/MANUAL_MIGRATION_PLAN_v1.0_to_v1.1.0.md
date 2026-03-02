@@ -1,6 +1,6 @@
 # AMMOcoin Manual Migration Plan - v1.0 to v1.1.0
 
-**Migration Type:** Manual Balance Transfer
+**Migration Type:** On-chain disposal wallet transfer
 **User Count:** ~20 users
 **Status:** Active Migration Period
 **Team Coordination Required:** Yes
@@ -9,13 +9,19 @@
 
 ## Overview
 
-Since v1.1.0 is a **fresh blockchain** (not a continuation of v1.0), balances cannot transfer automatically. However, the AMMOcoin team will **manually honor v1.0 balances** for legitimate holders.
+Since v1.1.0 is a **fresh blockchain** (not a continuation of v1.0), balances cannot transfer automatically. The AMMOcoin team facilitates migration through an **on-chain disposal wallet** process that creates immutable proof on both blockchains.
 
 **Process:**
-1. Team takes snapshot of v1.0 blockchain
-2. Users prove ownership of v1.0 addresses
-3. Users provide v1.1.0 addresses
-4. Team manually sends equivalent v1.1.0 AMMO
+1. User emails transfermy@ammocoin.org with amount and v1.1.0 receiving address(es)
+2. Team provides the v1.0 disposal wallet address
+3. User sends v1.0 AMMO to the disposal wallet (on-chain transaction)
+4. Team verifies the transfer on-chain, then sends equivalent v1.1.0 AMMO from the 250M distribution fund
+
+**Why this approach:**
+- On-chain proof on both blockchains — immutable and independently verifiable
+- Amount is self-verifying from the v1.0 transaction itself
+- Simple for users — just send coins (no CLI signing commands)
+- Clean audit trail: every v1.0 disposal tx maps to a v1.1.0 distribution tx
 
 ---
 
@@ -27,402 +33,272 @@ Since v1.1.0 is a **fresh blockchain** (not a continuation of v1.0), balances ca
 - Active users (>0 balance): ~20
 - Total supply: 232,397,748 AMMO
 
-### Phase 2: User Claims (90 days)
-**Claim Period:** 90 days from network launch (January 3, 2026 — April 3, 2026)
-- Users have 90 days to submit claims
-- Proof of ownership required
-- Must provide v1.1.0 receiving address
+### Phase 2: User Transfers (90 days)
+**Transfer Period:** 90 days from network launch (January 3, 2026 — April 3, 2026)
+- Users have 90 days to send v1.0 AMMO to the disposal wallet
+- Any amount accepted — users can send all at once or in multiple transfers
+- Users specify how to distribute the equivalent across v1.1.0 addresses
 
 ### Phase 3: Verification (Rolling)
-- Team verifies ownership claims
-- Checks v1.0 blockchain for actual balances
-- Approves legitimate claims
+- Team monitors disposal wallet for incoming v1.0 transactions
+- Confirms on-chain receipt of each transfer
+- Validates v1.1.0 receiving addresses
 
 ### Phase 4: Distribution (Rolling)
-- Team distributes v1.1.0 AMMO to verified claims
-- Proportional to snapshot balances
-- Tracked in public ledger
+- Team sends equivalent v1.1.0 AMMO from the 250M distribution fund
+- Distributed to user-specified v1.1.0 addresses in the requested proportions
+- Both transaction IDs recorded in public migration ledger
 
 ---
 
-## For Users: How to Claim Your v1.0 Balance
+## For Users: How to Transfer Your v1.0 Balance
 
 ### Prerequisites
 
 **You need:**
-1. Access to your v1.0 wallet with private keys
+1. Access to your v1.0 wallet (able to send transactions)
 2. v1.1.0 wallet installed and running
-3. Ability to sign messages (proves ownership)
+3. Email access to contact transfermy@ammocoin.org
 
-### Step 1: Take Snapshot of Your v1.0 Balance
+### Step 1: Install v1.1.0 and Generate Receiving Address(es)
 
-#### Run v1.0 Node with Snapshot Data
-```bash
-# Start v1.0 daemon (if not running)
-/path/to/v1.0/ammocoind -datadir=$HOME/.ammocoin-v1.0 -daemon
-
-# Wait for sync to complete
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 getinfo
-
-# Check you're at or past snapshot block
-# Snapshot block: 434,881
-```
-
-#### Get Your Balance at Snapshot
-```bash
-# List all your addresses with balances
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 listaddressgroupings
-
-# Get balance for specific address
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 getreceivedbyaddress YOUR_ADDRESS 0
-```
-
-#### Record Your Information
-Create a file `my-v10-claim.txt`:
-```
-v1.0 Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
-Balance at Block 434,881: 50000.12345678 AMMO
-Transaction History: (optional, helps verification)
-  - tx1: abc123...
-  - tx2: def456...
-```
-
-### Step 2: Install and Set Up v1.1.0
-
-#### Download v1.1.0
 ```bash
 # Download from GitHub release
 # https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
 
-# For macOS ARM64:
-curl -L -O https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-
-# Verify checksum
-shasum -a 256 AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-# Should match: f314ff670ad1088cc64516be4b2f7667974f9937a3c2e1683844e5500cb709dd
-
-# Extract
-tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-cd AMMOcoin-v1.1.0-macOS-ARM64/
-```
-
-#### Start v1.1.0 Node
-```bash
-# Delete any old v1.1.0 data (if exists)
-rm -rf ~/.ammocoin
-
 # Start v1.1.0 daemon
-./ammocoind -daemon
-
-# Wait for startup
-sleep 10
+ammocoind -daemon
 
 # Verify correct genesis
-./ammocoin-cli getblockhash 0
+ammocoin-cli getblockhash 0
 # MUST return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
+
+# Generate receiving address(es)
+ammocoin-cli getnewaddress "Migration"
+# Example: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n
+
+# Back up v1.1.0 wallet
+ammocoin-cli backupwallet ~/ammocoin-v1.1.0-wallet-backup.dat
 ```
 
-#### Generate New v1.1.0 Receiving Address
+Create multiple addresses if you want your balance split (e.g., staking, masternode collateral, savings).
+
+### Step 2: Email the Team
+
+Email **transfermy@ammocoin.org** with subject: **v1.0 Transfer Request**
+
+Include:
+- Amount you will send from your v1.0 wallet
+- v1.1.0 receiving address(es) and how to distribute the amount
+
+**Example — single address:**
+```
+I will be sending 50,000 AMMO from my v1.0 wallet to the disposal address.
+
+Please send the full amount to:
+  Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n — 50,000 AMMO
+```
+
+**Example — multiple addresses:**
+```
+I will be sending 60,000 AMMO from my v1.0 wallet to the disposal address.
+
+Please distribute as follows:
+  Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n — 40,000 AMMO (staking)
+  Ah2mX9cL4sD1eW6hK9jB2nRvT3xYz7kQ2 — 10,000 AMMO (masternode collateral)
+  Aj4pR8dN5tF2gH7iK3lM6oQ9sU1wX0yZ8 — 10,000 AMMO (savings)
+```
+
+Team will reply with the **v1.0 disposal wallet address**.
+
+### Step 3: Send v1.0 AMMO to Disposal Wallet
+
 ```bash
-# Generate a new address to receive your migrated AMMO
-./ammocoin-cli getnewaddress "Migration Claim"
+# Send specific amount
+ammocoin-cli sendtoaddress "DISPOSAL_WALLET_ADDRESS" 50000
 
-# Example output: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n
+# Or send entire balance (fee subtracted from amount)
+BALANCE=$(ammocoin-cli getbalance)
+ammocoin-cli sendtoaddress "DISPOSAL_WALLET_ADDRESS" $BALANCE "" "" true
 
-# IMPORTANT: Back up this address and your v1.1.0 wallet!
-./ammocoin-cli backupwallet ~/ammocoin-v1.1.0-wallet-backup.dat
+# Save the transaction ID
+ammocoin-cli listtransactions "*" 1
 ```
 
-### Step 3: Prove Ownership of v1.0 Address
+You can send in multiple transactions — each will be matched.
 
-This is CRITICAL - you must prove you own the v1.0 address.
+### Step 4: Receive v1.1.0 AMMO
 
-#### Sign a Message with Your v1.0 Address
-```bash
-# Create a unique message including your v1.1.0 address
-MESSAGE="I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: $(date -u +%Y-%m-%d)"
-
-# Sign with v1.0 wallet
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 signmessage "AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME" "$MESSAGE"
-
-# Returns signature like:
-# INsQ7k9R3m... (long base64 string)
-```
-
-#### Save Your Claim Package
-Create `my-claim-package.txt`:
-```
-=== AMMOcoin v1.0 to v1.1.0 Migration Claim ===
-
-v1.0 Address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
-v1.0 Balance at Block 434,881: 50000.12345678 AMMO
-
-v1.1.0 Receiving Address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n
-
-Proof of Ownership (Signed Message):
-Message: "I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: 2026-01-15"
-Signature: INsQ7k9R3m...
-
-Contact Email: support@ammocoin.org (for verification)
-Submission Date: 2026-01-15
-
-Optional: Transaction IDs showing balance history
-- abc123...
-- def456...
-```
-
-### Step 4: Submit Claim to Team
-
-**Submit your claim package to:**
-- **Email:** migration@ammocoin.org (or team-specified contact)
-- **Subject:** "v1.0 to v1.1.0 Migration Claim - [Your v1.0 Address]"
-- **Attach:** `my-claim-package.txt`
-
-**Or submit via:**
-- GitHub issue (if public migration tracking)
-- Discord/Telegram (if community channel exists)
-- Team-specified claim form
-
-### Step 5: Wait for Verification
-
-**Team will:**
-1. Verify signature is valid for v1.0 address
-2. Check v1.0 blockchain for actual balance at block 434,881
-3. Confirm v1.1.0 address is valid
-4. Approve or request additional information
-
-**Timeline:**
-- Initial review: 1-3 business days
-- Additional verification (if needed): 2-5 days
-- Distribution after approval: 1-7 days
-
-### Step 6: Receive v1.1.0 AMMO
-
-Once approved, team will send v1.1.0 AMMO to your receiving address:
+Once the team confirms your v1.0 transfer on-chain (typically 24-48 hours):
 
 ```bash
 # Check your v1.1.0 balance
-./ammocoin-cli getbalance
+ammocoin-cli getbalance
 
-# List recent transactions
-./ammocoin-cli listtransactions "*" 10
-
-# Verify you received the correct amount
-./ammocoin-cli getreceivedbyaddress "Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n"
+# View recent transactions
+ammocoin-cli listtransactions "*" 10
 ```
 
-**What you should receive:**
-- Amount matching your v1.0 snapshot balance
-- Sent from team distribution address
-- Transaction ID for your records
-
----
-
-## For Large Holders (Special Considerations)
-
-If you hold **>10,000 AMMO**, team may require additional verification:
-
-### Enhanced Verification Options
-
-#### Option 1: Multiple Signed Messages
-```bash
-# Sign multiple messages with different timestamps
-MESSAGE1="Migration claim - Part 1 - $(date -u +%Y-%m-%d)"
-MESSAGE2="Migration claim - Part 2 - $(date -u +%Y-%m-%d)"
-
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 signmessage "YOUR_ADDRESS" "$MESSAGE1"
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 signmessage "YOUR_ADDRESS" "$MESSAGE2"
-```
-
-#### Option 2: Small Test Transaction
-```bash
-# Send small amount from v1.0 address to team verification address
-# This proves you control the private key
-
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 sendtoaddress "TEAM_VERIFICATION_ADDRESS" 1.0
-
-# Include transaction ID in claim
-```
-
-#### Option 3: Video Call Verification
-- Schedule call with team
-- Demonstrate wallet control in real-time
-- Sign message during call
+Team will email confirmation with v1.1.0 transaction ID(s).
 
 ---
 
 ## For Team: Verification and Distribution Process
 
-### Step 1: Receive and Log Claims
+### Step 1: Receive Transfer Requests
 
-Create tracking spreadsheet:
+When a user emails transfermy@ammocoin.org:
+1. Log the request in the tracking spreadsheet
+2. Validate all provided v1.1.0 addresses
+3. Reply with the v1.0 disposal wallet address
+
 ```
-Claim ID | v1.0 Address | v1.0 Balance | v1.1.0 Address | Signature | Status | Notes
-001 | Ae3M... | 50000.12 | Af7k... | INsQ... | Pending | -
-002 | Ab8X... | 125000.00 | Ah2m... | JOtR... | Pending | Large holder
-...
+Transfer ID | User Email | v1.0 Amount | v1.1.0 Addresses | Status | Notes
+T-001 | user@email.com | 50,000 | Af7k... (50k) | Awaiting v1.0 tx | -
+T-002 | user2@email.com | 60,000 | Af7k... (40k), Ah2m... (10k), Aj4p... (10k) | Awaiting v1.0 tx | Multi-addr
 ```
 
-### Step 2: Verify Each Claim
+### Step 2: Monitor Disposal Wallet
 
-#### Verify Signature
 ```bash
-# Use v1.0 CLI to verify signature
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 verifymessage \
-  "AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME" \
-  "INsQ7k9R3m..." \
-  "I claim v1.0 balance for migration to v1.1.0 address: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n - Date: 2026-01-15"
+# Check disposal wallet for incoming transactions
+ammocoin-cli listtransactions "*" 50
 
-# Returns: true (valid) or false (invalid)
+# Get balance of disposal wallet
+ammocoin-cli getbalance
+
+# Check specific transaction details
+ammocoin-cli gettransaction "TXID"
 ```
 
-#### Verify Balance on v1.0 Blockchain
+Match incoming transactions to pending transfer requests by amount and timing.
+
+### Step 3: Verify On-Chain Receipt
+
+For each incoming v1.0 transaction:
+1. Confirm the transaction has sufficient confirmations (6+)
+2. Record the v1.0 txid
+3. Verify the amount matches the user's stated transfer amount
+
 ```bash
-# Check balance at snapshot block 434,881
-# Use v1.0 node synced to at least that height
-
-/path/to/v1.0/ammocoin-cli -datadir=$HOME/.ammocoin-v1.0 getreceivedbyaddress "AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME" 0
-
-# Compare to claimed amount
+# Verify transaction confirmations
+ammocoin-cli gettransaction "V1.0_TXID"
+# Look for "confirmations" field >= 6
 ```
-
-#### Verify v1.1.0 Address Valid
-```bash
-# Check v1.1.0 address is valid
-ammocoin-cli validateaddress "Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n"
-
-# Returns: {"isvalid": true, ...}
-```
-
-### Step 3: Approve or Reject
-
-**Approve if:**
-- ✅ Signature is valid
-- ✅ v1.0 balance matches claim (within 0.1%)
-- ✅ v1.1.0 address is valid
-- ✅ No red flags (duplicate claims, fraud indicators)
-
-**Reject if:**
-- ❌ Invalid signature
-- ❌ Balance mismatch
-- ❌ Invalid v1.1.0 address
-- ❌ Suspicious activity
-
-**Request more info if:**
-- ⚠️ Large holder (>10k AMMO)
-- ⚠️ Multiple addresses claimed by same person
-- ⚠️ Unusual transaction history
 
 ### Step 4: Distribute v1.1.0 AMMO
 
-#### Prepare Distribution Wallet
+For each confirmed v1.0 transfer, send the equivalent from the distribution fund:
 
-The team will need v1.1.0 AMMO to distribute. Options:
-
-**Option A: Use Genesis Wallet**
 ```bash
-# Import paper wallet private key (has genesis 250M AMMO)
+# Validate v1.1.0 receiving address
+ammocoin-cli validateaddress "Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n"
 
-# Verify balance
-ammocoin-cli getbalance
-# Should show: 250000000.00000000
-```
+# Send to single address
+ammocoin-cli sendtoaddress "Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n" 50000.00000000 "Migration T-001"
 
-**Option B: Mine Additional Blocks**
-```bash
-# Mine blocks to create distribution supply
-# (Requires mining setup)
+# For multi-address distributions, send to each
+ammocoin-cli sendtoaddress "Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n" 40000.00000000 "Migration T-002a"
+ammocoin-cli sendtoaddress "Ah2mX9cL4sD1eW6hK9jB2nRvT3xYz7kQ2" 10000.00000000 "Migration T-002b"
+ammocoin-cli sendtoaddress "Aj4pR8dN5tF2gH7iK3lM6oQ9sU1wX0yZ8" 10000.00000000 "Migration T-002c"
 
-ammocoin-cli generate 1000  # If regtest/testnet
-# Or actual mining on mainnet
-```
-
-**Option C: Create Distribution Premine**
-*Note: Would require code changes and rebuilding - not recommended at this stage*
-
-#### Send to Verified Claims
-
-For each approved claim:
-```bash
-# Send exact amount to user's v1.1.0 address
-ammocoin-cli sendtoaddress "Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n" 50000.12345678 "Migration v1.0 Claim 001"
-
-# Record transaction ID
-# Update spreadsheet with TXID and status: Completed
+# Record all v1.1.0 txids
 ```
 
 ### Step 5: Track and Report
 
-**Create public ledger:**
+**Migration Ledger (public):**
 ```
-Migration Transaction Ledger
-
-Claim ID | v1.0 Address | Amount | v1.1.0 TXID | Status | Date
-001 | Ae3M...1EKs | 50000.12 | abc123...def | Completed | 2026-01-20
-002 | Ab8X...2Fm | 125000.00 | def456...ghi | Completed | 2026-01-21
-...
+Transfer ID | v1.0 TXID | v1.0 Amount | v1.1.0 TXID(s) | v1.1.0 Amount | Status | Date
+T-001 | abc123...def | 50,000 | xyz789...ghi | 50,000 | Complete | 2026-01-20
+T-002 | def456...abc | 60,000 | aaa..., bbb..., ccc... | 60,000 | Complete | 2026-01-21
 
 Total Migrated: 232,397,748 AMMO
-Total Claims Processed: 18
-Pending Claims: 2
+Total Transfers Processed: 18
+Pending Transfers: 2
 ```
+
+Email the user with:
+- Confirmation of receipt
+- v1.1.0 transaction ID(s)
+- Amounts sent to each address
+
+---
+
+## Disposal Wallet Management
+
+### Disposal Wallet Address
+**v1.0 Address:** `TO_BE_ASSIGNED`
+
+This is a team-controlled address on the v1.0 chain. All migrated v1.0 AMMO is sent here. The accumulated balance serves as a permanent on-chain record of total migrated funds.
+
+### Distribution Fund
+**v1.1.0 Address:** `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` (genesis 250M AMMO)
+
+```bash
+# Check remaining distribution fund balance
+ammocoin-cli getbalance
+```
+
+### Accounting
+- v1.0 disposal wallet balance should always equal total v1.1.0 distributed amount
+- Any discrepancy requires investigation
+- Regular audits: compare disposal wallet received total with distribution fund spent total
 
 ---
 
 ## Security and Fraud Prevention
 
+### Verification Safeguards
+
+The disposal wallet approach has built-in fraud prevention:
+- **On-chain proof:** User must actually own and send the v1.0 coins — no way to fake a blockchain transaction
+- **Amount verification:** The v1.0 transaction amount is immutable — team sends exactly what was received
+- **No replay attacks:** v1.0 and v1.1.0 are completely separate chains
+
 ### Red Flags to Watch For
+- Requests to change v1.1.0 addresses after v1.0 transfer is sent (possible account compromise)
+- Unusually large transfers without prior communication
+- Multiple transfer requests from the same email with different v1.1.0 addresses
 
-**Suspicious Claims:**
-- Same signature used for multiple addresses
-- Recently moved v1.0 balances (after snapshot)
-- Addresses with no transaction history before snapshot
-- Duplicate v1.1.0 receiving addresses
-- Claims for addresses on exchange wallets
+### Handling Edge Cases
 
-### Verification Steps for Large Claims
+**User sends wrong amount:**
+- If they sent less than intended: they can send additional transfers
+- If they sent more than intended: distribute the full amount received (the v1.0 tx is the source of truth)
 
-For claims >10,000 AMMO:
-1. ✅ Verify signature (required)
-2. ✅ Check transaction history on v1.0 blockchain
-3. ✅ Confirm address had balance before snapshot
-4. ✅ Request additional proof (second signature, test tx, or video call)
-5. ✅ Wait 48 hours cooling-off period
-6. ✅ Distribute in tranches (25% per week)
+**User wants to change v1.1.0 addresses:**
+- Before v1.1.0 distribution: OK, update the request
+- After v1.1.0 distribution: cannot be reversed — user must handle on v1.1.0 side
 
-### Handling Disputed Claims
-
-If multiple people claim same v1.0 address:
-1. Request additional proof from all claimants
-2. Check which claim has valid signature
-3. If both valid, investigate for wallet theft
-4. Hold distribution pending resolution
-5. May require manual investigation
+**Disputed transfers:**
+- The v1.0 transaction is immutable proof of who sent the coins
+- Only the sender (controller of the v1.0 private key) could have initiated the transfer
 
 ---
 
 ## User FAQs
 
-### Q: Will I receive exactly my v1.0 balance?
-**A:** Yes, if your claim is verified, you'll receive the exact amount you had at block 434,881.
+### Q: How much can I transfer?
+**A:** Any amount. You can send your entire v1.0 balance at once or split it across multiple transfers.
 
-### Q: How long does migration take?
-**A:** Verification typically takes 1-3 days. Distribution depends on available supply (may be staged).
+### Q: Can I split my balance across multiple v1.1.0 addresses?
+**A:** Yes. In your email to transfermy@ammocoin.org, specify each v1.1.0 address and the amount to send to each.
+
+### Q: How long does it take?
+**A:** Once your v1.0 transfer confirms on-chain, the team typically processes the v1.1.0 distribution within 24-48 hours.
 
 ### Q: What if I have multiple v1.0 addresses?
-**A:** Submit separate claims for each address, or include all in one claim with signatures for each.
-
-### Q: Can I use the same address for v1.1.0?
-**A:** No. v1.1.0 is a fresh blockchain. You must generate a new v1.1.0 address. (However, you can import your v1.0 private keys if you want to reuse addresses conceptually - just know the balances won't automatically be there.)
+**A:** Send from each address separately, or consolidate to one address first then send. Email the team with details for each transfer.
 
 ### Q: What if I lost access to my v1.0 wallet?
-**A:** Unfortunately, without private keys you cannot prove ownership. No exception can be made.
+**A:** Unfortunately, without your v1.0 wallet you cannot send coins to the disposal wallet. There is no alternative method — the on-chain transfer is the proof of ownership.
 
 ### Q: Is there a deadline?
-**A:** Yes, the claim period is 90 days (closing April 3, 2026). Late claims may be considered case-by-case but are not guaranteed.
+**A:** Yes, the migration period is 90 days (closing April 3, 2026). Late transfers may be considered case-by-case but are not guaranteed.
 
 ### Q: What happens to unclaimed balances?
-**A:** After claim period, unclaimed balances may be burned or returned to development fund. Team will announce policy.
+**A:** After the migration period, remaining distribution fund balances will be returned to the community treasury.
 
 ---
 
@@ -430,21 +306,20 @@ If multiple people claim same v1.0 address:
 
 ### For Users
 
-**Submit Claims:**
-- Email: migration@ammocoin.org
-- Subject: "Migration Claim - [Your v1.0 Address]"
+**Transfer Requests:**
+- Email: transfermy@ammocoin.org
+- Subject: "v1.0 Transfer Request"
 
 **Get Help:**
-- Discord/Telegram: [Community channels]
 - GitHub: https://github.com/everquin/AMMOcoin/issues
-- Documentation: See repository guides
+- Documentation: See [User Migration Guide](USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
 
 ### For Team
 
 **Migration Coordination:**
 - Primary contact: [Team lead]
-- Verification team: [List members]
-- Distribution wallet: [Specify address/multisig]
+- Disposal wallet manager: [Specify]
+- Distribution wallet: `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`
 
 ---
 
@@ -452,51 +327,14 @@ If multiple people claim same v1.0 address:
 
 | Phase | Duration | Status |
 |-------|----------|--------|
-| Snapshot Taken | December 22, 2025 | ✅ Complete |
-| v1.1.0 Launch | January 3, 2026 | ✅ Complete |
-| Claim Period Opens | January 3, 2026 | ✅ Complete |
-| Claim Period Closes | April 3, 2026 | ⏳ Pending |
-| Distribution Complete | May 2026 | ⏳ Pending |
-
----
-
-## Appendix: Batch Claim Processing Script
-
-For team use - verify multiple claims efficiently:
-
-```bash
-#!/bin/bash
-# verify-claims.sh
-
-CLAIMS_FILE="claims-list.csv"  # Format: v10addr,v11addr,amount,signature,message
-
-while IFS=, read -r v10addr v11addr amount signature message; do
-    echo "Verifying claim for $v10addr..."
-
-    # Verify signature
-    VALID=$(/path/to/v1.0/ammocoin-cli verifymessage "$v10addr" "$signature" "$message")
-
-    if [ "$VALID" = "true" ]; then
-        # Check v1.0 balance
-        BALANCE=$(/path/to/v1.0/ammocoin-cli getreceivedbyaddress "$v10addr" 0)
-
-        echo "  Signature: ✅ VALID"
-        echo "  v1.0 Balance: $BALANCE AMMO"
-        echo "  Claimed: $amount AMMO"
-
-        # Compare amounts (allowing 0.1% difference for rounding)
-        # Add logic here
-
-    else
-        echo "  Signature: ❌ INVALID"
-    fi
-
-    echo "---"
-done < "$CLAIMS_FILE"
-```
+| Snapshot Taken | December 22, 2025 | Complete |
+| v1.1.0 Launch | January 3, 2026 | Complete |
+| Migration Period Opens | January 3, 2026 | Complete |
+| Migration Period Closes | April 3, 2026 | Pending |
+| Distribution Complete | May 2026 | Pending |
 
 ---
 
 **Last Updated:** March 1, 2026
 **Status:** Active Migration Plan
-**Questions?** Contact team at migration@ammocoin.org
+**Questions?** Contact team at transfermy@ammocoin.org

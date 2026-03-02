@@ -2,7 +2,7 @@
 
 **Network Launch:** January 3, 2026
 **Migration Deadline:** April 3, 2026 (90 days)
-**Migration Method:** Signed-message claim process
+**Migration Method:** On-chain transfer via disposal wallet
 
 ---
 
@@ -10,7 +10,9 @@
 
 AMMOcoin v1.1.0 is a **completely new blockchain** — it is NOT an upgrade of v1.0. The two networks are separate and incompatible.
 
-A **250,000,000 AMMO distribution fund** in the v1.1.0 genesis block covers all v1.0 balances (snapshot taken at block 434,881 on December 22, 2025). To receive your coins on v1.1.0, you must complete a claim process that proves you owned a v1.0 address.
+A **250,000,000 AMMO distribution fund** in the v1.1.0 genesis block covers all v1.0 balances. To receive your coins on v1.1.0, you transfer your v1.0 AMMO to a team-controlled **disposal wallet** on the v1.0 chain. Once the team confirms your transfer on-chain, the equivalent amount is sent to your v1.1.0 address(es) from the distribution fund.
+
+This creates **immutable proof on both blockchains** — your v1.0 send transaction and the matching v1.1.0 distribution transaction form a permanent, auditable record of the migration.
 
 **What v1.1.0 brings:**
 - Modern PIVX 5.x codebase
@@ -20,11 +22,27 @@ A **250,000,000 AMMO distribution fund** in the v1.1.0 genesis block covers all 
 
 ---
 
+## How Migration Works
+
+```
+v1.0 Chain                              v1.1.0 Chain
+──────────                              ────────────
+Your v1.0 wallet                        250M AMMO distribution fund
+      │                                        │
+      ▼                                        ▼
+Send AMMO to ──► Disposal Wallet    Team sends ──► Your v1.1.0 address(es)
+(on-chain tx)    (team-controlled)  (on-chain tx)  (you specify how to split)
+```
+
+Both transactions are recorded on their respective blockchains — immutable and independently verifiable.
+
+---
+
 ## Before You Start
 
 ### Back Up Your v1.0 Wallet
 
-**Without your v1.0 wallet.dat, you cannot prove ownership and will lose your coins permanently.**
+**Without your v1.0 wallet.dat, you cannot send your coins to the disposal wallet.**
 
 ```bash
 # Stop v1.0 daemon
@@ -127,127 +145,106 @@ ammocoin-cli getblockhash 0
 
 ---
 
-## Step 2: Import v1.0 Keys into v1.1.0
+## Step 2: Generate v1.1.0 Receiving Address(es)
 
-You need your v1.0 private keys in the v1.1.0 wallet so you can sign messages proving ownership. Choose one of three methods:
-
-### Method A: Copy wallet.dat (easiest)
+Create one or more addresses in your v1.1.0 wallet where your migrated coins will be sent:
 
 ```bash
-# Stop v1.1.0 daemon
-ammocoin-cli stop
-
-# Copy v1.0 wallet file into v1.1.0 data directory
-cp ~/ammocoin-v1.0-wallet-backup-*.dat ~/.ammocoin/wallet.dat
-
-# Restart with rescan
-ammocoind -daemon -rescan
-```
-
-### Method B: Import individual private keys
-
-```bash
-# From v1.0: export a private key
-/path/to/v1.0/ammocoin-cli dumpprivkey "YOUR_V1.0_ADDRESS"
-
-# In v1.1.0: import it (rescan=false for speed, rescan after all imports)
-ammocoin-cli importprivkey "PRIVATE_KEY_HERE" "v1.0 import" false
-
-# After importing all keys, rescan once
-ammocoin-cli stop
-ammocoind -daemon -rescan
-```
-
-### Method C: Dump/import entire wallet
-
-```bash
-# From v1.0: export all keys
-/path/to/v1.0/ammocoin-cli dumpwallet ~/v1.0-wallet-export.txt
-
-# In v1.1.0: import all keys
-ammocoin-cli importwallet ~/v1.0-wallet-export.txt
-
-# Delete the export file after import (contains private keys!)
-rm ~/v1.0-wallet-export.txt
-```
-
-**IMPORTANT: Importing keys does NOT restore your balance.** The v1.1.0 blockchain has no record of v1.0 transactions. Your balance will show 0 until you complete the claim process below.
-
----
-
-## Step 3: Generate a v1.1.0 Receiving Address
-
-Create a new address where your claimed coins will be sent:
-
-```bash
-ammocoin-cli getnewaddress "Migration Claim"
+ammocoin-cli getnewaddress "Migration"
 # Example output: Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n
 ```
 
-Back up your v1.1.0 wallet after generating the address:
+You can create multiple addresses if you want your balance split across them (e.g., a staking address and a masternode collateral address).
+
+Back up your v1.1.0 wallet after generating addresses:
 ```bash
 ammocoin-cli backupwallet ~/ammocoin-v1.1.0-wallet-backup.dat
 ```
 
 ---
 
-## Step 4: Prove Ownership of Your v1.0 Address
+## Step 3: Email the Team
 
-Sign a message with your v1.0 address (now available in v1.1.0 after Step 2):
-
-```bash
-# If wallet is encrypted, unlock it first
-ammocoin-cli walletpassphrase "your_passphrase" 300
-
-# Sign the claim message
-ammocoin-cli signmessage "YOUR_V1.0_ADDRESS" "I am migrating to AMMOcoin v1.1.0"
-
-# Returns a signature like: INsQ7k9R3m... (long base64 string)
-```
-
-Save the signature — you will need it for the claim submission.
-
----
-
-## Step 5: Submit Your Claim
-
-Email **support@ammocoin.org** with the subject line: **Migration Claim - [Your v1.0 Address]**
+Email **transfermy@ammocoin.org** with the subject line: **v1.0 Transfer Request**
 
 Include:
-1. **v1.0 Address:** (the address you signed with)
-2. **Message signed:** `I am migrating to AMMOcoin v1.1.0`
-3. **Signature:** (the base64 string from Step 4)
-4. **v1.1.0 Receiving Address:** (from Step 3)
+1. **Amount you will send** from your v1.0 wallet
+2. **v1.1.0 receiving address(es)** and how to distribute the amount between them
 
-If you have multiple v1.0 addresses, submit a separate claim for each, or include all addresses with their signatures in one email.
+**Example — single address:**
+```
+I will be sending 50,000 AMMO from my v1.0 wallet to the disposal address.
+
+Please send the full amount to:
+  Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n — 50,000 AMMO
+```
+
+**Example — multiple addresses:**
+```
+I will be sending 60,000 AMMO from my v1.0 wallet to the disposal address.
+
+Please distribute as follows:
+  Af7kQ2mN8pRvT3xYz9cL4sD1eW6hK9jB2n — 40,000 AMMO (staking)
+  Ah2mX9cL4sD1eW6hK9jB2nRvT3xYz7kQ2 — 10,000 AMMO (masternode collateral)
+  Aj4pR8dN5tF2gH7iK3lM6oQ9sU1wX0yZ8 — 10,000 AMMO (savings)
+```
+
+The team will reply with the **v1.0 disposal wallet address** to send your coins to.
 
 ---
 
-## Step 6: Receive Your Coins
+## Step 4: Send v1.0 AMMO to Disposal Wallet
 
-Claims are typically processed within **24-48 hours**. Once approved, you will receive v1.1.0 AMMO matching your v1.0 snapshot balance at block 434,881.
+Once you receive the disposal wallet address from the team, send your v1.0 AMMO:
 
 ```bash
-# Check your balance
+# Using v1.0 CLI
+ammocoin-cli sendtoaddress "DISPOSAL_WALLET_ADDRESS" 50000
+
+# Or send your entire balance
+BALANCE=$(ammocoin-cli getbalance)
+ammocoin-cli sendtoaddress "DISPOSAL_WALLET_ADDRESS" $BALANCE "" "" true
+# The 'true' at the end subtracts the fee from the amount sent
+```
+
+**Save the transaction ID (txid)** — this is your on-chain proof of transfer:
+```bash
+# View your most recent transaction
+ammocoin-cli listtransactions "*" 1
+```
+
+You can send in multiple transactions if you prefer. Each transfer will be matched with an equivalent v1.1.0 distribution.
+
+---
+
+## Step 5: Receive Your v1.1.0 AMMO
+
+Once the team confirms your v1.0 transfer on-chain, they will send the equivalent amount to your specified v1.1.0 address(es). This typically takes **24-48 hours**.
+
+```bash
+# Check your v1.1.0 balance
 ammocoin-cli getbalance
 
 # View recent transactions
 ammocoin-cli listtransactions "*" 10
 ```
 
+The team will email you confirmation with the v1.1.0 transaction ID(s) for your records.
+
 ---
 
 ## Masternode Operators
 
-If you ran a masternode on v1.0, you must set up a **fresh masternode on v1.1.0** after claiming your collateral:
+If you ran a masternode on v1.0, you must set up a **fresh masternode on v1.1.0** after transferring your collateral:
 
-1. **Claim your v1.0 balance** (follow Steps 1-6 above — you need at least 10,000 AMMO)
+1. **Transfer your v1.0 balance** (follow Steps 1-5 above)
+   - In your email, specify at least 10,000 AMMO to a dedicated masternode collateral address
 2. **Set up a new VPS** running v1.1.0 (or upgrade your existing VPS)
 3. **Configure the masternode** following the standard v1.1.0 masternode setup process
 4. **Lock collateral** (10,000 AMMO) in your v1.1.0 wallet
 5. **Start the masternode**
 
-Your v1.0 masternode configuration does not carry over. Contact support@ammocoin.org if you need help with masternode setup.
+Your v1.0 masternode configuration does not carry over. Contact transfermy@ammocoin.org if you need help with masternode setup.
 
 ---
 
@@ -256,9 +253,10 @@ Your v1.0 masternode configuration does not carry over. Contact support@ammocoin
 After completing migration:
 
 - [ ] v1.1.0 node running and synced (`ammocoin-cli getblockchaininfo`)
-- [ ] Balance received matches v1.0 snapshot balance (`ammocoin-cli getbalance`)
-- [ ] Can create new addresses (`ammocoin-cli getnewaddress`)
-- [ ] Can send a small test transaction
+- [ ] v1.1.0 balance received matches the amount you sent on v1.0 (`ammocoin-cli getbalance`)
+- [ ] You have the v1.0 txid (proof of disposal transfer) saved
+- [ ] You have the v1.1.0 txid (proof of distribution) saved
+- [ ] Can send a small test transaction on v1.1.0
 - [ ] Wallet encrypted (`ammocoin-cli encryptwallet "passphrase"` if not already)
 - [ ] v1.1.0 wallet backed up
 - [ ] v1.0 wallet backup stored safely (keep it!)
@@ -267,25 +265,25 @@ After completing migration:
 
 ## Troubleshooting
 
-### "Balance shows zero after importing keys"
+### "Transaction not confirming on v1.0"
 
-This is expected. Importing keys only adds addresses to your wallet — it does not restore balances. You must complete the claim process (Steps 4-6) to receive your v1.1.0 coins.
-
-### "Error: Wallet is encrypted"
-
-Unlock your wallet before signing:
+Ensure your v1.0 node is synced and has peers:
 ```bash
-ammocoin-cli walletpassphrase "your_passphrase" 300
+ammocoin-cli getinfo
+ammocoin-cli getpeerinfo
 ```
 
-### "signmessage: Private key not available"
+If no peers, add seed nodes to your v1.0 config.
 
-The v1.0 address was not imported correctly. Try importing the key again:
-```bash
-ammocoin-cli importprivkey "YOUR_V1.0_PRIVATE_KEY" "v1.0 import" true
-```
+### "I sent the wrong amount"
 
-### "Cannot connect to daemon"
+No problem. You can send additional transfers to the disposal wallet at any time. Email transfermy@ammocoin.org to update your distribution instructions.
+
+### "I want to change my v1.1.0 receiving addresses"
+
+Email transfermy@ammocoin.org before the team processes your transfer. Once the v1.1.0 distribution is sent, it cannot be reversed.
+
+### "Cannot connect to v1.1.0 daemon"
 
 Ensure v1.1.0 is running:
 ```bash
@@ -306,26 +304,29 @@ addnode=seed2.ammocoin.org:37020
 
 ## FAQ
 
-**Q: Will importing my v1.0 wallet restore my balance?**
-A: No. v1.1.0 is a separate blockchain. Importing keys lets you prove ownership — you must then submit a claim to receive your coins.
+**Q: Can I send my v1.0 AMMO in multiple transactions?**
+A: Yes. Send as many transfers as you like to the disposal wallet. Each will be matched with an equivalent v1.1.0 distribution. Just email transfermy@ammocoin.org with updated instructions for each transfer.
 
-**Q: Can I run both v1.0 and v1.1.0?**
-A: Yes, but use different data directories (e.g., `-datadir=~/.ammocoin-v1.0` for v1.0).
+**Q: Can I split my balance across multiple v1.1.0 addresses?**
+A: Yes. In your email, specify each v1.1.0 address and the amount to send to each. For example, you could put 10,000 AMMO toward masternode collateral and the rest into a staking address.
+
+**Q: What if I miss the deadline?**
+A: The migration period closes April 3, 2026. After that, unclaimed funds return to the community treasury. Contact transfermy@ammocoin.org if you need an extension.
 
 **Q: What if I'm running a masternode?**
-A: You must set up a fresh masternode on v1.1.0 after claiming your collateral. See the Masternode Operators section above.
+A: You must set up a fresh masternode on v1.1.0 after transferring your collateral. See the Masternode Operators section above.
 
 **Q: Do I need to re-download the entire blockchain?**
 A: Yes, v1.1.0 is a new blockchain starting from a new genesis block.
 
-**Q: Will my address change?**
-A: Your v1.0 addresses can be imported into v1.1.0 (same format), but you need a new v1.1.0 receiving address for the claim.
-
-**Q: What if I miss the deadline?**
-A: The claim period closes April 3, 2026. After that, unclaimed funds return to the community treasury. Contact support@ammocoin.org if you need an extension.
+**Q: What happens to my v1.0 coins after I send them to the disposal wallet?**
+A: They remain in the disposal wallet permanently on the v1.0 chain as an immutable record of your migration. The v1.0 network will eventually be shut down.
 
 **Q: What happens to transaction history?**
 A: v1.0 transaction history does not carry over. The v1.1.0 blockchain starts fresh.
+
+**Q: Is there a minimum transfer amount?**
+A: No. You can transfer any amount.
 
 ---
 
@@ -334,8 +335,8 @@ A: v1.0 transaction history does not carry over. The v1.1.0 blockchain starts fr
 1. **Never share your private keys** with anyone
 2. **Verify checksums** of all downloaded binaries before installing
 3. **Back up before making changes** — both v1.0 and v1.1.0 wallets
-4. **Test with a small amount first** if you have multiple addresses
-5. **Delete exported key files** after import (`dumpwallet` output contains private keys)
+4. **Confirm the disposal wallet address** with the team before sending — do not trust addresses from unofficial sources
+5. **Save all transaction IDs** from both chains for your records
 6. **Keep your v1.0 wallet backup** even after successful migration
 
 ---
@@ -346,16 +347,16 @@ A: v1.0 transaction history does not carry over. The v1.1.0 blockchain starts fr
 |-----------|------|--------|
 | v1.0 Snapshot (Block 434,881) | December 22, 2025 | Complete |
 | v1.1.0 Network Launch | January 3, 2026 | Complete |
-| Claim Period Opens | January 3, 2026 | Complete |
-| **Claim Period Closes** | **April 3, 2026** | Active |
+| Migration Period Opens | January 3, 2026 | Complete |
+| **Migration Period Closes** | **April 3, 2026** | Active |
 | Distribution Complete | May 2026 | Pending |
 
 ---
 
 ## Getting Help
 
-- **Email:** support@ammocoin.org
+- **Email:** transfermy@ammocoin.org
 - **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
 - **Documentation:** [Migration docs](https://github.com/everquin/AMMOcoin/tree/main/docs/migration)
 
-**Questions?** Contact support@ammocoin.org
+**Questions?** Contact transfermy@ammocoin.org
