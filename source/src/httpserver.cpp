@@ -392,7 +392,20 @@ bool InitHTTPServer()
 
     evhttp_set_timeout(http, gArgs.GetArg("-rpcservertimeout", DEFAULT_HTTP_SERVER_TIMEOUT));
     evhttp_set_max_headers_size(http, MAX_HEADERS_SIZE);
-    evhttp_set_max_body_size(http, MAX_SIZE);
+    // Cap RPC body to 8 MiB by default (was MAX_SIZE / 32 MiB). The cap
+    // protects against memory exhaustion from oversized JSON-RPC bodies
+    // — a real DoS surface at 32 MiB × 16 work-queue slots — while still
+    // accommodating every legitimate RPC call:
+    //   * submitblock: 2 MB MAX_BLOCK_SIZE_CURRENT × 2 (hex) ≈ 4 MB payload
+    //   * sendrawtransaction with shielded sapling tx: ~100 KB
+    //   * importwallet / importmulti with many keys: variable, ~MB-scale
+    // Operators with unusual needs (very large wallet imports, etc.) can
+    // raise the cap with -rpcmaxbodysize.
+    static const int64_t MAX_HTTP_REQUEST_BODY = 8 * 1024 * 1024;
+    int64_t maxBody = gArgs.GetArg("-rpcmaxbodysize", MAX_HTTP_REQUEST_BODY);
+    if (maxBody < 64 * 1024) maxBody = 64 * 1024;        // floor
+    if (maxBody > (int64_t)MAX_SIZE) maxBody = MAX_SIZE;  // never above the serialization cap
+    evhttp_set_max_body_size(http, maxBody);
     evhttp_set_gencb(http, http_request_cb, nullptr);
 
     if (!HTTPBindAddresses(http)) {

@@ -94,19 +94,39 @@ ammocoin-cli.exe getinfo
 
 ## Verification
 
-To verify the integrity of your download:
+There are two checks: (1) verify the checksums file was signed by the
+AMMOcoin release maintainer, then (2) verify your binary's checksum matches.
+**Both** matter — the SHA256 alone only protects against bit-rot, not a
+deliberate substitution of the release artifact on GitHub or a mirror.
 
-### macOS/Linux
+### Step 1 — verify the signature on the checksums file (recommended)
+
+Requires OpenSSH 8.0+ (`ssh-keygen` with `-Y` subcommand) and a clone of
+this repository at the v1.1.0 tag (the repo holds the trusted signer key):
+
+```bash
+git clone https://github.com/everquin/AMMOcoin.git
+cd AMMOcoin && git checkout v1.1.0
+./scripts/release/verify-release.sh \
+  /path/to/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
+```
+
+Expected: `✅ Signature is valid.` See [docs/release/SIGNING.md](../docs/release/SIGNING.md)
+for the full protocol, key-rotation policy, and rationale.
+
+### Step 2 — verify your binary's SHA256
+
+#### macOS/Linux
 ```bash
 sha256sum AMMOcoin-<platform>.tar.gz
 ```
 
-### Windows
+#### Windows
 ```powershell
 certutil -hashfile AMMOcoin-v1.1.0-Windows-x86_64.zip SHA256
 ```
 
-Compare the output with the checksums in [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
+Compare the output with the checksums in [AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt).
 
 ## Configuration
 

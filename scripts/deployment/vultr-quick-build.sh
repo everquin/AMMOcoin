@@ -25,7 +25,7 @@ cd AMMOcoin-build
 
 # Verify genesis hash
 echo "🔍 Verifying genesis block hash..."
-if grep -q "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162" source/src/chainparams.cpp; then
+if grep -q "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp; then
     echo "✅ Correct genesis hash found!"
 else
     echo "❌ ERROR: Genesis hash not found in source code!"
@@ -91,7 +91,7 @@ fi
 
 # Verify genesis hash in compiled binary
 echo "🔍 Verifying genesis hash in compiled binary..."
-if strings src/ammocoind | grep -q "00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162"; then
+if strings src/ammocoind | grep -q "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"; then
     echo "✅ Genesis hash verified in binary!"
 else
     echo "⚠️  WARNING: Genesis hash not found in binary!"
@@ -115,7 +115,7 @@ cat > ~/ammocoin-linux-release/README.md << 'EOFREADME'
 # AMMOcoin v1.1.0 - Linux x86_64
 
 **Platform:** Linux x86_64 (Ubuntu 18.04+)
-**Genesis Hash:** 00000da28f340848df488cd5cd49e4f40dbce9d37ab8fb9e8ec400b40b8fb162
+**Genesis Hash:** 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 **Genesis Reward:** 250,000,000 AMMO
 
 ## Binaries

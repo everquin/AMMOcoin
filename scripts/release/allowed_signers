@@ -1,0 +1,23 @@
+# AMMOcoin release-signing public keys (OpenSSH allowed_signers format).
+#
+# Each non-comment line is:
+#   <identity> [options] <key-type> <key-data> [comment]
+#
+# This file pins the public keys whose detached signatures are trusted to
+# certify AMMOcoin release artifacts (CHECKSUMS files, etc.). Anyone with
+# write access to this file can effectively replace the project's release
+# signer — protect it accordingly and review changes in PR.
+#
+# To add a key:
+#   1. The release maintainer generates an Ed25519 key dedicated to releases:
+#        ssh-keygen -t ed25519 -f ~/.ssh/ammocoin_release_ed25519 \
+#          -C "release@ammocoin.org"
+#   2. Append the *public* key (cat ~/.ssh/ammocoin_release_ed25519.pub) to
+#      this file, prefixed with the identity:
+#        release@ammocoin.org ssh-ed25519 AAAA... release@ammocoin.org
+#   3. Commit, sign the commit, and publish.
+#
+# Verifiers run `scripts/release/verify-release.sh <file>` against an
+# artifact + its `.sig`. The verifier hard-fails if this file is empty.
+#
+# --- TRUSTED KEYS BELOW THIS LINE ---

@@ -1,12 +1,28 @@
 #!/usr/bin/env python3
 """
+*** DEPRECATED — DO NOT USE FOR PRODUCTION MIGRATION ***
+
+This script signs and broadcasts 232M+ AMMO distribution transactions
+from an ONLINE, UNLOCKED wallet. A single compromised host (RPC password
+brute-force, malware, supply-chain) drains the entire migration fund.
+
+Use the three-step offline-signing pipeline instead:
+    1. migration-prepare.py         (online, watch-only — builds unsigned txs)
+    2. migration-sign-offline.py    (air-gapped — signs offline)
+    3. migration-broadcast.py       (online — broadcasts signed txs)
+
+This script refuses to run unless invoked with --i-accept-the-risk, and
+even then prints a long warning and requires explicit confirmation.
+
+Original docstring follows:
+
 AMMOcoin v1.1.0 - Top 61 Holders Distribution Script
 
 Automatically distributes funds to the top 61 holders from genesis-top-holders.json
 using the ammocoin-cli RPC interface.
 
 Usage:
-    python3 distribute-to-top-holders.py [--dry-run] [--cli-path PATH]
+    python3 distribute-to-top-holders.py --i-accept-the-risk [--dry-run] [--cli-path PATH]
 
 Options:
     --dry-run       Show what would be sent without actually sending
@@ -20,6 +36,28 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
+
+def _refuse_if_unaccepted() -> None:
+    if "--i-accept-the-risk" not in sys.argv:
+        print("*" * 72)
+        print("This script is DEPRECATED and unsafe for production migration.")
+        print("It signs from an online, unlocked wallet.")
+        print("")
+        print("Use the offline-signing pipeline instead:")
+        print("  scripts/migration/migration-prepare.py")
+        print("  scripts/migration/migration-sign-offline.py")
+        print("  scripts/migration/migration-broadcast.py")
+        print("")
+        print("If you understand the risk and still want to proceed, re-run with:")
+        print("  python3 distribute-to-top-holders.py --i-accept-the-risk ...")
+        print("*" * 72)
+        sys.exit(2)
+    # Strip the gate flag so argparse doesn't reject it.
+    sys.argv = [a for a in sys.argv if a != "--i-accept-the-risk"]
+
+
+_refuse_if_unaccepted()
 
 
 class DistributionManager:

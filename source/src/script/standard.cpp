@@ -326,6 +326,13 @@ CScript GetScriptForOpReturn(const uint256& message)
     return script;
 }
 
+CScript GetScriptForOpReturn(const std::vector<unsigned char>& data)
+{
+    CScript script;
+    script << OP_RETURN << data;
+    return script;
+}
+
 bool IsValidDestination(const CTxDestination& dest) {
     return dest.which() != 0;
 }

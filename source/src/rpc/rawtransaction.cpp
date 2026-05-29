@@ -24,6 +24,7 @@
 #ifdef ENABLE_WALLET
 #include "sapling/address.h"
 #include "sapling/key_io_sapling.h"
+#include "sapling/sapling_operation.h"
 #include "wallet/rpcwallet.h"
 #include "wallet/wallet.h"
 #endif
@@ -304,6 +305,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
             "2. \"outputs\"           (string, required) a json object with addresses as keys and amounts as values\n"
             "    {\n"
             "      \"address\": x.xxx   (numeric, required) The key is the ammocoin address, the value is the ammocoin amount\n"
+            "      \"data\": \"hex\"    (string, optional) The key is \"data\", the value is hex-encoded data for an OP_RETURN output\n"
             "      ,...\n"
             "    }\n"
             "3. locktime                (numeric, optional, default=0) Raw locktime. Non-0 value also locktime-activates inputs\n"
@@ -330,6 +332,18 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, locktime out of range");
         rawTx.nLockTime = nLockTime;
     }
+
+    // DoS guard: even with the HTTP body cap, a malformed-but-tiny request
+    // could still describe pathological input/output counts that allocate
+    // unbounded vectors. Cap them to a generous practical limit.
+    static const size_t MAX_RAW_INPUTS = 1000;
+    static const size_t MAX_RAW_OUTPUTS = 1000;
+    if (inputs.size() > MAX_RAW_INPUTS)
+        throw JSONRPCError(RPC_INVALID_PARAMETER,
+            strprintf("Too many inputs: %d (max %d)", inputs.size(), MAX_RAW_INPUTS));
+    if (sendTo.getKeys().size() > MAX_RAW_OUTPUTS)
+        throw JSONRPCError(RPC_INVALID_PARAMETER,
+            strprintf("Too many outputs: %d (max %d)", sendTo.getKeys().size(), MAX_RAW_OUTPUTS));
 
     for (unsigned int idx = 0; idx < inputs.size(); idx++) {
         const UniValue& input = inputs[idx];
@@ -364,19 +378,35 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
     std::set<CTxDestination> setAddress;
     std::vector<std::string> addrList = sendTo.getKeys();
     for (const std::string& name_ : addrList) {
-        CTxDestination address = DecodeDestination(name_);
-        if (!IsValidDestination(address))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid AMMOcoin address: ")+name_);
+        if (name_ == "data") {
+            if (!gArgs.GetBoolArg("-datacarrier", DEFAULT_ACCEPT_DATACARRIER))
+                throw JSONRPCError(RPC_INVALID_PARAMETER,
+                    "OP_RETURN outputs are disabled on this node (-datacarrier=0)");
+            std::vector<unsigned char> data = ParseHexV(sendTo[name_], "Data");
+            CScript scriptPubKey = GetScriptForOpReturn(data);
+            if (scriptPubKey.size() > nMaxDatacarrierBytes)
+                throw JSONRPCError(RPC_INVALID_PARAMETER,
+                    strprintf("OP_RETURN scriptPubKey too large: %d bytes (max %d). "
+                              "Reduce the data payload (typical limit ~%d bytes).",
+                              scriptPubKey.size(), nMaxDatacarrierBytes,
+                              nMaxDatacarrierBytes >= 3 ? nMaxDatacarrierBytes - 3 : 0));
+            CTxOut out(0, scriptPubKey);
+            rawTx.vout.push_back(out);
+        } else {
+            CTxDestination address = DecodeDestination(name_);
+            if (!IsValidDestination(address))
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid AMMOcoin address: ")+name_);
 
-        if (setAddress.count(address))
-            throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
-        setAddress.insert(address);
+            if (setAddress.count(address))
+                throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
+            setAddress.insert(address);
 
-        CScript scriptPubKey = GetScriptForDestination(address);
-        CAmount nAmount = AmountFromValue(sendTo[name_]);
+            CScript scriptPubKey = GetScriptForDestination(address);
+            CAmount nAmount = AmountFromValue(sendTo[name_]);
 
-        CTxOut out(nAmount, scriptPubKey);
-        rawTx.vout.push_back(out);
+            CTxOut out(nAmount, scriptPubKey);
+            rawTx.vout.push_back(out);
+        }
     }
 
     return EncodeHexTx(rawTx);
@@ -896,6 +926,82 @@ UniValue sendrawtransaction(const JSONRPCRequest& request)
     return hashTx.GetHex();
 }
 
+UniValue sendopreturn(const JSONRPCRequest& request)
+{
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+    if (!EnsureWalletIsAvailable(pwallet, request.fHelp))
+        return NullUniValue;
+
+    if (request.fHelp || request.params.size() != 2)
+        throw std::runtime_error(
+            "sendopreturn \"fromaddress\" \"hexdata\"\n"
+            "\nCreate, sign, and broadcast a transaction with an OP_RETURN output.\n"
+            "Useful for embedding data on-chain (e.g., AMMO-AUTH protocol messages).\n"
+            + HelpRequiringPassphrase(pwallet) + "\n"
+
+            "\nArguments:\n"
+            "1. \"fromaddress\"  (string, required) The sender address to fund the transaction\n"
+            "2. \"hexdata\"      (string, required) Hex-encoded data for the OP_RETURN output\n"
+            "                  (max payload size depends on -datacarriersize, typically up to 80 bytes)\n"
+
+            "\nResult:\n"
+            "\"txid\"            (string) The transaction hash\n"
+
+            "\nExamples:\n"
+            "\nSend an AMMO-AUTH REGISTER message:\n"
+            + HelpExampleCli("sendopreturn", "\"AAddress\" \"414d4d4f0101...\"")
+            + HelpExampleRpc("sendopreturn", "\"AAddress\", \"414d4d4f0101...\""));
+
+    if (!gArgs.GetBoolArg("-datacarrier", DEFAULT_ACCEPT_DATACARRIER))
+        throw JSONRPCError(RPC_INVALID_PARAMETER,
+            "OP_RETURN outputs are disabled on this node (-datacarrier=0)");
+
+    LOCK2(cs_main, &pwallet->cs_wallet);
+    EnsureWalletIsUnlocked(pwallet);
+
+    // Parse sender address. Only P2PKH (CKeyID) is supported because the
+    // SaplingOperation transparent-funding path matches UTXOs by exact
+    // destination — P2SH/cold-stake/exchange variants will silently find no
+    // UTXOs and return a misleading "Insufficient funds" error.
+    CTxDestination fromDest = DecodeDestination(request.params[0].get_str());
+    if (!IsValidDestination(fromDest))
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid sender address");
+    if (boost::get<CKeyID>(&fromDest) == nullptr)
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY,
+            "sendopreturn only supports standard P2PKH sender addresses");
+
+    // Parse OP_RETURN data and build the script up front so we enforce the
+    // same size limit (nMaxDatacarrierBytes against scriptPubKey size) that
+    // policy.cpp uses for relay — otherwise payloads of 81-83 bytes build
+    // 84-86 byte scripts that fail to relay and produce stuck transactions.
+    std::vector<unsigned char> data = ParseHexV(request.params[1], "hexdata");
+    if (data.empty())
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Data must not be empty");
+    CScript opReturnScript = GetScriptForOpReturn(data);
+    if (opReturnScript.size() > nMaxDatacarrierBytes)
+        throw JSONRPCError(RPC_INVALID_PARAMETER,
+            strprintf("OP_RETURN scriptPubKey too large: %d bytes (max %d). "
+                      "Reduce the data payload (typical limit ~%d bytes).",
+                      opReturnScript.size(), nMaxDatacarrierBytes,
+                      nMaxDatacarrierBytes >= 3 ? nMaxDatacarrierBytes - 3 : 0));
+
+    // Build recipients: one OP_RETURN output with the data
+    std::vector<SendManyRecipient> recipients;
+    recipients.emplace_back(data);
+
+    // Build, sign, and send
+    SaplingOperation operation(Params().GetConsensus(), pwallet);
+    operation.setFromAddress(fromDest);
+    operation.setRecipients(recipients)->setMinDepth(0);
+
+    std::string retTxHash;
+    OperationResult operationResult = operation.buildAndSend(retTxHash);
+    if (!operationResult)
+        throw JSONRPCError(RPC_WALLET_ERROR, operationResult.getError());
+
+    return retTxHash;
+}
+
 // clang-format off
 static const CRPCCommand commands[] =
 { //  category              name                      actor (function)         okSafe argNames
@@ -906,6 +1012,7 @@ static const CRPCCommand commands[] =
     { "rawtransactions",    "getrawtransaction",      &getrawtransaction,      true,  {"txid","verbose","blockhash"} },
     { "rawtransactions",    "sendrawtransaction",     &sendrawtransaction,     false, {"hexstring","allowhighfees"} },
     { "rawtransactions",    "signrawtransaction",     &signrawtransaction,     false, {"hexstring","prevtxs","privkeys","sighashtype"} }, /* uses wallet if enabled */
+    { "rawtransactions",    "sendopreturn",           &sendopreturn,           false, {"fromaddress","hexdata"} },
 };
 // clang-format on
 

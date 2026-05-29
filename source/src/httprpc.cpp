@@ -16,6 +16,9 @@
 #include "sync.h"
 #include "util/system.h"
 #include "utilstrencodings.h"
+#include "utiltime.h"
+
+#include <map>
 
 #include <boost/algorithm/string.hpp> // boost::trim
 
@@ -60,6 +63,70 @@ private:
 static std::string strRPCUserColonPass;
 /* Stored RPC timer interface (for unregistration) */
 static std::unique_ptr<HTTPRPCTimerInterface> httpRPCTimerInterface;
+
+/* Per-peer auth-failure tracking. Defends against brute-forcing the
+ * rpcuser/rpcpassword shared secret — the prior protection (a 250 ms
+ * sleep per attempt) was insufficient with 4 worker threads. */
+namespace {
+struct AuthFailState {
+    int64_t firstFailMicros = 0;
+    int64_t lockoutUntilMicros = 0;
+    int failCount = 0;
+};
+static std::map<std::string, AuthFailState> g_authFails;
+static RecursiveMutex cs_authFails;
+
+static const int     DEFAULT_RPC_AUTH_MAX_FAILS   = 5;
+static const int64_t DEFAULT_RPC_AUTH_FAIL_WINDOW = 60;    // seconds
+static const int64_t DEFAULT_RPC_AUTH_LOCKOUT     = 300;   // seconds
+
+static bool IsAuthLockedOut(const std::string& peerIp)
+{
+    LOCK(cs_authFails);
+    auto it = g_authFails.find(peerIp);
+    if (it == g_authFails.end()) return false;
+    int64_t now = GetTimeMicros();
+    if (it->second.lockoutUntilMicros > 0) {
+        if (now < it->second.lockoutUntilMicros) return true;
+        g_authFails.erase(it);  // lockout expired
+    }
+    return false;
+}
+
+static void RecordAuthFailure(const std::string& peerIp)
+{
+    int maxFails = gArgs.GetArg("-rpcauthmaxfails", DEFAULT_RPC_AUTH_MAX_FAILS);
+    // -rpcauthmaxfails=0 disables the lockout entirely. Useful when the
+    // RPC port sits behind a trusted reverse proxy whose source IP would
+    // otherwise cause all clients to share a single failure bucket.
+    if (maxFails <= 0) return;
+
+    LOCK(cs_authFails);
+    int64_t now = GetTimeMicros();
+    int64_t windowMicros = gArgs.GetArg("-rpcauthfailwindow", DEFAULT_RPC_AUTH_FAIL_WINDOW) * 1000000LL;
+    int64_t lockoutMicros = gArgs.GetArg("-rpcauthlockout", DEFAULT_RPC_AUTH_LOCKOUT) * 1000000LL;
+
+    AuthFailState& s = g_authFails[peerIp];
+    if (s.failCount == 0 || (now - s.firstFailMicros) > windowMicros) {
+        s.firstFailMicros = now;
+        s.failCount = 1;
+    } else {
+        s.failCount++;
+    }
+    if (s.failCount >= maxFails && s.lockoutUntilMicros == 0) {
+        s.lockoutUntilMicros = now + lockoutMicros;
+        LogPrintf("ThreadRPCServer: locking out %s for %d seconds "
+                  "after %d failed auth attempts\n",
+                  peerIp, lockoutMicros / 1000000, s.failCount);
+    }
+}
+
+static void RecordAuthSuccess(const std::string& peerIp)
+{
+    LOCK(cs_authFails);
+    g_authFails.erase(peerIp);
+}
+}  // namespace
 
 static void JSONErrorReply(HTTPRequest* req, const UniValue& objError, const UniValue& id)
 {
@@ -146,6 +213,17 @@ static bool HTTPReq_JSONRPC(HTTPRequest* req, const std::string &)
         req->WriteReply(HTTP_BAD_METHOD, "JSONRPC server handles only POST requests");
         return false;
     }
+    // Resolve peer IP up-front for the lockout tracker. Use just the IP
+    // (not IP:port), since attackers cycle source ports trivially.
+    const std::string peerIp = req->GetPeer().ToStringIP();
+
+    // Hard-reject already-locked-out peers before even parsing the header,
+    // so the lockout actually limits work performed per request.
+    if (IsAuthLockedOut(peerIp)) {
+        req->WriteReply(HTTP_UNAUTHORIZED);
+        return false;
+    }
+
     // Check authorization
     std::pair<bool, std::string> authHeader = req->GetHeader("authorization");
     if (!authHeader.first) {
@@ -157,14 +235,19 @@ static bool HTTPReq_JSONRPC(HTTPRequest* req, const std::string &)
     if (!RPCAuthorized(authHeader.second, jreq.authUser)) {
         LogPrintf("ThreadRPCServer incorrect password attempt from %s\n", req->GetPeer().ToString());
 
-        /* Deter brute-forcing
-           If this results in a DoS the user really
-           shouldn't have their RPC port exposed. */
+        RecordAuthFailure(peerIp);
+
+        /* Deter brute-forcing. The per-IP lockout above is the real
+         * defense; this sleep slows the first few attempts before the
+         * lockout kicks in. */
         MilliSleep(250);
 
         req->WriteReply(HTTP_UNAUTHORIZED);
         return false;
     }
+
+    // Clear any stale failure record on successful auth.
+    RecordAuthSuccess(peerIp);
 
     try {
         // Parse request

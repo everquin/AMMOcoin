@@ -61,9 +61,14 @@ struct SendManyRecipient
             recipient(new CRecipient(GetScriptForMultisig(nRequired, keys), amount, false))
     {}
 
-    // Transparent recipient: OP_RETURN
+    // Transparent recipient: OP_RETURN (uint256 message)
     SendManyRecipient(const uint256& message):
             recipient(new CRecipient(GetScriptForOpReturn(message), 0, false))
+    {}
+
+    // Transparent recipient: OP_RETURN (arbitrary data)
+    SendManyRecipient(const std::vector<unsigned char>& data):
+            recipient(new CRecipient(GetScriptForOpReturn(data), 0, false))
     {}
 };
 

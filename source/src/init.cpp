@@ -559,6 +559,10 @@ std::string HelpMessage(HelpMessageMode mode)
     if (showDebug) {
         strUsage += HelpMessageOpt("-rpcworkqueue=<n>", strprintf("Set the depth of the work queue to service RPC calls (default: %d)", DEFAULT_HTTP_WORKQUEUE));
         strUsage += HelpMessageOpt("-rpcservertimeout=<n>", strprintf("Timeout during HTTP requests (default: %d)", DEFAULT_HTTP_SERVER_TIMEOUT));
+        strUsage += HelpMessageOpt("-rpcmaxbodysize=<n>", "Maximum HTTP request body size in bytes (default: 8388608 / 8 MiB)");
+        strUsage += HelpMessageOpt("-rpcauthmaxfails=<n>", "Number of failed auth attempts from a single IP before lockout (default: 5, 0 disables — useful behind a trusted reverse proxy)");
+        strUsage += HelpMessageOpt("-rpcauthfailwindow=<n>", "Seconds within which -rpcauthmaxfails attempts trigger a lockout (default: 60)");
+        strUsage += HelpMessageOpt("-rpcauthlockout=<n>", "Seconds a locked-out IP is rejected before its counter resets (default: 300)");
     }
 
     strUsage += HelpMessageOpt("-blockspamfilter=<n>", strprintf("Use block spam filter (default: %u)", DEFAULT_BLOCK_SPAM_FILTER));

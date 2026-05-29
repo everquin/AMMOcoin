@@ -126,7 +126,13 @@ CScript GetScriptForMultisig(int nRequired, const std::vector<CPubKey>& keys);
 CScript GetScriptForStakeDelegation(const CKeyID& stakingKey, const CKeyID& spendingKey);
 CScript GetScriptForStakeDelegationLOF(const CKeyID& stakingKey, const CKeyID& spendingKey);
 
-/** Generate an OP_RETURN output script with the given data. */
+/** Generate an OP_RETURN output script with a uint256 message. */
 CScript GetScriptForOpReturn(const uint256& message);
+
+/** Generate an OP_RETURN output script with arbitrary data.
+ *  Callers must enforce the standardness limit themselves: the resulting
+ *  scriptPubKey size (data.size() + 1-3 pushdata bytes + 1 OP_RETURN byte)
+ *  must be <= nMaxDatacarrierBytes to be relayed. */
+CScript GetScriptForOpReturn(const std::vector<unsigned char>& data);
 
 #endif // BITCOIN_SCRIPT_STANDARD_H

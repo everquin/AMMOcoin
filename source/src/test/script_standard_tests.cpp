@@ -340,6 +340,63 @@ BOOST_AUTO_TEST_CASE(script_standard_GetScriptFor_)
     BOOST_CHECK(result == expected);
 }
 
+BOOST_AUTO_TEST_CASE(script_standard_GetScriptForOpReturn_data)
+{
+    // Verifies that GetScriptForOpReturn(vector) emits scripts that match the
+    // pushdata encoding boundaries that callers must enforce against
+    // nMaxDatacarrierBytes. A payload of 75 bytes is encoded with a single
+    // length byte; at 76 bytes the encoder switches to OP_PUSHDATA1 + length
+    // byte, adding one extra byte. Failure to account for this produced
+    // stuck txs in earlier sendopreturn code.
+
+    auto make_payload = [](size_t n) {
+        return std::vector<unsigned char>(n, 0xAB);
+    };
+
+    // Empty payload -> OP_RETURN + OP_0 (1 + 1 = 2 bytes total).
+    CScript s0 = GetScriptForOpReturn(std::vector<unsigned char>());
+    BOOST_CHECK_EQUAL(s0.size(), 2U);
+    BOOST_CHECK(s0[0] == OP_RETURN);
+
+    // 1-byte payload -> OP_RETURN + 0x01 + payload = 3 bytes.
+    CScript s1 = GetScriptForOpReturn(make_payload(1));
+    BOOST_CHECK_EQUAL(s1.size(), 3U);
+
+    // 75-byte payload: still single-byte length prefix.
+    // Script = OP_RETURN(1) + len(1) + payload(75) = 77 bytes.
+    CScript s75 = GetScriptForOpReturn(make_payload(75));
+    BOOST_CHECK_EQUAL(s75.size(), 77U);
+
+    // 76-byte payload: switches to OP_PUSHDATA1 + len byte.
+    // Script = OP_RETURN(1) + OP_PUSHDATA1(1) + len(1) + payload(76) = 79 bytes.
+    CScript s76 = GetScriptForOpReturn(make_payload(76));
+    BOOST_CHECK_EQUAL(s76.size(), 79U);
+
+    // 80-byte payload (typical AMMO-AUTH safe upper bound):
+    // 1 + 1 + 1 + 80 = 83 bytes -- exactly MAX_OP_RETURN_RELAY.
+    CScript s80 = GetScriptForOpReturn(make_payload(80));
+    BOOST_CHECK_EQUAL(s80.size(), 83U);
+    BOOST_CHECK_EQUAL(s80.size(), MAX_OP_RETURN_RELAY);
+
+    // 81-byte payload: 84 bytes -- exceeds MAX_OP_RETURN_RELAY by 1.
+    // This is the regression boundary: a check on payload size alone (<=83)
+    // would let this through; the standardness check on scriptPubKey.size()
+    // would then reject it at relay time, producing a stuck transaction.
+    CScript s81 = GetScriptForOpReturn(make_payload(81));
+    BOOST_CHECK_EQUAL(s81.size(), 84U);
+    BOOST_CHECK_GT(s81.size(), MAX_OP_RETURN_RELAY);
+
+    // 83-byte payload: 86 bytes script.
+    CScript s83 = GetScriptForOpReturn(make_payload(83));
+    BOOST_CHECK_EQUAL(s83.size(), 86U);
+
+    // Sanity: AMMO-AUTH message sizes (REGISTER=58, TRANSFER=46, REVOKE=27)
+    // are all comfortably within the standardness limit.
+    BOOST_CHECK_LE(GetScriptForOpReturn(make_payload(58)).size(), MAX_OP_RETURN_RELAY);
+    BOOST_CHECK_LE(GetScriptForOpReturn(make_payload(46)).size(), MAX_OP_RETURN_RELAY);
+    BOOST_CHECK_LE(GetScriptForOpReturn(make_payload(27)).size(), MAX_OP_RETURN_RELAY);
+}
+
 BOOST_AUTO_TEST_CASE(script_standard_IsMine)
 {
     CKey keys[2];

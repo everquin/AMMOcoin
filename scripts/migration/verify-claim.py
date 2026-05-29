@@ -1,24 +1,54 @@
 #!/usr/bin/env python3
 """
+*** DEPRECATED — migration model changed (commit 74c6ff1e). ***
+
+The signed-message claim process documented below is no longer how the
+v1.0 → v1.1 migration works. The current model is:
+  1. v1.0 holder sends their v1.0 AMMO to the canonical disposal address
+     (see docs/migration/DISPOSAL_ADDRESS.md and
+     scripts/migration/verify-disposal-address.py).
+  2. AMMOcoin Core distributes equivalent v1.1 AMMO using the offline-
+     signing pipeline (migration-prepare.py / migration-sign-offline.py /
+     migration-broadcast.py).
+
+Running this script against current users risks double-crediting
+(they may already have proved via the disposal-wallet transfer). It
+refuses to run unless invoked with --i-accept-the-risk.
+
+Original docstring follows:
+
 AMMOcoin v1.1.0 - Migration Fund Claim Verification Script
 
 Verifies that a user owns a v1.0 address and calculates the exact amount
 they're entitled to claim from the migration fund.
 
 Usage:
-    # Interactive mode
-    python3 verify-claim.py
-
-    # Command line mode
-    python3 verify-claim.py --address <v1.0_address> --signature <signature> --message <message>
-
-    # Process claim and send funds
-    python3 verify-claim.py --address <v1.0_address> --signature <sig> --message <msg> --send --v1.1-address <new_address>
+    python3 verify-claim.py --i-accept-the-risk [other args]
 """
 
 import json
 import subprocess
 import sys
+
+
+def _refuse_if_unaccepted() -> None:
+    if "--i-accept-the-risk" not in sys.argv:
+        print("*" * 72)
+        print("verify-claim.py is DEPRECATED. The signed-message claim process")
+        print("was replaced by an on-chain disposal-wallet transfer (commit")
+        print("74c6ff1e). Running this script now can double-credit users who")
+        print("have already migrated via the disposal-wallet path.")
+        print("")
+        print("See:  docs/migration/DISPOSAL_ADDRESS.md")
+        print("      scripts/migration/migration-prepare.py")
+        print("")
+        print("To run anyway, pass --i-accept-the-risk.")
+        print("*" * 72)
+        sys.exit(2)
+    sys.argv = [a for a in sys.argv if a != "--i-accept-the-risk"]
+
+
+_refuse_if_unaccepted()
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Optional, Tuple

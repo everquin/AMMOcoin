@@ -13,6 +13,14 @@
 #include "utilstrencodings.h"
 #include "utiltime.h"
 
+#include <cerrno>
+#include <cstring>
+#ifndef WIN32
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
+
 /**
  * JSON-RPC protocol.  AMMOcoin speaks version 1.0 for maximum compatibility,
  * but uses JSON-RPC 1.1/2.0 standards for parts of the 1.0 standard that were
@@ -77,20 +85,49 @@ bool GenerateAuthCookie(std::string *cookie_out)
     unsigned char rand_pwd[COOKIE_SIZE];
     GetRandBytes(rand_pwd, COOKIE_SIZE);
     std::string cookie = COOKIEAUTH_USER + ":" + HexStr(rand_pwd);
+    fs::path filepath = GetAuthCookieFile();
 
-    /** the umask determines what permissions are used to create this file -
-     * these are set to 077 in init.cpp unless overridden with -sysperms.
-     */
+#ifndef WIN32
+    // POSIX: do not rely on the process umask alone — -sysperms skips it.
+    // Unlink any stale cookie (e.g. from a crashed prior run), then create
+    // the file with O_EXCL + 0600 and fchmod() for belt-and-suspenders.
+    fs::remove(filepath);
+    int fd = ::open(filepath.string().c_str(),
+                    O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC,
+                    S_IRUSR | S_IWUSR);
+    if (fd < 0) {
+        LogPrintf("Unable to open cookie authentication file %s for writing: %s\n",
+                  filepath.string(), std::strerror(errno));
+        return false;
+    }
+    if (::fchmod(fd, S_IRUSR | S_IWUSR) != 0) {
+        LogPrintf("Unable to fchmod cookie authentication file %s: %s\n",
+                  filepath.string(), std::strerror(errno));
+        ::close(fd);
+        ::unlink(filepath.string().c_str());
+        return false;
+    }
+    ssize_t written = ::write(fd, cookie.data(), cookie.size());
+    int closeRc = ::close(fd);
+    if (written != (ssize_t)cookie.size() || closeRc != 0) {
+        LogPrintf("Failed to write cookie authentication file %s\n", filepath.string());
+        ::unlink(filepath.string().c_str());
+        return false;
+    }
+#else
+    // Windows: rely on user-profile ACLs (the cookie sits under %APPDATA%).
+    // The process umask path above is POSIX-only.
     fsbridge::ofstream file;
-    fs::path filepath_tmp = GetAuthCookieFile();
-    file.open(filepath_tmp);
+    file.open(filepath);
     if (!file.is_open()) {
-        LogPrintf("Unable to open cookie authentication file %s for writing\n", filepath_tmp.string());
+        LogPrintf("Unable to open cookie authentication file %s for writing\n", filepath.string());
         return false;
     }
     file << cookie;
     file.close();
-    LogPrintf("Generated RPC authentication cookie %s\n", filepath_tmp.string());
+#endif
+
+    LogPrintf("Generated RPC authentication cookie %s\n", filepath.string());
 
     if (cookie_out)
         *cookie_out = cookie;

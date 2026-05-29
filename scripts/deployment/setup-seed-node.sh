@@ -282,12 +282,17 @@ EOF
     CURRENT_COMMIT=$(git rev-parse --short HEAD)
     echo "Current commit: $CURRENT_COMMIT"
 
-    # Check for v1.1.0 genesis block
-    if grep -q "0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp; then
-        echo "✓ v1.1.0 genesis block confirmed (Path A)"
+    # Check for v1.1.0 genesis block — mismatch is fatal: building against
+    # the wrong genesis produces a binary that can never sync to mainnet.
+    EXPECTED_GENESIS="0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
+    if grep -q "$EXPECTED_GENESIS" source/src/chainparams.cpp; then
+        echo "✓ v1.1.0 genesis block confirmed"
     else
-        echo "⚠️  WARNING: Genesis block mismatch!"
-        echo "   Expected v1.1.0 genesis (Path A)"
+        echo "❌ FATAL: Genesis block mismatch!"
+        echo "   Expected: $EXPECTED_GENESIS"
+        echo "   The repository does not contain the canonical v1.1.0 genesis."
+        echo "   Refusing to build a binary that cannot join the AMMOcoin network."
+        exit 1
     fi
     echo ""
 
