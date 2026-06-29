@@ -1,0 +1,28 @@
+{
+  "name": "ammocoin-payment-gateway",
+  "version": "1.0.0",
+  "description": "AMMOcoin Payment Gateway — Accept AMMO payments as a merchant",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3100",
+    "build": "next build",
+    "start": "next start --port 3100",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "better-sqlite3": "^11.3.0",
+    "uuid": "^10.0.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/uuid": "^10.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.5.0"
+  }
+}
