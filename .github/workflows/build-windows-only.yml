@@ -202,6 +202,10 @@ jobs:
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile src/Makefile
 
+          # configure regenerates these tracked files; without this the version reads "-dirty"
+          git update-index --assume-unchanged src/config/ammocoin-config.h src/config/stamp-h1
+          git status --porcelain --untracked-files=no
+
           echo "✅ Starting build with Rust 1.80 and Windows target..."
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \

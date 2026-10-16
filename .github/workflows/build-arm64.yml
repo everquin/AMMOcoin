@@ -146,6 +146,10 @@ jobs:
             echo "Patched cargo build command with ARM64 target"
           fi
 
+          # configure regenerates these tracked files; without this the version reads "-dirty"
+          git update-index --assume-unchanged src/config/ammocoin-config.h src/config/stamp-h1
+          git status --porcelain --untracked-files=no
+
           echo "Starting build with Rust 1.80..."
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \

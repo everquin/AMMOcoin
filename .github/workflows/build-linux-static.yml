@@ -156,6 +156,10 @@ jobs:
           echo "✅ Starting build with Rust 1.80..."
           echo "Using rustc: $(which rustc)"
           echo "Rust version: $(rustc --version)"
+          # configure regenerates these tracked files; without this the version reads "-dirty"
+          git update-index --assume-unchanged src/config/ammocoin-config.h src/config/stamp-h1
+          git status --porcelain --untracked-files=no
+
           make -j$(nproc)
           echo "✅ Build completed successfully"
 
