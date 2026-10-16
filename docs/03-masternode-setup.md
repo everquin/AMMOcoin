@@ -2,6 +2,8 @@
 
 Set up your own AMMOcoin masternode to earn higher rewards and contribute to network stability. This comprehensive guide covers everything from requirements to maintenance.
 
+> **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoincore` (Linux), `~/Library/Application Support/AMMOcoinCore` (macOS), `%APPDATA%\AMMOcoinCore` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+
 ## 🤔 What is a Masternode?
 
 A **masternode** is a specially configured node that provides enhanced services to the AMMOcoin network and earns premium rewards in return.
@@ -16,8 +18,8 @@ A **masternode** is a specially configured node that provides enhanced services 
 ### Benefits vs Regular Staking
 | Feature | Staking | Masternode |
 |---------|---------|------------|
-| **Minimum Coins** | 1 AMMO | 10,000 AMMO |
-| **Annual Returns** | 8-12% | 15-25% |
+| **Minimum Coins** | Any amount (600 confirmations to stake) | 10,000 AMMO |
+| **Rewards** | 4 AMMO per staked block (10 if no masternode is paid) | 6 AMMO per paid block |
 | **Requirements** | Basic wallet | VPS + Technical setup |
 | **Voting Rights** | No | Yes |
 | **Network Services** | Basic | Enhanced |
@@ -33,7 +35,8 @@ A **masternode** is a specially configured node that provides enhanced services 
 - **🖥️ VPS/Server**: Linux-based virtual private server
 - **💾 RAM**: Minimum 1GB, recommended 2GB+
 - **💿 Storage**: 20GB+ SSD space
-- **🌐 Network**: Static IP address
+- **🌐 Network**: Static, public (routable) IPv4/IPv6 address, port **37020** open
+- **🐧 OS**: Ubuntu 22.04 LTS or newer (24.04 tested) - the Linux binaries need glibc 2.34+
 - **⏰ Uptime**: 99%+ availability required
 
 ### Knowledge Requirements
@@ -62,8 +65,8 @@ The setup involves **two main components**:
 ### Acquire Collateral
 ```
 Required: Exactly 10,000 AMMO
-Method: Purchase, mine, or stake to accumulate
-Important: Must be in single transaction/address
+Method: Purchase or stake to accumulate (there is no mining after block 2,776)
+Important: Must be a single 10,000 AMMO output (one transaction)
 ```
 
 ### Create Collateral Transaction
@@ -79,8 +82,8 @@ Important: Must be in single transaction/address
 # Send exactly 10,000 AMMO to this address
 ./ammocoin-cli sendtoaddress [new_address] 10000
 
-# Get transaction output info
-./ammocoin-cli gettransaction [txid]
+# After 15 confirmations, list valid collateral outputs (txid + index)
+./ammocoin-cli getmasternodeoutputs
 ```
 
 ## 🖥️ Step 2: VPS Server Setup
@@ -94,7 +97,7 @@ Important: Must be in single transaction/address
 
 ### Server Specifications
 ```
-OS: Ubuntu 20.04 LTS (recommended)
+OS: Ubuntu 24.04 LTS (tested) or 22.04 LTS - NOT 18.04/20.04 (glibc too old)
 RAM: 2GB minimum, 4GB preferred
 Storage: 20GB SSD minimum
 Network: 1TB+ bandwidth
@@ -124,17 +127,17 @@ su - ammocoin
 # Create working directory
 mkdir ~/ammocoin && cd ~/ammocoin
 
-# Download latest release (replace with current version)
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+# Check glibc (must be 2.34 or newer)
+ldd --version
 
-# Extract files
-tar -xzf ammocoind-linux.tar.gz
+# Download the v1.1.1 Linux release from the official GitHub release page
+# (https://github.com/everquin/AMMOcoin/releases - v1.1.1 is upcoming; verify the SHA256 checksum)
 
-# Make executable
-chmod +x ammocoind ammocoin-cli
+# Extract files (file name depends on the release)
+tar -xzf AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
 
 # Move to system path
-sudo cp ammocoind ammocoin-cli /usr/local/bin/
+sudo install -m 0755 -t /usr/local/bin bin/ammocoind bin/ammocoin-cli
 
 # Verify installation
 ammocoind --version
@@ -142,11 +145,11 @@ ammocoind --version
 
 ### Create Configuration
 ```bash
-# Create data directory
-mkdir ~/.ammocoin
+# Create data directory (v1.1.1 default)
+mkdir ~/.ammocoincore
 
 # Create configuration file
-nano ~/.ammocoin/ammocoin.conf
+nano ~/.ammocoincore/ammocoin.conf
 ```
 
 **Configuration File**:
@@ -162,6 +165,7 @@ listen=1
 # Masternode settings
 masternode=1
 masternodeprivkey=YOUR_MASTERNODE_PRIVATE_KEY
+masternodeaddr=YOUR_SERVER_IP:37020
 externalip=YOUR_SERVER_IP
 
 # Network settings
@@ -170,29 +174,37 @@ rpcport=51473
 
 # Performance settings
 maxconnections=256
+
+# Seed nodes
+addnode=78.141.194.140:37020
+addnode=104.238.165.56:37020
 ```
+
+> **Important:** `YOUR_SERVER_IP` must be the VPS's **public, routable** IP and the port must be **37020**. `127.0.0.1` or private addresses (10.x, 172.16-31.x, 192.168.x) are rejected with `Invalid IP address`.
 
 ## 🔑 Step 4: Generate Masternode Key
 
 ### On Local Wallet
 ```bash
 # Generate masternode private key
-./ammocoin-cli masternode genkey
+./ammocoin-cli createmasternodekey
 
-# Get collateral output info
-./ammocoin-cli masternode outputs
+# Get collateral output info (txid and index)
+./ammocoin-cli getmasternodeoutputs
 ```
 
 **Example Output**:
 ```
 Masternode Private Key: 7X4j9K2m8P5n1Q3r6T8uV9wY2z5A7b4C8d6F3g9H1k4M7n
-Collateral Output: "a1b2c3d4e5f6...transaction_hash" : "0"
+[ { "txhash": "a1b2c3d4e5f6...transaction_hash", "outputidx": 0 } ]
 ```
+
+> There is no `masternode genkey` command in AMMOcoin - use `createmasternodekey`.
 
 ### Update Server Configuration
 ```bash
 # Edit server config with your key
-nano ~/.ammocoin/ammocoin.conf
+nano ~/.ammocoincore/ammocoin.conf
 
 # Replace YOUR_MASTERNODE_PRIVATE_KEY with generated key
 # Replace YOUR_SERVER_IP with your VPS IP address
@@ -202,19 +214,22 @@ nano ~/.ammocoin/ammocoin.conf
 
 ### Create Masternode Configuration
 ```bash
-# Create masternode config file
-nano ~/.ammocoin/masternode.conf
+# Create masternode config file in the controller wallet's data folder
+# Linux: ~/.ammocoincore/masternode.conf
+# macOS: ~/Library/Application Support/AMMOcoinCore/masternode.conf
+# Windows: %APPDATA%\AMMOcoinCore\masternode.conf
+nano ~/.ammocoincore/masternode.conf
 ```
 
 **Masternode Configuration Format**:
 ```
 # Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index
-mn1 123.456.789.10:37020 7X4j9K2m8P5n1Q3r6T8uV9wY2z5A7b4C8d6F3g9H1k4M7n a1b2c3d4e5f6...transaction_hash 0
+mn1 203.0.113.10:37020 7X4j9K2m8P5n1Q3r6T8uV9wY2z5A7b4C8d6F3g9H1k4M7n a1b2c3d4e5f6...transaction_hash 0
 ```
 
-**Real Example**:
+**Real Example** (use your VPS's public IP; private IPs like 192.168.x.x are rejected):
 ```
-mynode01 192.168.1.100:37020 7rVTLnLh8WKG1JzVzjNJTurBNp8TKbwpEj9nDjHjbhvK2L a1b2c3d4e5f67890abcdef1234567890abcdef1234567890abcdef1234567890 0
+mynode01 203.0.113.10:37020 7rVTLnLh8WKG1JzVzjNJTurBNp8TKbwpEj9nDjHjbhvK2L a1b2c3d4e5f67890abcdef1234567890abcdef1234567890abcdef1234567890 0
 ```
 
 ## ⚡ Step 6: Start Masternode
@@ -224,15 +239,44 @@ mynode01 192.168.1.100:37020 7rVTLnLh8WKG1JzVzjNJTurBNp8TKbwpEj9nDjHjbhvK2L a1b2
 # SSH into your VPS
 ssh ammocoin@your_server_ip
 
-# Start daemon
-ammocoind
+# Start daemon (or use the systemd service below)
+ammocoind -daemon
 
 # Wait for sync (check progress)
 ammocoin-cli getblockchaininfo
 
 # Check masternode status
-ammocoin-cli masternode status
+ammocoin-cli getmasternodestatus
 ```
+
+### Run as a systemd Service (recommended)
+The unit **must** set `HOME`, otherwise the node exits with `Cannot find the Sapling parameters` (they live in `~/.ammocoin-params`). Tested unit, `/etc/systemd/system/ammocoind.service`:
+
+```ini
+[Unit]
+Description=AMMOcoin daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Environment=HOME=/root
+ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
+ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+Restart=on-failure
+TimeoutStopSec=120
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now ammocoind
+```
+
+If you run as a non-root user (e.g. `ammocoin`), set `User=ammocoin`, `Environment=HOME=/home/ammocoin`, and `-datadir=/home/ammocoin/.ammocoincore`, with the binaries path adjusted to where you installed them. Remove `daemon=1` from `ammocoin.conf` when using this unit.
 
 ### Start from Local Wallet
 
@@ -247,13 +291,13 @@ ammocoin-cli masternode status
 #### Command Line Method
 ```bash
 # Start specific masternode
-./ammocoin-cli masternode start-alias mn1
+./ammocoin-cli startmasternode alias false mn1
 
-# Or start all masternodes
-./ammocoin-cli masternode start-all
+# Or start all masternodes in masternode.conf
+./ammocoin-cli startmasternode all false
 
 # Check status
-./ammocoin-cli masternode list-conf
+./ammocoin-cli listmasternodeconf
 ```
 
 ## 📊 Step 7: Monitor Masternode
@@ -261,26 +305,27 @@ ammocoin-cli masternode status
 ### Check Masternode Status
 ```bash
 # On remote server
-ammocoin-cli masternode status
+ammocoin-cli getmasternodestatus
 
-# Expected output for successful start:
+# Expected output for successful start (abridged):
 {
-  "outpoint": "a1b2c3d4e5f6...transaction_hash-0",
-  "service": "192.168.1.100:37020",
-  "status": "Masternode successfully started"
+  "txhash": "a1b2c3d4e5f6...transaction_hash",
+  "outputidx": 0,
+  "netaddr": "203.0.113.10:37020",
+  "message": "Masternode successfully started"
 }
 ```
 
 ### Monitor from Local Wallet
 ```bash
 # List all masternodes and their status
-./ammocoin-cli masternode list
+./ammocoin-cli listmasternodes
 
 # Check specific masternode
-./ammocoin-cli masternode list full | grep your_server_ip
+./ammocoin-cli listmasternodes your_server_ip
 
 # View masternode count
-./ammocoin-cli masternode count
+./ammocoin-cli getmasternodecount
 ```
 
 ### GUI Monitoring
@@ -294,27 +339,19 @@ ammocoin-cli masternode status
 ## 💰 Masternode Rewards
 
 ### Reward Distribution
-- **Block Reward**: ~5 AMMO per block (3-minute blocks)
-- **Masternode Share**: 45% of block reward (~2.25 AMMO)
+- **Block Reward**: 10 AMMO per block after the v1.1.1 fork (3-minute blocks)
+- **Masternode Payment**: Fixed 6 AMMO per paid block (the staker keeps the other 4 AMMO)
 - **Selection**: Deterministic based on queue order
-- **Frequency**: Approximately every 12-24 hours per masternode
-
-### Expected Returns
-```
-Network Masternodes: 1,000 active
-Your Position: Average
-Rewards per Day: ~2.25 AMMO
-Monthly Rewards: ~67.5 AMMO
-Annual Rewards: ~821 AMMO
-Annual Return: ~0.8% (on 10,000 AMMO)
-```
+- **Frequency**: Depends on how many masternodes are active
 
 ### Reward Calculation
-**Formula**: Daily Rewards = (Daily Blocks × MN Reward) / Active Masternodes
+**Formula**: Daily Rewards ≈ (Daily Blocks × MN Payment) / Active Masternodes
 - Daily Blocks: 480 (1 block/3 minutes)
-- MN Reward per Block: ~2.25 AMMO
-- Daily Pool: 480 × 2.25 = 1,080 AMMO
-- Your Share: 1,080 / Active MNs
+- MN Payment per Block: 6 AMMO
+- Daily Pool: 480 × 6 = 2,880 AMMO
+- Your Share: 2,880 / Active MNs
+
+Example: with 100 active masternodes, each earns about 28.8 AMMO/day on average. Actual results vary with the active count and your uptime.
 
 ## 🔧 Maintenance & Management
 
@@ -323,7 +360,7 @@ Annual Return: ~0.8% (on 10,000 AMMO)
 #### Daily Checks
 ```bash
 # Check masternode status
-ammocoin-cli masternode status
+ammocoin-cli getmasternodestatus
 
 # Verify blockchain sync
 ammocoin-cli getblockchaininfo
@@ -341,7 +378,7 @@ sudo apt update && sudo apt upgrade -y
 df -h
 
 # Monitor logs
-tail -f ~/.ammocoin/debug.log
+tail -f ~/.ammocoincore/debug.log
 ```
 
 #### Monthly Tasks
@@ -357,7 +394,7 @@ tail -f ~/.ammocoin/debug.log
 **Solutions**:
 1. **Verify** collateral has 15+ confirmations
 2. **Check** masternode.conf syntax
-3. **Confirm** server IP and port accessibility
+3. **Confirm** server IP is public and the port is 37020 (`Invalid IP address` means 127.0.0.1 or a private IP was used)
 4. **Restart** both local wallet and remote daemon
 
 #### ❌ Sync Issues
@@ -368,10 +405,10 @@ tail -f ~/.ammocoin/debug.log
 ammocoin-cli stop
 
 # Remove blockchain data (keep wallet.dat!)
-rm -rf ~/.ammocoin/blocks ~/.ammocoin/chainstate
+rm -rf ~/.ammocoincore/blocks ~/.ammocoincore/chainstate
 
 # Restart daemon
-ammocoind
+ammocoind -daemon
 
 # Wait for resync
 ```
@@ -386,8 +423,9 @@ sudo ufw status
 # Allow AMMOcoin port
 sudo ufw allow 37020
 
-# Add peers manually
-ammocoin-cli addnode "peer_ip:37020" "add"
+# Add seed nodes manually
+ammocoin-cli addnode "78.141.194.140:37020" "add"
+ammocoin-cli addnode "104.238.165.56:37020" "add"
 ```
 
 ### Security Hardening
@@ -430,13 +468,11 @@ sudo ufw enable
 # masternode_monitor.sh
 # Check masternode status and restart if needed
 
-STATUS=$(ammocoin-cli masternode status | jq -r '.status')
+STATUS=$(ammocoin-cli getmasternodestatus | jq -r '.message')
 
 if [ "$STATUS" != "Masternode successfully started" ]; then
     echo "Masternode issue detected, restarting..."
-    ammocoin-cli stop
-    sleep 10
-    ammocoind
+    sudo systemctl restart ammocoind
 fi
 ```
 
@@ -450,10 +486,9 @@ fi
 
 ### Investment Breakdown
 ```
-Initial Investment: 10,000 AMMO
+Initial Investment: 10,000 AMMO (collateral stays yours; it is not spent)
 VPS Costs: $10/month × 12 = $120/year
-Annual Rewards: ~821 AMMO
-Break-even: ~2.5 years (excluding AMMO price appreciation)
+Annual Rewards: 6 AMMO × (blocks your masternode is paid) - depends on the active masternode count
 ```
 
 ### Risk Factors

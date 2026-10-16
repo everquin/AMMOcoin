@@ -2,6 +2,8 @@
 
 Set up your own AMMOcoin full node to contribute to network decentralization, improve privacy, and gain complete control over your transactions.
 
+> **v1.1.1 (upcoming):** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+
 ## 🤔 What is a Full Node?
 
 A **full node** is a program that validates transactions and blocks on the AMMOcoin network. Unlike lightweight wallets, full nodes:
@@ -44,7 +46,9 @@ A **full node** is a program that validates transactions and blocks on the AMMOc
 - **RAM**: 2GB (4GB recommended)
 - **Storage**: 50GB available space
 - **Network**: Broadband internet connection
-- **OS**: Windows 10, macOS 10.14, Ubuntu 18.04+
+- **OS**: Windows 10, macOS 10.14, Ubuntu 22.04+ (24.04 tested)
+
+> **Linux:** the v1.1.1 binaries need **glibc 2.34 or newer** (`ldd --version`). Ubuntu 18.04 and 20.04 cannot run them - upgrade or reinstall the OS first.
 
 ### Recommended Specifications
 - **CPU**: 2+ cores, 2GHz+ processor
@@ -69,8 +73,8 @@ A **full node** is a program that validates transactions and blocks on the AMMOc
 # Extract to C:\AMMOcoin\
 # Add to PATH environment variable
 
-# Create data directory
-mkdir %APPDATA%\AMMOcoin
+# Create data directory (v1.1.1 default)
+mkdir %APPDATA%\AMMOcoinCore
 
 # Create shortcut with parameters
 "C:\AMMOcoin\ammocoind.exe" -daemon
@@ -78,27 +82,27 @@ mkdir %APPDATA%\AMMOcoin
 
 #### macOS Installation
 ```bash
-# Download .dmg from releases
-# Install AMMOcoin.app to Applications
-# Or use Homebrew (if available)
-brew install ammocoin
+# Download the macOS release from GitHub releases
+# Install AMMOcoin.app to Applications (or extract ammocoind/ammocoin-cli)
 
-# Create data directory
-mkdir ~/Library/Application\ Support/AMMOcoin
+# Create data directory (v1.1.1 default)
+mkdir ~/Library/Application\ Support/AMMOcoinCore
 ```
 
 #### Linux Installation (Ubuntu/Debian)
 ```bash
-# Download latest release
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+# Check glibc (must be 2.34+)
+ldd --version
 
-# Extract and install
-tar -xzf ammocoind-linux.tar.gz
-sudo cp ammocoind ammocoin-cli /usr/local/bin/
-chmod +x /usr/local/bin/ammocoind /usr/local/bin/ammocoin-cli
+# Download the v1.1.1 Linux release from https://github.com/everquin/AMMOcoin/releases
+# (v1.1.1 is upcoming - verify the published SHA256 checksum)
 
-# Create data directory
-mkdir ~/.ammocoin
+# Extract and install (file name depends on the release)
+tar -xzf AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
+sudo install -m 0755 -t /usr/local/bin bin/ammocoind bin/ammocoin-cli
+
+# Create data directory (v1.1.1 default)
+mkdir ~/.ammocoincore
 
 # Verify installation
 ammocoind --version
@@ -127,7 +131,7 @@ sudo make install
 
 ### Basic Configuration File
 
-Create `~/.ammocoin/ammocoin.conf` (Linux/macOS) or `%APPDATA%\AMMOcoin\ammocoin.conf` (Windows):
+Create `~/.ammocoincore/ammocoin.conf` (Linux), `~/Library/Application Support/AMMOcoinCore/ammocoin.conf` (macOS) or `%APPDATA%\AMMOcoinCore\ammocoin.conf` (Windows):
 
 ```conf
 # Basic node configuration
@@ -152,6 +156,10 @@ logtimestamps=1
 rpcuser=your_username
 rpcpassword=your_secure_password
 rpcallowip=127.0.0.1
+
+# Seed nodes
+addnode=78.141.194.140:37020
+addnode=104.238.165.56:37020
 
 # Optional: Enable staking
 staking=1
@@ -184,8 +192,9 @@ maxreceivebuffer=5000
 maxsendbuffer=1000
 
 # Connection management
-addnode=seed1.ammocoin.org
-addnode=seed2.ammocoin.org
+# seed1 and seed2.ammocoin.org
+addnode=78.141.194.140:37020
+addnode=104.238.165.56:37020
 ```
 
 #### Low-Resource Node
@@ -236,7 +245,7 @@ seednode=0
 #### Linux/macOS
 ```bash
 # Start daemon
-ammocoind
+ammocoind -daemon
 
 # Check if running
 ammocoin-cli getinfo
@@ -274,8 +283,8 @@ watch -n 30 'ammocoin-cli getblockchaininfo | grep verificationprogress'
 ### Sync Progress Indicators
 ```json
 {
-  "blocks": 850000,           // Current blocks downloaded
-  "headers": 850000,          // Headers downloaded
+  "blocks": 3500,             // Current blocks downloaded (past 2,775 = on the v1.1.1 PoS chain)
+  "headers": 3500,            // Headers downloaded
   "verificationprogress": 0.95 // 95% complete
 }
 ```
@@ -293,24 +302,27 @@ sudo nano /etc/systemd/system/ammocoind.service
 ```ini
 [Unit]
 Description=AMMOcoin daemon
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-Type=forking
-User=ammocoin
-Group=ammocoin
-WorkingDirectory=/home/ammocoin
-ExecStart=/usr/local/bin/ammocoind -conf=/home/ammocoin/.ammocoin/ammocoin.conf
-ExecStop=/usr/local/bin/ammocoin-cli stop
-Restart=always
-RestartSec=30
+Type=simple
+User=root
+Environment=HOME=/root
+ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
+ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+Restart=on-failure
+TimeoutStopSec=120
 
 [Install]
 WantedBy=multi-user.target
 ```
 
+> **`Environment=HOME=...` is required.** Without it the node exits with `Cannot find the Sapling parameters` (they are looked up in `$HOME/.ammocoin-params`). For a non-root user set `User=ammocoin`, `Environment=HOME=/home/ammocoin` and `-datadir=/home/ammocoin/.ammocoincore`. Remove `daemon=1` from `ammocoin.conf` when using this unit, and adjust the binary path if you installed to `/usr/local/bin`.
+
 ```bash
 # Enable and start service
+sudo systemctl daemon-reload
 sudo systemctl enable ammocoind
 sudo systemctl start ammocoind
 
@@ -380,13 +392,13 @@ ammocoin-cli uptime
 ammocoin-cli stop
 
 # Force restart (if needed)
-pkill ammocoind && sleep 5 && ammocoind
+pkill ammocoind && sleep 5 && ammocoind -daemon
 
 # Check log files
-tail -f ~/.ammocoin/debug.log
+tail -f ~/.ammocoincore/debug.log
 
 # Disk space check
-df -h ~/.ammocoin/
+df -h ~/.ammocoincore/
 ```
 
 ## 🔒 Security Hardening
@@ -432,11 +444,11 @@ server=0
 #### File Permissions
 ```bash
 # Secure configuration files
-chmod 600 ~/.ammocoin/ammocoin.conf
-chmod 700 ~/.ammocoin/
+chmod 600 ~/.ammocoincore/ammocoin.conf
+chmod 700 ~/.ammocoincore/
 
 # Secure wallet file
-chmod 600 ~/.ammocoin/wallet.dat
+chmod 600 ~/.ammocoincore/wallet.dat
 ```
 
 ### Monitoring & Alerts
@@ -444,13 +456,13 @@ chmod 600 ~/.ammocoin/wallet.dat
 #### Log Monitoring
 ```bash
 # Monitor for errors
-tail -f ~/.ammocoin/debug.log | grep -i error
+tail -f ~/.ammocoincore/debug.log | grep -i error
 
 # Check for warnings
-grep -i warning ~/.ammocoin/debug.log
+grep -i warning ~/.ammocoincore/debug.log
 
 # Monitor connections
-grep -i "connection" ~/.ammocoin/debug.log | tail -20
+grep -i "connection" ~/.ammocoincore/debug.log | tail -20
 ```
 
 #### Automated Monitoring Script
@@ -485,23 +497,24 @@ echo "Node Status: $BLOCKS blocks, $CONNECTIONS peers"
 # Check peers
 ammocoin-cli getpeerinfo
 
-# Add manual peers
-ammocoin-cli addnode "peer_ip:37020" "add"
+# Add seed nodes manually
+ammocoin-cli addnode "78.141.194.140:37020" "add"
+ammocoin-cli addnode "104.238.165.56:37020" "add"
 
 # Restart with fresh peer connections
 ammocoin-cli stop
-rm ~/.ammocoin/peers.dat
-ammocoind
+rm ~/.ammocoincore/peers.dat
+ammocoind -daemon
 ```
 
 #### Performance Issues
 ```bash
 # Slow performance
 # Increase database cache
-echo "dbcache=1024" >> ~/.ammocoin/ammocoin.conf
+echo "dbcache=1024" >> ~/.ammocoincore/ammocoin.conf
 
 # Check disk space
-df -h ~/.ammocoin/
+df -h ~/.ammocoincore/
 
 # Monitor resource usage
 top -p $(pgrep ammocoind)

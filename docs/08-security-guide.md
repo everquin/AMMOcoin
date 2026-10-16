@@ -2,6 +2,8 @@
 
 Comprehensive security guide to protect your AMMOcoin investments and maintain operational security. Follow these practices to keep your funds safe.
 
+> **v1.1.1 (upcoming) and v1.0 holders:** v1.0 balances are **airdropped to the same addresses** on v1.1. Keep your v1.0 `wallet.dat` and **send nothing anywhere**. Anyone who emails you a "disposal address" or asks for coins, keys or your wallet file is a scammer. See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md).
+
 ## 🎯 Security Fundamentals
 
 ### Core Security Principles
@@ -120,13 +122,27 @@ ammocoin-cli dumpprivkey "cold_storage_address"
 
 #### Cold Staking Setup
 ```bash
-# Delegate staking rights to hot wallet
-# Keep coins in cold storage
-# Earn rewards while maintaining security
+# Delegate staking rights to an always-online staking node
+# The owner keys stay in your own wallet; the staker can stake but never spend
 
-# Set up delegation (when available)
-ammocoin-cli delegatestake "cold_address" "hot_staking_address"
+# 1. On the staking server (online node): create a staking address (starts with S)
+ammocoin-cli getnewstakingaddress
+
+# 2. In the owner wallet: delegate an amount to that staking address
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000
+
+# Optional: name the owner address; if it is not in this wallet (e.g. an
+# offline/paper address), set ext_owner to true
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000 "OFFLINE_OWNER_ADDRESS" true
+
+# 3. Check
+ammocoin-cli getdelegatedbalance     # owner wallet
+ammocoin-cli getcoldstakingbalance   # staking server
+ammocoin-cli listcoldutxos           # staking server
+ammocoin-cli getstakingstatus        # staking server
 ```
+
+Delegated coins need 600 confirmations before they can stake.
 
 ## 🌐 Network Security
 
@@ -188,7 +204,7 @@ logpath = /var/log/auth.log
 [ammocoin]
 enabled = true
 port = 37020
-logpath = /home/user/.ammocoin/debug.log
+logpath = /home/user/.ammocoincore/debug.log
 ```
 
 ### RPC Security
@@ -255,7 +271,7 @@ sudo cat /var/lib/tor/ammocoin/hostname
 ### Masternode Security Architecture
 - **🔑 Control wallet** - Holds collateral, stays offline
 - **🖥️ Remote server** - Runs masternode, no private keys
-- **🔒 Separation** - Never store 100k AMMO on VPS
+- **🔒 Separation** - Never store the 10,000 AMMO collateral on the VPS
 
 ### VPS Security Hardening
 
@@ -309,8 +325,8 @@ sudo systemctl status unattended-upgrades
 
 #### Secure Key Generation
 ```bash
-# Generate masternode private key offline
-ammocoin-cli masternode genkey
+# Generate masternode private key in the controller wallet
+ammocoin-cli createmasternodekey
 
 # Store securely - this key goes on VPS
 # Original wallet stays offline with collateral
@@ -351,7 +367,7 @@ else
 fi
 
 # Check for suspicious log entries
-ERRORS=$(grep -c -i "error\|fail\|attack" ~/.ammocoin/debug.log)
+ERRORS=$(grep -c -i "error\|fail\|attack" ~/.ammocoincore/debug.log)
 if [ "$ERRORS" -lt 10 ]; then
     echo "✅ Log looks clean: $ERRORS errors"
 else
@@ -380,11 +396,12 @@ ammocoin-cli sendtoaddress "address" amount
 - **🌐 Fake websites** - Mimicking official sites
 - **📱 Fake apps** - Malicious wallet applications
 - **💬 Social media scams** - Impersonation accounts
+- **🔁 Fake "migration" requests** - Emails or messages asking you to send v1.0 or v1.1 coins to a "disposal address". The v1.0 to v1.1 migration is an airdrop to your same addresses; you never send anything
 
 #### Protection Strategies
 - **✅ Bookmark** official websites
 - **✅ Verify URLs** carefully (check SSL certificates)
-- **✅ Download** only from official sources
+- **✅ Download** only from official sources (the AMMOcoin GitHub releases page) and verify the published SHA256 checksums
 - **✅ Enable 2FA** where available
 - **❌ Never** enter passwords from email links
 
