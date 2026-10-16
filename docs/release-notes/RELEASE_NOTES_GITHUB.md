@@ -1,5 +1,7 @@
 # AMMOcoin v1.1.0 - Official Release
 
+> **⚠️ Superseded by v1.1.1 (upcoming).** v1.1.0 nodes cannot follow the network after block 2,775. seed2 is now 104.238.165.56 (147.182.245.102 is dead). See [v1.1.1 Release Notes (draft)](RELEASE_NOTES_v1.1.1_DRAFT.md).
+
 **Release Date:** February 22, 2026
 **Tag:** v1.1.0
 **Status:** Production Ready - All platforms available
@@ -21,6 +23,9 @@ nTime:       1623089845 (June 7, 2021 - 23:04:05 UTC)
 ```
 
 **Paper Wallet (Genesis Coinbase):**
+
+> **Correction (v1.1.1 docs update):** on chain, the 250,000,000 AMMO premine is in **block 1**, paid to `AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u` (the block-1 miner address). `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` is only the genesis (block 0) output, which is unspendable by design.
+
 ```
 Address:     AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
 Public Key:  049f0878e7c014c51fcb3f4f5571710833c0369aacba72546a6935c8c52d4dfdfee07cce4224c61904358c3e06faecbb9c2f286dccd864fd9dc3b061552084f752
@@ -161,7 +166,7 @@ ammocoin-cli getblockhash 0
 
 ### Seed Nodes
 - **seed1.ammocoin.org** (78.141.194.140)
-- **seed2.ammocoin.org** (147.182.245.102)
+- **seed2.ammocoin.org** (104.238.165.56; the original 147.182.245.102 is dead)
 
 ### Network Ports
 - **P2P Port:** 37020 (mainnet), 37022 (testnet)

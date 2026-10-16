@@ -85,7 +85,7 @@ v1.1.0 launched on January 3, 2026 with the following genesis parameters:
 - **Genesis Hash**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - **Genesis Timestamp**: June 7, 2021 23:04:05 UTC (commemorative)
 - **Genesis Nonce**: 1299391
-- **Distribution Output**: 250,000,000 AMMO to AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
+- **Distribution Output**: 250,000,000 AMMO in block 1 to AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u (the genesis output to AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME is unspendable)
 
 This represents a clean start with proper architectural foundation for long-term growth while maintaining fairness to the existing community.
 

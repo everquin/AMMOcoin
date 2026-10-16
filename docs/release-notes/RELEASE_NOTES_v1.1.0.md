@@ -1,5 +1,7 @@
 # AMMOcoin v1.1.0 - Option 2.5: Team Distribution Premine
 
+> **⚠️ Superseded by v1.1.1 (upcoming).** v1.1.0 nodes cannot follow the network after block 2,775 (Proof-of-Stake hard fork at block 2,776). The disposal-wallet migration described below is **no longer used**: v1.0 balances are airdropped to the same addresses - send nothing. See [v1.1.1 Release Notes (draft)](RELEASE_NOTES_v1.1.1_DRAFT.md) and [v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md).
+
 **Release Date:** December 31, 2025
 **Release Type:** Major Release - New Blockchain with 250M AMMO Team Distribution
 **Network Status:** Ready for deployment
@@ -285,6 +287,9 @@ See detailed guides:
 
 **250,000,000 AMMO in Genesis Block:**
 - Controlled by team wallet: `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`
+
+> **Correction (v1.1.1 docs update):** on chain, the 250,000,000 AMMO premine is in **block 1**, paid to `AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u` (the block-1 miner address). `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` is only the genesis (block 0) output, which is unspendable by design.
+
 - Private key secured offline (never exposed in code or GitHub)
 - Will be manually distributed to verified v1.0 users
 
