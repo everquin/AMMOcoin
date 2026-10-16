@@ -1,24 +1,21 @@
 # AMMOcoin Seed Node Quick Start Guide
 
 **For:** seed1.ammocoin.org
-**Date:** December 28, 2025
-**Platform:** Ubuntu 20.04/22.04/24.04 LTS on Vultr
+**Date:** December 28, 2025 (updated October 16, 2026 for v1.1.1)
+**Platform:** Ubuntu 22.04/24.04 LTS on Vultr (24.04 tested; v1.1.1 needs glibc 2.34+)
 
 ---
 
-## ⚠️ CRITICAL: Existing v1.0 Node Operators
+## ⚠️ CRITICAL: v1.1.1 (upcoming) Hard Fork
 
-**If you have an existing AMMOcoin v1.0 installation with wallet balances:**
+- **Everyone must upgrade to v1.1.1.** Proof-of-Stake starts at block 2,776; there is no mining after it.
+- v1.1.1 uses new network magic bytes (`a3 4d b1 e7`) and does **not** connect to v1.0 or v1.1.0 nodes.
+- **New default data dir:** `~/.ammocoincore` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling params stay in `~/.ammocoin-params`.
+- **OS:** Ubuntu 22.04 or newer. Ubuntu 18.04/20.04 cannot run v1.1.1 (glibc 2.34+ required) - upgrade or reinstall the OS.
+- **Seeds:** seed1 `78.141.194.140:37020`, seed2.ammocoin.org `104.238.165.56:37020`. `147.182.245.102` is dead.
+- **Existing v1.0 / v1.1.0 operators:** stop the old node and back up every `wallet.dat` first. Keep your v1.0 `wallet.dat` - v1.0 balances are airdropped to the same addresses on v1.1; send nothing anywhere. See [v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md).
 
-🔴 **STOP! Read this first:** `V1.0_TO_V1.1.0_NODE_MIGRATION.md`
-
-v1.1.0 is a **completely new blockchain**. Your v1.0 wallet contains private keys needed to claim v1.1.0 balances. The automated setup script will:
-- ✅ Detect existing v1.0 installation
-- ✅ Automatically backup v1.0 wallet and data
-- ✅ Create separate v1.1.0 data directory
-- ✅ Preserve v1.0 data untouched
-
-**For fresh installs (no existing v1.0):** Continue below.
+**For fresh installs:** Continue below.
 
 ---
 
@@ -32,8 +29,10 @@ git clone https://github.com/everquin/AMMOcoin.git
 cd AMMOcoin
 
 # 2. Run the setup script
-sudo bash scripts/setup-seed-node.sh
+sudo bash scripts/deployment/setup-seed-node.sh
 ```
+
+> **v1.1.1 note:** `setup-seed-node.sh` was written for v1.1.0 and still creates a `~/.ammocoin-v1.1.0` data dir. Until it is updated, use Method 2 (manual), or check the generated config and systemd unit against the v1.1.1 settings in this guide (`~/.ammocoincore`, `Environment=HOME=`, ports 37020/51473).
 
 **Time:** 15-25 minutes (automated)
 
@@ -108,7 +107,7 @@ which ammocoind
 ammocoind --version
 ```
 
-Should show: `AMMOcoin Core Daemon version v1.1.0.0`
+Should show: `AMMOcoin Core Daemon version v1.1.1.0` (build from the v1.1.1 release tag / branch)
 
 ### Step 7: Install zkSNARK Parameters
 ```bash
@@ -121,13 +120,12 @@ wget https://download.z.cash/downloads/sapling-output.params
 
 ### Step 8: Create Configuration
 ```bash
-mkdir -p ~/.ammocoin
+mkdir -p ~/.ammocoincore
 
-cat > ~/.ammocoin/ammocoin.conf << 'EOF'
+cat > ~/.ammocoincore/ammocoin.conf << 'EOF'
 # AMMOcoin Seed Node Configuration
 listen=1
 server=1
-daemon=1
 dnsseed=1
 
 # RPC Settings
@@ -140,12 +138,16 @@ rpcport=51473
 port=37020
 maxconnections=125
 
+# Seed nodes (omit this node's own IP)
+addnode=78.141.194.140:37020
+addnode=104.238.165.56:37020
+
 # Performance
 dbcache=450
 maxmempool=300
 EOF
 
-chmod 600 ~/.ammocoin/ammocoin.conf
+chmod 600 ~/.ammocoincore/ammocoin.conf
 ```
 
 **IMPORTANT:** Change the `rpcpassword` to a strong random password!
@@ -164,7 +166,7 @@ ammocoind -daemon
 ### Step 11: Verify Node is Running
 ```bash
 ammocoin-cli getinfo
-tail -f ~/.ammocoin/debug.log
+tail -f ~/.ammocoincore/debug.log
 ```
 
 ---
@@ -176,22 +178,24 @@ Create service file:
 sudo nano /etc/systemd/system/ammocoind.service
 ```
 
-Paste this content:
+Paste this content. `Environment=HOME=` is **required**: without it the node exits with `Cannot find the Sapling parameters`.
 ```ini
 [Unit]
 Description=AMMOcoin Daemon
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-Type=forking
+Type=simple
 User=YOUR_USERNAME
 Group=YOUR_USERNAME
-ExecStart=/usr/local/bin/ammocoind -daemon
-ExecStop=/usr/local/bin/ammocoin-cli stop
+Environment=HOME=/home/YOUR_USERNAME
+ExecStart=/usr/local/bin/ammocoind -datadir=/home/YOUR_USERNAME/.ammocoincore -daemon=0
+ExecStop=/usr/local/bin/ammocoin-cli -datadir=/home/YOUR_USERNAME/.ammocoincore stop
 Restart=on-failure
 RestartSec=10
 TimeoutStartSec=120
-TimeoutStopSec=60
+TimeoutStopSec=120
 
 # Hardening
 PrivateTmp=true
@@ -203,7 +207,7 @@ PrivateDevices=true
 WantedBy=multi-user.target
 ```
 
-**Replace `YOUR_USERNAME` with your actual username!**
+**Replace `YOUR_USERNAME` with your actual username!** Running as root instead: `User=root`, `Environment=HOME=/root`, `-datadir=/root/.ammocoincore` (this is the tested v1.1.1 unit, with binaries in `/opt/ammocoin-v1.1.1/bin/`).
 
 Enable and start:
 ```bash
@@ -227,7 +231,7 @@ ammocoin-cli getnetworkinfo
 
 ### Monitor Logs
 ```bash
-tail -f ~/.ammocoin/debug.log
+tail -f ~/.ammocoincore/debug.log
 ```
 
 ### Check Connections
@@ -254,19 +258,19 @@ sudo systemctl restart ammocoind
 ### Node won't start?
 ```bash
 # Check logs
-tail -100 ~/.ammocoin/debug.log
+tail -100 ~/.ammocoincore/debug.log
 
 # Check if port is already in use
 sudo netstat -tulpn | grep 37020
 
 # Check permissions
-ls -la ~/.ammocoin/
+ls -la ~/.ammocoincore/
 ```
 
 ### Can't connect to RPC?
 ```bash
 # Verify RPC credentials in config
-cat ~/.ammocoin/ammocoin.conf | grep rpc
+cat ~/.ammocoincore/ammocoin.conf | grep rpc
 
 # Test RPC connection
 curl --user ammocoinrpc:YOUR_PASSWORD \
@@ -293,8 +297,9 @@ curl ifconfig.me  # Get your public IP
 ## Network Configuration
 
 ### DNS Records (Already Configured)
-- **seed1.ammocoin.org** → This Vultr VM IP
-- **seed1.ammocoin.org** → This Vultr VM IP
+- **seed1.ammocoin.org** → `78.141.194.140`
+- **seed2.ammocoin.org** → `104.238.165.56`
+- `147.182.245.102` (old seed2) is dead - remove it from DNS, configs and firewall rules
 
 ### Firewall Ports
 - **37020/tcp** - AMMOcoin P2P (must be open)
@@ -338,7 +343,7 @@ maxconnections=250
 4. **Backup wallet.dat**
    ```bash
    ammocoin-cli stop
-   cp ~/.ammocoin/wallet.dat ~/wallet-backup-$(date +%Y%m%d).dat
+   cp ~/.ammocoincore/wallet.dat ~/wallet-backup-$(date +%Y%m%d).dat
    ammocoind -daemon
    ```
 
@@ -362,14 +367,11 @@ maxconnections=250
    ```
    Look for `"blocks"` field increasing
 
-3. **Generate Initial Supply** (if this is the genesis node)
-   - Wait for staking rewards
+   Must go past block 2,775 (PoS from 2,776). Stuck at 2,775 means the node or its peers are still on v1.1.0.
 
-4. **Set Up Second Seed Node**
-   - Repeat this process on another Vultr VM
-   - Configure seed2.ammocoin.org
+3. **No mining:** v1.1.1 is Proof-of-Stake only. Blocks come from staking wallets; a seed node does not need to stake.
 
-5. **Connect Nodes**
+4. **Connect to the Other Seed**
    ```bash
    ammocoin-cli addnode "seed2.ammocoin.org:37020" "add"
    ```
@@ -401,7 +403,7 @@ sudo systemctl status ammocoind
 ammocoin-cli getinfo
 
 # View logs
-tail -f ~/.ammocoin/debug.log
+tail -f ~/.ammocoincore/debug.log
 
 # Get peer count
 ammocoin-cli getconnectioncount
@@ -417,5 +419,5 @@ ammocoin-cli addnode "IP:37020" "add"
 
 **Last Updated:** December 28, 2025
 **Node:** seed1.ammocoin.org
-**Network:** AMMOcoin v1.1.0 Mainnet
+**Network:** AMMOcoin v1.1 Mainnet (v1.1.1 upcoming)
 

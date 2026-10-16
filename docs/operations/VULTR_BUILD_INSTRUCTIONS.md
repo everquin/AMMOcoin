@@ -1,8 +1,10 @@
-# Building AMMOcoin v1.1.0 on Vultr Ubuntu VM (seed1.ammocoin.build)
+# Building AMMOcoin v1.1.1 on Vultr Ubuntu VM (seed1.ammocoin.build)
 
 **Date:** January 1, 2026
-**Target:** Linux x86_64 binaries with v1.1.0 genesis block
+**Target:** Linux x86_64 v1.1.1 binaries (genesis block unchanged from v1.1.0)
 **Node:** seed1.ammocoin.build
+
+> **Updated for v1.1.1 (upcoming), October 16, 2026.** v1.1.1 is the Proof-of-Stake hard fork (PoS from block 2,776, no mining, new network magic - no peering with v1.0/v1.1.0). Build on **Ubuntu 22.04 or 24.04** (24.04 tested): the resulting binaries need **glibc 2.34+**, so they will not run on Ubuntu 18.04/20.04. Default data dir is now `~/.ammocoincore`.
 
 ---
 
@@ -15,9 +17,9 @@ ssh root@seed1.ammocoin.build
 
 ---
 
-## Step 2: Clean Up Any Existing v1.1.0 Code
+## Step 2: Clean Up Any Existing Build Code
 
-**IMPORTANT:** We updated the genesis block, so we need to remove old code and start fresh.
+**IMPORTANT:** Remove old v1.1.0 build trees and start fresh.
 
 ```bash
 # Stop any running daemon first
@@ -37,10 +39,11 @@ rm -rf ~/.cargo/registry/cache
 ## Step 3: Clone Fresh Repository
 
 ```bash
-# Clone the latest code with v1.1.0 genesis
+# Clone the code and check out v1.1.1
 cd ~
 git clone https://github.com/everquin/AMMOcoin.git AMMOcoin-build
 cd AMMOcoin-build
+git checkout v1.1.1    # until the tag exists: git checkout v1.1.1-pos-fork
 
 # Verify we have the correct genesis hash
 grep -r "000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2" source/src/chainparams.cpp
@@ -90,7 +93,7 @@ gcc --version
 
 ---
 
-## Step 5: Build AMMOcoin v1.1.0 Binaries
+## Step 5: Build AMMOcoin v1.1.1 Binaries
 
 ```bash
 # Navigate to build directory
@@ -140,7 +143,7 @@ strings src/ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9999825e5791
 
 # Also verify the version
 src/ammocoind --version
-# Should show: AMMOcoin Core Daemon version v1.1.0.0
+# Should show: AMMOcoin Core Daemon version v1.1.1.0
 ```
 
 ---
@@ -161,10 +164,10 @@ ls -lh ~/ammocoin-linux-release/bin/
 
 # Create README
 cat > ~/ammocoin-linux-release/README.md << 'EOF'
-# AMMOcoin v1.1.0 - Linux x86_64
+# AMMOcoin v1.1.1 - Linux x86_64
 
 **Built on:** $(date)
-**Platform:** Linux x86_64 (Ubuntu 18.04+)
+**Platform:** Linux x86_64 (Ubuntu 22.04+ / glibc 2.34+; Ubuntu 18.04/20.04 not supported)
 **Genesis Hash:** 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 ## Package Contents
@@ -186,6 +189,10 @@ ammocoind --version
 
 ## Quick Start
 
+Data folder: `~/.ammocoincore` (Sapling params: `~/.ammocoin-params`).
+systemd units must set `Environment=HOME=...` or the node exits with
+"Cannot find the Sapling parameters".
+
 ```bash
 # Start daemon
 ammocoind -daemon
@@ -202,6 +209,8 @@ ammocoin-cli stop
 - Max Supply: 9,999,999,999 AMMO
 - Genesis Premine: 250,000,000 AMMO
 - Block Time: 3 minutes
+- Consensus: Proof-of-Stake from block 2,776 (no mining)
+- Stake maturity: 600 confirmations
 - P2P Port: 37020
 - RPC Port: 51473
 
@@ -210,15 +219,15 @@ EOF
 
 # Create archive
 cd ~/ammocoin-linux-release
-tar -czf ../AMMOcoin-v1.1.0-Linux-x86_64.tar.gz .
+tar -czf ../AMMOcoin-v1.1.1-Linux-x86_64.tar.gz .
 cd ~
 
 # Verify archive
-ls -lh AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+ls -lh AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
 
 # Generate checksum
-sha256sum AMMOcoin-v1.1.0-Linux-x86_64.tar.gz > AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
-cat AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
+sha256sum AMMOcoin-v1.1.1-Linux-x86_64.tar.gz > AMMOcoin-v1.1.1-Linux-x86_64-CHECKSUM.txt
+cat AMMOcoin-v1.1.1-Linux-x86_64-CHECKSUM.txt
 ```
 
 ---
@@ -232,15 +241,15 @@ cat AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
 mkdir -p /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/linux-x86_64
 
 # Download from Vultr VM
-scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
-scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
+scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.1-Linux-x86_64.tar.gz /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
+scp root@seed1.ammocoin.build:~/AMMOcoin-v1.1.1-Linux-x86_64-CHECKSUM.txt /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/
 
 # Or if you want individual binaries:
 scp root@seed1.ammocoin.build:~/ammocoin-linux-release/bin/* /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/linux-x86_64/
 
 # Verify download
-ls -lh /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-cat /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
+ls -lh /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
+cat /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.1-Linux-x86_64-CHECKSUM.txt
 ```
 
 ---
@@ -251,10 +260,10 @@ cat /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/releases/AMMOcoin-v1.1.0-Linux-x86_64-C
 
 ```bash
 # Create test directory
-mkdir -p /tmp/ammocoin-v1.1.0-test
+mkdir -p /tmp/ammocoin-v1.1.1-test
 
 # Create minimal config
-cat > /tmp/ammocoin-v1.1.0-test/ammocoin.conf << EOF
+cat > /tmp/ammocoin-v1.1.1-test/ammocoin.conf << EOF
 regtest=0
 testnet=0
 listen=1
@@ -262,33 +271,33 @@ server=1
 rpcuser=test_user
 rpcpassword=test_pass_$(date +%s)
 rpcallowip=127.0.0.1
-rpcport=37020
+rpcport=51473
 dnsseed=1
 EOF
 
 # Start daemon with test directory
-~/ammocoin-linux-release/bin/ammocoind -datadir=/tmp/ammocoin-v1.1.0-test -daemon
+~/ammocoin-linux-release/bin/ammocoind -datadir=/tmp/ammocoin-v1.1.1-test -daemon
 
 # Wait a few seconds
 sleep 5
 
 # Check it's running
-~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getinfo
+~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.1-test getinfo
 
 # Verify genesis block
-~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getblockhash 0
+~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.1-test getblockhash 0
 # Should return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 # Check genesis block details
-~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getblock $(~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test getblockhash 0) 2
+~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.1-test getblock $(~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.1-test getblockhash 0) 2
 
 # Look for: "value": 250000000.00 in the genesis transaction
 
 # Stop test daemon
-~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.0-test stop
+~/ammocoin-linux-release/bin/ammocoin-cli -datadir=/tmp/ammocoin-v1.1.1-test stop
 
 # Cleanup test data
-rm -rf /tmp/ammocoin-v1.1.0-test
+rm -rf /tmp/ammocoin-v1.1.1-test
 ```
 
 ---
@@ -341,8 +350,8 @@ I've completed the Linux x86_64 build on seed1.ammocoin.build. The binaries are 
 - ~/ammocoin-linux-release/bin/ammocoin-cli
 - ~/ammocoin-linux-release/bin/ammocoin-tx
 
-Archive: ~/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-Checksum: ~/AMMOcoin-v1.1.0-Linux-x86_64-CHECKSUM.txt
+Archive: ~/AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
+Checksum: ~/AMMOcoin-v1.1.1-Linux-x86_64-CHECKSUM.txt
 
 Genesis hash verified: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
