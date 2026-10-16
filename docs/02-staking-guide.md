@@ -2,9 +2,11 @@
 
 Earn passive income by staking your AMMOcoin! This guide explains everything you need to know about Proof of Stake rewards.
 
+> ⚠️ **v1.1.1 (upcoming):** the network switches to Proof-of-Stake at **block 2,776**. There is no mining after the fork - staking is the only way new blocks are made. You must run **v1.1.1** to stake; v1.0 and v1.1.0 nodes cannot connect to the new network. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+
 ## 🤔 What is Staking?
 
-**Staking** is the process of holding AMMO coins in your wallet to help secure the network and earn rewards. Unlike mining, staking requires no special hardware - just your coins and an online wallet.
+**Staking** is the process of holding AMMO coins in your wallet to help secure the network and earn rewards. From block 2,776 AMMOcoin is pure Proof-of-Stake: staking requires no special hardware - just your coins and an online wallet.
 
 ### How Staking Works
 1. **Hold** AMMO coins in your wallet
@@ -15,23 +17,25 @@ Earn passive income by staking your AMMOcoin! This guide explains everything you
 ### Staking Benefits
 - 💰 **Passive Income** - Earn rewards while you sleep
 - 🔒 **Network Security** - Help secure the AMMOcoin network
-- 🌱 **Eco-Friendly** - No energy-intensive mining
+- 🌱 **Eco-Friendly** - No energy-intensive hashing
 - 📈 **Compound Growth** - Reinvest rewards automatically
 
 ## 🎰 Staking Rewards & Economics
 
 ### Reward Structure
-| Staking Amount | Annual Return (APY) | Monthly Rewards* |
-|----------------|-------------------|------------------|
-| 100 AMMO | ~8-12% | 0.67-1.0 AMMO |
-| 1,000 AMMO | ~8-12% | 6.7-10 AMMO |
-| 10,000 AMMO | ~8-12% | 67-100 AMMO |
-| 100,000 AMMO | ~8-12% | 667-1,000 AMMO |
+After the fork (from block 2,777) every block mints **10 AMMO**:
 
-*Estimates based on current network conditions
+| Recipient | Per block |
+|-----------|-----------|
+| Staker (block creator) | **4 AMMO** (10 AMMO if no masternode is paid in that block) |
+| Masternode | **6 AMMO** |
+
+Block 2,776 itself pays 250 AMMO. Treasury superblocks (every 43,200 blocks) only pay approved proposals. Transaction fees also go to the staker.
+
+There is no fixed APY - your return depends on how much of the network's coins are staking. See the formula under [Reward Estimation](#reward-estimation).
 
 ### Factors Affecting Rewards
-- **Coin Age** - Older coins have higher priority
+- **Maturity** - Each UTXO must have **600 confirmations** (about 30 hours) before it can stake
 - **Network Weight** - Total coins staking network-wide
 - **Wallet Uptime** - More online time = more opportunities
 - **Coin Amount** - More coins = higher chance of rewards
@@ -41,16 +45,15 @@ Earn passive income by staking your AMMOcoin! This guide explains everything you
 ### Prerequisites
 - ✅ AMMOcoin wallet installed and synced
 - ✅ Wallet encrypted with strong password
-- ✅ At least 1 AMMO (minimum staking amount)
+- ✅ AMMO that has at least **600 confirmations**
 - ✅ Stable internet connection
 
 ### Step-by-Step Setup
 
 #### 1. Prepare Your Coins
 ```
-Minimum staking: 1 AMMO
-Recommended: 100+ AMMO for regular rewards
-Optimal: 1,000+ AMMO for daily rewards
+Maturity: 600 confirmations per UTXO before it can stake (~30 hours at 3-minute blocks)
+More coins = higher chance of being selected
 ```
 
 #### 2. Enable Staking in Wallet
@@ -66,6 +69,11 @@ Optimal: 1,000+ AMMO for daily rewards
 3. **Check** "For staking only" option
 4. **Set** unlock duration (recommend: permanent)
 5. **Click** OK
+
+Command line equivalent (unlock for staking only, no timeout):
+```bash
+./ammocoin-cli walletpassphrase "YOUR_PASSPHRASE" 0 true
+```
 
 #### 4. Verify Staking Status
 Look for staking indicators:
@@ -83,16 +91,15 @@ Look for staking indicators:
 
 ## 📊 Understanding Staking Mechanics
 
-### Coin Age & Weight
-**Coin Age** determines staking priority:
-- Coins gain "age" after 8 hours (maturation time)
-- Maximum effective age: 30 days
-- Older coins have higher selection probability
-- Used coins reset to 0 age
+### Maturity & Weight
+**Maturity** determines when a coin can stake:
+- Each UTXO needs **600 confirmations** before it is eligible
+- A UTXO that stakes (or is spent) starts again at 0 confirmations
+- Older coins do **not** get extra weight - weight is the UTXO amount
 
 ### Staking Weight
 ```
-Your Staking Weight = (Coin Amount) × (Coin Age)
+Your Staking Weight = Sum of your mature UTXO amounts
 Network Weight = Sum of all staking weights
 Your Chance = Your Weight / Network Weight
 ```
@@ -114,11 +121,11 @@ Your Chance = Your Weight / Network Weight
 
 #### 2. Wallet Management
 ```bash
-# Split coins for optimal staking (CLI command)
-./ammocoin-cli splitstakingutxos 5000
+# Set the stake split threshold (stake outputs larger than this are split)
+./ammocoin-cli setstakesplitthreshold 5000
 
-# Check staking info
-./ammocoin-cli getstakinginfo
+# Check staking status
+./ammocoin-cli getstakingstatus
 
 # View coin splits
 ./ammocoin-cli listunspent
@@ -133,10 +140,29 @@ Your Chance = Your Weight / Network Weight
 ### Advanced Staking Setup
 
 #### Cold Staking (Advanced Users)
-1. **Setup** hot wallet on VPS/dedicated machine
-2. **Delegate** staking rights from cold wallet
-3. **Keep** coins secure offline
-4. **Earn** rewards while maintaining security
+Cold staking lets an always-on **staking server** stake your coins while the keys stay in your **owner wallet**. The server can stake but cannot spend.
+
+1. **On the staking server** (online v1.1.1 node), create a staking address:
+   ```bash
+   ./ammocoin-cli getnewstakingaddress
+   # returns an S... address
+   ```
+2. **In the owner wallet**, delegate coins to it:
+   ```bash
+   ./ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000
+   # with a specific owner address:
+   ./ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000 "A_OWNER_ADDRESS"
+   # owner address not in this wallet (e.g. an offline wallet): set ext_owner=true
+   ./ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000 "A_OFFLINE_OWNER_ADDRESS" true
+   ```
+3. **On the staking server**, whitelist the owner address so its delegations are staked, then check:
+   ```bash
+   ./ammocoin-cli delegatoradd "A_OWNER_ADDRESS"
+   ./ammocoin-cli listcoldutxos           # delegated UTXOs
+   ./ammocoin-cli getcoldstakingbalance   # coins delegated to this server
+   ./ammocoin-cli getstakingstatus
+   ```
+4. **In the owner wallet**, check `./ammocoin-cli getdelegatedbalance`. Delegated coins still need 600 confirmations before they stake.
 
 #### Multi-Wallet Staking
 - **Run** multiple wallet instances
@@ -151,10 +177,6 @@ Your Chance = Your Weight / Network Weight
 # Enable staking
 staking=1
 
-# Optimize for staking
-stakeminconfirmations=1
-stakecachesize=2000
-
 # Network settings
 server=1
 listen=1
@@ -168,19 +190,13 @@ rpcallowip=127.0.0.1
 
 ### Advanced Staking Settings
 ```conf
-# Reserve balance (don't stake these coins)
-reservebalance=100
-
-# Minimum stake split size
+# Minimum value allowed for the stake split threshold
 minstakesplit=1000
 
-# Stake split threshold
-stakesplitthreshold=2000
-
-# Cold staking
+# Cold staking support (default on; set 0 to disable)
 coldstaking=1
-coldstakingaddress=your_cold_address
 ```
+The stake split threshold itself is set with `setstakesplitthreshold <amount>`. Cold staking is set up with RPC commands, not config entries - see [Cold Staking](#cold-staking-advanced-users).
 
 ## 📈 Monitoring Your Staking
 
@@ -193,7 +209,7 @@ coldstakingaddress=your_cold_address
 ### Command Line Monitoring
 ```bash
 # Check staking status
-./ammocoin-cli getstakinginfo
+./ammocoin-cli getstakingstatus
 
 # View recent staking rewards
 ./ammocoin-cli listtransactions "" 10
@@ -227,7 +243,7 @@ coldstakingaddress=your_cold_address
 **Symptoms**: Staking active but no rewards received
 **Solutions**:
 1. **Wait** - Small amounts may take weeks
-2. **Check** coin maturity (>8 hours old)
+2. **Check** coin maturity (600+ confirmations - see `confirmations` in `listunspent`)
 3. **Improve** uptime - keep wallet online
 4. **Split** large coin amounts
 
@@ -235,7 +251,7 @@ coldstakingaddress=your_cold_address
 **Symptoms**: Very low expected time, poor performance
 **Solutions**:
 1. **Increase** coin amount
-2. **Age** coins by waiting
+2. **Wait** for UTXOs to reach 600 confirmations
 3. **Optimize** UTXO sizes
 4. **Check** network weight trends
 
@@ -244,13 +260,13 @@ coldstakingaddress=your_cold_address
 **Solutions**:
 1. **Check** internet connection stability
 2. **Configure** firewall for port 37020
-3. **Add** reliable peer nodes
+3. **Add** reliable peer nodes (seed1 `78.141.194.140:37020`, seed2 `104.238.165.56:37020`)
 4. **Consider** VPS hosting
 
 ### Debug Commands
 ```bash
 # Detailed staking info
-./ammocoin-cli getstakinginfo
+./ammocoin-cli getstakingstatus
 
 # Check peer connections
 ./ammocoin-cli getpeerinfo
@@ -270,12 +286,12 @@ coldstakingaddress=your_cold_address
 **Example Calculation**:
 ```
 Your Coins: 10,000 AMMO
-Network Weight: 50,000,000 AMMO
+Network Weight: 50,000,000 AMMO (example only)
 Your Share: 10,000 / 50,000,000 = 0.02%
 Annual Blocks: 175,200 (1 block per 3 min)
-Block Reward: ~5 AMMO average
-Expected Annual: 175,200 × 5 × 0.0002 = 175 AMMO
-Annual Return: 175 / 10,000 = 1.75%
+Staker Reward: 4 AMMO per block (10 AMMO minus 6 AMMO masternode payment)
+Expected Annual: 175,200 × 4 × 0.0002 = ~140 AMMO
+Annual Return: 140 / 10,000 = ~1.4%
 ```
 
 ### Online Tools
@@ -335,7 +351,8 @@ Annual Return: 175 / 10,000 = 1.75%
 ## ✅ Staking Checklist
 
 - [ ] Wallet installed and fully synced
-- [ ] Minimum coins available (1+ AMMO)
+- [ ] Running v1.1.1 and synced past block 2,775
+- [ ] Coins have 600+ confirmations
 - [ ] Wallet encrypted with strong password
 - [ ] Staking enabled in settings
 - [ ] Wallet unlocked for staking only
