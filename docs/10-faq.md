@@ -7,6 +7,9 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 ### What is AMMOcoin?
 **AMMOcoin** is a decentralized cryptocurrency built on Proof of Stake consensus, featuring masternodes, governance voting, and staking rewards. It offers fast 3-minute block times and focuses on community-driven development.
 
+### Do I need to upgrade to v1.1.1?
+**Yes - everyone must upgrade.** v1.1.1 (upcoming) is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+
 ### How do I get started with AMMOcoin?
 1. **Download** the wallet from official sources
 2. **Install** and sync with the network
@@ -18,7 +21,7 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 - **Exchanges**: Check CoinMarketCap for current listings
 - **DEX Trading**: Decentralized exchange pairs
 - **OTC Trading**: Direct peer-to-peer trades
-- **Mining/Staking**: Earn through network participation
+- **Staking/Masternodes**: Earn through network participation (there is no mining after the v1.1.1 fork)
 
 ### Is AMMOcoin safe to use?
 Yes, when following security best practices:
@@ -50,7 +53,7 @@ ammocoin-cli dumpwallet "keys_backup.txt"
 ammocoin-cli stop
 
 # Replace wallet file
-cp your_backup.dat ~/.ammocoin/wallet.dat
+cp your_backup.dat ~/.ammocoincore/wallet.dat
 
 # Restart and rescan
 ammocoind -rescan
@@ -74,7 +77,8 @@ Common causes:
 **Staking** is holding AMMO coins in your wallet to help secure the network and earn rewards. Your coins have a chance to create new blocks and earn block rewards.
 
 ### How much can I earn from staking?
-- **Annual Return**: ~8-12% per year
+- **Block reward (v1.1.1)**: 10 AMMO per block; when a masternode is paid it gets 6 AMMO and the staker keeps 4 AMMO
+- **Network issuance**: ~480 blocks/day, so ~4,800 AMMO/day is shared by all stakers and masternodes - your return depends on your share of the coins being staked
 - **Factors**: Your coin amount, network weight, uptime
 - **Frequency**: Small amounts may stake weekly/monthly
 - **Compounding**: Rewards automatically increase your staking weight
@@ -88,11 +92,11 @@ Common causes:
 Check these common issues:
 ```bash
 # Verify staking is enabled
-ammocoin-cli getstakinginfo
+ammocoin-cli getstakingstatus
 
 # Common problems:
 # - Wallet locked (unlock for staking)
-# - Coins too new (wait 8+ hours)
+# - Coins too new (need 600 confirmations, ~30 hours)
 # - Network disconnected (check peers)
 # - Insufficient mature coins
 ```
@@ -100,22 +104,22 @@ ammocoin-cli getstakinginfo
 ### How do I unlock my wallet for staking?
 ```bash
 # Unlock for staking only (secure)
-ammocoin-cli walletpassphrase "your_password" 999999 true
+ammocoin-cli walletpassphrase "your_password" 0 true
 
 # The 'true' parameter means "staking only"
-# 999999 = stay unlocked for ~11 days
+# 0 = stay unlocked until the wallet is locked or restarted
 ```
 
 ### My coins aren't staking after days/weeks. Why?
 - **Small amounts** may take weeks or months to stake
 - **Network weight** affects frequency - more network stakes = longer waits
-- **Coin age** resets when you stake, starting the wait over
+- **Maturity** resets when you stake or move coins - each UTXO needs 600 confirmations again
 - **Consider** combining small amounts or getting more AMMO
 
 ## 🏛️ Masternode Questions
 
 ### What is a masternode?
-A **masternode** is a special type of node that provides enhanced services to the network (InstantSend, governance voting) and earns premium rewards in return for maintaining 10,000 AMMO collateral.
+A **masternode** is a special type of node that provides enhanced services to the network (governance voting, budget finalization) and earns a fixed payment in return for maintaining 10,000 AMMO collateral.
 
 ### How much does it cost to run a masternode?
 - **Collateral**: Exactly 10,000 AMMO
@@ -124,10 +128,13 @@ A **masternode** is a special type of node that provides enhanced services to th
 - **Technical Knowledge**: Basic Linux command line skills
 
 ### What returns can I expect from a masternode?
-- **Annual Returns**: ~15-25% per year
-- **Monthly Rewards**: ~100-200 AMMO (varies with network size)
-- **Payment Frequency**: Every 12-24 hours typically
-- **Break-even**: ~2-3 years (excluding AMMO price appreciation)
+- **Payment**: 6 AMMO per paid block (v1.1.1)
+- **Network total**: ~480 blocks/day x 6 AMMO = ~2,880 AMMO/day shared by all enabled masternodes
+- **Payment Frequency**: depends on how many masternodes are enabled
+- **Requirements**: public, routable IP on port 37020 (127.0.0.1 or private IPs give "Invalid IP address")
+
+### Can I stake without keeping my wallet online? (cold staking)
+**Yes.** On an always-on staking node run `ammocoin-cli getnewstakingaddress`, then from your owner wallet run `ammocoin-cli delegatestake "S_STAKING_ADDRESS" AMOUNT` (add an owner address and `true` for `ext_owner` if the owner address is offline). The staking node can stake but cannot spend. Check with `getcoldstakingbalance` and `listcoldutxos` on the staking node, `getdelegatedbalance` in the owner wallet, and `getstakingstatus`.
 
 ### Can I run multiple masternodes?
 **Yes!** Each requires:
@@ -156,7 +163,10 @@ A **masternode** is a special type of node that provides enhanced services to th
 | **Masternode Collateral** | 10,000 AMMO |
 | **Network Port** | 37020 |
 | **RPC Port** | 51473 |
-| **Protocol Version** | 70920 |
+| **Protocol Version** | 70927 |
+| **Stake Maturity** | 600 confirmations |
+| **Block Reward** | 10 AMMO (6 masternode / 4 staker) from the v1.1.1 PoS fork |
+| **Seed Nodes** | seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56) |
 
 ### How do I check if I'm on the correct network?
 ```bash
@@ -168,7 +178,11 @@ ammocoin-cli getblockchaininfo | grep chain
 # Should show "main" not "test" or "regtest"
 
 # Check protocol version
-# Should be 70920 or higher
+# Should be 70927 or higher
+
+# Check you are past the PoS fork (v1.1.1 only)
+ammocoin-cli getblockcount
+# Stuck at 2775 = old software, upgrade to v1.1.1
 ```
 
 ### What's the difference between mainnet and testnet?
@@ -194,7 +208,7 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 ### How do I create a proposal?
 1. **Discuss** with community first
 2. **Create** detailed proposal document
-3. **Pay** proposal fee (5 AMMO)
+3. **Pay** proposal fee (50 AMMO)
 4. **Submit** via wallet or command line
 5. **Promote** to masternode operators
 
@@ -206,9 +220,9 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 - **Operations**: Infrastructure, legal
 
 ### How long does voting take?
-- **Submission**: Immediate
+- **Submission**: Proposal must be at least 24 hours old to enter a budget
 - **Discussion**: 7 days recommended
-- **Voting Period**: 30 days
+- **Voting Period**: Until the target superblock (every 43,200 blocks, ~90 days)
 - **Implementation**: Varies by proposal
 
 ## 🔧 Technical Questions
@@ -216,14 +230,14 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 ### Which operating systems are supported?
 - **Windows**: Windows 10, 11 (64-bit)
 - **macOS**: 10.14+ (Mojave and newer)
-- **Linux**: Ubuntu 18.04+, CentOS 7+, Debian 9+
+- **Linux**: glibc 2.34+ required - Ubuntu 22.04+ (24.04 tested), Debian 12+. Ubuntu 18.04/20.04 cannot run v1.1.1 binaries
 - **ARM**: Raspberry Pi 4 with 4GB+ RAM
 
 ### How much disk space do I need?
-- **Current blockchain**: ~15GB
-- **Growth rate**: ~2GB per year
-- **Recommended**: 50GB+ free space
-- **Pruning**: Can reduce to ~2GB with pruning enabled
+- **Current blockchain**: small (the v1.1 chain restarted from a new genesis in 2026)
+- **Recommended**: 20GB+ free space to allow for growth and logs
+- **Sapling parameters**: ~50MB in `~/.ammocoin-params`
+- **Pruning**: Not supported
 
 ### Can I run AMMOcoin on a Raspberry Pi?
 **Yes!** Requirements:
@@ -310,23 +324,25 @@ Common causes:
 
 ### My wallet won't start. What should I do?
 1. **Check** if another instance is running
-2. **Remove** lock files (`~/.ammocoin/.lock`)
-3. **Try** `ammocoind -reindex`
-4. **Check** available disk space
-5. **Review** error messages in debug.log
+2. **Remove** lock files (`~/.ammocoincore/.lock`)
+3. **Under systemd?** "Cannot find the Sapling parameters" means the unit needs `Environment=HOME=/root` (or the service user's home)
+4. **Try** `ammocoind -reindex`
+5. **Check** available disk space
+6. **Review** error messages in debug.log
 
 ### Why do I keep losing peer connections?
 - **Firewall blocking**: Open port 37020
 - **ISP issues**: Try VPN or different network
-- **Outdated software**: Update to latest version
+- **Outdated software**: v1.0/v1.1.0 nodes cannot connect to v1.1.1 - upgrade
 - **Poor internet**: Check connection stability
 
 ### My balance disappeared after an update. Help!
 **Don't panic!** Common solutions:
-1. **Wait for sync** - Might still be downloading blocks
-2. **Rescan blockchain** - `ammocoind -rescan`
-3. **Check network** - Ensure on mainnet, not testnet
-4. **Restore backup** - If rescan doesn't work
+1. **New data folder** - v1.1.1 uses `~/.ammocoincore`; copy your `wallet.dat` from `~/.ammocoin`
+2. **Wait for sync** - Might still be downloading blocks
+3. **Rescan blockchain** - `ammocoind -rescan`
+4. **Check network** - Ensure on mainnet, not testnet
+5. **Restore backup** - If rescan doesn't work
 
 ### How do I report a bug?
 1. **Search** existing issues on GitHub
@@ -361,7 +377,7 @@ Depends on your situation:
 - Prefer simplicity
 
 **Masternode** if you have:
-- 100,000+ AMMO available
+- 10,000+ AMMO available (exact collateral: 10,000 AMMO)
 - Technical skills for setup
 - Want governance voting rights
 - Willing to manage VPS
@@ -393,37 +409,32 @@ Depends on your situation:
 ### Is there a bug bounty program?
 Check the official website and GitHub for current bug bounty programs. Serious security vulnerabilities should be reported privately to security@ammocoin.org.
 
-## 🔄 Migration (v1.0 → v1.1.0)
+## 🔄 Migration (v1.0 → v1.1)
 
-### How do I transfer my v1.0 balance to v1.1.0?
-AMMOcoin v1.1.0 is a completely new blockchain — balances do not transfer automatically. To migrate your v1.0 coins:
+### How do I get my v1.0 balance on v1.1?
+**You don't need to send anything.** v1.0 balances from the snapshot at **block 434,881** are **airdropped to the same addresses** on v1.1.
 
-1. **Back up** your v1.0 wallet.dat
-2. **Install v1.1.0** (pre-built binaries available for all platforms)
-3. **Generate** v1.1.0 receiving address(es)
-4. **Email** transfermy@ammocoin.org with the amount you'll send and your v1.1.0 address(es)
-5. **Send** your v1.0 AMMO to the disposal wallet address provided by the team
-6. **Receive** equivalent v1.1.0 AMMO within 24-48 hours
+1. **Back up** your v1.0 `wallet.dat` and keep it - the same keys control your v1.1 balance
+2. **Install v1.1.1 (upcoming)** when it is released
+3. **Copy** a backup of the v1.0 `wallet.dat` into the v1.1.1 data folder (`~/.ammocoincore` on Linux)
+4. **Start** the node and let it sync - your balance appears on your v1.0 addresses
 
-Both transactions are recorded on-chain — immutable proof on both blockchains. See the full [User Migration Guide](migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md) for detailed instructions.
+See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md) for details.
 
-### Can I split my balance across multiple v1.1.0 addresses?
-**Yes.** In your email to transfermy@ammocoin.org, specify each v1.1.0 address and the amount to send to each. You can also send multiple v1.0 transfers if you prefer.
+### Someone emailed me a "disposal address" to send my v1.0 coins to. Is that legitimate?
+**❌ No - it is a scam.** The old disposal-address / email process is superseded. Never send coins, private keys or your wallet file to anyone.
+
+### What if my balance is missing after sync?
+Use the fallback **signed-message claim**: sign a message with your v1.0 address (`ammocoin-cli signmessage "V1.0_ADDRESS" "message"` on your v1.0 wallet) and submit it through the official channel announced on GitHub. A signature proves ownership without revealing your key.
 
 ### What is the migration deadline?
-The migration period closes **April 3, 2026** (90 days from the v1.1.0 network launch on January 3, 2026). After this date, remaining distribution funds return to the community treasury. Contact transfermy@ammocoin.org if you need an extension.
+**There is no deadline.**
 
 ### What about masternodes?
-v1.0 masternode configurations do not carry over. After transferring your v1.0 balance (you need at least 10,000 AMMO collateral), you must set up a **fresh masternode** on v1.1.0. In your transfer email, specify a dedicated masternode collateral address. Contact transfermy@ammocoin.org for setup assistance.
+v1.0 masternode configurations do not carry over. Once your airdropped balance is on v1.1 (at least 10,000 AMMO), set up a **fresh masternode** on v1.1.1 - see the [Masternode Setup Guide](03-masternode-setup.md).
 
-### What happens to untransferred funds?
-After the migration period closes (April 3, 2026), remaining distribution fund balances are returned to the community treasury. Late transfers may be considered case-by-case but are not guaranteed.
-
-### What happens to my v1.0 coins after I send them?
-They remain in the disposal wallet permanently on the v1.0 chain as an immutable record of your migration. The v1.0 network will eventually be shut down.
-
-### Where can I download v1.1.0?
-Pre-built binaries for all platforms (macOS, Windows, Linux x86_64, Linux ARM64) are available on the [GitHub Releases page](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0) and the [AMMOcoin Downloads page](https://www.ammocoin.org/downloads.html).
+### Where can I download v1.1.1?
+v1.1.1 is **not released yet**. When it is, binaries will be published on the official [GitHub Releases page](https://github.com/everquin/AMMOcoin/releases). Do not install binaries from any other source.
 
 ---
 
