@@ -47,7 +47,7 @@ done
 case "$ROLE" in node|coldstaker|masternode) ;; *) die "--role must be node, coldstaker or masternode" ;; esac
 
 # v1.1.1 Linux builds need glibc 2.34+ (Ubuntu 22.04 or newer). 18.04/20.04 must be upgraded first.
-GLIBC=$(ldd --version | head -1 | grep -oE '[0-9]+\.[0-9]+$')
+GLIBC=$(getconf GNU_LIBC_VERSION | awk '{print $2}')  # not ldd|head: SIGPIPE + pipefail exits silently
 [ "$(printf '%s\n2.34\n' "$GLIBC" | sort -V | head -1)" = 2.34 ] \
   || die "glibc $GLIBC is too old; v1.1.1 needs 2.34+ (Ubuntu 22.04 or newer)"
 
