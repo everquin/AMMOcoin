@@ -230,13 +230,13 @@ ammocoin-cli getstakingstatus
 ### Privacy Transactions
 ```bash
 # Create shielded address (Sapling)
-ammocoin-cli getnewshieldedaddress
+ammocoin-cli getnewshieldaddress
 
 # Shield coins for privacy
 ammocoin-cli shieldsendmany "from_address" '[{"address":"shielded_address","amount":10}]'
 
 # List shielded balances
-ammocoin-cli z_gettotalbalance
+ammocoin-cli getshieldbalance
 ```
 
 ### Masternode Setup
@@ -262,6 +262,8 @@ ammocoin-cli listmasternodes
 ```bash
 # On the staking server
 ammocoin-cli getnewstakingaddress
+# ...and whitelist the owner address, or the delegated coins will not stake
+ammocoin-cli delegatoradd "OWNER_ADDRESS"
 
 # In the owner wallet
 ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000

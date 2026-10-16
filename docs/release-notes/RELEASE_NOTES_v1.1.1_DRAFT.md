@@ -106,6 +106,11 @@ ammocoin-cli getnewstakingaddress
 # returns an S... address
 ```
 
+Also on the staking server, whitelist the owner address (the address the coins are delegated from). Without this the server does not stake the delegated coins:
+```bash
+ammocoin-cli delegatoradd "A_OWNER_ADDRESS"
+```
+
 In the **owner wallet**:
 ```bash
 ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000
