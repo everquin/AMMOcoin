@@ -157,7 +157,9 @@ echo
 echo "AMMOcoin $VER installed as '$ROLE'. Check progress with:  ammocoin-cli getblockcount"
 case "$ROLE" in
   coldstaker) echo "Next: ammocoin-cli getnewstakingaddress   then, in your own wallet:"
-              echo "      delegatestake <that S... address> <amount>   (coins stake after 600 confirmations)" ;;
+              echo "      delegatestake <that S... address> <amount> <your owner address>"
+              echo "      and back here: ammocoin-cli delegatoradd <your owner address>"
+              echo "      (this server only stakes owners it has added; coins stake after 600 confirmations)" ;;
   masternode) echo "Next: once synced, add this line to masternode.conf in your controller wallet and restart it:"
               echo "      <alias> $IP:$P2P_PORT <masternode key> <collateral txid> <index>   (from getmasternodeoutputs)"
               echo "      then run: startmasternode alias false <alias>" ;;
