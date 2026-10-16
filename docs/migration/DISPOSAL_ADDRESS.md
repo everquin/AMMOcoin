@@ -1,5 +1,13 @@
 # Canonical Disposal Wallet Address
 
+> ## ⛔ SUPERSEDED - DO NOT FOLLOW
+>
+> This document describes the old disposal-address / email migration process. **It is no longer in use.**
+>
+> **Current process:** v1.0 balances from the snapshot at block 434,881 are **airdropped to the same addresses** on v1.1. Keep your v1.0 `wallet.dat`, **send nothing anywhere**, and never trust an emailed "disposal address". Signed-message claims are the fallback. There is no deadline.
+>
+> See **[v1.0 Balance Airdrop](V1.0_BALANCE_AIRDROP.md)**. This file is kept for history only.
+
 **Status:** Not yet published — placeholder sentinel `PENDING-AMMO-CORE-PUBLICATION` in code.
 
 The v1.0 → v1.1 migration requires holders of v1.0 AMMO to send their

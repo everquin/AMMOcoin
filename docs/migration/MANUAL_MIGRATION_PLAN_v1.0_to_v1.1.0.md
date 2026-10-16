@@ -1,5 +1,13 @@
 # AMMOcoin Manual Migration Plan - v1.0 to v1.1.0
 
+> ## ⛔ SUPERSEDED - DO NOT FOLLOW
+>
+> This document describes the old disposal-address / email migration process. **It is no longer in use.**
+>
+> **Current process:** v1.0 balances from the snapshot at block 434,881 are **airdropped to the same addresses** on v1.1. Keep your v1.0 `wallet.dat`, **send nothing anywhere**, and never trust an emailed "disposal address". Signed-message claims are the fallback. There is no deadline.
+>
+> See **[v1.0 Balance Airdrop](V1.0_BALANCE_AIRDROP.md)**. This file is kept for history only.
+
 **Migration Type:** On-chain disposal wallet transfer
 **User Count:** ~20 users
 **Status:** Active Migration Period
