@@ -532,13 +532,14 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\AMMOcoin
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\AMMOcoin
-// Mac: ~/Library/Application Support/AMMOcoin
-// Unix: ~/.ammocoin
+// v1.1.1 uses its own folder so it never opens v1.0 data (v1.0 used AMMOcoin / .ammocoin)
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\AMMOcoinCore
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\AMMOcoinCore
+// Mac: ~/Library/Application Support/AMMOcoinCore
+// Unix: ~/.ammocoincore
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "AMMOcoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AMMOcoinCore";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -550,10 +551,10 @@ fs::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectories(pathRet);
-    return pathRet / "AMMOcoin";
+    return pathRet / "AMMOcoinCore";
 #else
     // Unix
-    return pathRet / ".ammocoin";
+    return pathRet / ".ammocoincore";
 #endif
 #endif
 }

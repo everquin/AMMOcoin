@@ -49,7 +49,8 @@ static const int MAX_URI_LENGTH = 255;
 #define EXPORT_IMAGE_SIZE 256
 
 
-#define QAPP_ORG_NAME "AMMOcoin"
+// v1.1.1: new settings namespace so the GUI does not reuse a v1.0 data directory choice
+#define QAPP_ORG_NAME "AMMOcoinCore"
 #define QAPP_ORG_DOMAIN "ammocoin.org"
 #define QAPP_APP_NAME_DEFAULT "AMMOcoin-Qt"
 #define QAPP_APP_NAME_TESTNET "AMMOcoin-Qt-testnet"
