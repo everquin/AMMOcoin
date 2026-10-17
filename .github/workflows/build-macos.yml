@@ -14,6 +14,7 @@ on:
     branches: [v1.1.1-pos-fork]
     paths:
       - .github/workflows/build-macos.yml
+      - source/**
       - scripts/build/macos-*
       - scripts/build/build-macos.sh
       - scripts/packaging/macos/**
