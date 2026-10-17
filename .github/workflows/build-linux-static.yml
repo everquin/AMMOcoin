@@ -1,4 +1,5 @@
 name: Build AMMOcoin v1.1.1 Linux x86_64
+run-name: Build AMMOcoin v1.1.1 Linux x86_64 (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
@@ -100,6 +101,12 @@ jobs:
             exit 1
           fi
 
+      - name: Ensure Sapling params (packaged in the .deb)
+        run: |
+          # source/params/*.params are installed by `make install` and shipped in the .deb;
+          # fetch + verify them if the checkout lacks them (e.g. if they leave git someday).
+          scripts/packaging/ammocoin-fetch-params --dir source/params
+
       - name: Build dependencies (Boost, BDB, libevent, etc.) - STATIC
         working-directory: source/depends
         run: |
@@ -156,11 +163,17 @@ jobs:
           echo "✅ Starting build with Rust 1.80..."
           echo "Using rustc: $(which rustc)"
           echo "Rust version: $(rustc --version)"
-          # configure regenerates these tracked files; without this the version reads "-dirty"
-          git update-index --assume-unchanged src/config/ammocoin-config.h src/config/stamp-h1
-          git status --porcelain --untracked-files=no
+          # configure rewrites tracked files (setup.nsi, Info.plist, test/config.ini, ...);
+          # without this share/genbuild.sh stamps the version "-dirty"
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
 
           make -j$(nproc)
+          # make can rewrite more tracked files after genbuild.sh ran: re-mark and re-stamp
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            make -j$(nproc)
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h
           echo "✅ Build completed successfully"
 
           echo "📦 Installing binaries..."
@@ -213,7 +226,13 @@ jobs:
           [ -f dist/bin/ammocoind ] && echo "✅ ammocoind found" || (echo "❌ ammocoind missing" && exit 1)
           [ -f dist/bin/ammocoin-cli ] && echo "✅ ammocoin-cli found" || (echo "❌ ammocoin-cli missing" && exit 1)
           [ -f dist/bin/ammocoin-tx ] && echo "✅ ammocoin-tx found" || (echo "❌ ammocoin-tx missing" && exit 1)
-          [ -f dist/bin/ammocoin-qt ] && echo "✅ ammocoin-qt found" || echo "⚠️  ammocoin-qt not found (Qt build may have been skipped)"
+          # Linux builds are headless (--without-gui); the GUI wallet is not shipped for Linux.
+          for p in sapling-spend.params sapling-output.params; do
+            [ -f dist/share/ammocoin/$p ] || { echo "❌ dist/share/ammocoin/$p missing"; exit 1; }
+          done
+          echo "Version: $(dist/bin/ammocoind -version | head -1)"
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h dist/bin/ammocoind dist/bin/ammocoin-cli
+          dist/bin/ammocoind -version | head -1 | grep -qE 'v1\.1\.1' || { echo "❌ ammocoind does not report v1.1.1"; exit 1; }
 
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings dist/bin/ammocoind | grep -q "$GENESIS_HASH"; then
@@ -230,73 +249,19 @@ jobs:
 
       - name: Create Release Package
         run: |
-          echo "📦 Creating Linux release package..."
-          mkdir -p release-package/bin
-          cp source/dist/bin/ammocoind release-package/bin/
-          cp source/dist/bin/ammocoin-cli release-package/bin/
-          cp source/dist/bin/ammocoin-tx release-package/bin/
-          cp source/dist/bin/ammocoin-qt release-package/bin/ 2>/dev/null || true
-          cd release-package
-          tar -czf ../AMMOcoin-v1.1.1-Linux-x86_64.tar.gz bin/
-          cd ..
-          zip -r AMMOcoin-v1.1.1-Linux-x86_64.zip release-package/bin/
+          echo "📦 Creating Linux release packages (bin/, ammocoin-fetch-params, install-node.sh, README.txt)..."
+          scripts/packaging/build-linux-archives.sh x86_64 source/dist .
           echo "✅ Release packages created"
 
       - name: Build Debian Package
         run: |
           echo "📦 Building .deb package (amd64)..."
-          DEB_ROOT="deb-staging/ammocoin_1.1.1-1_amd64"
-          mkdir -p "$DEB_ROOT/DEBIAN"
-          mkdir -p "$DEB_ROOT/usr/bin"
-          mkdir -p "$DEB_ROOT/etc/ammocoin"
-          mkdir -p "$DEB_ROOT/lib/systemd/system"
+          scripts/packaging/build-deb.sh amd64 source/dist/bin source/dist/share/ammocoin AMMOcoin-v1.1.1-Linux-amd64.deb
+          dpkg-deb --info AMMOcoin-v1.1.1-Linux-amd64.deb
+          dpkg-deb --contents AMMOcoin-v1.1.1-Linux-amd64.deb
 
-          # Copy binaries
-          cp source/dist/bin/ammocoind "$DEB_ROOT/usr/bin/"
-          cp source/dist/bin/ammocoin-cli "$DEB_ROOT/usr/bin/"
-          cp source/dist/bin/ammocoin-tx "$DEB_ROOT/usr/bin/"
-
-          # Copy systemd service
-          cp source/contrib/debian/ammocoind.service "$DEB_ROOT/lib/systemd/system/"
-
-          # Copy example config
-          cp source/contrib/debian/examples/ammocoin.conf "$DEB_ROOT/etc/ammocoin/"
-
-          # Copy maintainer scripts
-          cp source/contrib/debian/ammocoind.postinst "$DEB_ROOT/DEBIAN/postinst"
-          cp source/contrib/debian/ammocoind.postrm "$DEB_ROOT/DEBIAN/postrm"
-          chmod 755 "$DEB_ROOT/DEBIAN/postinst" "$DEB_ROOT/DEBIAN/postrm"
-
-          # Calculate installed size
-          INSTALLED_SIZE=$(du -sk "$DEB_ROOT" | cut -f1)
-
-          # Create control file
-          cat > "$DEB_ROOT/DEBIAN/control" << EOF
-          Package: ammocoin
-          Version: 1.1.1-1
-          Architecture: amd64
-          Maintainer: AMMOcoin Core <dev@ammocoin.org>
-          Depends: libc6 (>= 2.31)
-          Section: net
-          Priority: optional
-          Homepage: https://www.ammocoin.org
-          Installed-Size: ${INSTALLED_SIZE}
-          Description: AMMOcoin daemon and CLI tools
-           AMMOcoin is a cryptocurrency focused on community and mining.
-           This package provides the headless daemon (ammocoind),
-           command-line interface (ammocoin-cli), and transaction
-           utility (ammocoin-tx) with systemd service integration.
-          EOF
-
-          # Remove leading spaces from control file (heredoc indentation)
-          sed -i 's/^          //' "$DEB_ROOT/DEBIAN/control"
-
-          # Build the deb
-          dpkg-deb --build "$DEB_ROOT"
-          mv "deb-staging/ammocoin_1.1.1-1_amd64.deb" "AMMOcoin-v1.1.1-Linux-amd64.deb"
-          echo "✅ .deb package created"
-          ls -lh AMMOcoin-v1.1.1-Linux-amd64.deb
-          dpkg -c AMMOcoin-v1.1.1-Linux-amd64.deb
+      - name: Test Debian Package (install, run service, reinstall, remove)
+        run: scripts/test/test-deb.sh ./AMMOcoin-v1.1.1-Linux-amd64.deb
 
       - name: Generate checksums
         run: |
@@ -310,6 +275,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AMMOcoin-v1.1.1-Linux-x86_64
+          if-no-files-found: error
           path: |
             AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
             AMMOcoin-v1.1.1-Linux-x86_64.zip
@@ -320,8 +286,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Linux-Binaries
+          if-no-files-found: error
           path: |
             source/dist/bin/ammocoind
             source/dist/bin/ammocoin-cli
             source/dist/bin/ammocoin-tx
-            source/dist/bin/ammocoin-qt
