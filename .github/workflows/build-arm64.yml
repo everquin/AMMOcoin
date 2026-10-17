@@ -1,4 +1,5 @@
 name: Build AMMOcoin v1.1.1 Linux ARM64 (Raspberry Pi)
+run-name: Build AMMOcoin v1.1.1 Linux ARM64 (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
@@ -73,6 +74,9 @@ jobs:
             exit 1
           fi
 
+      - name: Ensure Sapling params (packaged in the .deb)
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
+
       - name: Build dependencies for ARM64 - STATIC
         working-directory: source/depends
         run: |
@@ -146,9 +150,9 @@ jobs:
             echo "Patched cargo build command with ARM64 target"
           fi
 
-          # configure regenerates these tracked files; without this the version reads "-dirty"
-          git update-index --assume-unchanged src/config/ammocoin-config.h src/config/stamp-h1
-          git status --porcelain --untracked-files=no
+          # configure rewrites tracked files (setup.nsi, Info.plist, test/config.ini, ...);
+          # without this share/genbuild.sh stamps the version "-dirty"
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
 
           echo "Starting build with Rust 1.80..."
           CARGO="$(rustup which cargo --toolchain 1.80)" \
@@ -169,6 +173,15 @@ jobs:
               exit 1
             fi
           }
+          # make can rewrite more tracked files after genbuild.sh ran: re-mark and re-stamp
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            CARGO="$(rustup which cargo --toolchain 1.80)" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
+            make -j$(nproc)
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h
           echo "Build completed successfully"
 
           echo "Installing binaries..."
@@ -192,6 +205,10 @@ jobs:
           [ -f dist/bin/ammocoind ] && echo "ammocoind found" || (echo "ammocoind missing" && exit 1)
           [ -f dist/bin/ammocoin-cli ] && echo "ammocoin-cli found" || (echo "ammocoin-cli missing" && exit 1)
           [ -f dist/bin/ammocoin-tx ] && echo "ammocoin-tx found" || (echo "ammocoin-tx missing" && exit 1)
+          for p in sapling-spend.params sapling-output.params; do
+            [ -f dist/share/ammocoin/$p ] || { echo "dist/share/ammocoin/$p missing"; exit 1; }
+          done
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h dist/bin/ammocoind dist/bin/ammocoin-cli
 
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings dist/bin/ammocoind | grep -q "$GENESIS_HASH"; then
@@ -208,61 +225,15 @@ jobs:
 
       - name: Create Release Package
         run: |
-          echo "Creating ARM64 release package..."
-          mkdir -p release-package/bin
-          cp source/dist/bin/ammocoind release-package/bin/
-          cp source/dist/bin/ammocoin-cli release-package/bin/
-          cp source/dist/bin/ammocoin-tx release-package/bin/
-          cd release-package
-          tar -czf ../AMMOcoin-v1.1.1-Linux-ARM64.tar.gz bin/
-          cd ..
-          zip -r AMMOcoin-v1.1.1-Linux-ARM64.zip release-package/bin/
-          echo "Release packages created"
+          echo "Creating ARM64 release packages (bin/, ammocoin-fetch-params, install-node.sh, README.txt)..."
+          scripts/packaging/build-linux-archives.sh ARM64 source/dist .
 
       - name: Build Debian Package
         run: |
           echo "Building .deb package (arm64)..."
-          DEB_ROOT="deb-staging/ammocoin_1.1.1-1_arm64"
-          mkdir -p "$DEB_ROOT/DEBIAN"
-          mkdir -p "$DEB_ROOT/usr/bin"
-          mkdir -p "$DEB_ROOT/etc/ammocoin"
-          mkdir -p "$DEB_ROOT/lib/systemd/system"
-
-          cp source/dist/bin/ammocoind "$DEB_ROOT/usr/bin/"
-          cp source/dist/bin/ammocoin-cli "$DEB_ROOT/usr/bin/"
-          cp source/dist/bin/ammocoin-tx "$DEB_ROOT/usr/bin/"
-          cp source/contrib/debian/ammocoind.service "$DEB_ROOT/lib/systemd/system/"
-          cp source/contrib/debian/examples/ammocoin.conf "$DEB_ROOT/etc/ammocoin/"
-          cp source/contrib/debian/ammocoind.postinst "$DEB_ROOT/DEBIAN/postinst"
-          cp source/contrib/debian/ammocoind.postrm "$DEB_ROOT/DEBIAN/postrm"
-          chmod 755 "$DEB_ROOT/DEBIAN/postinst" "$DEB_ROOT/DEBIAN/postrm"
-
-          INSTALLED_SIZE=$(du -sk "$DEB_ROOT" | cut -f1)
-
-          cat > "$DEB_ROOT/DEBIAN/control" << EOF
-          Package: ammocoin
-          Version: 1.1.1-1
-          Architecture: arm64
-          Maintainer: AMMOcoin Core <dev@ammocoin.org>
-          Depends: libc6 (>= 2.31)
-          Section: net
-          Priority: optional
-          Homepage: https://www.ammocoin.org
-          Installed-Size: ${INSTALLED_SIZE}
-          Description: AMMOcoin daemon and CLI tools
-           AMMOcoin is a cryptocurrency focused on community and mining.
-           This package provides the headless daemon (ammocoind),
-           command-line interface (ammocoin-cli), and transaction
-           utility (ammocoin-tx) with systemd service integration.
-          EOF
-
-          sed -i 's/^          //' "$DEB_ROOT/DEBIAN/control"
-
-          dpkg-deb --build "$DEB_ROOT"
-          mv "deb-staging/ammocoin_1.1.1-1_arm64.deb" "AMMOcoin-v1.1.1-Linux-arm64.deb"
-          echo "arm64 .deb package created"
-          ls -lh AMMOcoin-v1.1.1-Linux-arm64.deb
-          dpkg -c AMMOcoin-v1.1.1-Linux-arm64.deb
+          scripts/packaging/build-deb.sh arm64 source/dist/bin source/dist/share/ammocoin AMMOcoin-v1.1.1-Linux-arm64.deb
+          dpkg-deb --info AMMOcoin-v1.1.1-Linux-arm64.deb
+          dpkg-deb --contents AMMOcoin-v1.1.1-Linux-arm64.deb
 
       - name: Generate checksums
         run: |
@@ -276,6 +247,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AMMOcoin-v1.1.1-Linux-ARM64
+          if-no-files-found: error
           path: |
             AMMOcoin-v1.1.1-Linux-ARM64.tar.gz
             AMMOcoin-v1.1.1-Linux-ARM64.zip
@@ -286,7 +258,41 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ARM64-Binaries
+          if-no-files-found: error
           path: |
             source/dist/bin/ammocoind
             source/dist/bin/ammocoin-cli
             source/dist/bin/ammocoin-tx
+
+  # The binaries are cross-compiled; run the real .deb + tarball on native arm64 hardware.
+  test-linux-arm64:
+    needs: build-linux-arm64
+    runs-on: ubuntu-22.04-arm
+    name: Test ARM64 packages on arm64
+    steps:
+      - name: Checkout test scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Download packages
+        uses: actions/download-artifact@v4
+        with:
+          name: AMMOcoin-v1.1.1-Linux-ARM64
+
+      - name: Verify checksums
+        run: sha256sum -c AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
+
+      - name: Tarball binaries run
+        run: |
+          mkdir t && tar -xzf AMMOcoin-v1.1.1-Linux-ARM64.tar.gz -C t
+          ls -l t t/bin
+          t/bin/ammocoind -version | head -1
+          t/bin/ammocoin-cli -version | head -1
+          t/bin/ammocoind -version | head -1 | grep -q 'v1\.1\.1'
+          if t/bin/ammocoind -version | head -1 | grep -q dirty; then echo "version is -dirty"; exit 1; fi
+          bash -n t/install-node.sh
+          t/bin/ammocoin-fetch-params --help | head -3
+
+      - name: Test Debian Package (install, run service, reinstall, remove)
+        run: scripts/test/test-deb.sh ./AMMOcoin-v1.1.1-Linux-arm64.deb

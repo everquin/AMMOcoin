@@ -1,4 +1,5 @@
 name: Build AMMOcoin v1.1.1 Windows Only
+run-name: Build AMMOcoin v1.1.1 Windows x86_64 (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
@@ -65,6 +66,9 @@ jobs:
             echo "❌ ERROR: Expected genesis hash not found!"
             exit 1
           fi
+
+      - name: Ensure Sapling params (bundled by the NSIS installer)
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
 
       - name: Update timestamps on pre-generated files
         run: |
@@ -202,9 +206,9 @@ jobs:
           sleep 1
           touch src/univalue/Makefile src/secp256k1/Makefile src/Makefile
 
-          # configure regenerates these tracked files; without this the version reads "-dirty"
-          git update-index --assume-unchanged src/config/ammocoin-config.h src/config/stamp-h1
-          git status --porcelain --untracked-files=no
+          # configure rewrites tracked files (setup.nsi, Info.plist, test/config.ini, ...);
+          # without this share/genbuild.sh stamps the version "-dirty"
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
 
           echo "✅ Starting build with Rust 1.80 and Windows target..."
           CARGO="$(rustup which cargo --toolchain 1.80)" \
@@ -226,6 +230,15 @@ jobs:
               exit 1
             fi
           }
+          # make can rewrite more tracked files after genbuild.sh ran: re-mark and re-stamp
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            CARGO="$(rustup which cargo --toolchain 1.80)" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO_BUILD_TARGET=x86_64-pc-windows-gnu \
+            make -j$(nproc)
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h
           echo "✅ Build completed successfully"
 
       - name: Verify Compiled Binaries
@@ -235,7 +248,12 @@ jobs:
           [ -f src/ammocoind.exe ] && echo "✅ ammocoind.exe found" || (echo "❌ ammocoind.exe missing" && exit 1)
           [ -f src/ammocoin-cli.exe ] && echo "✅ ammocoin-cli.exe found" || (echo "❌ ammocoin-cli.exe missing" && exit 1)
           [ -f src/ammocoin-tx.exe ] && echo "✅ ammocoin-tx.exe found" || (echo "❌ ammocoin-tx.exe missing" && exit 1)
-          [ -f src/qt/ammocoin-qt.exe ] && echo "✅ ammocoin-qt.exe found" || echo "⚠️  ammocoin-qt.exe not found (Qt build may have been skipped)"
+          # The installer, Start-menu shortcuts and zip all advertise the GUI wallet: it must exist.
+          [ -f src/qt/ammocoin-qt.exe ] && echo "✅ ammocoin-qt.exe found" || { echo "❌ ammocoin-qt.exe missing"; exit 1; }
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h src/ammocoind.exe src/ammocoin-cli.exe src/qt/ammocoin-qt.exe
+          # the Qt platform plugin must be linked in, or the GUI exits with "no Qt platform plugin"
+          strings src/qt/ammocoin-qt.exe | grep -q 'QWindowsIntegrationPlugin' \
+            || { echo "❌ ammocoin-qt.exe lacks the static qwindows platform plugin"; exit 1; }
 
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings src/ammocoind.exe | grep -q "$GENESIS_HASH"; then
@@ -250,62 +268,71 @@ jobs:
           echo "📊 Binary sizes:"
           ls -lh src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe src/qt/ammocoin-qt.exe 2>/dev/null || true
 
+      - name: Strip binaries
+        working-directory: source
+        run: |
+          x86_64-w64-mingw32-strip src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe src/qt/ammocoin-qt.exe
+          ls -lh src/ammocoind.exe src/ammocoin-cli.exe src/ammocoin-tx.exe src/qt/ammocoin-qt.exe
+
       - name: Create Release Package
         run: |
           echo "📦 Creating Windows release package..."
-          mkdir -p release-package/bin
-          cp source/src/ammocoind.exe release-package/bin/
-          cp source/src/ammocoin-cli.exe release-package/bin/
-          cp source/src/ammocoin-tx.exe release-package/bin/
-          cp source/src/qt/ammocoin-qt.exe release-package/bin/ 2>/dev/null || true
+          rm -rf release-package && mkdir -p release-package/bin
+          cp source/src/ammocoind.exe source/src/ammocoin-cli.exe source/src/ammocoin-tx.exe \
+             source/src/qt/ammocoin-qt.exe release-package/bin/
+          cp scripts/packaging/windows/install-params.ps1 release-package/
+          # Windows tools expect CRLF in .bat/.txt
+          sed 's/$/\r/' scripts/packaging/windows/install-params.bat > release-package/install-params.bat
+          sed 's/$/\r/' scripts/packaging/windows/README.txt > release-package/README.txt
           cd release-package
-          tar -czf ../AMMOcoin-v1.1.1-Windows-x86_64.tar.gz bin/
+          tar -czf ../AMMOcoin-v1.1.1-Windows-x86_64.tar.gz bin install-params.bat install-params.ps1 README.txt
+          zip -r ../AMMOcoin-v1.1.1-Windows-x86_64.zip bin install-params.bat install-params.ps1 README.txt
           cd ..
-          zip -r AMMOcoin-v1.1.1-Windows-x86_64.zip release-package/bin/
+          unzip -l AMMOcoin-v1.1.1-Windows-x86_64.zip
           echo "✅ Release packages created"
 
       - name: Build NSIS Installer
         run: |
           echo "📦 Building Windows NSIS installer..."
-          WORKSPACE="$GITHUB_WORKSPACE"
-
-          # Stage binaries where setup.nsi expects them
+          # share/setup.nsi is generated by configure from share/setup.nsi.in with this
+          # checkout's paths; it bundles the GUI, daemon, CLI and the Sapling params
+          # (installed to %APPDATA%\AMMOcoinParams).
+          grep -q 'AMMOcoinParams' source/share/setup.nsi
           mkdir -p source/release
-          cp source/src/qt/ammocoin-qt.exe source/release/ 2>/dev/null || true
-          cp source/src/ammocoind.exe source/release/
-          cp source/src/ammocoin-cli.exe source/release/
-
-          # Create CI-compatible setup.nsi with workspace-relative paths
-          sed \
-            -e "s|/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source|${WORKSPACE}/source|g" \
-            source/share/setup.nsi > source/share/setup-ci.nsi
-
-          # Build the installer
-          makensis source/share/setup-ci.nsi
-
-          # Find and rename the output
+          cp source/src/qt/ammocoin-qt.exe source/src/ammocoind.exe source/src/ammocoin-cli.exe source/release/
+          rm -f source/ammocoin-*-setup*.exe
+          makensis -V2 -WX source/share/setup.nsi
           INSTALLER=$(find source -maxdepth 1 -name "ammocoin-*-setup*.exe" | head -1)
-          if [ -n "$INSTALLER" ]; then
-            cp "$INSTALLER" AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe
-            echo "✅ NSIS installer created: AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe"
-            ls -lh AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe
-          else
-            echo "⚠️  NSIS installer output not found, skipping"
-          fi
+          [ -n "$INSTALLER" ] || { echo "❌ NSIS installer output not found"; exit 1; }
+          cp "$INSTALLER" AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe
+          ls -lh AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe
+          # sanity: installer must be larger than the GUI + params it embeds (compressed)
+          [ "$(stat -c %s AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe)" -gt 40000000 ] \
+            || { echo "❌ installer is suspiciously small"; exit 1; }
+          echo "✅ NSIS installer created"
+
+      - name: Generate checksums
+        run: |
+          sha256sum AMMOcoin-v1.1.1-Windows-x86_64.tar.gz AMMOcoin-v1.1.1-Windows-x86_64.zip \
+            AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe > AMMOcoin-v1.1.1-Windows-x86_64-CHECKSUM.txt
+          cat AMMOcoin-v1.1.1-Windows-x86_64-CHECKSUM.txt
 
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: AMMOcoin-v1.1.1-Windows-x86_64
+          if-no-files-found: error
           path: |
             AMMOcoin-v1.1.1-Windows-x86_64.tar.gz
             AMMOcoin-v1.1.1-Windows-x86_64.zip
             AMMOcoin-v1.1.1-Windows-x86_64-Setup.exe
+            AMMOcoin-v1.1.1-Windows-x86_64-CHECKSUM.txt
 
       - name: Upload Individual Binaries
         uses: actions/upload-artifact@v4
         with:
           name: Windows-Binaries
+          if-no-files-found: error
           path: |
             source/src/ammocoind.exe
             source/src/ammocoin-cli.exe
