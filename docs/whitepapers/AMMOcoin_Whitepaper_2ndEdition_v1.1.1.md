@@ -152,7 +152,7 @@ v1.0 balances from the official snapshot at **v1.0 block 434,881** are airdroppe
 - If an address is missed, a signed-message claim (`signmessage` with your v1.0 address) is the fallback. A signature proves ownership without revealing your key.
 - There is no deadline. Earlier instructions with a deadline or a disposal address are withdrawn.
 
-The airdrop is paid first. Only what remains of the block-1 reserve after it funds the QuarterMaster reserve described in Section 12.
+The airdrop is paid first. Only what remains of the block-1 reserve after the airdrop funds the QuarterMaster reserve described in Section 12.
 
 ---
 
@@ -302,7 +302,7 @@ Remember: each masternode gets one vote. One operator running 10 masternodes cas
 
 *"It is the quality rather than the quantity that matters."* Lucius Annaeus Seneca
 
-Some look at the value of a single bitcoin without understanding how one "coin" could fetch so much. A thing often forgotten is supply and demand: Bitcoin's supply is fixed by its code, and its block reward halves on a schedule.
+In Bitcoin, supply is fixed by the code, and the block reward halves on a schedule that anyone can read.
 
 The 1st Edition said AMMO "has no limit supply" and estimated about 12,000,000 new AMMO a month. That is withdrawn. AMMO's issuance is set by its code, not by anyone's whim, and anyone can read it in `GetBlockValue()` in `src/validation.cpp`.
 
@@ -354,7 +354,7 @@ AMMO is not on any crypto exchange. Why? By design. AMMO is released in a struct
 
 Those who join the AMMO network as stakers and masternode operators are a critical component, and the code pays them the block rewards in Section 10. Beyond that, folks who become AMMOfreaks and AMMOgeeks earn AMMO for building and promoting the network.
 
-So, yeah, AMMO has no intrinsic value as of right now. But, then again, Bitcoin had a value of zero on its release.
+So, yeah: AMMO has no assigned value, and the project makes no claim about what it is or will ever be worth.
 
 ### No Exchanges
 Collectively, AMMO will not be offered on exchanges without explicit approval through DAO Command. As a decentralized system, no one has authority over individual AMMO holders. However, Founding50 members have vowed to honor decisions made through DAO Command in this important regard.
@@ -420,7 +420,7 @@ Positions are earned or awarded, never sold. Cash and purchased NUGGETS cannot b
 **What a position does, in code terms:** a masternode with 10,000 AMMO collateral takes its turn in the payment queue and receives 3 AMMO per paid block, shared in rotation across all enabled masternodes, and casts one vote per masternode in DAO Command. AMMO you hold can also stake and earn the staker's share for each block it makes. Nothing more is promised.
 
 ### AMMOgeek & AMMOfreak contributor reserve: 50,000,000 AMMO
-A further 50,000,000 AMMO, also held by the QuarterMaster reserve, is earmarked for the people who expand the network (AMMOgeeks) and the people who promote it in their own circles (AMMOfreaks). The 1st Edition set this at 20,000,000 AMMO. Awards are made for contributions such as code, nodes, tools, content and campaigns; there is no set amount per contribution. It's the one time getting a "participation reward" really is something worthwhile.
+A further 50,000,000 AMMO, also held by the QuarterMaster reserve, is earmarked for the people who expand the network (AMMOgeeks) and the people who promote it in their own circles (AMMOfreaks). The 1st Edition set this at 20,000,000 AMMO. Awards are made for contributions such as code, nodes, tools, content and campaigns; there is no set amount per contribution. It's the one time getting a "participation reward" really means something.
 
 This reserve is separate from the on-chain treasury, which pays only the budget proposals that masternode operators vote for. Anyone, contributors included, can also submit a budget proposal as an additional route.
 

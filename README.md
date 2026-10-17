@@ -48,7 +48,7 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 ### Key Features
 
 🛡️ **Privacy Technology**
-- **Sapling Protocol**: Zero-knowledge proofs for completely private transactions
+- **Sapling Protocol**: Optional shielded (zero-knowledge) transactions; AMMO is transparent by default, the transparent side of shielding/unshielding is visible, and peers can see your IP
 - **Shielded Addresses**: Optional privacy for enhanced transaction confidentiality
 - **Selective Disclosure**: Users control transaction visibility
 
@@ -60,7 +60,7 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 🏛️ **Governance & Economics**
 - **Decentralized Voting**: Community-driven development decisions
 - **Treasury System**: Sustainable funding for ecosystem growth
-- **Staking Rewards**: Passive income for network participants
+- **Staking Rewards**: Stakers who create a block receive the staker share set by `GetBlockValue()`
 
 🔧 **Developer Features**
 - **JSON-RPC API**: Complete programmatic blockchain access

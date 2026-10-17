@@ -2,7 +2,8 @@
  * AMMOcoin Payment Gateway — Payout Types
  *
  * Payouts move AMMO OUT of the gateway (hot) wallet to a merchant-supplied
- * address — the settlement leg for "sell Nuggets for AMMO" on Glibz. Unlike
+ * address — the settlement leg of the GLiBz earned-NUGGETS-to-AMMO swap
+ * (a swap, not a sale; the earned-only gate lives on GLiBz). Unlike
  * invoices (inbound), a payout broadcasts a spend, so the state machine is
  * built around a single idempotent send.
  */

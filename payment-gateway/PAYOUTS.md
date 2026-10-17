@@ -1,7 +1,9 @@
 # Payouts API — sending AMMO out of the gateway
 
 The payout endpoints settle **outbound** AMMO from the gateway hot wallet —
-the on-chain leg of "sell Nuggets for AMMO" on Glibz. Unlike invoices
+the on-chain leg of the GLiBz swap of *earned* NUGGETS for AMMO (a
+swap, not a sale: the project never sells AMMO; the earned-only gate is
+enforced on GLiBz, not here). Unlike invoices
 (inbound, monitored), a payout broadcasts a spend, so the design centers on
 **idempotency** and a strict **safe-to-refund vs. ambiguous** contract.
 
@@ -15,8 +17,8 @@ Body:
 {
   "address": "A…",                 // destination AMMO address (required)
   "amount": 12.5,                   // AMMO, positive, rounded to 8 dp (required)
-  "idempotency_key": "glibz_sell:42", // merchant-unique; replays never re-send (required)
-  "memo": "GLiBz Nuggets sale",     // optional; passed as the tx comment
+  "idempotency_key": "glibz_swap:42", // merchant-unique; replays never re-send (required)
+  "memo": "GLiBz earned Nuggets swap", // optional; passed as the tx comment
   "metadata": { "profile_id": 7 }   // optional; stored as JSON
 }
 ```
@@ -60,4 +62,7 @@ wallet**. A transport/timeout failure at send time leaves the row `sending`
 
 See `.env.example` for `GATEWAY_WALLET_PASSPHRASE`, `MAX_PAYOUT_AMMO`,
 `MIN_PAYOUT_AMMO`. The Glibz caller lives in `ammo_exchange.php`
-(`_ammoExchangeSellNuggets`), keyed by `glibz_sell:<txn_id>`.
+(`_ammoExchangeSellNuggets`), keyed by `glibz_sell:<txn_id>`. Those are
+legacy identifiers on the GLiBz side (the key prefix must not change for
+existing rows, or idempotency would break); the operation is a swap of
+earned NUGGETS, not a sale of AMMO. The gateway treats the key as opaque.

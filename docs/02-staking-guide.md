@@ -1,6 +1,6 @@
 # 🎯 AMMOcoin Staking Guide
 
-Earn passive income by staking your AMMOcoin! This guide explains everything you need to know about Proof of Stake rewards.
+Stake your AMMOcoin to help secure the network. This guide explains how Proof of Stake works and how block rewards are paid, in the terms the code uses.
 
 > ⚠️ **v1.1.1 (upcoming):** the network switches to Proof-of-Stake at **block 2,776**. There is no mining after the fork - staking is the only way new blocks are made. You must run **v1.1.1** to stake; v1.0 and v1.1.0 nodes cannot connect to the new network. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
 
@@ -12,13 +12,12 @@ Earn passive income by staking your AMMOcoin! This guide explains everything you
 1. **Hold** AMMO coins in your wallet
 2. **Keep** wallet online and unlocked for staking
 3. **Earn** block rewards when your coins are selected
-4. **Compound** rewards by continuing to stake
+4. **Keep staking** - rewards received are ordinary coins and can stake once they mature
 
 ### Staking Benefits
-- 💰 **Passive Income** - Earn rewards while you sleep
 - 🔒 **Network Security** - Help secure the AMMOcoin network
 - 🌱 **Eco-Friendly** - No energy-intensive hashing
-- 📈 **Compound Growth** - Reinvest rewards automatically
+- 🧱 **Block Production** - Stakers create the blocks and receive the block's staker payment
 
 ## 🎰 Staking Rewards & Economics
 
@@ -32,7 +31,7 @@ The PoS fork does not change the reward schedule. Blocks keep paying the origina
 
 Treasury superblocks (every 43,200 blocks) only pay approved proposals. Transaction fees also go to the staker.
 
-There is no fixed APY - your return depends on how much of the network's coins are staking. See the formula under [Reward Estimation](#reward-estimation).
+There is no fixed rate. How many blocks you create depends on your share of the coins staking network-wide and on keeping your wallet online. See [Reward Estimation](#reward-estimation).
 
 ### Factors Affecting Rewards
 - **Maturity** - Each UTXO must have **600 confirmations** (about 30 hours) before it can stake
@@ -222,9 +221,9 @@ The stake split threshold itself is set with `setstakesplitthreshold <amount>`. 
 ```
 
 ### Key Metrics to Track
-1. **Staking Weight Percentage** - Your share of network
-2. **Average Reward Frequency** - How often you earn
-3. **Annual Percentage Yield** - Your effective return
+1. **Staking Weight Share** - Your weight / network weight
+2. **Blocks Created** - How many blocks your wallet has staked
+3. **Expected Time to Stake** - Shown by the wallet, based on your weight
 4. **Wallet Uptime** - Connection reliability
 
 ## 🛠️ Troubleshooting Staking Issues
@@ -281,20 +280,22 @@ The stake split threshold itself is set with `setstakesplitthreshold <amount>`. 
 ## 📊 Staking Calculators & Tools
 
 ### Reward Estimation
-**Formula**: Annual Rewards = (Your Coins / Network Weight) × Annual Block Rewards
+Staking is a lottery weighted by coins. Each block goes to one staker, chosen in proportion to the weight of mature coins staking.
 
-**Example Calculation**:
+**Expected share of blocks** = Your Weight / Network Weight
+
+**Expected stakes per day** = Expected share × Blocks per day (480 at one block per 3 minutes)
+
+**Example**:
 ```
-Your Coins: 10,000 AMMO
-Network Weight: 250,000,000 AMMO (example: the migration premine alone stakes about this much)
-Your Share: 10,000 / 250,000,000 = 0.004%
-Annual Blocks: 175,200 (1 block per 3 min)
-Staker Reward: 247 AMMO per block (250 AMMO minus 3 AMMO masternode payment)
-Expected Annual: 175,200 × 247 × 0.00004 = ~1,731 AMMO
-Annual Return: 1,731 / 10,000 = ~17%
+Your Weight:      10,000 AMMO
+Network Weight:   250,000,000 AMMO (example figure only)
+Expected share:   10,000 / 250,000,000 = 0.004% of blocks
+Blocks per day:   480
+Expected stakes:  480 x 0.00004 = ~0.019 per day, i.e. about one block every 52 days
 ```
 
-This assumes every block pays 250 AMMO. That holds only up to block 86,400 (about 6 months after the fork); after that the block value drops to 225 AMMO, then 45 AMMO from block 151,201, so a real year earns less. The network weight is also an example only: the more coins stake, the smaller your share.
+Each block you stake pays the staker amount set by `GetBlockValue()` minus `GetMasternodePayment()` at that height (247 AMMO today, less after block 86,400), plus transaction fees. These are averages, not promises: the network weight changes as others stake, the block value falls over time, and you only stake while your wallet is online and unlocked.
 
 ### Online Tools
 - **AMMOcoin Block Explorer** - View network statistics
@@ -318,35 +319,28 @@ This assumes every block pays 250 AMMO. That holds only up to block 86,400 (abou
 
 ## 💰 Tax Considerations
 
-### Staking Rewards as Income
+### Staking Rewards
 - **Record** all staking rewards received
 - **Track** fair market value at receipt time
-- **Calculate** annual staking income
-- **Consult** tax professional for advice
+- **Consult** a tax professional about how rewards are treated where you live
 
 ### Record Keeping
 - Date and time of reward
 - Amount of AMMO received
-- USD value at time of receipt
 - Transaction hash for verification
 
-## 🎯 Advanced Staking Strategies
+*AMMO is not a proponent of its network being used to circumvent or bypass an individual's local, state or federal tax or financial reporting obligations. Every individual is responsible for their own actions.* The AMMOcoin project publishes no price for AMMO; it is your responsibility to work out what your local rules require.
 
-### Portfolio Allocation
-- **80%** - Long-term staking (large UTXOs)
-- **15%** - Active trading/liquidity
-- **5%** - Experimental/new features
+## 🎯 Staking Practices
 
-### Compound Staking
-1. **Reinvest** all staking rewards
-2. **Combine** small rewards periodically
-3. **Optimize** UTXO sizes regularly
-4. **Track** compound growth over time
+### UTXO Management
+1. **Combine** many small rewards periodically
+2. **Optimize** UTXO sizes regularly
+3. **Remember** that moving coins resets their maturity (600 confirmations)
 
-### Multi-Strategy Approach
-- **Combine** staking with masternode rewards
-- **Diversify** across different wallets
-- **Balance** security with earning potential
+### Combining with Masternodes
+- Masternode collateral is locked and is not used for staking; stake with your other coins
+- **Balance** security with uptime: a wallet only stakes while it is online and unlocked for staking
 
 ---
 
@@ -363,8 +357,8 @@ This assumes every block pays 250 AMMO. That holds only up to block 86,400 (abou
 - [ ] Backup created and stored safely
 - [ ] Monitoring setup configured
 
-**🎉 Congratulations! You're now earning passive income through AMMOcoin staking.**
+**🎉 Congratulations! Your wallet is now staking and helping secure the AMMOcoin network.**
 
 ---
 
-*Next: Learn about [Masternodes](./03-masternode-setup.md) for higher rewards with larger investments.*
+*Next: Learn about [Masternodes](./03-masternode-setup.md), which provide network services and receive the masternode share of each block.*

@@ -845,8 +845,9 @@ CAmount GetBlockValue(int nHeight)
     if (nHeight > 151200) return 45 * COIN;
     if (nHeight > 86400) return 225 * COIN;
     if (nHeight != 1) return 250 * COIN;
-    // Block 1: 250M AMMO distribution premine for v1.0 user migration
-    // Sent to distribution address AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
+    // Block 1: 250M AMMO block-1 reserve (v1.0 balance airdrop first; the remainder funds the QuarterMaster reserve)
+    // The block-1 output is AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u.
+    // (AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME is only the unspendable genesis (block 0) output.)
     // Genesis block (block 0) coinbase is unspendable by design, so premine must be at block 1
     return 250000000 * COIN;
 }

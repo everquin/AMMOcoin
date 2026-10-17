@@ -1,18 +1,18 @@
 # 🏛️ AMMOcoin Masternode Setup Guide
 
-Set up your own AMMOcoin masternode to earn higher rewards and contribute to network stability. This comprehensive guide covers everything from requirements to maintenance.
+Set up your own AMMOcoin masternode to provide network services, vote in governance and receive the masternode payment set by the code. This comprehensive guide covers everything from requirements to maintenance.
 
 > **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoincore` (Linux), `~/Library/Application Support/AMMOcoinCore` (macOS), `%APPDATA%\AMMOcoinCore` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
 
 ## 🤔 What is a Masternode?
 
-A **masternode** is a specially configured node that provides enhanced services to the AMMOcoin network and earns premium rewards in return.
+A **masternode** is a specially configured node that provides enhanced services to the AMMOcoin network. In return the code pays it the masternode share of a block when it reaches the front of the payment queue.
 
 ### Masternode Functions
 - 🔒 **InstantSend** - Near-instant transaction confirmations
 - 🛡️ **Enhanced Security** - Additional network protection layers
 - 🗳️ **Governance Voting** - Participate in DAO decisions
-- 💰 **Premium Rewards** - Higher returns than regular staking
+- 💰 **Masternode Payment** - 3 AMMO per paid block (`GetMasternodePayment()`)
 - 🌐 **Network Stability** - Always-on full nodes
 
 ### Benefits vs Regular Staking
@@ -351,7 +351,7 @@ ammocoin-cli getmasternodestatus
 - Daily Pool: 480 × 3 = 1,440 AMMO
 - Your Share: 1,440 / Active MNs
 
-Example: with 100 active masternodes, each earns about 14.4 AMMO/day on average. Actual results vary with the active count and your uptime.
+Example: with 100 active masternodes, each is paid about 14.4 AMMO/day on average (one 3 AMMO payment roughly every 100 blocks, about every 5 hours). Actual results vary with the active count and your uptime.
 
 ## 🔧 Maintenance & Management
 
@@ -482,26 +482,27 @@ fi
 - **Better Network** - Reduced latency
 - **Geographic Distribution** - Spread risk
 
-## 💡 Economics & ROI Analysis
+## 💡 How Masternode Payments Work
 
-### Investment Breakdown
+### What the code does
 ```
-Initial Investment: 10,000 AMMO (collateral stays yours; it is not spent)
-VPS Costs: $10/month × 12 = $120/year
-Annual Rewards: 3 AMMO × (blocks your masternode is paid) - depends on the active masternode count
+Collateral:        10,000 AMMO, locked in your own wallet (it is not spent or sent to anyone)
+Payment per block: 3 AMMO to the masternode at the front of the queue (GetMasternodePayment())
+Payment frequency: about once every N blocks, where N = number of enabled masternodes
+Running costs:     your own server (VPS) costs, paid by you to your hosting provider
 ```
 
-### Risk Factors
-- **Price Volatility** - AMMO value fluctuation
-- **Network Changes** - Reward structure updates
-- **Technical Risk** - Server downtime, technical issues
-- **Competition** - Increasing masternode count reduces rewards
+What one masternode receives depends on how many others are enabled and on keeping the node online; the code sets the per-block amount, not what any operator will receive over time. The AMMOcoin project publishes no price for AMMO and makes no claim about what AMMO is or will be worth.
 
-### ROI Optimization
-1. **Minimize** VPS costs through annual plans
-2. **Maximize** uptime through monitoring
-3. **Compound** rewards by reinvesting
-4. **Scale** with additional masternodes
+### Things that change payments
+- **Masternode Count** - More enabled masternodes means each one is paid less often
+- **Network Changes** - Consensus changes to the reward schedule (announced as such)
+- **Downtime** - A masternode that drops off the list stops being paid until it is enabled again
+
+### Keeping a Masternode Paid
+1. **Maximize** uptime through monitoring
+2. **Keep** the node on the current release
+3. **Do not move** the collateral UTXO (moving it disables the masternode)
 
 ## 🆘 Support & Resources
 

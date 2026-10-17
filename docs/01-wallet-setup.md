@@ -177,7 +177,7 @@ When you first open your wallet:
 
 ### Basic Settings
 - **Language** - Choose your preferred language
-- **Currency Display** - USD, EUR, BTC equivalent
+- **Display Unit** - AMMO, mAMMO or µAMMO (the wallet shows amounts in AMMO only; it has no price feed)
 - **Decimal Places** - Precision for amounts
 - **Theme** - Light or dark mode
 

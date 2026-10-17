@@ -18,10 +18,13 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 5. **Start staking** or consider running a masternode
 
 ### Where can I buy AMMOcoin?
-- **Exchanges**: Check CoinMarketCap for current listings
-- **DEX Trading**: Decentralized exchange pairs
-- **OTC Trading**: Direct peer-to-peer trades
-- **Staking/Masternodes**: Earn through network participation (there is no mining after the v1.1.1 fork)
+**The AMMOcoin project does not sell AMMO**, has never held an ICO or token sale, and does not list AMMO on any exchange. AMMO is received, not bought from the project:
+- **Staking**: Stakers who create a block receive the staker share set by the code (there is no mining after the v1.1.1 fork)
+- **Masternodes**: Enabled masternodes receive the masternode payment when they reach the front of the queue
+- **Contributions**: Development and community work can be rewarded from the reserves or by approved treasury proposals
+- **GLiBz**: NUGGETS *earned* through activity on GLiBz can be swapped for AMMO; purchased NUGGETS can never reach AMMO
+
+Any exchange listing can only happen through an explicit masternode governance vote (DAO Command). The project publishes no price for AMMO.
 
 ### Is AMMOcoin safe to use?
 Yes, when following security best practices:
@@ -78,10 +81,10 @@ Common causes:
 
 ### How much can I earn from staking?
 - **Block reward (v1.1.1)**: 250 AMMO per block today (the fork keeps the original schedule; 225 AMMO from block 86,401, 45 AMMO from 151,201); when a masternode is paid it gets 3 AMMO and the staker keeps 247 AMMO
-- **Network issuance**: ~480 blocks/day, so ~120,000 AMMO/day today is shared by all stakers and masternodes - your return depends on your share of the coins being staked
+- **Network issuance**: ~480 blocks/day, so ~120,000 AMMO/day today is shared by all stakers and masternodes - how many blocks you stake depends on your share of the coins being staked (expected share of blocks = your weight / network weight)
 - **Factors**: Your coin amount, network weight, uptime
 - **Frequency**: Small amounts may stake weekly/monthly
-- **Compounding**: Rewards automatically increase your staking weight
+- **Maturity**: Rewards are ordinary coins and add to your staking weight once they have 600 confirmations
 
 ### What's the minimum amount needed for staking?
 - **Technical minimum**: 1 AMMO
@@ -127,7 +130,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 - **Setup Time**: 2-4 hours initial setup
 - **Technical Knowledge**: Basic Linux command line skills
 
-### What returns can I expect from a masternode?
+### How are masternodes paid?
 - **Payment**: 3 AMMO per paid block (6 AMMO only after block 3,715,200)
 - **Network total**: ~480 blocks/day x 3 AMMO = ~1,440 AMMO/day shared by all enabled masternodes
 - **Payment Frequency**: depends on how many masternodes are enabled
@@ -215,7 +218,7 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 ### What types of proposals are accepted?
 - **Development**: New features, bug fixes
 - **Marketing**: Promotion campaigns
-- **Integration**: Exchange listings, partnerships
+- **Integration**: Partnerships; any exchange listing is only possible through such a vote
 - **Community**: Events, education
 - **Operations**: Infrastructure, legal
 
@@ -351,22 +354,16 @@ Common causes:
 4. **Provide** steps to reproduce
 5. **Submit** detailed bug report
 
-## 📈 Investment Questions
+## 📈 Value Questions
 
 ### Is AMMOcoin a good investment?
-**We cannot provide investment advice.** Consider:
-- **Technology**: Strong blockchain with active development
-- **Community**: Growing user and developer base
-- **Use cases**: Staking, masternodes, governance
-- **Risks**: Cryptocurrency investments are high-risk
-- **Research**: Do your own thorough research
+**AMMO is not an investment, and the AMMOcoin project makes no claims about its value.** The project assigns AMMO no value, publishes no price, and promises no return, yield, profit or price. Nothing in these documents is an offer to sell anything or investment advice. AMMO exists to be used: staking, masternodes, governance and the GLiBz closed loop.
 
-### What factors affect AMMOcoin's price?
-- **Adoption**: More users = higher demand
-- **Development**: New features and improvements
-- **Market sentiment**: General crypto market trends
-- **Competition**: Other similar cryptocurrencies
-- **Regulations**: Government policies on crypto
+### What is AMMOcoin's price?
+The project publishes no price, target or valuation for AMMO and does not comment on what it might be worth. Member-to-member trades are the members' own business; the project sets no price and is not a party.
+
+### Do I have tax obligations on AMMO I receive?
+Possibly - rules differ by country. Keep a record of every reward (date, amount, transaction hash) and ask a tax professional. *AMMO is not a proponent of its network being used to circumvent or bypass an individual's local, state or federal tax or financial reporting obligations. Every individual is responsible for their own actions.*
 
 ### Should I stake or run a masternode?
 Depends on your situation:

@@ -1,8 +1,9 @@
 /**
  * /api/payouts
  *
- * POST — Send AMMO from the gateway hot wallet to an address (the "sell
- *        Nuggets for AMMO" settlement leg). Idempotent on `idempotency_key`.
+ * POST — Send AMMO from the gateway hot wallet to an address (the settlement
+ *        leg of the GLiBz earned-NUGGETS-to-AMMO swap; not a sale of AMMO).
+ *        Idempotent on `idempotency_key`.
  * GET  — List payouts for the authenticated merchant.
  *
  * Response contract the caller relies on:
