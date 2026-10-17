@@ -1,0 +1,166 @@
+name: Build AMMOcoin v1.1.1 macOS
+run-name: Build AMMOcoin v1.1.1 macOS arm64 + x86_64 (${{ github.ref_name }})
+
+# Native builds on GitHub's macOS runners. Every dependency (boost, Berkeley DB 4.8, libevent,
+# gmp, libsodium, zeromq, miniupnpc, libnatpmp, qrencode, Qt 5.15) is built from source by
+# scripts/build/macos-deps.sh with MACOSX_DEPLOYMENT_TARGET=13.0 and cached, so nothing comes
+# from Homebrew and every Mach-O in the packages runs on macOS 13 Ventura or newer.
+
+on:
+  workflow_dispatch:
+
+env:
+  MACOSX_DEPLOYMENT_TARGET: "13.0"
+  VERSION: "1.1.1"
+
+jobs:
+  build-macos:
+    name: macOS ${{ matrix.label }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            label: ARM64
+            runner: macos-15
+          # macos-13 (the last macOS 13 Intel image) was retired by GitHub in December 2025;
+          # macos-15-intel is the remaining x86_64 image. The deployment target, not the
+          # runner's macOS version, sets the minimum macOS of the binaries.
+          - arch: x86_64
+            label: x86_64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Toolchain info
+        run: |
+          set -x
+          uname -m
+          sw_vers
+          xcodebuild -version
+          xcrun --sdk macosx --show-sdk-path
+          [ "$(uname -m)" = "${{ matrix.arch }}" ] || { echo "runner arch mismatch"; exit 1; }
+          cmake --version | head -1
+          rustup --version
+          echo "rust-toolchain: $(cat source/rust-toolchain)"
+
+      - name: Install build tools
+        run: |
+          # Only build tools; no libraries are linked from Homebrew (the package check enforces it).
+          brew list pkgconf >/dev/null 2>&1 || brew list pkg-config >/dev/null 2>&1 || brew install pkgconf
+          rustup toolchain install "$(cat source/rust-toolchain)" --profile minimal
+          ( cd source && cargo --version && rustc --version )
+
+      - name: Cache dependencies
+        id: deps-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/macos-deps
+          key: macos-deps-v1-${{ matrix.arch }}-${{ env.MACOSX_DEPLOYMENT_TARGET }}-${{ hashFiles('scripts/build/macos-deps.sh', 'source/depends/config.guess', 'source/depends/config.sub') }}
+
+      - name: Build dependencies from source (MACOSX_DEPLOYMENT_TARGET=13.0)
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: scripts/build/macos-deps.sh "$RUNNER_TEMP/macos-deps" "$RUNNER_TEMP/macos-deps-work"
+
+      - name: Upload dependency build logs on failure
+        if: failure() && steps.deps-cache.outputs.cache-hit != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-deps-logs-${{ matrix.label }}
+          path: ${{ runner.temp }}/macos-deps-work/*.log
+          if-no-files-found: ignore
+
+      - name: Ensure Sapling params (bundled into AMMOcoin-Qt.app)
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
+
+      - name: Build AMMOcoin
+        run: |
+          # configure + make; marks configure-rewritten tracked files assume-unchanged
+          # (scripts/ci/mark-tracked-build-outputs.sh) and fails on a -dirty version
+          # (scripts/ci/check-build-version.sh).
+          scripts/build/build-macos.sh "$RUNNER_TEMP/macos-deps" all
+
+      - name: Upload config.log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: config-log-${{ matrix.label }}
+          path: source/config.log
+          if-no-files-found: ignore
+
+      - name: Package (dmg, tar.gz, zip, SHA256)
+        env:
+          QT_PREFIX: ${{ runner.temp }}/macos-deps/qt
+          MAX_MINOS: ${{ env.MACOSX_DEPLOYMENT_TARGET }}
+        run: |
+          scripts/packaging/macos/package-macos.sh dist
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" source/src/obj/build.h
+          ls -l dist
+
+      - name: Verify package (otool minos <= 13.0, no Homebrew or /usr/local paths)
+        run: |
+          set -euo pipefail
+          NAME="AMMOcoin-v${VERSION}-macOS-${{ matrix.label }}"
+          M="$RUNNER_TEMP/dmg"; mkdir -p "$M" "$RUNNER_TEMP/tgz"
+          hdiutil attach -readonly -nobrowse -mountpoint "$M" "dist/$NAME.dmg"
+          tar -C "$RUNNER_TEMP/tgz" -xzf "dist/$NAME.tar.gz"
+          ( cd dist && shasum -a 256 -c "$NAME.SHA256" )
+          bad=0; n=0
+          while IFS= read -r -d '' f; do
+            [[ "$(file -b "$f")" == *Mach-O* ]] || continue
+            n=$((n+1))
+            file -b "$f" | grep -q "${{ matrix.arch }}" || { echo "WRONG ARCH: $f: $(file -b "$f")"; bad=1; }
+            m=$(otool -l "$f" | awk '/LC_BUILD_VERSION/{b=1} b&&/minos/{print $2; exit} /LC_VERSION_MIN_MACOSX/{v=1} v&&/version/{print $2; exit}')
+            if [ "$(printf '%s\n%s\n' "$m" "$MACOSX_DEPLOYMENT_TARGET" | sort -V | tail -1)" != "$MACOSX_DEPLOYMENT_TARGET" ]; then
+              echo "MINOS $m > $MACOSX_DEPLOYMENT_TARGET: $f"; bad=1
+            fi
+            if otool -L "$f" | tail -n +2 | awk '{print $1}' | grep -E '^(/opt/homebrew|/usr/local)/'; then
+              echo "HOMEBREW/USR-LOCAL REFERENCE: $f"; bad=1
+            fi
+            if otool -l "$f" | awk '/LC_RPATH/{getline;getline;print $2}' | grep -E '^/'; then
+              echo "ABSOLUTE RPATH: $f"; bad=1
+            fi
+          done < <(find "$M" "$RUNNER_TEMP/tgz" -type f -print0)
+          echo "checked $n Mach-O files (minos <= $MACOSX_DEPLOYMENT_TARGET, no Homebrew paths)"
+          otool -L "$M/AMMOcoin-Qt.app/Contents/MacOS/AMMOcoin-Qt"
+          otool -L "$M/bin/ammocoind"
+          codesign --verify --deep --strict "$M/AMMOcoin-Qt.app"
+          plutil -p "$M/AMMOcoin-Qt.app/Contents/Info.plist" | grep -E 'ShortVersion|LSMinimumSystemVersion'
+          hdiutil detach "$M"
+          [ $bad = 0 ]
+
+      - name: Smoke test (regtest daemon + offscreen Qt)
+        run: |
+          set -euo pipefail
+          NAME="AMMOcoin-v${VERSION}-macOS-${{ matrix.label }}"
+          M="$RUNNER_TEMP/dmg-test"; mkdir -p "$M"
+          hdiutil attach -readonly -nobrowse -mountpoint "$M" "dist/$NAME.dmg"
+          "$M/bin/ammocoind" -version | head -1
+          "$M/bin/ammocoin-cli" -version | head -1
+          "$M/bin/ammocoin-tx" -help | head -1
+          scripts/test/macos-smoke-test.sh "$RUNNER_TEMP/tgz/$NAME/bin" "$M/AMMOcoin-Qt.app" source/params "$RUNNER_TEMP/smoke"
+          hdiutil detach "$M"
+
+      - name: Upload debug logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-logs-${{ matrix.label }}
+          path: ${{ runner.temp }}/smoke/**/debug*.log
+          if-no-files-found: ignore
+
+      - name: Upload macOS ${{ matrix.label }} packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}
+          path: |
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.dmg
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.tar.gz
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.zip
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.SHA256
+          if-no-files-found: error
+          retention-days: 30

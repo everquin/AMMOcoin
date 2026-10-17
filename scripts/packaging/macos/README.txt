@@ -1,9 +1,10 @@
-AMMOcoin Core v1.1.1 for macOS (Apple Silicon / arm64)
-=======================================================
+AMMOcoin Core v1.1.1 for macOS (@ARCHDESC@)
+=====================================================
 
-Requirements: a Mac with an Apple Silicon (M-series) CPU running macOS 26
-(Tahoe) or newer. This build does not run on Intel Macs or on older macOS
-versions (its bundled libraries were compiled for macOS 26).
+Requirements: a Mac with an @ARCHDESC@ CPU running macOS @MINOS@ or newer.
+Use AMMOcoin-v1.1.1-macOS-ARM64 on Apple Silicon and -x86_64 on Intel Macs.
+(The ARM64 package does not run on Intel Macs; the x86_64 package also runs
+on Apple Silicon under Rosetta 2, but more slowly.)
 
 Contents
 --------
@@ -11,8 +12,6 @@ Contents
   bin/ammocoind          Full node / wallet daemon
   bin/ammocoin-cli       RPC command-line client
   bin/ammocoin-tx        Raw transaction utility
-  bin/lib/               Bundled libraries the command-line tools need
-                         (keep this folder next to the binaries)
   fetch-params.sh        Downloads + verifies the Sapling parameters
   README.txt             This file
 
