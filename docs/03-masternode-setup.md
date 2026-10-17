@@ -19,7 +19,7 @@ A **masternode** is a specially configured node that provides enhanced services 
 | Feature | Staking | Masternode |
 |---------|---------|------------|
 | **Minimum Coins** | Any amount (600 confirmations to stake) | 10,000 AMMO |
-| **Rewards** | 4 AMMO per staked block (10 if no masternode is paid) | 6 AMMO per paid block |
+| **Rewards** | 247 AMMO per staked block today (250 if no masternode is paid) | 3 AMMO per paid block |
 | **Requirements** | Basic wallet | VPS + Technical setup |
 | **Voting Rights** | No | Yes |
 | **Network Services** | Basic | Enhanced |
@@ -339,19 +339,19 @@ ammocoin-cli getmasternodestatus
 ## 💰 Masternode Rewards
 
 ### Reward Distribution
-- **Block Reward**: 10 AMMO per block after the v1.1.1 fork (3-minute blocks)
-- **Masternode Payment**: Fixed 6 AMMO per paid block (the staker keeps the other 4 AMMO)
+- **Block Reward**: 250 AMMO per block today (3-minute blocks); the v1.1.1 fork keeps the original schedule (225 AMMO from block 86,401, 45 AMMO from 151,201, lower later)
+- **Masternode Payment**: Fixed 3 AMMO per paid block (the staker keeps the rest, 247 AMMO today); it becomes 6 AMMO only after block 3,715,200
 - **Selection**: Deterministic based on queue order
 - **Frequency**: Depends on how many masternodes are active
 
 ### Reward Calculation
 **Formula**: Daily Rewards ≈ (Daily Blocks × MN Payment) / Active Masternodes
 - Daily Blocks: 480 (1 block/3 minutes)
-- MN Payment per Block: 6 AMMO
-- Daily Pool: 480 × 6 = 2,880 AMMO
-- Your Share: 2,880 / Active MNs
+- MN Payment per Block: 3 AMMO
+- Daily Pool: 480 × 3 = 1,440 AMMO
+- Your Share: 1,440 / Active MNs
 
-Example: with 100 active masternodes, each earns about 28.8 AMMO/day on average. Actual results vary with the active count and your uptime.
+Example: with 100 active masternodes, each earns about 14.4 AMMO/day on average. Actual results vary with the active count and your uptime.
 
 ## 🔧 Maintenance & Management
 
@@ -488,7 +488,7 @@ fi
 ```
 Initial Investment: 10,000 AMMO (collateral stays yours; it is not spent)
 VPS Costs: $10/month × 12 = $120/year
-Annual Rewards: 6 AMMO × (blocks your masternode is paid) - depends on the active masternode count
+Annual Rewards: 3 AMMO × (blocks your masternode is paid) - depends on the active masternode count
 ```
 
 ### Risk Factors

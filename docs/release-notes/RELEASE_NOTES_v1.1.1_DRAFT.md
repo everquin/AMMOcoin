@@ -29,6 +29,7 @@ The v1.1 chain stopped at block 2,775 after its Proof-of-Work phase. v1.1.1 swit
 Other fixes in this release:
 - Restart crash after the fork fixed (the node asserted on every restart once the Zerocoin upgrade height was active).
 - Linux build fixed for glibc 2.36+ (Ubuntu 24.04).
+- Rewards keep the original schedule after the fork (250 AMMO per block, 3 AMMO to masternodes, budget at 20%). Reward heights are now separate from the upgrade heights (`nRewardZCV2Height` 1,153,160 and `nRewardV55Height` 3,715,200 on mainnet), so activating every upgrade at block 2,776 does not change what blocks pay.
 
 ---
 
@@ -41,9 +42,9 @@ Other fixes in this release:
 | Block time (target spacing) | 3 minutes |
 | Stake maturity | **600 confirmations** (about 30 hours) before a UTXO can stake |
 | Masternode collateral | **10,000 AMMO** (15 confirmations) |
-| Block reward after the fork | **10 AMMO** per block (block 2,776 itself pays 250 AMMO) |
-| Masternode payment | **6 AMMO** per paid block, taken out of the 10 AMMO; the staker keeps the remaining 4 AMMO |
-| Treasury (budget) | Superblocks every 43,200 blocks (about 90 days), up to 10 AMMO x 43,200 = 432,000 AMMO per cycle, paid only to approved proposals |
+| Block reward | Unchanged by the fork: **250 AMMO** per block up to block 86,400, then 225 AMMO, 45 AMMO from block 151,201, and the rest of the original schedule |
+| Masternode payment | **3 AMMO** per paid block, taken out of the block reward; the staker keeps the rest (247 AMMO today). 6 AMMO only after block 3,715,200 |
+| Treasury (budget) | Superblocks every 43,200 blocks (about 90 days), up to 20% of the block value x 43,200 (50 AMMO x 43,200 = 2,160,000 AMMO per cycle today), paid only to approved proposals |
 | DNS seeds | seed1.ammocoin.org, seed2.ammocoin.org |
 | Fixed seeds | 78.141.194.140 (seed1), 104.238.165.56 (seed2.ammocoin.org) |
 

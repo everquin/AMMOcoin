@@ -253,7 +253,7 @@ ammocoin-cli getbudgetprojection
 ## 💰 Treasury Management
 
 ### Budget Allocation System
-- **Budget per cycle**: up to 10 AMMO x 43,200 blocks = **432,000 AMMO** (v1.1.1 PoS block reward is 10 AMMO)
+- **Budget per cycle**: 20% of the block value x 43,200 blocks; today 50 AMMO x 43,200 = **2,160,000 AMMO** (250 AMMO block value). It shrinks as the block value drops (225 AMMO from block 86,401, 45 AMMO from 151,201) and becomes 100% of the block value only after block 3,715,200
 - **Allocation Period**: 43,200-block cycles (~90 days)
 - **Distribution**: Automatic via superblocks
 - **Unused Funds**: Never minted (not carried over)
@@ -329,8 +329,14 @@ bool CMasternode::IsValidForVoting() {
 ```cpp
 // Budget per cycle (source/src/budget/budgetmanager.cpp)
 CAmount CBudgetManager::GetTotalBudget(int nHeight) {
-    // 100% of block reward after V5.5 upgrade (active from block 2,776 on mainnet)
+    // 100% of block reward after nRewardV55Height (3,715,200 on mainnet)
     CAmount nSubsidy = GetBlockValue(nHeight);
+
+    // 20% of block reward up to nRewardV55Height (the case today)
+    if (nHeight <= Params().GetConsensus().nRewardV55Height) {
+        nSubsidy /= 5;
+    }
+
     return nSubsidy * Params().GetConsensus().nBudgetCycleBlocks;  // 43,200 on mainnet
 }
 ```

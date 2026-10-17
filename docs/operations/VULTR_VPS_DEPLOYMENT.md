@@ -7,7 +7,7 @@ This guide covers deploying AMMOcoin v1.1.1 Linux binaries on Vultr VPS for mast
 
 **Key facts:**
 - Collateral: **10,000 AMMO** (15 confirmations)
-- Masternode payment: 6 AMMO per paid block (see the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md))
+- Masternode payment: 3 AMMO per paid block, 6 AMMO only after block 3,715,200 (see the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md))
 - The VPS needs a **public, routable IPv4 address** and must use port **37020**. 127.0.0.1 or private IPs (10.x, 172.16-31.x, 192.168.x) are rejected with `Invalid IP address`.
 - RPC port 51473 stays localhost-only.
 

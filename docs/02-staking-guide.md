@@ -23,14 +23,14 @@ Earn passive income by staking your AMMOcoin! This guide explains everything you
 ## 🎰 Staking Rewards & Economics
 
 ### Reward Structure
-After the fork (from block 2,777) every block mints **10 AMMO**:
+The PoS fork does not change the reward schedule. Blocks keep paying the original v1.1 amounts: **250 AMMO** per block up to block 86,400, then 225 AMMO up to 151,200, 45 AMMO up to 302,400, and lower after that (see `GetBlockValue` in `source/src/validation.cpp`).
 
-| Recipient | Per block |
+| Recipient | Per block (today, up to block 86,400) |
 |-----------|-----------|
-| Staker (block creator) | **4 AMMO** (10 AMMO if no masternode is paid in that block) |
-| Masternode | **6 AMMO** |
+| Staker (block creator) | **247 AMMO** (250 AMMO if no masternode is paid in that block) |
+| Masternode | **3 AMMO** (6 AMMO only after block 3,715,200) |
 
-Block 2,776 itself pays 250 AMMO. Treasury superblocks (every 43,200 blocks) only pay approved proposals. Transaction fees also go to the staker.
+Treasury superblocks (every 43,200 blocks) only pay approved proposals. Transaction fees also go to the staker.
 
 There is no fixed APY - your return depends on how much of the network's coins are staking. See the formula under [Reward Estimation](#reward-estimation).
 
@@ -289,9 +289,14 @@ Your Coins: 10,000 AMMO
 Network Weight: 50,000,000 AMMO (example only)
 Your Share: 10,000 / 50,000,000 = 0.02%
 Annual Blocks: 175,200 (1 block per 3 min)
-Staker Reward: 4 AMMO per block (10 AMMO minus 6 AMMO masternode payment)
-Expected Annual: 175,200 × 4 × 0.0002 = ~140 AMMO
-Annual Return: 140 / 10,000 = ~1.4%
+Staker Reward: 247 AMMO per block (250 AMMO minus 3 AMMO masternode payment)
+Expected Annual: 175,200 × 247 × 0.0002 = ~8,655 AMMO
+Annual Return: 8,655 / 10,000 = ~87%
+```
+
+This assumes every block pays 250 AMMO. That holds only up to block 86,400 (about 6 months after the fork); after that the block value drops to 225 AMMO, then 45 AMMO from block 151,201, so a real year earns less. The network weight is also an example only: the more coins stake, the smaller your share.
+
+```
 ```
 
 ### Online Tools

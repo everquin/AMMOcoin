@@ -77,8 +77,8 @@ Common causes:
 **Staking** is holding AMMO coins in your wallet to help secure the network and earn rewards. Your coins have a chance to create new blocks and earn block rewards.
 
 ### How much can I earn from staking?
-- **Block reward (v1.1.1)**: 10 AMMO per block; when a masternode is paid it gets 6 AMMO and the staker keeps 4 AMMO
-- **Network issuance**: ~480 blocks/day, so ~4,800 AMMO/day is shared by all stakers and masternodes - your return depends on your share of the coins being staked
+- **Block reward (v1.1.1)**: 250 AMMO per block today (the fork keeps the original schedule; 225 AMMO from block 86,401, 45 AMMO from 151,201); when a masternode is paid it gets 3 AMMO and the staker keeps 247 AMMO
+- **Network issuance**: ~480 blocks/day, so ~120,000 AMMO/day today is shared by all stakers and masternodes - your return depends on your share of the coins being staked
 - **Factors**: Your coin amount, network weight, uptime
 - **Frequency**: Small amounts may stake weekly/monthly
 - **Compounding**: Rewards automatically increase your staking weight
@@ -128,8 +128,8 @@ A **masternode** is a special type of node that provides enhanced services to th
 - **Technical Knowledge**: Basic Linux command line skills
 
 ### What returns can I expect from a masternode?
-- **Payment**: 6 AMMO per paid block (v1.1.1)
-- **Network total**: ~480 blocks/day x 6 AMMO = ~2,880 AMMO/day shared by all enabled masternodes
+- **Payment**: 3 AMMO per paid block (6 AMMO only after block 3,715,200)
+- **Network total**: ~480 blocks/day x 3 AMMO = ~1,440 AMMO/day shared by all enabled masternodes
 - **Payment Frequency**: depends on how many masternodes are enabled
 - **Requirements**: public, routable IP on port 37020 (127.0.0.1 or private IPs give "Invalid IP address")
 
@@ -165,7 +165,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 | **RPC Port** | 51473 |
 | **Protocol Version** | 70927 |
 | **Stake Maturity** | 600 confirmations |
-| **Block Reward** | 10 AMMO (6 masternode / 4 staker) from the v1.1.1 PoS fork |
+| **Block Reward** | 250 AMMO today (3 masternode / 247 staker); original schedule kept after the fork |
 | **Seed Nodes** | seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56) |
 
 ### How do I check if I'm on the correct network?

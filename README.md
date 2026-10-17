@@ -287,7 +287,7 @@ ammocoin-cli getstakingstatus
 - **Block Time**: 3 minutes
 - **Algorithm**: Proof-of-Stake from block 2,776 (blocks 1-2,775 were PoW; no mining after the fork)
 - **Stake Maturity**: 600 confirmations
-- **Block Reward (after fork)**: 10 AMMO; masternode payment 6 AMMO, staker 4 AMMO
+- **Block Reward**: 250 AMMO today, original schedule kept after the fork (225 AMMO from block 86,401, 45 AMMO from 151,201, lower later); masternode payment 3 AMMO, staker 247 AMMO
 - **Masternode Collateral**: 10,000 AMMO (15 confirmations)
 - **Seed Nodes**: seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56)
 

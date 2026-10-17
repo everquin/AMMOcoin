@@ -419,7 +419,7 @@ ammocoin-cli listmasternodes | grep "your_ip"
 # Check network masternode count
 ammocoin-cli getmasternodecount
 
-# Expected: 6 AMMO per paid block (v1.1.1 PoS)
+# Expected: 3 AMMO per paid block (6 AMMO only after block 3,715,200)
 ```
 
 **Solutions**:
