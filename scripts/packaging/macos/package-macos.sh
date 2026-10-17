@@ -163,7 +163,7 @@ if [ "$NOTARIZE" = 1 ]; then
   ditto -c -k --keepParent "$APP" "$NZ/AMMOcoin-Qt.app.zip"
   notarize "$NZ/AMMOcoin-Qt.app.zip"
   xcrun stapler staple "$APP"
-  xcrun stapler validate "$APP"
+  for i in 1 2 3 4 5; do xcrun stapler validate "$APP" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
   ( cd "$ST/$NAME" && ditto -c -k --keepParent bin "$NZ/$NAME-bin.zip" )
   notarize "$NZ/$NAME-bin.zip"
   rm -rf "$NZ"
@@ -184,7 +184,7 @@ fi
 if [ "$NOTARIZE" = 1 ]; then
   notarize "$NAME.dmg"
   xcrun stapler staple "$NAME.dmg"
-  xcrun stapler validate "$NAME.dmg"
+  for i in 1 2 3 4 5; do xcrun stapler validate "$NAME.dmg" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
   spctl -a -vvv -t install "$NAME.dmg"
   spctl -a -vvv -t exec "$APP"
 fi

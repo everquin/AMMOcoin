@@ -211,8 +211,8 @@ jobs:
             codesign -dvv "$M/AMMOcoin-Qt.app" 2>&1 | grep -qx "TeamIdentifier=$APPLE_TEAM_ID" || { echo "wrong Team ID"; bad=1; }
             spctl -a -vvv -t install "dist/$NAME.dmg"
             spctl -a -vvv -t exec "$M/AMMOcoin-Qt.app"
-            xcrun stapler validate "dist/$NAME.dmg"
-            xcrun stapler validate "$M/AMMOcoin-Qt.app"
+            for i in 1 2 3 4 5; do xcrun stapler validate "dist/$NAME.dmg" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
+            for i in 1 2 3 4 5; do xcrun stapler validate "$M/AMMOcoin-Qt.app" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
           else
             echo "::warning::${{ matrix.label }}: ad-hoc signed only (no Developer ID secrets) - skipped spctl/stapler checks"
           fi
