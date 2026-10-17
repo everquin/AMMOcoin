@@ -1,5 +1,5 @@
-AMMOcoin Core v1.1.1 for macOS (@ARCHDESC@)
-=====================================================
+AMMOcoin Core v1.1.1 for macOS - @ARCH@
+=====================================
 
 Requirements: a Mac with an @ARCHDESC@ CPU running macOS @MINOS@ or newer.
 Use AMMOcoin-v1.1.1-macOS-ARM64 on Apple Silicon and -x86_64 on Intel Macs.
