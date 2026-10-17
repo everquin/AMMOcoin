@@ -1,0 +1,87 @@
+#!/bin/sh
+# ammocoin .deb postinst: service user, data folder, ammocoin.conf, Sapling params, systemd.
+set -e
+
+SVC_USER=ammocoin
+SVC_HOME=/var/lib/ammocoin
+DATADIR=$SVC_HOME/.ammocoincore
+CONF=$DATADIR/ammocoin.conf
+P2P_PORT=37020
+RPC_PORT=51473
+
+if [ "$1" = configure ]; then
+  if ! getent passwd "$SVC_USER" >/dev/null; then
+    adduser --system --group --home "$SVC_HOME" --no-create-home \
+      --shell /usr/sbin/nologin --gecos "AMMOcoin node" "$SVC_USER" >/dev/null
+  fi
+  install -d -m 0750 -o "$SVC_USER" -g "$SVC_USER" "$SVC_HOME"
+  install -d -m 0700 -o "$SVC_USER" -g "$SVC_USER" "$DATADIR"
+
+  if [ -f "$CONF" ]; then
+    echo "ammocoin: keeping existing $CONF"
+  else
+    PASS=$(head -c 32 /dev/urandom | base64 | tr -dc A-Za-z0-9 | head -c 32)
+    umask 077
+    cat > "$CONF" <<EOF
+# Written by the ammocoin package on first install; never overwritten by upgrades.
+server=1
+listen=1
+port=$P2P_PORT
+rpcport=$RPC_PORT
+rpcbind=127.0.0.1
+rpcallowip=127.0.0.1
+rpcuser=ammocoin
+rpcpassword=$PASS
+staking=1
+EOF
+    chown "$SVC_USER:$SVC_USER" "$CONF"
+    chmod 600 "$CONF"
+    echo "ammocoin: wrote $CONF (random RPC password)"
+  fi
+
+  # The package ships verified params in /usr/share/ammocoin, which the node uses when
+  # ~/.ammocoin-params has none, so every user (service or desktop) works without a download.
+  if /usr/bin/ammocoin-fetch-params --dir "$SVC_HOME/.ammocoin-params" --check >/dev/null 2>&1; then
+    PARAMS_OK=1
+  else
+    PARAMS_OK=0
+  fi
+
+  if [ -d /run/systemd/system ]; then
+    systemctl daemon-reload >/dev/null 2>&1 || true
+    if [ "$PARAMS_OK" = 1 ]; then
+      if [ -z "$2" ]; then
+        # first install: enable and start the node
+        systemctl enable ammocoind.service >/dev/null 2>&1 || true
+        systemctl start ammocoind.service || echo "ammocoin: could not start ammocoind; see: journalctl -u ammocoind"
+      else
+        # upgrade: restart only if it was running
+        systemctl try-restart ammocoind.service || true
+      fi
+    fi
+  fi
+
+  if [ "$PARAMS_OK" = 1 ]; then
+    cat <<EOF
+
+AMMOcoin node installed (service: ammocoind, user: $SVC_USER, data: $DATADIR).
+  Status:      systemctl status ammocoind
+  Sync height: ammocoin-node-cli getblockcount
+  Firewall:    open TCP $P2P_PORT for inbound peers (e.g. sudo ufw allow $P2P_PORT/tcp)
+  Stop/disable: sudo systemctl disable --now ammocoind
+See /usr/share/doc/ammocoin/README.Debian.
+
+EOF
+  else
+    cat <<EOF
+
+AMMOcoin: the Sapling parameters are missing or failed verification, so ammocoind was NOT started.
+When you are online, run:
+  sudo ammocoin-fetch-params --dir $SVC_HOME/.ammocoin-params --owner $SVC_USER
+  sudo systemctl enable --now ammocoind
+
+EOF
+  fi
+fi
+
+exit 0

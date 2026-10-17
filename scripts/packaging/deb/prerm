@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+# Stop the node before its binary is removed. On upgrade postinst restarts it if it was running.
+if [ -d /run/systemd/system ] && [ "$1" = remove ]; then
+  systemctl stop ammocoind.service >/dev/null 2>&1 || true
+  systemctl disable ammocoind.service >/dev/null 2>&1 || true
+fi
+exit 0
