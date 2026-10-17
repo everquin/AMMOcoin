@@ -22,7 +22,14 @@ APP="$ST/dmg/AMMOcoin-Qt.app"
 ditto "$SRC/AMMOcoin-Qt.app" "$APP"
 # Declare the real minimum macOS (Homebrew-built dependencies set it).
 /usr/libexec/PlistBuddy -c "Set :LSMinimumSystemVersion $MINOS" "$APP/Contents/Info.plist"
-"$HB/opt/qt@5/bin/macdeployqt" "$APP" -verbose=0
+# The GUI loads its icons as SVG through the qsvg image plugin, which macdeployqt does not
+# pick up on its own (the executable has no direct QtSvg link). Without it every SVG icon is
+# blank ("Could not create pixmap from ://ic-..."). Add it and let macdeployqt fix its links.
+QT_PLUGINS="$("$HB/opt/qt@5/bin/qmake" -query QT_INSTALL_PLUGINS)"
+mkdir -p "$APP/Contents/PlugIns/imageformats"
+cp "$QT_PLUGINS/imageformats/libqsvg.dylib" "$APP/Contents/PlugIns/imageformats/"
+"$HB/opt/qt@5/bin/macdeployqt" "$APP" -verbose=0 \
+  -executable="$APP/Contents/PlugIns/imageformats/libqsvg.dylib"
 # Plugin dylibs keep their Homebrew install-name id; rewrite it, and drop stray LC_RPATHs.
 ( cd "$APP/Contents"
   find PlugIns -name '*.dylib' | while read -r f; do install_name_tool -id "@executable_path/../$f" "$f" 2>/dev/null; done
