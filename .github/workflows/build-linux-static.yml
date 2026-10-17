@@ -397,22 +397,10 @@ jobs:
           echo "$VER" | grep -q 'v1\.1\.1' || { echo "❌ ammocoin-qt -version does not report v1.1.1"; exit 1; }
           if echo "$VER" | grep -q dirty; then echo "❌ -dirty version"; exit 1; fi
           xvfb-run -a src/qt/ammocoin-qt -help | grep -q -- '-paramsdir'
-          # start the wallet against a throwaway data dir and confirm it loads the Sapling params
-          T=$(mktemp -d); mkdir -p "$T/data"
-          "$GITHUB_WORKSPACE/scripts/packaging/ammocoin-fetch-params" --dir "$T/home/.ammocoin-params"
-          HOME=$T/home timeout 120 xvfb-run -a src/qt/ammocoin-qt -datadir="$T/data" -connect=0 -listen=0 \
-            -port=37990 -rpcport=51990 >/dev/null 2>&1 &
-          for i in $(seq 1 50); do
-            grep -q "Loaded Sapling parameters" "$T/data/debug.log" 2>/dev/null && break
-            sleep 2
-          done
-          pkill -f "ammocoin-qt -datadir=$T/data" || true
-          tail -20 "$T/data/debug.log" 2>/dev/null || true
-          if grep -q "Loaded Sapling parameters" "$T/data/debug.log" 2>/dev/null; then
-            echo "✅ wallet started and loaded the Sapling params"
-          else
-            echo "::warning::ammocoin-qt did not reach 'Loaded Sapling parameters' within 100s (a first-run dialog may be waiting); check by hand"
-          fi
+          # regtest only, throwaway datadir: pre-create the wallet with ammocoind (built in this
+          # job alongside ammocoin-qt) so the GUI skips its first-run tutorial, then start the GUI,
+          # wait for the Sapling params + RPC, getnewshieldaddress, stop via RPC. Fails hard.
+          "$GITHUB_WORKSPACE/scripts/test/linux-qt-smoke-test.sh" src/qt/ammocoin-qt src params "$RUNNER_TEMP/qt-smoke"
 
       - name: Download pinned appimagetool + runtime
         run: |

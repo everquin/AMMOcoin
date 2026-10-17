@@ -413,7 +413,8 @@ jobs:
           path: source/src/qt/ammocoin-qt
 
   test-package-linux-arm64-qt:
-    needs: build-linux-arm64-qt
+    # ammocoind/ammocoin-cli from the headless build pre-create the regtest wallet for the GUI smoke test
+    needs: [build-linux-arm64, build-linux-arm64-qt]
     runs-on: ubuntu-22.04-arm
     name: Test + package ARM64 Qt wallet on arm64
     steps:
@@ -430,11 +431,17 @@ jobs:
           name: ARM64-Qt-Binary
           path: qtbin
 
+      - name: Download ARM64 daemon binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: ARM64-Binaries
+          path: daemonbin
+
       - name: Install test tools
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb xauth
-          chmod +x qtbin/ammocoin-qt
+          chmod +x qtbin/ammocoin-qt daemonbin/ammocoind daemonbin/ammocoin-cli daemonbin/ammocoin-tx
 
       - name: Check dependencies and smoke test (Xvfb)
         run: |
@@ -458,6 +465,14 @@ jobs:
           00cbdfcf917cc6c0ff6d3347d59e0ca1f7f45a6df1a428a0d6d8a78664d87444  runtime-aarch64
           SUMS
           chmod +x appimagetool
+
+      - name: Smoke test ammocoin-qt -regtest (Xvfb)
+        run: |
+          # regtest only, throwaway datadir: pre-create the wallet with ammocoind so the GUI skips
+          # its first-run tutorial, then start the GUI, wait for the Sapling params + RPC,
+          # getnewshieldaddress, stop via RPC. Fails hard.
+          xvfb-run -a qtbin/ammocoin-qt -help | grep -q -- '-paramsdir'
+          scripts/test/linux-qt-smoke-test.sh qtbin/ammocoin-qt daemonbin params "$RUNNER_TEMP/qt-smoke"
 
       - name: Package Qt wallet (tarball + AppImage)
         env:
