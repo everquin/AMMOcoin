@@ -286,18 +286,15 @@ The stake split threshold itself is set with `setstakesplitthreshold <amount>`. 
 **Example Calculation**:
 ```
 Your Coins: 10,000 AMMO
-Network Weight: 50,000,000 AMMO (example only)
-Your Share: 10,000 / 50,000,000 = 0.02%
+Network Weight: 250,000,000 AMMO (example: the migration premine alone stakes about this much)
+Your Share: 10,000 / 250,000,000 = 0.004%
 Annual Blocks: 175,200 (1 block per 3 min)
 Staker Reward: 247 AMMO per block (250 AMMO minus 3 AMMO masternode payment)
-Expected Annual: 175,200 × 247 × 0.0002 = ~8,655 AMMO
-Annual Return: 8,655 / 10,000 = ~87%
+Expected Annual: 175,200 × 247 × 0.00004 = ~1,731 AMMO
+Annual Return: 1,731 / 10,000 = ~17%
 ```
 
 This assumes every block pays 250 AMMO. That holds only up to block 86,400 (about 6 months after the fork); after that the block value drops to 225 AMMO, then 45 AMMO from block 151,201, so a real year earns less. The network weight is also an example only: the more coins stake, the smaller your share.
-
-```
-```
 
 ### Online Tools
 - **AMMOcoin Block Explorer** - View network statistics

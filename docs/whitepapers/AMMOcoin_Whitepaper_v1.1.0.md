@@ -1,3 +1,5 @@
+> **Superseded.** This paper describes v1.1.0 and some of its figures (reward splits, initial reward) never matched the code. For current consensus values see [docs/02-staking-guide.md](../02-staking-guide.md), [docs/03-masternode-setup.md](../03-masternode-setup.md) and the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+
 # AMMOcoin Whitepaper v1.1.0
 
 **A Privacy-Focused, Community-Driven Cryptocurrency Platform**
