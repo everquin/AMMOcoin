@@ -42,13 +42,14 @@ jobs:
           echo "OUT=$OUT" >> "$GITHUB_ENV"
           cd assets
           # per-platform checksum files and signatures are not release binaries
-          files=$(ls -1 | { grep -vE -- '-CHECKSUMS?\.txt(\.sig)?$|\.sig$|\.asc$' || true; } | sort)
+          # (macOS packages ship AMMOcoin-vX.Y.Z-macOS-<ARCH>.SHA256 next to the .dmg/.tar.gz/.zip)
+          files=$(ls -1 | { grep -vE -- '-CHECKSUMS?\.txt(\.sig)?$|\.SHA256(\.sig)?$|\.sig$|\.asc$' || true; } | sort)
           [ -n "$files" ] || { echo "no assets on release $TAG"; exit 1; }
           echo "$files" | tr '\n' '\0' | xargs -0 sha256sum > "../$OUT"
           cd ..
           cat "$OUT"
-          # cross-check against the per-platform CHECKSUM files where they exist
-          for c in assets/*-CHECKSUM.txt; do
+          # cross-check against the per-platform CHECKSUM / macOS .SHA256 files where they exist
+          for c in assets/*-CHECKSUM.txt assets/*.SHA256; do
             [ -f "$c" ] || continue
             while read -r sum name; do
               name=${name#\*}
@@ -57,6 +58,24 @@ jobs:
                 exit 1
               fi
             done < "$c"
+          done
+          # macOS: both architectures, each with dmg + tar.gz + zip covered by its .SHA256
+          for arch in ARM64 x86_64; do
+            base="AMMOcoin-v${VER}-macOS-${arch}"
+            if [ ! -f "assets/$base.SHA256" ]; then
+              echo "::warning::$base.SHA256 is not on release $TAG (macOS $arch packages missing?)"
+              continue
+            fi
+            for ext in dmg tar.gz zip; do
+              if [ ! -f "assets/$base.$ext" ]; then
+                echo "::error::$base.$ext is missing from release $TAG but listed for macOS $arch"
+                exit 1
+              fi
+              if ! grep -qE "^[0-9a-f]{64}  \*?$base\.$ext\$" "assets/$base.SHA256"; then
+                echo "::error::$base.SHA256 does not list $base.$ext"
+                exit 1
+              fi
+            done
           done
 
       - name: Upload to release
