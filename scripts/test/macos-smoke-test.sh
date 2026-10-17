@@ -22,7 +22,9 @@ trap cleanup EXIT
 
 wait_datadir() { # pid datadir
   for _ in $(seq 1 120); do
-    if lsof -p "$1" 2>/dev/null | grep -qF "$2/regtest/debug.log"; then return 0; fi
+    # (capture first: with pipefail, grep -q closing the pipe early fails the lsof side)
+    open_files=$(lsof -p "$1" 2>/dev/null || true)
+    if grep -qF "$2/regtest/debug.log" <<<"$open_files"; then return 0; fi
     kill -0 "$1" 2>/dev/null || { echo "process $1 exited early" >&2; return 1; }
     sleep 0.5
   done
