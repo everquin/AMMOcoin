@@ -21,6 +21,17 @@
 # into bin/lib by dylibbundler), signatures, and AMMOcoin-v1.1.1-macOS-<ARCH>.{dmg,tar.gz,zip,SHA256}.
 # Fails on any reference to Homebrew / /usr/local paths, or a -dirty version.
 set -euo pipefail
+
+# Apple's ticket lookup (CloudKit) drops connections on some CI runners and a fresh ticket can
+# take a minute to propagate after "Accepted": retry staple/validate with growing waits (~7 min max).
+apple_staple() { # apple_staple staple|validate <path>
+  local i
+  for i in 1 2 3 4 5 6; do
+    xcrun stapler "$1" "$2" && return 0
+    echo "stapler $1 $2: Apple lookup failed (try $i/6)"; sleep $((i * 20))
+  done
+  return 1
+}
 OUT=${1:?usage: $0 <output-dir>}
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$HERE/../../.." && pwd)"
@@ -162,8 +173,8 @@ if [ "$NOTARIZE" = 1 ]; then
   NZ="$ST/notarize"; mkdir -p "$NZ"
   ditto -c -k --keepParent "$APP" "$NZ/AMMOcoin-Qt.app.zip"
   notarize "$NZ/AMMOcoin-Qt.app.zip"
-  xcrun stapler staple "$APP"
-  for i in 1 2 3 4 5; do xcrun stapler validate "$APP" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
+  apple_staple staple "$APP"
+  apple_staple validate "$APP"
   ( cd "$ST/$NAME" && ditto -c -k --keepParent bin "$NZ/$NAME-bin.zip" )
   notarize "$NZ/$NAME-bin.zip"
   rm -rf "$NZ"
@@ -183,8 +194,8 @@ if [ "$SIGN_IDENTITY" != - ]; then
 fi
 if [ "$NOTARIZE" = 1 ]; then
   notarize "$NAME.dmg"
-  xcrun stapler staple "$NAME.dmg"
-  for i in 1 2 3 4 5; do xcrun stapler validate "$NAME.dmg" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
+  apple_staple staple "$NAME.dmg"
+  apple_staple validate "$NAME.dmg"
   spctl -a -vvv -t install "$NAME.dmg"
   spctl -a -vvv -t exec "$APP"
 fi
