@@ -8,6 +8,16 @@ run-name: Build AMMOcoin v1.1.1 macOS arm64 + x86_64 (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
+  # workflow_dispatch only works once this file is on the default branch; until then a push to
+  # the release branch that touches the macOS build runs it.
+  push:
+    branches: [v1.1.1-pos-fork]
+    paths:
+      - .github/workflows/build-macos.yml
+      - scripts/build/macos-*
+      - scripts/build/build-macos.sh
+      - scripts/packaging/macos/**
+      - scripts/test/macos-smoke-test.sh
 
 env:
   MACOSX_DEPLOYMENT_TARGET: "13.0"
