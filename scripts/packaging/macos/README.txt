@@ -18,19 +18,6 @@ Contents
 @FIRST_LAUNCH@
 
 Sapling parameters
-  README.txt             This file
-
-First launch (unsigned app)
----------------------------
-These binaries are ad-hoc signed but NOT notarized by Apple, so Gatekeeper
-will refuse to open them the first time. To allow them:
-
-  GUI:  Right-click (or Control-click) AMMOcoin-Qt.app > Open > Open.
-        On recent macOS you may instead need System Settings > Privacy &
-        Security > "Open Anyway" after the first attempt.
-  CLI:  xattr -dr com.apple.quarantine /path/to/the/extracted/folder
-
-Sapling parameters
 ------------------
 AMMOcoin needs two zk-SNARK parameter files (about 50 MB):
 
