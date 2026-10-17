@@ -6,7 +6,7 @@ v1.1.1 is the Proof-of-Stake hard fork release; older nodes are on a dead chain.
 
 What the package installs
 -------------------------
-  /usr/bin/ammocoind               the node (headless; no GUI wallet in this package)
+  /usr/bin/ammocoind               the node (headless; the GUI wallet is the -Qt.AppImage / -Qt.tar.gz release download)
   /usr/bin/ammocoin-cli            RPC client
   /usr/bin/ammocoin-tx             offline transaction tool
   /usr/bin/ammocoin-node-cli       ammocoin-cli for the packaged service (runs as user "ammocoin")

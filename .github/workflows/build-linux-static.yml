@@ -291,3 +291,157 @@ jobs:
             source/dist/bin/ammocoind
             source/dist/bin/ammocoin-cli
             source/dist/bin/ammocoin-tx
+
+  # GUI wallet: depends-built static Qt 5.9 (like Windows). Separate job so the headless
+  # daemon build above is untouched and its artifacts are produced even if Qt breaks.
+  build-linux-x86_64-qt:
+    runs-on: ubuntu-22.04
+    name: Build Linux x86_64 Qt wallet
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential autoconf autoconf-archive automake libtool \
+            pkg-config git curl wget python3 bsdmainutils cmake xvfb xauth dpkg-dev zip
+
+      - name: Install Rust for librustzcash
+        run: |
+          rustup toolchain install 1.80
+          rustup default 1.80
+
+      - name: Vendor Rust dependencies
+        working-directory: source
+        run: cargo vendor vendor-sources
+
+      - name: Ensure Sapling params
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
+
+      - name: Build dependencies with Qt (static)
+        working-directory: source/depends
+        run: |
+          make -j$(nproc) HOST=x86_64-pc-linux-gnu
+          mkdir -p x86_64-pc-linux-gnu/vendored-sources
+          cp -r ../vendor-sources/* x86_64-pc-linux-gnu/vendored-sources/
+          # Qt is built with -no-xcb-xlib (no libX11), but build-aux/m4/bitcoin_qt.m4 still
+          # requires the x11-xcb pkg-config module on Linux. Satisfy it with an empty shim.
+          printf 'Name: x11-xcb\nDescription: empty shim, Qt is built without Xlib\nVersion: 1.6.0\nLibs:\nCflags:\n' \
+            > x86_64-pc-linux-gnu/lib/pkgconfig/x11-xcb.pc
+
+      - name: Build ammocoin-qt
+        working-directory: source
+        env:
+          ACLOCAL: ":"
+          AUTOCONF: ":"
+          AUTOMAKE: ":"
+          AUTOHEADER: ":"
+        run: |
+          rm -f src/qt/moc_*.cpp src/qt/ammocoin/moc_*.cpp src/qt/ammocoin/settings/moc_*.cpp
+          rm -f src/qt/forms/ui_*.h src/qt/ammocoin/forms/ui_*.h src/qt/ammocoin/settings/forms/ui_*.h
+          rm -f src/qt/qrc_*.cpp src/qt/*.moc src/qt/locale/*.qm
+          CONFIG_SITE=$PWD/depends/x86_64-pc-linux-gnu/share/config.site \
+          ./configure \
+            --prefix=$PWD/dist \
+            --disable-tests \
+            --disable-bench \
+            --with-gui=qt5 \
+            --enable-wallet \
+            --with-incompatible-bdb \
+            --disable-maintainer-mode \
+            --disable-online-rust \
+            CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            LDFLAGS="-static-libstdc++ -static-libgcc" \
+            RUSTC="$(command -v rustc)" \
+            CARGO="$(command -v cargo)"
+          grep -q 'define QT_STATICPLUGIN 1' src/config/ammocoin-config.h
+          grep -q 'define QT_QPA_PLATFORM_XCB 1' src/config/ammocoin-config.h
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+          make -j$(nproc)
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            make -j$(nproc)
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h src/qt/ammocoin-qt
+          strip src/qt/ammocoin-qt
+          ls -lh src/qt/ammocoin-qt
+
+      - name: Check ammocoin-qt dependencies
+        working-directory: source
+        run: |
+          ldd src/qt/ammocoin-qt
+          if ldd src/qt/ammocoin-qt | grep -E 'not found|libQt5|libboost|libssl\.|libcrypto\.|libdb(_cxx)?-'; then
+            echo "❌ ammocoin-qt must link Qt/Boost/OpenSSL/BDB statically and resolve all libraries"
+            exit 1
+          fi
+          # Debian package names of the remaining system libraries (for the README / release notes)
+          mkdir -p /tmp/shl/debian && cd /tmp/shl && printf 'Source: x\n\nPackage: x\nArchitecture: any\n' > debian/control
+          dpkg-shlibdeps -O "$GITHUB_WORKSPACE/source/src/qt/ammocoin-qt" | tee "$GITHUB_WORKSPACE/qt-shlibs.txt" || true
+          touch "$GITHUB_WORKSPACE/qt-shlibs.txt"
+          strings "$GITHUB_WORKSPACE/source/src/qt/ammocoin-qt" | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -1
+
+      - name: Smoke test ammocoin-qt (Xvfb)
+        working-directory: source
+        run: |
+          # Qt is static with only the xcb platform plugin, so it needs an X server even for -version
+          VER=$(xvfb-run -a src/qt/ammocoin-qt -version | head -1)
+          echo "$VER"
+          echo "$VER" | grep -q 'v1\.1\.1' || { echo "❌ ammocoin-qt -version does not report v1.1.1"; exit 1; }
+          if echo "$VER" | grep -q dirty; then echo "❌ -dirty version"; exit 1; fi
+          xvfb-run -a src/qt/ammocoin-qt -help | grep -q -- '-paramsdir'
+          # start the wallet against a throwaway data dir and confirm it loads the Sapling params
+          T=$(mktemp -d); mkdir -p "$T/data"
+          "$GITHUB_WORKSPACE/scripts/packaging/ammocoin-fetch-params" --dir "$T/home/.ammocoin-params"
+          HOME=$T/home timeout 120 xvfb-run -a src/qt/ammocoin-qt -datadir="$T/data" -connect=0 -listen=0 \
+            -port=37990 -rpcport=51990 >/dev/null 2>&1 &
+          for i in $(seq 1 50); do
+            grep -q "Loaded Sapling parameters" "$T/data/debug.log" 2>/dev/null && break
+            sleep 2
+          done
+          pkill -f "ammocoin-qt -datadir=$T/data" || true
+          tail -20 "$T/data/debug.log" 2>/dev/null || true
+          if grep -q "Loaded Sapling parameters" "$T/data/debug.log" 2>/dev/null; then
+            echo "✅ wallet started and loaded the Sapling params"
+          else
+            echo "::warning::ammocoin-qt did not reach 'Loaded Sapling parameters' within 100s (a first-run dialog may be waiting); check by hand"
+          fi
+
+      - name: Download pinned appimagetool + runtime
+        run: |
+          curl -fsSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+          curl -fsSL -o runtime-x86_64 https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-x86_64
+          sha256sum -c - <<'SUMS'
+          ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  appimagetool
+          2fca8b443c92510f1483a883f60061ad09b46b978b2631c807cd873a47ec260d  runtime-x86_64
+          SUMS
+          chmod +x appimagetool
+
+      - name: Package Qt wallet (tarball + AppImage)
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+          APPIMAGETOOL: ${{ github.workspace }}/appimagetool
+          APPIMAGE_RUNTIME: ${{ github.workspace }}/runtime-x86_64
+          APPIMAGE_ARCH: x86_64
+        run: |
+          scripts/packaging/build-linux-qt-packages.sh x86_64 source/src/qt/ammocoin-qt source/params .
+          VER=$(xvfb-run -a ./AMMOcoin-v1.1.1-Linux-x86_64-Qt.AppImage -version | head -1)
+          echo "AppImage: $VER"
+          echo "$VER" | grep -q 'v1\.1\.1'
+          sha256sum AMMOcoin-v1.1.1-Linux-x86_64-Qt.tar.gz AMMOcoin-v1.1.1-Linux-x86_64-Qt.AppImage \
+            > AMMOcoin-v1.1.1-Linux-x86_64-Qt-CHECKSUM.txt
+          cat AMMOcoin-v1.1.1-Linux-x86_64-Qt-CHECKSUM.txt qt-shlibs.txt
+
+      - name: Upload Qt wallet artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMMOcoin-v1.1.1-Linux-x86_64-Qt
+          if-no-files-found: error
+          path: |
+            AMMOcoin-v1.1.1-Linux-x86_64-Qt.tar.gz
+            AMMOcoin-v1.1.1-Linux-x86_64-Qt.AppImage
+            AMMOcoin-v1.1.1-Linux-x86_64-Qt-CHECKSUM.txt

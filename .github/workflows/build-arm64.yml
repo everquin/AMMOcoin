@@ -296,3 +296,187 @@ jobs:
 
       - name: Test Debian Package (install, run service, reinstall, remove)
         run: scripts/test/test-deb.sh ./AMMOcoin-v1.1.1-Linux-arm64.deb
+
+  # GUI wallet for 64-bit ARM Linux: cross-compiled depends Qt 5.9 (static), tested and
+  # packaged natively on arm64 below. Separate job so the headless build is unaffected.
+  build-linux-arm64-qt:
+    runs-on: ubuntu-22.04
+    name: Build Linux ARM64 Qt wallet
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies and ARM64 cross-compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential autoconf autoconf-archive automake libtool \
+            pkg-config git curl wget python3 bsdmainutils cmake \
+            g++-aarch64-linux-gnu binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu
+
+      - name: Install Rust with ARM64 target
+        run: |
+          rustup toolchain install 1.80
+          rustup default 1.80
+          rustup target add aarch64-unknown-linux-gnu
+
+      - name: Vendor Rust dependencies
+        working-directory: source
+        run: cargo vendor vendor-sources
+
+      - name: Ensure Sapling params
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
+
+      - name: Build ARM64 dependencies with Qt (static)
+        working-directory: source/depends
+        run: |
+          make -j$(nproc) HOST=aarch64-linux-gnu NO_RUST=1
+          mkdir -p aarch64-linux-gnu/vendored-sources
+          cp -r ../vendor-sources/* aarch64-linux-gnu/vendored-sources/
+          # Qt is built with -no-xcb-xlib, but bitcoin_qt.m4 still asks pkg-config for x11-xcb
+          printf 'Name: x11-xcb\nDescription: empty shim, Qt is built without Xlib\nVersion: 1.6.0\nLibs:\nCflags:\n' \
+            > aarch64-linux-gnu/lib/pkgconfig/x11-xcb.pc
+          DEPENDS_NATIVE_BIN=aarch64-linux-gnu/native/bin
+          if [ -d "$DEPENDS_NATIVE_BIN" ]; then
+            rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
+            ln -sf "$(rustup which cargo --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/cargo"
+            ln -sf "$(rustup which rustc --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/rustc"
+          fi
+
+      - name: Build ammocoin-qt (ARM64)
+        working-directory: source
+        env:
+          ACLOCAL: ":"
+          AUTOCONF: ":"
+          AUTOMAKE: ":"
+          AUTOHEADER: ":"
+        run: |
+          rm -f src/qt/moc_*.cpp src/qt/ammocoin/moc_*.cpp src/qt/ammocoin/settings/moc_*.cpp
+          rm -f src/qt/forms/ui_*.h src/qt/ammocoin/forms/ui_*.h src/qt/ammocoin/settings/forms/ui_*.h
+          rm -f src/qt/qrc_*.cpp src/qt/*.moc src/qt/locale/*.qm
+          CONFIG_SITE=$PWD/depends/aarch64-linux-gnu/share/config.site \
+          ./configure \
+            --prefix=$PWD/dist \
+            --host=aarch64-linux-gnu \
+            --disable-tests \
+            --disable-bench \
+            --with-gui=qt5 \
+            --enable-wallet \
+            --with-incompatible-bdb \
+            --disable-maintainer-mode \
+            --disable-online-rust \
+            CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            LDFLAGS="-static-libstdc++ -static-libgcc" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO="$(rustup which cargo --toolchain 1.80)"
+          grep -q 'define QT_STATICPLUGIN 1' src/config/ammocoin-config.h
+          grep -q 'define QT_QPA_PLATFORM_XCB 1' src/config/ammocoin-config.h
+          if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
+            sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target aarch64-unknown-linux-gnu --manifest-path|g' src/Makefile
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+          build() {
+            CARGO="$(rustup which cargo --toolchain 1.80)" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
+            make -j$(nproc)
+          }
+          build || {
+            if [ -f target/aarch64-unknown-linux-gnu/release/librustzcash.a ]; then
+              mkdir -p target/release
+              ln -sf ../aarch64-unknown-linux-gnu/release/librustzcash.a target/release/librustzcash.a
+              build
+            else
+              exit 1
+            fi
+          }
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            build
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h src/qt/ammocoin-qt
+          aarch64-linux-gnu-strip src/qt/ammocoin-qt
+          file src/qt/ammocoin-qt
+          ls -lh src/qt/ammocoin-qt
+
+      - name: Upload ARM64 Qt binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARM64-Qt-Binary
+          if-no-files-found: error
+          path: source/src/qt/ammocoin-qt
+
+  test-package-linux-arm64-qt:
+    needs: build-linux-arm64-qt
+    runs-on: ubuntu-22.04-arm
+    name: Test + package ARM64 Qt wallet on arm64
+    steps:
+      - name: Checkout packaging scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts
+            source/share/pixmaps
+
+      - name: Download ARM64 Qt binary
+        uses: actions/download-artifact@v4
+        with:
+          name: ARM64-Qt-Binary
+          path: qtbin
+
+      - name: Install test tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb xauth
+          chmod +x qtbin/ammocoin-qt
+
+      - name: Check dependencies and smoke test (Xvfb)
+        run: |
+          ldd qtbin/ammocoin-qt
+          if ldd qtbin/ammocoin-qt | grep -E 'not found|libQt5|libboost|libssl\.|libcrypto\.|libdb(_cxx)?-'; then
+            echo "❌ unexpected or missing shared libraries"; exit 1
+          fi
+          VER=$(xvfb-run -a qtbin/ammocoin-qt -version | head -1)
+          echo "$VER"
+          echo "$VER" | grep -q 'v1\.1\.1' || { echo "❌ ammocoin-qt -version does not report v1.1.1"; exit 1; }
+          if echo "$VER" | grep -q dirty; then echo "❌ -dirty version"; exit 1; fi
+
+      - name: Fetch Sapling params and pinned appimagetool (aarch64)
+        run: |
+          mkdir -p params
+          scripts/packaging/ammocoin-fetch-params --dir params
+          curl -fsSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-aarch64.AppImage
+          curl -fsSL -o runtime-aarch64 https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-aarch64
+          sha256sum -c - <<'SUMS'
+          f0837e7448a0c1e4e650a93bb3e85802546e60654ef287576f46c71c126a9158  appimagetool
+          00cbdfcf917cc6c0ff6d3347d59e0ca1f7f45a6df1a428a0d6d8a78664d87444  runtime-aarch64
+          SUMS
+          chmod +x appimagetool
+
+      - name: Package Qt wallet (tarball + AppImage)
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+          APPIMAGETOOL: ${{ github.workspace }}/appimagetool
+          APPIMAGE_RUNTIME: ${{ github.workspace }}/runtime-aarch64
+          APPIMAGE_ARCH: aarch64
+        run: |
+          scripts/packaging/build-linux-qt-packages.sh ARM64 qtbin/ammocoin-qt params .
+          VER=$(xvfb-run -a ./AMMOcoin-v1.1.1-Linux-ARM64-Qt.AppImage -version | head -1)
+          echo "AppImage: $VER"
+          echo "$VER" | grep -q 'v1\.1\.1'
+          sha256sum AMMOcoin-v1.1.1-Linux-ARM64-Qt.tar.gz AMMOcoin-v1.1.1-Linux-ARM64-Qt.AppImage \
+            > AMMOcoin-v1.1.1-Linux-ARM64-Qt-CHECKSUM.txt
+          cat AMMOcoin-v1.1.1-Linux-ARM64-Qt-CHECKSUM.txt
+
+      - name: Upload ARM64 Qt wallet artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMMOcoin-v1.1.1-Linux-ARM64-Qt
+          if-no-files-found: error
+          path: |
+            AMMOcoin-v1.1.1-Linux-ARM64-Qt.tar.gz
+            AMMOcoin-v1.1.1-Linux-ARM64-Qt.AppImage
+            AMMOcoin-v1.1.1-Linux-ARM64-Qt-CHECKSUM.txt

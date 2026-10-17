@@ -12,7 +12,7 @@ Requirements
 
 Contents
 --------
-  bin/ammocoind               the node (headless; this archive has no GUI wallet)
+  bin/ammocoind               the node (headless; the GUI wallet is AMMOcoin-v1.1.1-Linux-@ARCH@-Qt.AppImage / -Qt.tar.gz)
   bin/ammocoin-cli            RPC client
   bin/ammocoin-tx             offline transaction tool
   bin/ammocoin-fetch-params   downloads + SHA-256 verifies the Sapling parameters
