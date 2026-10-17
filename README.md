@@ -316,6 +316,7 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 - **📦 [Release Notes v1.1.1 (draft)](docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md)** - PoS hard fork, upgrade checklist
 - **📦 [Release Notes v1.1.0](docs/release-notes/RELEASE_NOTES_v1.1.0.md)** - What was new in v1.1.0
 - **⚡ [Genesis Block Authority](V1.1.0_GENESIS_BLOCK_AUTHORITY.md)** - Official genesis parameters
+- **⚖️ [Compliance record](docs/compliance/README.md)** - no ICO, no sale, no price, no ROI: binding principles, decision log and the pre-merge review checklist
 
 ### Installation & Setup
 - [macOS Installation](docs/installation/INSTALL_MACOS.md)

@@ -1,0 +1,13 @@
+# Paths whose changes can affect issuance, reserves, value or public claims.
+# Every change here must be reviewed against docs/compliance/REVIEW_CHECKLIST.md.
+/docs/compliance/                       @everquin
+/docs/whitepapers/                      @everquin
+/docs/release-notes/                    @everquin
+/docs/migration/                        @everquin
+/source/src/chainparams.cpp             @everquin
+/source/src/validation.cpp              @everquin
+/source/src/consensus/                  @everquin
+/source/src/budget/                     @everquin
+/payment-gateway/                       @everquin
+/blockchain-explorer/                   @everquin
+/README.md                              @everquin
