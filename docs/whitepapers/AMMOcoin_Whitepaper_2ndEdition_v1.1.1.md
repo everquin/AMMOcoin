@@ -11,6 +11,8 @@ date: "rev. 2026/10/17"
 
 **Prepared by:** Founding50 Personae: quarterMASTER / flibbertigibbet / techMASTER / StinkelVoss / Covfefe
 
+> **PENDING RELEASE.** AMMOcoin v1.1.1 is not yet published. This edition describes the v1.1.1 protocol as it will run once the release is announced. Install v1.1.1 only from the official AMMOcoin GitHub release (github.com/everquin/AMMOcoin/releases) once it is announced, and never from any other source.
+
 **2nd Edition (v1.1.1), rev. 2026/10/17.** This edition replaces the 1st Edition of 2022/01/15. Every technical and economic figure in it is taken from the AMMOcoin v1.1.1 source code. Where this paper and the code disagree, the code wins, and this paper will be corrected.
 
 ---
@@ -390,7 +392,7 @@ The informational home of the AMMO protocol. Visitors can find out all about AMM
 A domain reserved by the founders. The 1st Edition imagined it as a future exchange platform. Whether it is used at all, and for what, is a DAO Command decision; nothing will launch there without proposals, discussion and a masternode vote. The project itself does not sell AMMO there or anywhere else.
 
 #### GLiBz (glibz.com)
-GLiBz replaces AMMO.chat as the community hub of AMMOcoin. Old links to AMMO.chat now land on GLiBz. GLiBz is a western-themed social and community platform, built on the open-source UNA community software and operated by members of the Founding50.
+GLiBz replaces AMMO.chat. Old links to AMMO.chat now land on GLiBz. GLiBz (glibz.com), the community hub in the AMMOcoin ecosystem, is a western-themed social and community platform built on the open-source UNA community software.
 
 Much like the issues with traditional financial sources, traditional social media outlets have grown into monstrosities of privacy abuses, neglect of user desires and hyper-partisan biases that diminish the core purpose that made them so popular (and profitable) in the first place. Traditional social media is like the ancient pyramids built for the benefit of the pharaohs off the blood, sweat and tears of the abused masses. Another irritating reality is that each monolithic outlet offers one limited service: video here, short messages there, family over yonder, photos somewhere else.
 
