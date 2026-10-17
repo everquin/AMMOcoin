@@ -37,6 +37,12 @@ if [ "$SIGN_IDENTITY" = - ]; then
 fi
 if [ "$NOTARIZE" = 1 ]; then
   : "${APPLE_API_KEY_PATH:?NOTARIZE=1 needs APPLE_API_KEY_PATH}" "${APPLE_API_KEY_ID:?}" "${APPLE_API_ISSUER_ID:?}"
+  # secrets pasted into `gh secret set` can carry spaces or a newline; notarytool rejects them
+  APPLE_API_KEY_ID=$(printf %s "$APPLE_API_KEY_ID" | tr -d '[:space:]')
+  APPLE_API_ISSUER_ID=$(printf %s "$APPLE_API_ISSUER_ID" | tr -d '[:space:]')
+  [[ $APPLE_API_ISSUER_ID =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]] \
+    || { echo "::error::APPLE_API_ISSUER_ID is not a UUID (App Store Connect > Users and Access > Integrations > Issuer ID)"; exit 1; }
+  [[ $APPLE_API_KEY_ID =~ ^[A-Z0-9]{10}$ ]] || { echo "::error::APPLE_API_KEY_ID should be the 10-character key ID"; exit 1; }
 fi
 KCARGS=(); [ -n "${KEYCHAIN:-}" ] && KCARGS=(--keychain "$KEYCHAIN")
 ENT="$HERE/entitlements.plist"
