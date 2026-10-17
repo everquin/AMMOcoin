@@ -279,6 +279,10 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = nPoSForkHeight;
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
+        // Rewards keep the original v1.1 schedule (250 AMMO/block, 3 AMMO to masternodes, budget at 20%)
+        // instead of following ZC_V2/V5_5, which now activate at the PoS fork height.
+        consensus.nRewardZCV2Height = 1153160;
+        consensus.nRewardV55Height = 3715200;
 
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
@@ -432,6 +436,8 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1624280; // Estimate Feb 23 Midnight UTC
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
+        consensus.nRewardZCV2Height = consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight;
+        consensus.nRewardV55Height = consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -585,6 +591,8 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1000;
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
+        consensus.nRewardZCV2Height = consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight;
+        consensus.nRewardV55Height = consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.

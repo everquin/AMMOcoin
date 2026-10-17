@@ -185,6 +185,10 @@ struct Params {
     int nMNCollateralMinConf;
     CAmount nMNBlockReward;
     CAmount nNewMNBlockReward;
+    // Heights for the reward schedule, kept apart from the upgrade heights: the v1.1.1 fork
+    // activates every upgrade at once, which must not change what blocks pay.
+    int nRewardZCV2Height;
+    int nRewardV55Height;
     int64_t nProposalEstablishmentTime;
     int nStakeMinAge;
     int nStakeMinDepth;
