@@ -15,6 +15,11 @@ Contents
   fetch-params.sh        Downloads + verifies the Sapling parameters
   README.txt             This file
 
+@FIRST_LAUNCH@
+
+Sapling parameters
+  README.txt             This file
+
 First launch (unsigned app)
 ---------------------------
 These binaries are ad-hoc signed but NOT notarized by Apple, so Gatekeeper
