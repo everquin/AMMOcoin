@@ -171,6 +171,16 @@ Not legal advice. Counsel review status: **pending**.
 - **Inconsistencies found (to fix before payout):** the snapshot file records `supply_match: false` (232,397,748.45021523 vs expected 232,439,448.45021522 AMMO, 41,700 AMMO apart); `scripts/migration/verify-claim.py` still calls the signed-message claim deprecated and the disposal model current (reverse of D-2026-10-16-01); `migration-prepare.py` usage refers to a `genesis-top-holders.json` from the earlier "Option 2.5" plan; the user guide's claim message names no destination. Tracked as G-15.
 - **Owner approval:** written at the owner's request in the 2026-10-17 session (relayed); commit under owner identity. The published values need the owner's own commit.
 
+## AMMO-D-2026-10-18-11 No AMMO/USD rate anywhere; the WooCommerce gateway is retired (fixes G-14)
+
+- **Date:** 2026-10-18
+- **Principles:** AMMO-P-02, AMMO-P-03, AMMO-P-09, AMMO-P-14
+- **Decision:** nothing in the ecosystem states, stores or uses an AMMO/USD rate. Shop items are priced in USD only. AMMO stays an earned reward, never a currency with a quoted value. The local `woocommerce-plugin/` draft (a gateway that converts USD order totals to AMMO at a configured "AMMO/USD Rate") is retired: it must not be committed, published or installed, and it is not redesigned.
+- **Context:** shop.glibz.com runs on Shopify; the WooCommerce gateway was never deployed. On GLiBz the same idea existed as `glibz_ammo_usd_rate` (AMMO shop prices derived from USD); the closed-loop release (glibz `release-plus-closed-loop`) already retires it, stops reading it in `shop_sync.php` and resets USD-derived AMMO prices to 0.
+- **Enforcement / evidence:** `woocommerce-plugin/RETIRED.md` marks the local folder (it was never in git). GLiBz: `shop_sync.php` and `activate_closed_loop.php` on `release-plus-closed-loop` (f58240c93); live once the closed loop is deployed and activated.
+- **Not enforced until then:** live glibz.com `shop_sync.php` still reads `glibz_ammo_usd_rate` if an admin sets it.
+- **Owner approval:** owner chose "Remove the rate" in the 2026-10-18 session. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
@@ -195,5 +205,5 @@ Open until fixed; record the fixing commit in the Status column.
 | G-11 | `docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md:345,616,644-653` | "Annual Yield 8-12%", "Investment and Savings", "Anonymous Trading", "Yield Farming". Marked superseded (5e2a9e2c8) but still in the tree. | P-04, P-10 | Mitigated: superseded banner and inline strike-through (`be2c0aad6`, D-2026-10-17-08); consider moving to an archive folder |
 | G-12 | (process) | "No deploy without review" (D-2026-10-17-05) has no technical enforcement verified (branch protection, required reviewers). | P-15 | Open, UNVERIFIED |
 | G-13 | `docs/migration/MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md:306` | Still describes a 90-day migration period closing 2026-04-03 (superseded banner present). | P-13 | Mitigated (superseded) |
-| G-14 | `woocommerce-plugin/includes/class-wc-ammocoin-gateway.php` (uncommitted local folder, not on any branch) | "AMMO/USD Rate" setting ("How many USD one AMMO is worth") converts USD order totals to AMMO: a stated AMMO price and fiat-to-AMMO conversion. | P-03, P-02 | Open: owner decision needed (drop the plugin, or redesign without any AMMO price/fiat conversion) before it is committed or deployed |
+| G-14 | `woocommerce-plugin/includes/class-wc-ammocoin-gateway.php` (uncommitted local folder, not on any branch) | "AMMO/USD Rate" setting ("How many USD one AMMO is worth") converts USD order totals to AMMO: a stated AMMO price and fiat-to-AMMO conversion. | P-03, P-02 | Decided D-2026-10-18-11: plugin retired, never committed or installed; GLiBz rate retired by the closed-loop release |
 | G-15 | `docs/migration/data/v1.0-complete-balance-snapshot.json` (`supply_match: false`), `scripts/migration/verify-claim.py:3-16`, `scripts/migration/migration-prepare.py:21-24`, `docs/migration/V1.0_BALANCE_AIRDROP.md` | Snapshot total does not match its expected supply (41,700 AMMO); claim tool and prepare script still follow withdrawn models; user-guide claim message names no destination. | P-06, P-13 | Open (see `AIRDROPS.md` section 6) |
