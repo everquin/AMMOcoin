@@ -97,8 +97,8 @@ export interface NetworkStats {
   hashrate: number;
   totalSupply: number;
   circulatingSupply: number;
-  marketCap?: number;
-  price?: number;
+  // No price or market-cap fields: the explorer shows no price, market cap or fiat
+  // value for AMMO (docs/compliance AMMO-P-03, AMMO-D-2026-10-17-09).
   nodes: number;
   mempool: {
     size: number;
@@ -155,15 +155,6 @@ export interface ChartDataPoint {
   timestamp: number;
   value: number;
   label?: string;
-}
-
-export interface PriceData {
-  price: number;
-  change24h: number;
-  change7d: number;
-  volume24h: number;
-  marketCap: number;
-  timestamp: number;
 }
 
 // API Response types

@@ -16,6 +16,7 @@
 - **Privacy transactions** - Full support for Sapling shielded transactions
 - **Masternode monitoring** - Track masternode network and rewards
 - **Network statistics** - Comprehensive blockchain metrics and analytics
+- **No price data** - the explorer shows on-chain data only: no price, market cap, exchange rate, fiat value or return figures, and no market-data API (see `docs/compliance`, AMMO-P-03)
 
 ### **Modern Design System**
 - **AMMOcoin branding** - Authentic lime green (#32cd32) and black theme
@@ -178,8 +179,6 @@ NEXT_PUBLIC_EXPLORER_NAME="AMMOcoin Explorer"
 NEXT_PUBLIC_NETWORK_NAME="AMMOcoin Mainnet"
 NEXT_PUBLIC_COIN_SYMBOL="AMMO"
 
-# Optional: External APIs
-NEXT_PUBLIC_COINMARKETCAP_API_KEY=your_cmc_api_key
 ```
 
 ### **Connecting to AMMOcoin Node**

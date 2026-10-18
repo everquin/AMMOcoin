@@ -199,7 +199,7 @@ getMempoolInfo() - Current mempool statistics
 - ✅ Block, Transaction, Address interfaces
 - ✅ NetworkStats, MempoolTransaction
 - ✅ AMMOcoin-specific: Masternode, StakingInfo, PrivacyTransaction
-- ✅ Utility types: PaginatedResponse, ChartDataPoint, PriceData
+- ✅ Utility types: PaginatedResponse, ChartDataPoint (PriceData removed 2026-10-17: the explorer shows no price, AMMO-D-2026-10-17-09)
 
 **v1.1.0 Specific Types:**
 ```typescript
@@ -387,7 +387,7 @@ timestampindex=1
 
 - [ ] Enable blockchain indices (txindex, addressindex, spentindex)
 - [ ] Implement real-time updates (WebSocket)
-- [ ] Add price data integration (CoinMarketCap API)
+- ~~Add price data integration (CoinMarketCap API)~~ Withdrawn 2026-10-17: the explorer shows no price, market cap or fiat value (AMMO-P-03, AMMO-D-2026-10-17-09)
 - [ ] Add charts (block time, difficulty, supply)
 - [ ] Add rich list functionality
 - [ ] Add address balance history

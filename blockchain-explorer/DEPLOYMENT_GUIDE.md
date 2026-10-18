@@ -157,9 +157,6 @@ NEXT_PUBLIC_COIN_SYMBOL="AMMO"
 NEXT_PUBLIC_SITE_URL=https://explorer.ammocoin.org
 NEXT_PUBLIC_SITE_DESCRIPTION="AMMOcoin Blockchain Explorer"
 
-# External APIs (optional)
-NEXT_PUBLIC_COINMARKETCAP_API_KEY=your_cmc_api_key
-
 # Analytics (optional)
 NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
 
