@@ -24,6 +24,7 @@ Principle IDs (`AMMO-P-xx`) are the same in all three AMMOcoin repositories. Thi
 | [PRINCIPLES.md](PRINCIPLES.md) | The binding principles. Every change must comply. |
 | [DECISIONS.md](DECISIONS.md) | Dated decision log (ADR style) with evidence: commit SHAs and file:line enforcement points. Includes a list of known gaps. |
 | [REVIEW_CHECKLIST.md](REVIEW_CHECKLIST.md) | Pre-merge checklist for any change that touches rewards, the reserve, prices, payments, exchanges, privacy claims or copy. |
+| [AIRDROPS.md](AIRDROPS.md) | The v1.0 -> v1.1 migration airdrop: how it works, what is published (placeholders marked TO BE PUBLISHED), why it is not a sale. |
 
 ## How to use this folder in reviews
 
