@@ -403,7 +403,7 @@ At GLiBz you can do all of these things in one place, with one login, while keep
 - **Coming to GLiBz** (built and being switched on): an Earn hub listing every way to earn NUGGETS and AMMO, AMMO airdrops for ranking up and for referrals, and a bridge to the sister ecosystem everQUIN.
 
 ### The QuarterMaster reserve
-The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**, together with voluntary pledges from the early contributors who hold the largest v1.0 balances: v1.0 holders come first. The 61 largest v1.0 holders, early contributors, pledged 33.121679% of their snapshot balances by signed message; their airdrop is reduced by that amount (AMMO-D-2026-10-18-12).
+The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**, together with voluntary pledges from the early contributors who hold the largest v1.0 balances: v1.0 holders come first. The 61 largest v1.0 holders, early contributors, have agreed to pledge 33.121679% of their snapshot balances by signed message; their airdrop will be reduced by that amount (AMMO-D-2026-10-18-12).
 
 The tiers and the contributor reserve are an off-chain distribution programme run by the AMMOcoin project. They are not a consensus rule, and nothing in the code reserves them.
 
