@@ -30,7 +30,7 @@ The block reward schedule, masternode payment, treasury budget and block-1 reser
 
 ## AMMO-P-06 Block-1 reserve: v1.0 airdrop first
 
-The 250,000,000 AMMO block-1 reserve exists to airdrop v1.0 balances (snapshot at v1.0 block 434,881) to the same addresses. The airdrop is paid first. Only what remains after the airdrop funds the QuarterMaster reserve. v1.0 holders are never asked to send coins, keys, wallet files or email registrations to receive the airdrop.
+The 250,000,000 AMMO block-1 reserve exists to airdrop v1.0 balances (snapshot at v1.0 block 434,881) to the same addresses. The airdrop is paid first. The QuarterMaster reserve is funded from the block-1 reserve after the v1.0 airdrop, together with voluntary pledges from the early contributors who hold the largest v1.0 balances. v1.0 holders are never asked to send coins, keys, wallet files or email registrations to receive the airdrop.
 
 ## AMMO-P-07 Structured-release tier positions are earned or awarded, never sold
 
