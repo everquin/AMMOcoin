@@ -10,7 +10,7 @@
 set -euo pipefail
 DEB=${1:?path to the .deb}
 case "$DEB" in /*|./*) ;; *) DEB=./$DEB ;; esac
-CONF=/var/lib/ammocoin/.ammocoincore/ammocoin.conf
+CONF=/var/lib/ammocoin/.ammocoin11/ammocoin.conf
 fail() { echo "FAIL: $*" >&2; sudo journalctl -u ammocoind --no-pager 2>/dev/null | tail -30 >&2 || true; exit 1; }
 pass() { echo "ok: $*"; }
 
@@ -39,9 +39,9 @@ for _ in $(seq 1 90); do
   systemctl is-active --quiet ammocoind || break
   sleep 2
 done
-[ "$ok" = 1 ] || { sudo tail -40 /var/lib/ammocoin/.ammocoincore/debug.log >&2 || true; fail "service did not answer RPC"; }
+[ "$ok" = 1 ] || { sudo tail -40 /var/lib/ammocoin/.ammocoin11/debug.log >&2 || true; fail "service did not answer RPC"; }
 pass "service answers RPC, height $(ammocoin-node-cli getblockcount)"
-sudo grep -q "Loaded Sapling parameters" /var/lib/ammocoin/.ammocoincore/debug.log || fail "Sapling params not loaded"
+sudo grep -q "Loaded Sapling parameters" /var/lib/ammocoin/.ammocoin11/debug.log || fail "Sapling params not loaded"
 pass "Sapling params loaded by the service"
 
 # a desktop user without ~/.ammocoin-params must also be able to start the node

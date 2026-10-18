@@ -2,7 +2,7 @@
 
 Complete solutions for common AMMOcoin issues. Find quick fixes and detailed diagnostics for wallet, staking, masternode, and network problems.
 
-> **v1.1.1 (upcoming):** paths below use the new default data folder - Linux `~/.ammocoincore`, macOS `~/Library/Application Support/AMMOcoinCore`, Windows `%APPDATA%\AMMOcoinCore` (v1.0/v1.1.0 used `.ammocoin` / `AMMOcoin`). Mainnet ports: P2P **37020**, RPC **51473**.
+> **v1.1.1 (upcoming):** paths below use the new default data folder - Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11` (v1.0/v1.1.0 used `.ammocoin` / `AMMOcoin`). Mainnet ports: P2P **37020**, RPC **51473**.
 
 ## 🔀 v1.1.1 Upgrade Issues
 
@@ -21,8 +21,8 @@ ammocoind -version          # must show v1.1.1
 ```
 
 #### ❌ "Balance / Wallet Missing After Upgrade"
-**Cause**: v1.1.1 uses a new data folder (`~/.ammocoincore`), so it starts with an empty wallet.
-**Solution**: Stop the node, copy your backed-up `wallet.dat` (and `ammocoin.conf`, `masternode.conf`) from `~/.ammocoin` into `~/.ammocoincore`, then start again. Do not copy `blocks/` or `chainstate/`.
+**Cause**: v1.1.1 uses a new data folder (`~/.ammocoin11`), so it starts with an empty wallet.
+**Solution**: Stop the node, copy your backed-up `wallet.dat` (and `ammocoin.conf`, `masternode.conf`) from `~/.ammocoin` into `~/.ammocoin11`, then start again. Do not copy `blocks/` or `chainstate/`.
 
 #### ❌ "version `GLIBC_2.34' not found"
 **Cause**: v1.1.1 Linux binaries need glibc 2.34 or newer.
@@ -47,7 +47,7 @@ Sapling params locations: Linux `~/.ammocoin-params`, macOS `~/Library/Applicati
 # Quick diagnosis
 ps aux | grep ammocoin    # Check if already running
 pkill ammocoind          # Force close if stuck
-rm ~/.ammocoincore/.lock  # Remove stale lock file
+rm ~/.ammocoin11/.lock  # Remove stale lock file
 ammocoind                # Restart
 
 # If still failing
@@ -86,7 +86,7 @@ pkill ammocoind
 ammocoind -salvagewallet
 
 # If repair fails, restore from backup
-cp wallet_backup.dat ~/.ammocoincore/wallet.dat
+cp wallet_backup.dat ~/.ammocoin11/wallet.dat
 ammocoind
 ```
 
@@ -99,7 +99,7 @@ ps aux | grep ammocoin
 kill -9 [process_id]
 
 # Remove lock files
-rm ~/.ammocoincore/.lock
+rm ~/.ammocoin11/.lock
 
 # Restart
 ammocoind
@@ -110,10 +110,10 @@ ammocoind
 **Solutions**:
 ```bash
 # Check disk space
-df -h ~/.ammocoincore/
+df -h ~/.ammocoin11/
 
 # Clean up log files
-truncate -s 0 ~/.ammocoincore/debug.log
+truncate -s 0 ~/.ammocoin11/debug.log
 
 # Move the data folder to a larger disk and start with -datadir=/path/to/data
 # (pruning is not supported)
@@ -146,7 +146,7 @@ ammocoin-cli addnode "104.238.165.56:37020" "add"
 
 # If still stuck, restart sync
 ammocoin-cli stop
-rm -rf ~/.ammocoincore/peers.dat
+rm -rf ~/.ammocoin11/peers.dat
 ammocoind
 
 # Nuclear option: reindex
@@ -246,7 +246,7 @@ ammocoin-cli getstakingstatus
 ammocoin-cli walletpassphrase "password" 999999 true
 
 # Make sure staking is not disabled in config (staking=1 is the default)
-grep staking ~/.ammocoincore/ammocoin.conf
+grep staking ~/.ammocoin11/ammocoin.conf
 
 # Restart wallet
 ammocoin-cli stop && ammocoind
@@ -275,7 +275,7 @@ ammocoin-cli setstakesplitthreshold 5000
 # Keep wallet online 24/7
 
 # Check for errors
-tail -f ~/.ammocoincore/debug.log | grep -i stake
+tail -f ~/.ammocoin11/debug.log | grep -i stake
 ```
 
 #### ❌ "Very Low Staking Weight"
@@ -315,7 +315,7 @@ ammocoin-cli getpeerinfo | wc -l
 ammocoin-cli addnode "reliable_peer:37020" "add"
 
 # Monitor logs for disconnections
-grep -i "disconnect" ~/.ammocoincore/debug.log
+grep -i "disconnect" ~/.ammocoin11/debug.log
 ```
 
 ## 🏛️ Masternode Issues
@@ -333,7 +333,7 @@ ammocoin-cli getmasternodeoutputs
 ammocoin-cli gettransaction "collateral_txid"
 
 # Check masternode.conf syntax
-cat ~/.ammocoincore/masternode.conf
+cat ~/.ammocoin11/masternode.conf
 ```
 
 **Solutions**:
@@ -403,7 +403,7 @@ ssh user@vps ammocoind
 ammocoin-cli startmasternode alias false mn1
 
 # Monitor server stability
-ssh user@vps tail -f ~/.ammocoincore/debug.log
+ssh user@vps tail -f ~/.ammocoin11/debug.log
 ```
 
 #### ❌ "Low Masternode Rewards"
@@ -431,7 +431,7 @@ ammocoin-cli getmasternodecount
 ssh user@vps ammocoin-cli getpeerinfo
 
 # Verify correct payment address
-grep -i "masternode" ~/.ammocoincore/ammocoin.conf
+grep -i "masternode" ~/.ammocoin11/ammocoin.conf
 ```
 
 ## 🌐 Network & Connection Issues
@@ -499,7 +499,7 @@ maxconnections=20
 ammocoin-cli verifychain
 
 # Check for error messages
-grep -i "error\|corrupt" ~/.ammocoincore/debug.log
+grep -i "error\|corrupt" ~/.ammocoin11/debug.log
 ```
 
 **Solutions**:
@@ -510,7 +510,7 @@ ammocoind -reindex
 
 # If reindex fails, resync
 ammocoin-cli stop
-rm -rf ~/.ammocoincore/blocks ~/.ammocoincore/chainstate
+rm -rf ~/.ammocoin11/blocks ~/.ammocoin11/chainstate
 ammocoind
 ```
 
@@ -527,11 +527,11 @@ ammocoin-cli getblockchaininfo | grep chain
 **Solutions**:
 ```bash
 # Remove testnet config
-grep -v testnet ~/.ammocoincore/ammocoin.conf > temp.conf
-mv temp.conf ~/.ammocoincore/ammocoin.conf
+grep -v testnet ~/.ammocoin11/ammocoin.conf > temp.conf
+mv temp.conf ~/.ammocoin11/ammocoin.conf
 
 # Clear testnet data
-rm -rf ~/.ammocoincore/testnet5/
+rm -rf ~/.ammocoin11/testnet5/
 
 # Restart on mainnet
 ammocoind
@@ -572,10 +572,10 @@ ammocoin-cli walletpassphrase "new_password" 30
 ammocoin-cli getwalletinfo
 
 # Check available disk space
-df -h ~/.ammocoincore/
+df -h ~/.ammocoin11/
 
 # Check file permissions
-ls -la ~/.ammocoincore/wallet.dat
+ls -la ~/.ammocoin11/wallet.dat
 ```
 
 **Solutions**:
@@ -597,12 +597,12 @@ ammocoin-cli backupwallet "pre_encrypt_backup.dat"
 **Solutions**:
 ```bash
 # Fix file ownership
-sudo chown -R $USER:$USER ~/.ammocoincore/
+sudo chown -R $USER:$USER ~/.ammocoin11/
 
 # Fix permissions
-chmod 700 ~/.ammocoincore/
-chmod 600 ~/.ammocoincore/wallet.dat
-chmod 600 ~/.ammocoincore/ammocoin.conf
+chmod 700 ~/.ammocoin11/
+chmod 600 ~/.ammocoin11/wallet.dat
+chmod 600 ~/.ammocoin11/ammocoin.conf
 ```
 
 #### ❌ "RPC Connection Failed"
@@ -613,7 +613,7 @@ chmod 600 ~/.ammocoincore/ammocoin.conf
 ps aux | grep ammocoind
 
 # Check RPC configuration
-grep -E "rpc" ~/.ammocoincore/ammocoin.conf
+grep -E "rpc" ~/.ammocoin11/ammocoin.conf
 
 # Test RPC connection
 curl --user user:pass --data-binary '{"jsonrpc": "1.0", "id":"test", "method": "getinfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:51473/
@@ -625,9 +625,9 @@ curl --user user:pass --data-binary '{"jsonrpc": "1.0", "id":"test", "method": "
 ammocoind
 
 # Configure RPC access
-echo "server=1" >> ~/.ammocoincore/ammocoin.conf
-echo "rpcuser=user" >> ~/.ammocoincore/ammocoin.conf
-echo "rpcpassword=pass" >> ~/.ammocoincore/ammocoin.conf
+echo "server=1" >> ~/.ammocoin11/ammocoin.conf
+echo "rpcuser=user" >> ~/.ammocoin11/ammocoin.conf
+echo "rpcpassword=pass" >> ~/.ammocoin11/ammocoin.conf
 
 # Restart daemon
 ammocoin-cli stop && ammocoind
@@ -642,13 +642,13 @@ ammocoin-cli stop && ammocoind
 **Solutions**:
 ```bash
 # Increase database cache
-echo "dbcache=1024" >> ~/.ammocoincore/ammocoin.conf
+echo "dbcache=1024" >> ~/.ammocoin11/ammocoin.conf
 
 # Use SSD instead of HDD
 # Move data directory to SSD
 
 # Reduce startup verification
-echo "checkblocks=50" >> ~/.ammocoincore/ammocoin.conf
+echo "checkblocks=50" >> ~/.ammocoin11/ammocoin.conf
 ```
 
 #### ❌ "High Memory Usage"
@@ -665,8 +665,8 @@ top -p $(pgrep ammocoind)
 **Solutions**:
 ```bash
 # Reduce memory usage
-echo "maxmempool=50" >> ~/.ammocoincore/ammocoin.conf
-echo "dbcache=200" >> ~/.ammocoincore/ammocoin.conf
+echo "maxmempool=50" >> ~/.ammocoin11/ammocoin.conf
+echo "dbcache=200" >> ~/.ammocoin11/ammocoin.conf
 ```
 
 ### Network Performance
@@ -676,7 +676,7 @@ echo "dbcache=200" >> ~/.ammocoincore/ammocoin.conf
 **Solutions**:
 ```bash
 # Increase connections
-echo "maxconnections=50" >> ~/.ammocoincore/ammocoin.conf
+echo "maxconnections=50" >> ~/.ammocoin11/ammocoin.conf
 
 # Connect to well-connected nodes
 ammocoin-cli addnode "fast_node_ip:37020" "add"
@@ -690,11 +690,11 @@ ammocoin-cli addnode "fast_node_ip:37020" "add"
 **Solutions**:
 ```bash
 # Limit bandwidth
-echo "maxreceivebuffer=1000" >> ~/.ammocoincore/ammocoin.conf
-echo "maxsendbuffer=1000" >> ~/.ammocoincore/ammocoin.conf
+echo "maxreceivebuffer=1000" >> ~/.ammocoin11/ammocoin.conf
+echo "maxsendbuffer=1000" >> ~/.ammocoin11/ammocoin.conf
 
 # Reduce connections
-echo "maxconnections=10" >> ~/.ammocoincore/ammocoin.conf
+echo "maxconnections=10" >> ~/.ammocoin11/ammocoin.conf
 ```
 
 ## 🛠️ Advanced Diagnostics
@@ -717,16 +717,16 @@ debug=stakeweight
 #### Log Analysis
 ```bash
 # Monitor live logs
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 
 # Search for errors
-grep -i error ~/.ammocoincore/debug.log
+grep -i error ~/.ammocoin11/debug.log
 
 # Find staking messages
-grep -i stake ~/.ammocoincore/debug.log
+grep -i stake ~/.ammocoin11/debug.log
 
 # Network connection logs
-grep -i "connection" ~/.ammocoincore/debug.log
+grep -i "connection" ~/.ammocoin11/debug.log
 ```
 
 ### System Health Check Script
@@ -776,7 +776,7 @@ else
 fi
 
 # Disk space
-SPACE=$(df ~/.ammocoincore/ | awk 'NR==2{print $5}' | sed 's/%//')
+SPACE=$(df ~/.ammocoin11/ | awk 'NR==2{print $5}' | sed 's/%//')
 echo "5. Disk Space:"
 if [ "$SPACE" -lt 85 ]; then
     echo "   ✅ Disk usage: ${SPACE}%"
@@ -796,11 +796,11 @@ echo "Health check complete."
 ammocoin-cli stop
 
 # 2. Backup current state
-cp -r ~/.ammocoincore ~/.ammocoincore_backup_$(date +%Y%m%d)
+cp -r ~/.ammocoin11 ~/.ammocoin11_backup_$(date +%Y%m%d)
 
 # 3. Restore from clean backup
-rm -rf ~/.ammocoincore
-cp -r ~/wallet_backup ~/.ammocoincore
+rm -rf ~/.ammocoin11
+cp -r ~/wallet_backup ~/.ammocoin11
 
 # 4. Restart and rescan
 ammocoind -rescan
@@ -813,7 +813,7 @@ ammocoin-cli getbalance
 ```bash
 # DANGER: Only if wallet.dat is safely backed up
 ammocoin-cli stop
-cd ~/.ammocoincore
+cd ~/.ammocoin11
 rm -rf blocks chainstate peers.dat banlist.dat
 # Keep: wallet.dat, ammocoin.conf, masternode.conf
 ammocoind

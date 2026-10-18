@@ -17,6 +17,6 @@ Using this zip instead
      %APPDATA%\AMMOcoinParams yourself.
   3. Start bin\ammocoin-qt.exe (GUI wallet), or bin\ammocoind.exe + bin\ammocoin-cli.exe.
 
-Wallet and blockchain data: %APPDATA%\AMMOcoinCore (back up wallet.dat).
+Wallet and blockchain data: %APPDATA%\AMMOcoin11 (back up wallet.dat).
 Ports: P2P 37020, RPC 51473 (localhost only).
 Guides: https://github.com/everquin/AMMOcoin/tree/main/docs

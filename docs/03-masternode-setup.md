@@ -2,7 +2,7 @@
 
 Set up your own AMMOcoin masternode to provide network services, vote in governance and receive the masternode payment set by the code. This comprehensive guide covers everything from requirements to maintenance.
 
-> **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoincore` (Linux), `~/Library/Application Support/AMMOcoinCore` (macOS), `%APPDATA%\AMMOcoinCore` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoin11` (Linux), `~/Library/Application Support/AMMOcoin11` (macOS), `%APPDATA%\AMMOcoin11` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
 
 ## 🤔 What is a Masternode?
 
@@ -146,10 +146,10 @@ ammocoind --version
 ### Create Configuration
 ```bash
 # Create data directory (v1.1.1 default)
-mkdir ~/.ammocoincore
+mkdir ~/.ammocoin11
 
 # Create configuration file
-nano ~/.ammocoincore/ammocoin.conf
+nano ~/.ammocoin11/ammocoin.conf
 ```
 
 **Configuration File**:
@@ -204,7 +204,7 @@ Masternode Private Key: 7X4j9K2m8P5n1Q3r6T8uV9wY2z5A7b4C8d6F3g9H1k4M7n
 ### Update Server Configuration
 ```bash
 # Edit server config with your key
-nano ~/.ammocoincore/ammocoin.conf
+nano ~/.ammocoin11/ammocoin.conf
 
 # Replace YOUR_MASTERNODE_PRIVATE_KEY with generated key
 # Replace YOUR_SERVER_IP with your VPS IP address
@@ -215,10 +215,10 @@ nano ~/.ammocoincore/ammocoin.conf
 ### Create Masternode Configuration
 ```bash
 # Create masternode config file in the controller wallet's data folder
-# Linux: ~/.ammocoincore/masternode.conf
-# macOS: ~/Library/Application Support/AMMOcoinCore/masternode.conf
-# Windows: %APPDATA%\AMMOcoinCore\masternode.conf
-nano ~/.ammocoincore/masternode.conf
+# Linux: ~/.ammocoin11/masternode.conf
+# macOS: ~/Library/Application Support/AMMOcoin11/masternode.conf
+# Windows: %APPDATA%\AMMOcoin11\masternode.conf
+nano ~/.ammocoin11/masternode.conf
 ```
 
 **Masternode Configuration Format**:
@@ -262,8 +262,8 @@ Wants=network-online.target
 Type=simple
 User=root
 Environment=HOME=/root
-ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
-ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoin11 -daemon=0
+ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoin11 stop
 Restart=on-failure
 TimeoutStopSec=120
 
@@ -276,7 +276,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now ammocoind
 ```
 
-If you run as a non-root user (e.g. `ammocoin`), set `User=ammocoin`, `Environment=HOME=/home/ammocoin`, and `-datadir=/home/ammocoin/.ammocoincore`, with the binaries path adjusted to where you installed them. Remove `daemon=1` from `ammocoin.conf` when using this unit.
+If you run as a non-root user (e.g. `ammocoin`), set `User=ammocoin`, `Environment=HOME=/home/ammocoin`, and `-datadir=/home/ammocoin/.ammocoin11`, with the binaries path adjusted to where you installed them. Remove `daemon=1` from `ammocoin.conf` when using this unit.
 
 ### Start from Local Wallet
 
@@ -378,7 +378,7 @@ sudo apt update && sudo apt upgrade -y
 df -h
 
 # Monitor logs
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 ```
 
 #### Monthly Tasks
@@ -405,7 +405,7 @@ tail -f ~/.ammocoincore/debug.log
 ammocoin-cli stop
 
 # Remove blockchain data (keep wallet.dat!)
-rm -rf ~/.ammocoincore/blocks ~/.ammocoincore/chainstate
+rm -rf ~/.ammocoin11/blocks ~/.ammocoin11/chainstate
 
 # Restart daemon
 ammocoind -daemon

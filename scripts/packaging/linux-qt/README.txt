@@ -31,7 +31,7 @@ AMMOcoin .deb they are already in /usr/share/ammocoin and are found automaticall
 Easier: the AMMOcoin-v1.1.1-Linux-@ARCH@-Qt.AppImage from the same release needs no setup
 (chmod +x it and run it; it includes the parameters).
 
-Data: wallet and blockchain in ~/.ammocoincore (back up wallet.dat). Ports: P2P 37020, RPC 51473.
+Data: wallet and blockchain in ~/.ammocoin11 (back up wallet.dat). Ports: P2P 37020, RPC 51473.
 If the AMMOcoin .deb's background node (ammocoind service) is running on this machine, stop it
 first (sudo systemctl disable --now ammocoind) or the wallet cannot use port 37020.
 Guides: https://github.com/everquin/AMMOcoin/tree/main/docs

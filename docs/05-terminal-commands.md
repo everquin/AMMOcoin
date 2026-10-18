@@ -2,7 +2,7 @@
 
 Complete reference guide for AMMOcoin CLI (Command Line Interface) commands. Master the terminal for advanced wallet management and network operations.
 
-> ℹ️ Written for **v1.1.1 (upcoming)**: Proof-of-Stake from block 2,776, no mining. Mainnet ports: **P2P 37020**, **RPC 51473**. Default data folder: Linux `~/.ammocoincore`, macOS `~/Library/Application Support/AMMOcoinCore`, Windows `%APPDATA%\AMMOcoinCore`. Run `ammocoin-cli help` on your node for the authoritative command list.
+> ℹ️ Written for **v1.1.1 (upcoming)**: Proof-of-Stake from block 2,776, no mining. Mainnet ports: **P2P 37020**, **RPC 51473**. Default data folder: Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11`. Run `ammocoin-cli help` on your node for the authoritative command list.
 
 ## 🚀 Getting Started with CLI
 
@@ -33,7 +33,7 @@ ammocoin-cli help <command>
 ### Common Options
 ```bash
 -conf=<file>       # Specify config file location
--datadir=<dir>     # Data directory (default: ~/.ammocoincore on Linux)
+-datadir=<dir>     # Data directory (default: ~/.ammocoin11 on Linux)
 -rpcuser=<user>    # RPC username
 -rpcpassword=<pw>  # RPC password
 -rpcport=<port>    # RPC port (default: 51473)
@@ -428,9 +428,9 @@ ammocoin-cli getnettotals
 
 ### Configuration
 Configuration is read from `ammocoin.conf` in the data folder at startup; restart the node after changes. There are no config RPC commands.
-- Linux: `~/.ammocoincore/ammocoin.conf`
-- macOS: `~/Library/Application Support/AMMOcoinCore/ammocoin.conf`
-- Windows: `%APPDATA%\AMMOcoinCore\ammocoin.conf`
+- Linux: `~/.ammocoin11/ammocoin.conf`
+- macOS: `~/Library/Application Support/AMMOcoin11/ammocoin.conf`
+- Windows: `%APPDATA%\AMMOcoin11\ammocoin.conf`
 
 ## 📊 Advanced Commands
 
@@ -558,7 +558,7 @@ ammocoind -reindex
 ammocoind -rescan
 
 # Recovery from corrupted blockchain (keep wallet.dat!)
-rm -rf ~/.ammocoincore/blocks ~/.ammocoincore/chainstate
+rm -rf ~/.ammocoin11/blocks ~/.ammocoin11/chainstate
 ammocoind
 ```
 

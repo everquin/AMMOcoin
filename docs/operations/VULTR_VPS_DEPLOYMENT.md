@@ -3,7 +3,7 @@
 ## Overview
 This guide covers deploying AMMOcoin v1.1.1 Linux binaries on Vultr VPS for masternode operation.
 
-> **v1.1.1 is a mandatory hard fork.** Proof-of-Stake from block 2,776, no mining, new network magic (`a3 4d b1 e7`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes. Default data dir is now `~/.ammocoincore` (was `~/.ammocoin`). v1.1.1 is not released yet - use only the official GitHub release once published.
+> **v1.1.1 is a mandatory hard fork.** Proof-of-Stake from block 2,776, no mining, new network magic (`c7 9a e3 b5`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes. Default data dir is now `~/.ammocoin11` (was `~/.ammocoin`). v1.1.1 is not released yet - use only the official GitHub release once published.
 
 **Key facts:**
 - Collateral: **10,000 AMMO** (15 confirmations)
@@ -108,7 +108,7 @@ ammocoin-cli getmasternodeoutputs
 # -> COLLATERAL_TXID and COLLATERAL_INDEX
 ```
 
-Add one line to `masternode.conf` in the controller's data folder (Linux `~/.ammocoincore/`, macOS `~/Library/Application Support/AMMOcoinCore/`, Windows `%APPDATA%\AMMOcoinCore\`):
+Add one line to `masternode.conf` in the controller's data folder (Linux `~/.ammocoin11/`, macOS `~/Library/Application Support/AMMOcoin11/`, Windows `%APPDATA%\AMMOcoin11\`):
 
 ```
 mn1 YOUR_VPS_IP:37020 MASTERNODE_PRIVKEY COLLATERAL_TXID COLLATERAL_INDEX
@@ -119,10 +119,10 @@ Restart the controller wallet so it reads `masternode.conf`.
 ### On the VPS: Create Configuration
 ```bash
 # Create ammocoin data directory (v1.1.1 default)
-mkdir -p ~/.ammocoincore
+mkdir -p ~/.ammocoin11
 
 # Create configuration file
-cat > ~/.ammocoincore/ammocoin.conf << EOF
+cat > ~/.ammocoin11/ammocoin.conf << EOF
 # AMMOcoin v1.1.1 Configuration for Masternode
 rpcuser=ammocoinrpc
 rpcpassword=$(openssl rand -base64 32)
@@ -156,7 +156,7 @@ addnode=104.238.165.56:37020
 EOF
 
 # Secure configuration file
-chmod 600 ~/.ammocoincore/ammocoin.conf
+chmod 600 ~/.ammocoin11/ammocoin.conf
 ```
 
 Replace `MASTERNODE_PRIVKEY` (from `createmasternodekey`) and `YOUR_VPS_IP` (the VPS public IPv4, e.g. from `curl -4 ifconfig.me`).
@@ -179,8 +179,8 @@ User=ammocoin
 Group=ammocoin
 Environment=HOME=/home/ammocoin
 WorkingDirectory=/home/ammocoin
-ExecStart=/usr/local/bin/ammocoind -datadir=/home/ammocoin/.ammocoincore -daemon=0
-ExecStop=/usr/local/bin/ammocoin-cli -datadir=/home/ammocoin/.ammocoincore stop
+ExecStart=/usr/local/bin/ammocoind -datadir=/home/ammocoin/.ammocoin11 -daemon=0
+ExecStop=/usr/local/bin/ammocoin-cli -datadir=/home/ammocoin/.ammocoin11 stop
 Restart=on-failure
 TimeoutStopSec=120
 
@@ -189,7 +189,7 @@ NoNewPrivileges=yes
 PrivateTmp=yes
 ProtectSystem=full
 ProtectHome=read-only
-ReadWritePaths=/home/ammocoin/.ammocoincore /home/ammocoin/.ammocoin-params
+ReadWritePaths=/home/ammocoin/.ammocoin11 /home/ammocoin/.ammocoin-params
 
 [Install]
 WantedBy=multi-user.target
@@ -200,7 +200,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable ammocoin.service
 ```
 
-Running as root instead (the tested v1.1.1 unit): `User=root`, `Environment=HOME=/root`, `ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0`, `ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop`, `Restart=on-failure`, `TimeoutStopSec=120` (and drop the `ProtectHome`/`ReadWritePaths` lines).
+Running as root instead (the tested v1.1.1 unit): `User=root`, `Environment=HOME=/root`, `ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoin11 -daemon=0`, `ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoin11 stop`, `Restart=on-failure`, `TimeoutStopSec=120` (and drop the `ProtectHome`/`ReadWritePaths` lines).
 
 ## Step 5: Start and Monitor
 
@@ -253,7 +253,7 @@ sudo dpkg-reconfigure -plow unattended-upgrades
 
 # Set up log rotation for AMMOcoin
 sudo tee /etc/logrotate.d/ammocoin > /dev/null << EOF
-/home/ammocoin/.ammocoincore/debug.log {
+/home/ammocoin/.ammocoin11/debug.log {
     daily
     rotate 7
     compress
@@ -287,9 +287,9 @@ sudo systemctl stop ammocoin.service
 
 # Backup wallet and configuration
 tar -czf $BACKUP_DIR/ammocoin-backup-$DATE.tar.gz \
-    ~/.ammocoincore/wallet.dat \
-    ~/.ammocoincore/ammocoin.conf \
-    ~/.ammocoincore/masternode.conf 2>/dev/null
+    ~/.ammocoin11/wallet.dat \
+    ~/.ammocoin11/ammocoin.conf \
+    ~/.ammocoin11/masternode.conf 2>/dev/null
 
 # Start service
 sudo systemctl start ammocoin.service
@@ -366,7 +366,7 @@ sudo ufw status
 ammocoin-cli getmasternodestatus
 
 # Verify masternode private key and address
-grep -E "masternodeprivkey|masternodeaddr|externalip" ~/.ammocoincore/ammocoin.conf
+grep -E "masternodeprivkey|masternodeaddr|externalip" ~/.ammocoin11/ammocoin.conf
 
 # Check collateral transaction (on the controller wallet)
 ammocoin-cli getmasternodeoutputs

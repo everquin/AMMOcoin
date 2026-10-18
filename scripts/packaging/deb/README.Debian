@@ -17,7 +17,7 @@ What the package installs
 The node service
 ----------------
 On first install the package creates the system user "ammocoin" (HOME /var/lib/ammocoin),
-writes /var/lib/ammocoin/.ammocoincore/ammocoin.conf (mode 600, random rpcpassword, P2P
+writes /var/lib/ammocoin/.ammocoin11/ammocoin.conf (mode 600, random rpcpassword, P2P
 port 37020, RPC 51473 on 127.0.0.1, staking=1) and enables + starts ammocoind. An existing
 ammocoin.conf is never overwritten. This is the same layout scripts/deployment/install-node.sh
 uses, so either can manage the same node.
@@ -34,7 +34,7 @@ ammocoin.conf (see /usr/share/doc/ammocoin/examples/ammocoin.conf), then
 
 Running the node as your own user
 ---------------------------------
-`ammocoind -daemon` as a normal user keeps data in ~/.ammocoincore and finds the packaged
+`ammocoind -daemon` as a normal user keeps data in ~/.ammocoin11 and finds the packaged
 Sapling parameters in /usr/share/ammocoin automatically. Stop the service first
 (`sudo systemctl disable --now ammocoind`), or give your node another -port/-rpcport.
 `ammocoin-fetch-params` copies the parameters into ~/.ammocoin-params if you prefer a

@@ -37,11 +37,11 @@ AMMOcoin needs two zk-SNARK parameter files (about 50 MB):
 
 Data directory
 --------------
-  ~/Library/Application Support/AMMOcoinCore/
+  ~/Library/Application Support/AMMOcoin11/
   (wallet.dat, ammocoin.conf, blocks, debug.log). Back up wallet.dat.
   v1.1.1 uses this NEW folder; it does not read the old v1.0/v1.1.0 folder
   ~/Library/Application Support/AMMOcoin/. To keep using an existing wallet,
-  stop the old wallet and copy its wallet.dat into AMMOcoinCore first.
+  stop the old wallet and copy its wallet.dat into AMMOcoin11 first.
 
 Command-line quick start
 ------------------------

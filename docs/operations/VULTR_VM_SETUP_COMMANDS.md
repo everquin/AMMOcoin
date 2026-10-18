@@ -6,9 +6,9 @@
 
 ## ⚠️ CRITICAL: v1.1.1 (upcoming) Hard Fork
 
-- **v1.1.1 is mandatory.** Proof-of-Stake from block 2,776, no mining. New network magic (`a3 4d b1 e7`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes.
+- **v1.1.1 is mandatory.** Proof-of-Stake from block 2,776, no mining. New network magic (`c7 9a e3 b5`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes.
 - **OS:** Ubuntu 22.04 or 24.04 (24.04 tested). v1.1.1 needs glibc 2.34+; on Ubuntu 18.04/20.04 upgrade or reinstall the OS first (`ldd --version`).
-- **Data dir:** `~/.ammocoincore` (v1.0/v1.1.0 used `~/.ammocoincore`). Sapling params: `~/.ammocoin-params`.
+- **Data dir:** `~/.ammocoin11` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling params: `~/.ammocoin-params`.
 - **Seeds:** seed1 `78.141.194.140:37020`, seed2.ammocoin.org `104.238.165.56:37020`. `147.182.245.102` is dead.
 - **Existing installs:** stop the old node and back up every `wallet.dat` before continuing. Keep v1.0 `wallet.dat` files - v1.0 balances are airdropped to the same addresses on v1.1 ([v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md)).
 
@@ -124,12 +124,12 @@ cd ~
 ## Step 8: Create Configuration (1 minute)
 
 ```bash
-mkdir -p ~/.ammocoincore
+mkdir -p ~/.ammocoin11
 
 # Generate strong RPC password
 RPC_PASS=$(openssl rand -hex 32)
 
-cat > ~/.ammocoincore/ammocoin.conf << EOF
+cat > ~/.ammocoin11/ammocoin.conf << EOF
 # AMMOcoin Seed Node Configuration
 listen=1
 server=1
@@ -158,7 +158,7 @@ debug=0
 shrinkdebugfile=1
 EOF
 
-chmod 600 ~/.ammocoincore/ammocoin.conf
+chmod 600 ~/.ammocoin11/ammocoin.conf
 
 # Save RPC credentials
 echo "RPC Password: $RPC_PASS" > ~/rpc-credentials.txt
@@ -200,7 +200,7 @@ ammocoin-cli getinfo
 
 ```bash
 # Watch the log file
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 
 # Press Ctrl+C to stop watching when you see connections forming
 ```
@@ -223,8 +223,8 @@ Type=simple
 User=$USER
 Group=$USER
 Environment=HOME=$HOME
-ExecStart=/usr/local/bin/ammocoind -datadir=$HOME/.ammocoincore -daemon=0
-ExecStop=/usr/local/bin/ammocoin-cli -datadir=$HOME/.ammocoincore stop
+ExecStart=/usr/local/bin/ammocoind -datadir=$HOME/.ammocoin11 -daemon=0
+ExecStop=/usr/local/bin/ammocoin-cli -datadir=$HOME/.ammocoin11 stop
 Restart=on-failure
 RestartSec=10
 TimeoutStartSec=120
@@ -267,7 +267,7 @@ ammocoin-cli getpeerinfo
 ammocoin-cli getconnectioncount
 
 # View recent log entries
-tail -50 ~/.ammocoincore/debug.log
+tail -50 ~/.ammocoin11/debug.log
 ```
 
 ---
@@ -292,7 +292,7 @@ sudo systemctl restart ammocoind
 sudo systemctl status ammocoind
 
 # View logs
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 
 # Check RPC credentials
 cat ~/rpc-credentials.txt

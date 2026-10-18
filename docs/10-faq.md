@@ -8,7 +8,7 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 **AMMOcoin** is a decentralized cryptocurrency built on Proof of Stake consensus, featuring masternodes, governance voting, and staking rewards. It offers fast 3-minute block times and focuses on community-driven development.
 
 ### Do I need to upgrade to v1.1.1?
-**Yes - everyone must upgrade.** v1.1.1 (upcoming) is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+**Yes - everyone must upgrade.** v1.1.1 (upcoming) is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
 
 ### How do I get started with AMMOcoin?
 1. **Download** the wallet from official sources
@@ -56,7 +56,7 @@ ammocoin-cli dumpwallet "keys_backup.txt"
 ammocoin-cli stop
 
 # Replace wallet file
-cp your_backup.dat ~/.ammocoincore/wallet.dat
+cp your_backup.dat ~/.ammocoin11/wallet.dat
 
 # Restart and rescan
 ammocoind -rescan
@@ -327,7 +327,7 @@ Common causes:
 
 ### My wallet won't start. What should I do?
 1. **Check** if another instance is running
-2. **Remove** lock files (`~/.ammocoincore/.lock`)
+2. **Remove** lock files (`~/.ammocoin11/.lock`)
 3. **Under systemd?** "Cannot find the Sapling parameters" means the unit needs `Environment=HOME=/root` (or the service user's home)
 4. **Try** `ammocoind -reindex`
 5. **Check** available disk space
@@ -341,7 +341,7 @@ Common causes:
 
 ### My balance disappeared after an update. Help!
 **Don't panic!** Common solutions:
-1. **New data folder** - v1.1.1 uses `~/.ammocoincore`; copy your `wallet.dat` from `~/.ammocoin`
+1. **New data folder** - v1.1.1 uses `~/.ammocoin11`; copy your `wallet.dat` from `~/.ammocoin`
 2. **Wait for sync** - Might still be downloading blocks
 3. **Rescan blockchain** - `ammocoind -rescan`
 4. **Check network** - Ensure on mainnet, not testnet
@@ -413,7 +413,7 @@ Check the official website and GitHub for current bug bounty programs. Serious s
 
 1. **Back up** your v1.0 `wallet.dat` and keep it - the same keys control your v1.1 balance
 2. **Install v1.1.1 (upcoming)** when it is released
-3. **Copy** a backup of the v1.0 `wallet.dat` into the v1.1.1 data folder (`~/.ammocoincore` on Linux)
+3. **Copy** a backup of the v1.0 `wallet.dat` into the v1.1.1 data folder (`~/.ammocoin11` on Linux)
 4. **Start** the node and let it sync - your balance appears on your v1.0 addresses
 
 See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md) for details.

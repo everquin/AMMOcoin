@@ -4,7 +4,7 @@ set -e
 
 SVC_USER=ammocoin
 SVC_HOME=/var/lib/ammocoin
-DATADIR=$SVC_HOME/.ammocoincore
+DATADIR=$SVC_HOME/.ammocoin11
 CONF=$DATADIR/ammocoin.conf
 P2P_PORT=37020
 RPC_PORT=51473

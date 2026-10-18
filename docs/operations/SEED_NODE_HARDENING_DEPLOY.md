@@ -2,11 +2,11 @@
 
 > **v1.1.1 (upcoming) note:** This checklist was written for the v1.1.0 RPC
 > hardening patch. v1.1.1 is a **hard fork** (Proof-of-Stake from block 2,776,
-> new network magic `a3 4d b1 e7`), so a v1.1.1 node does **not** interoperate
+> new network magic `c7 9a e3 b5`), so a v1.1.1 node does **not** interoperate
 > with v1.1.0 nodes, and rolling back to a pre-v1.1.1 binary leaves the seed
 > stuck at block 2,775 with no peers. For the v1.1.1 upgrade follow
 > [SEED_NODE_DEPLOYMENT.md](../../SEED_NODE_DEPLOYMENT.md). Path differences in
-> v1.1.1: the default data dir is `~/.ammocoincore` (was `~/.ammocoin`), and
+> v1.1.1: the default data dir is `~/.ammocoin11` (was `~/.ammocoin`), and
 > systemd units must set `Environment=HOME=...` or the node exits with
 > "Cannot find the Sapling parameters". Ports are unchanged: P2P 37020, RPC 51473.
 > The smoke tests and 24h watch list below still apply.

@@ -58,7 +58,7 @@ Description: AMMOcoin v1.1.1 node and command-line tools (Proof of Stake)
  This package provides the headless node (ammocoind), the RPC client
  (ammocoin-cli), the transaction tool (ammocoin-tx), the Sapling parameters
  and a systemd service that runs the node as the "ammocoin" user with its
- data in /var/lib/ammocoin/.ammocoincore. The GUI wallet is not included.
+ data in /var/lib/ammocoin/.ammocoin11. The GUI wallet is not included.
  Binaries link libstdc++/libgcc and all other libraries statically; only
  glibc 2.34+ is needed.
 EOF

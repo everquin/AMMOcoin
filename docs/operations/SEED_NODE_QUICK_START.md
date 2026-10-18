@@ -9,8 +9,8 @@
 ## ⚠️ CRITICAL: v1.1.1 (upcoming) Hard Fork
 
 - **Everyone must upgrade to v1.1.1.** Proof-of-Stake starts at block 2,776; there is no mining after it.
-- v1.1.1 uses new network magic bytes (`a3 4d b1 e7`) and does **not** connect to v1.0 or v1.1.0 nodes.
-- **New default data dir:** `~/.ammocoincore` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling params stay in `~/.ammocoin-params`.
+- v1.1.1 uses new network magic bytes (`c7 9a e3 b5`) and does **not** connect to v1.0 or v1.1.0 nodes.
+- **New default data dir:** `~/.ammocoin11` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling params stay in `~/.ammocoin-params`.
 - **OS:** Ubuntu 22.04 or newer. Ubuntu 18.04/20.04 cannot run v1.1.1 (glibc 2.34+ required) - upgrade or reinstall the OS.
 - **Seeds:** seed1 `78.141.194.140:37020`, seed2.ammocoin.org `104.238.165.56:37020`. `147.182.245.102` is dead.
 - **Existing v1.0 / v1.1.0 operators:** stop the old node and back up every `wallet.dat` first. Keep your v1.0 `wallet.dat` - v1.0 balances are airdropped to the same addresses on v1.1; send nothing anywhere. See [v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md).
@@ -32,7 +32,7 @@ cd AMMOcoin
 sudo bash scripts/deployment/setup-seed-node.sh
 ```
 
-> **v1.1.1 note:** `setup-seed-node.sh` was written for v1.1.0 and still creates a `~/.ammocoin-v1.1.0` data dir. Until it is updated, use Method 2 (manual), or check the generated config and systemd unit against the v1.1.1 settings in this guide (`~/.ammocoincore`, `Environment=HOME=`, ports 37020/51473).
+> **v1.1.1 note:** `setup-seed-node.sh` was written for v1.1.0 and still creates a `~/.ammocoin-v1.1.0` data dir. Until it is updated, use Method 2 (manual), or check the generated config and systemd unit against the v1.1.1 settings in this guide (`~/.ammocoin11`, `Environment=HOME=`, ports 37020/51473).
 
 **Time:** 15-25 minutes (automated)
 
@@ -120,9 +120,9 @@ wget https://download.z.cash/downloads/sapling-output.params
 
 ### Step 8: Create Configuration
 ```bash
-mkdir -p ~/.ammocoincore
+mkdir -p ~/.ammocoin11
 
-cat > ~/.ammocoincore/ammocoin.conf << 'EOF'
+cat > ~/.ammocoin11/ammocoin.conf << 'EOF'
 # AMMOcoin Seed Node Configuration
 listen=1
 server=1
@@ -147,7 +147,7 @@ dbcache=450
 maxmempool=300
 EOF
 
-chmod 600 ~/.ammocoincore/ammocoin.conf
+chmod 600 ~/.ammocoin11/ammocoin.conf
 ```
 
 **IMPORTANT:** Change the `rpcpassword` to a strong random password!
@@ -166,7 +166,7 @@ ammocoind -daemon
 ### Step 11: Verify Node is Running
 ```bash
 ammocoin-cli getinfo
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 ```
 
 ---
@@ -190,8 +190,8 @@ Type=simple
 User=YOUR_USERNAME
 Group=YOUR_USERNAME
 Environment=HOME=/home/YOUR_USERNAME
-ExecStart=/usr/local/bin/ammocoind -datadir=/home/YOUR_USERNAME/.ammocoincore -daemon=0
-ExecStop=/usr/local/bin/ammocoin-cli -datadir=/home/YOUR_USERNAME/.ammocoincore stop
+ExecStart=/usr/local/bin/ammocoind -datadir=/home/YOUR_USERNAME/.ammocoin11 -daemon=0
+ExecStop=/usr/local/bin/ammocoin-cli -datadir=/home/YOUR_USERNAME/.ammocoin11 stop
 Restart=on-failure
 RestartSec=10
 TimeoutStartSec=120
@@ -207,7 +207,7 @@ PrivateDevices=true
 WantedBy=multi-user.target
 ```
 
-**Replace `YOUR_USERNAME` with your actual username!** Running as root instead: `User=root`, `Environment=HOME=/root`, `-datadir=/root/.ammocoincore` (this is the tested v1.1.1 unit, with binaries in `/opt/ammocoin-v1.1.1/bin/`).
+**Replace `YOUR_USERNAME` with your actual username!** Running as root instead: `User=root`, `Environment=HOME=/root`, `-datadir=/root/.ammocoin11` (this is the tested v1.1.1 unit, with binaries in `/opt/ammocoin-v1.1.1/bin/`).
 
 Enable and start:
 ```bash
@@ -231,7 +231,7 @@ ammocoin-cli getnetworkinfo
 
 ### Monitor Logs
 ```bash
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 ```
 
 ### Check Connections
@@ -258,19 +258,19 @@ sudo systemctl restart ammocoind
 ### Node won't start?
 ```bash
 # Check logs
-tail -100 ~/.ammocoincore/debug.log
+tail -100 ~/.ammocoin11/debug.log
 
 # Check if port is already in use
 sudo netstat -tulpn | grep 37020
 
 # Check permissions
-ls -la ~/.ammocoincore/
+ls -la ~/.ammocoin11/
 ```
 
 ### Can't connect to RPC?
 ```bash
 # Verify RPC credentials in config
-cat ~/.ammocoincore/ammocoin.conf | grep rpc
+cat ~/.ammocoin11/ammocoin.conf | grep rpc
 
 # Test RPC connection
 curl --user ammocoinrpc:YOUR_PASSWORD \
@@ -343,7 +343,7 @@ maxconnections=250
 4. **Backup wallet.dat**
    ```bash
    ammocoin-cli stop
-   cp ~/.ammocoincore/wallet.dat ~/wallet-backup-$(date +%Y%m%d).dat
+   cp ~/.ammocoin11/wallet.dat ~/wallet-backup-$(date +%Y%m%d).dat
    ammocoind -daemon
    ```
 
@@ -403,7 +403,7 @@ sudo systemctl status ammocoind
 ammocoin-cli getinfo
 
 # View logs
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 
 # Get peer count
 ammocoin-cli getconnectioncount

@@ -25,14 +25,14 @@ Contents
       [--role node|coldstaker|masternode] [--mnkey <key>] [--ip <public IPv4>]
 
 It creates the "ammocoin" user (HOME /var/lib/ammocoin), fetches and verifies the Sapling
-parameters, writes /var/lib/ammocoin/.ammocoincore/ammocoin.conf (random RPC password),
+parameters, writes /var/lib/ammocoin/.ammocoin11/ammocoin.conf (random RPC password),
 installs the ammocoind systemd service and opens P2P port 37020. Run ./install-node.sh --help.
 On Debian/Ubuntu you can instead install the .deb from the same release (apt install ./AMMOcoin-v1.1.1-Linux-*.deb).
 
 2. Run it as your own user
 --------------------------
   ./bin/ammocoin-fetch-params          # once: puts the params in ~/.ammocoin-params (~50 MB download)
-  ./bin/ammocoind -daemon              # data folder: ~/.ammocoincore
+  ./bin/ammocoind -daemon              # data folder: ~/.ammocoin11
   ./bin/ammocoin-cli getblockcount
   ./bin/ammocoin-cli stop
 

@@ -2,7 +2,7 @@
 
 Welcome to the AMMOcoin documentation. This directory contains all official documentation for the project.
 
-> **⚠️ v1.1.1 (upcoming) is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic, so it does not connect to v1.0 or v1.1.0 nodes - everyone must upgrade. New data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`), ports 37020 (P2P) / 51473 (RPC), Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 Release Notes (draft)](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **⚠️ v1.1.1 (upcoming) is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic, so it does not connect to v1.0 or v1.1.0 nodes - everyone must upgrade. New data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`), ports 37020 (P2P) / 51473 (RPC), Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 Release Notes (draft)](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
 
 ## Quick Links
 

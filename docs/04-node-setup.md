@@ -2,7 +2,7 @@
 
 Set up your own AMMOcoin full node to contribute to network decentralization, improve privacy, and gain complete control over your transactions.
 
-> **v1.1.1 (upcoming):** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **v1.1.1 (upcoming):** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
 
 ## 🤔 What is a Full Node?
 
@@ -74,7 +74,7 @@ A **full node** is a program that validates transactions and blocks on the AMMOc
 # Add to PATH environment variable
 
 # Create data directory (v1.1.1 default)
-mkdir %APPDATA%\AMMOcoinCore
+mkdir %APPDATA%\AMMOcoin11
 
 # Create shortcut with parameters
 "C:\AMMOcoin\ammocoind.exe" -daemon
@@ -86,7 +86,7 @@ mkdir %APPDATA%\AMMOcoinCore
 # Install AMMOcoin.app to Applications (or extract ammocoind/ammocoin-cli)
 
 # Create data directory (v1.1.1 default)
-mkdir ~/Library/Application\ Support/AMMOcoinCore
+mkdir ~/Library/Application\ Support/AMMOcoin11
 ```
 
 #### Linux Installation (Ubuntu/Debian)
@@ -102,7 +102,7 @@ tar -xzf AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
 sudo install -m 0755 -t /usr/local/bin bin/ammocoind bin/ammocoin-cli
 
 # Create data directory (v1.1.1 default)
-mkdir ~/.ammocoincore
+mkdir ~/.ammocoin11
 
 # Verify installation
 ammocoind --version
@@ -131,7 +131,7 @@ sudo make install
 
 ### Basic Configuration File
 
-Create `~/.ammocoincore/ammocoin.conf` (Linux), `~/Library/Application Support/AMMOcoinCore/ammocoin.conf` (macOS) or `%APPDATA%\AMMOcoinCore\ammocoin.conf` (Windows):
+Create `~/.ammocoin11/ammocoin.conf` (Linux), `~/Library/Application Support/AMMOcoin11/ammocoin.conf` (macOS) or `%APPDATA%\AMMOcoin11\ammocoin.conf` (Windows):
 
 ```conf
 # Basic node configuration
@@ -309,8 +309,8 @@ Wants=network-online.target
 Type=simple
 User=root
 Environment=HOME=/root
-ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
-ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoin11 -daemon=0
+ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoin11 stop
 Restart=on-failure
 TimeoutStopSec=120
 
@@ -318,7 +318,7 @@ TimeoutStopSec=120
 WantedBy=multi-user.target
 ```
 
-> **`Environment=HOME=...` is required.** Without it the node exits with `Cannot find the Sapling parameters` (they are looked up in `$HOME/.ammocoin-params`). For a non-root user set `User=ammocoin`, `Environment=HOME=/home/ammocoin` and `-datadir=/home/ammocoin/.ammocoincore`. Remove `daemon=1` from `ammocoin.conf` when using this unit, and adjust the binary path if you installed to `/usr/local/bin`.
+> **`Environment=HOME=...` is required.** Without it the node exits with `Cannot find the Sapling parameters` (they are looked up in `$HOME/.ammocoin-params`). For a non-root user set `User=ammocoin`, `Environment=HOME=/home/ammocoin` and `-datadir=/home/ammocoin/.ammocoin11`. Remove `daemon=1` from `ammocoin.conf` when using this unit, and adjust the binary path if you installed to `/usr/local/bin`.
 
 ```bash
 # Enable and start service
@@ -395,10 +395,10 @@ ammocoin-cli stop
 pkill ammocoind && sleep 5 && ammocoind -daemon
 
 # Check log files
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 
 # Disk space check
-df -h ~/.ammocoincore/
+df -h ~/.ammocoin11/
 ```
 
 ## 🔒 Security Hardening
@@ -444,11 +444,11 @@ server=0
 #### File Permissions
 ```bash
 # Secure configuration files
-chmod 600 ~/.ammocoincore/ammocoin.conf
-chmod 700 ~/.ammocoincore/
+chmod 600 ~/.ammocoin11/ammocoin.conf
+chmod 700 ~/.ammocoin11/
 
 # Secure wallet file
-chmod 600 ~/.ammocoincore/wallet.dat
+chmod 600 ~/.ammocoin11/wallet.dat
 ```
 
 ### Monitoring & Alerts
@@ -456,13 +456,13 @@ chmod 600 ~/.ammocoincore/wallet.dat
 #### Log Monitoring
 ```bash
 # Monitor for errors
-tail -f ~/.ammocoincore/debug.log | grep -i error
+tail -f ~/.ammocoin11/debug.log | grep -i error
 
 # Check for warnings
-grep -i warning ~/.ammocoincore/debug.log
+grep -i warning ~/.ammocoin11/debug.log
 
 # Monitor connections
-grep -i "connection" ~/.ammocoincore/debug.log | tail -20
+grep -i "connection" ~/.ammocoin11/debug.log | tail -20
 ```
 
 #### Automated Monitoring Script
@@ -503,7 +503,7 @@ ammocoin-cli addnode "104.238.165.56:37020" "add"
 
 # Restart with fresh peer connections
 ammocoin-cli stop
-rm ~/.ammocoincore/peers.dat
+rm ~/.ammocoin11/peers.dat
 ammocoind -daemon
 ```
 
@@ -511,10 +511,10 @@ ammocoind -daemon
 ```bash
 # Slow performance
 # Increase database cache
-echo "dbcache=1024" >> ~/.ammocoincore/ammocoin.conf
+echo "dbcache=1024" >> ~/.ammocoin11/ammocoin.conf
 
 # Check disk space
-df -h ~/.ammocoincore/
+df -h ~/.ammocoin11/
 
 # Monitor resource usage
 top -p $(pgrep ammocoind)

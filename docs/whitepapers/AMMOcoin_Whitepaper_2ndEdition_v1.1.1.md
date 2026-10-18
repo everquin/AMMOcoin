@@ -110,7 +110,7 @@ This paper describes software and a community. It is not an offer to sell anythi
 | Testnet addresses | `x...` or `y...` (P2P 37022, RPC 51475) |
 | P2P port | 37020 |
 | RPC port | 51473 (keep it private) |
-| Network magic | `a3 4d b1 e7` (v1.1.1 does not talk to v1.0 or v1.1.0 nodes) |
+| Network magic | `c7 9a e3 b5` (v1.1.1 does not talk to v1.0 or v1.1.0 nodes) |
 | Block-1 reserve | 250,000,000 AMMO, set aside to airdrop v1.0 balances |
 | Seed nodes | seed1.ammocoin.org, seed2.ammocoin.org |
 | Amount ceiling | 9,999,999,999 AMMO: a sanity limit on any amount, not a supply target |

@@ -2,7 +2,7 @@
 
 **Quick guide to run and test v1.1.1 on your Mac (Apple Silicon)**
 
-> **v1.1.1 notes:** Mainnet is Proof-of-Stake from block 2,776 - there is no mining. `generate` only works on **regtest**, so the block-generation steps below run a separate regtest node (`-regtest`). The default mainnet data dir on macOS is now `~/Library/Application Support/AMMOcoinCore` (was `.../AMMOcoin`); this guide uses its own test folder so it never touches it. Mainnet ports: P2P 37020, RPC 51473 (regtest RPC defaults to 51477). v1.1.1 does not connect to v1.0 or v1.1.0 nodes.
+> **v1.1.1 notes:** Mainnet is Proof-of-Stake from block 2,776 - there is no mining. `generate` only works on **regtest**, so the block-generation steps below run a separate regtest node (`-regtest`). The default mainnet data dir on macOS is now `~/Library/Application Support/AMMOcoin11` (was `.../AMMOcoin`); this guide uses its own test folder so it never touches it. Mainnet ports: P2P 37020, RPC 51473 (regtest RPC defaults to 51477). v1.1.1 does not connect to v1.0 or v1.1.0 nodes.
 
 ---
 

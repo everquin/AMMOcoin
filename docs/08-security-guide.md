@@ -204,7 +204,7 @@ logpath = /var/log/auth.log
 [ammocoin]
 enabled = true
 port = 37020
-logpath = /home/user/.ammocoincore/debug.log
+logpath = /home/user/.ammocoin11/debug.log
 ```
 
 ### RPC Security
@@ -367,7 +367,7 @@ else
 fi
 
 # Check for suspicious log entries
-ERRORS=$(grep -c -i "error\|fail\|attack" ~/.ammocoincore/debug.log)
+ERRORS=$(grep -c -i "error\|fail\|attack" ~/.ammocoin11/debug.log)
 if [ "$ERRORS" -lt 10 ]; then
     echo "✅ Log looks clean: $ERRORS errors"
 else

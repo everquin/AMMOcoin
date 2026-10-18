@@ -10,7 +10,7 @@
 
 The v1.1 chain stopped at block 2,775 after its Proof-of-Work phase. v1.1.1 switches the network to **Proof-of-Stake from block 2,776**. There is no mining after the fork.
 
-- **New network magic bytes** (`a3 4d b1 e7`). v1.1.1 nodes do **not** connect to v1.0 or v1.1.0 nodes, and v1.1.0 nodes cannot follow the PoS chain.
+- **New network magic bytes** (`c7 9a e3 b5`). v1.1.1 nodes do **not** connect to v1.0 or v1.1.0 nodes, and v1.1.0 nodes cannot follow the PoS chain.
 - A v1.1.0 node left running will sit at block 2,775 with no peers. Stop it and install v1.1.1.
 - The genesis block is unchanged: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
@@ -21,8 +21,8 @@ The v1.1 chain stopped at block 2,775 after its Proof-of-Work phase. v1.1.1 swit
 | | v1.1.0 | v1.1.1 (upcoming) |
 |---|---|---|
 | Consensus | Proof-of-Work | **Proof-of-Stake from block 2,776** (no mining) |
-| Network magic | v1.0-compatible | `a3 4d b1 e7` (separate network) |
-| Default data folder | `.ammocoin` / `AMMOcoin` | `.ammocoincore` / `AMMOcoinCore` (see below) |
+| Network magic | v1.0-compatible | `c7 9a e3 b5` (separate network) |
+| Default data folder | `.ammocoin` / `AMMOcoin` | `.ammocoin11` / `AMMOcoin11` (see below) |
 | Fixed seed nodes | 78.141.194.140, 147.182.245.102 (dead) | 78.141.194.140, 104.238.165.56 |
 | Linux binaries | glibc 2.31+ | **glibc 2.34+** (Ubuntu 22.04 or newer) |
 
@@ -58,11 +58,13 @@ v1.1.1 uses a new default data directory so it never mixes with v1.0 or v1.1.0 d
 
 | OS | v1.1.1 data folder | Old folder (v1.0 / v1.1.0) |
 |---|---|---|
-| Linux | `~/.ammocoincore` | `~/.ammocoin` |
-| macOS | `~/Library/Application Support/AMMOcoinCore` | `~/Library/Application Support/AMMOcoin` |
-| Windows | `%APPDATA%\AMMOcoinCore` | `%APPDATA%\AMMOcoin` |
+| Linux | `~/.ammocoin11` | `~/.ammocoin` |
+| macOS | `~/Library/Application Support/AMMOcoin11` | `~/Library/Application Support/AMMOcoin` |
+| Windows | `%APPDATA%\AMMOcoin11` | `%APPDATA%\AMMOcoin` |
 
 Sapling parameters are stored separately: Linux `~/.ammocoin-params`, macOS `~/Library/Application Support/AMMOcoinParams`, Windows `%APPDATA%\AMMOcoinParams`.
+
+> **Pre-release testers:** early v1.1.1 test builds used magic `a3 4d b1 e7` and the folder `.ammocoincore` / `AMMOcoinCore`. Release builds use neither and cannot connect to that test network. See [MAINNET_SEPARATION.md](../MAINNET_SEPARATION.md).
 
 **Upgrading a v1.1.0 node:**
 1. Stop the old node: `ammocoin-cli stop`
@@ -179,8 +181,8 @@ Wants=network-online.target
 Type=simple
 User=root
 Environment=HOME=/root
-ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
-ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoin11 -daemon=0
+ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoin11 stop
 Restart=on-failure
 TimeoutStopSec=120
 

@@ -12,8 +12,8 @@
 
 v1.1.1 switches the network to **Proof-of-Stake from block 2,776**. There is no mining after the fork.
 
-- **New network magic** (`a3 4d b1 e7`): v1.1.1 nodes do **not** connect to v1.0 or v1.1.0 nodes. Every wallet, staker, masternode and seed must upgrade.
-- **New data folder:** Linux `~/.ammocoincore`, macOS `~/Library/Application Support/AMMOcoinCore`, Windows `%APPDATA%\AMMOcoinCore` (was `.ammocoin` / `AMMOcoin`).
+- **New network magic** (`c7 9a e3 b5`): v1.1.1 nodes do **not** connect to v1.0 or v1.1.0 nodes. Every wallet, staker, masternode and seed must upgrade.
+- **New data folder:** Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11` (was `.ammocoin` / `AMMOcoin`).
 - **Ports:** P2P **37020**, RPC **51473**.
 - **Linux:** binaries need **glibc 2.34+** (Ubuntu 22.04 or newer; 24.04 tested). Ubuntu 18.04/20.04 must upgrade or reinstall the OS.
 - **v1.0 holders:** balances from the block 434,881 snapshot are **airdropped to the same addresses**. Keep your v1.0 `wallet.dat` and **send nothing anywhere**. See [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md).
@@ -102,7 +102,7 @@ Download the v1.1.1 archive for your platform from the official GitHub release o
 tar -xzf AMMOcoin-v1.1.1-<platform>.tar.gz
 cd <extracted folder>/bin
 
-# Start daemon (data folder: ~/Library/Application Support/AMMOcoinCore)
+# Start daemon (data folder: ~/Library/Application Support/AMMOcoin11)
 ./ammocoind -daemon
 
 # Check status
@@ -125,7 +125,7 @@ cd <extracted folder>/bin
 # Install system-wide (optional)
 sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
 
-# Start daemon (data folder: ~/.ammocoincore)
+# Start daemon (data folder: ~/.ammocoin11)
 ammocoind -daemon
 
 # Check status - block height should pass 2,775 once synced
@@ -139,7 +139,7 @@ For a server, run the node under systemd and set `Environment=HOME=/root` (or th
 # Extract the ZIP file
 # Navigate to the bin directory
 
-# Start daemon (data folder: %APPDATA%\AMMOcoinCore)
+# Start daemon (data folder: %APPDATA%\AMMOcoin11)
 .\ammocoind.exe -daemon
 
 # Check status (in new command prompt)
@@ -283,7 +283,7 @@ ammocoin-cli getstakingstatus
 ### Network Parameters
 - **P2P Port**: 37020 (mainnet)
 - **RPC Port**: 51473 (mainnet)
-- **Network Magic**: `a3 4d b1 e7` (v1.1.1)
+- **Network Magic**: `c7 9a e3 b5` (v1.1.1)
 - **Block Time**: 3 minutes
 - **Algorithm**: Proof-of-Stake from block 2,776 (blocks 1-2,775 were PoW; no mining after the fork)
 - **Stake Maturity**: 600 confirmations

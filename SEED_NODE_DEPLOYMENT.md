@@ -2,7 +2,7 @@
 
 **For production seed nodes running Ubuntu Linux**
 
-> **v1.1.1 is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic bytes (`a3 4d b1 e7`), so it does **not** connect to v1.0 or v1.1.0 nodes. Every seed node must run v1.1.1.
+> **v1.1.1 is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic bytes (`c7 9a e3 b5`), so it does **not** connect to v1.0 or v1.1.0 nodes. Every seed node must run v1.1.1.
 > v1.1.1 is not released yet. Download links and checksums will be published on the official GitHub release page; do not use binaries from any other source.
 
 **Current seed nodes:**
@@ -36,7 +36,7 @@ TASK:
 3. Download the AMMOcoin v1.1.1 Linux binaries from the official GitHub release
 4. Verify the SHA256 checksum against the official release checksums
 5. Install the binaries to /opt/ammocoin-v1.1.1/bin/
-6. Create the data directory ~/.ammocoincore/ (new v1.1.1 default)
+6. Create the data directory ~/.ammocoin11/ (new v1.1.1 default)
 7. Create ammocoin.conf with seed node configuration
 8. Install a systemd unit (must include Environment=HOME=...) and start it
 9. Verify the node is running, has peers and is past block 2775
@@ -170,17 +170,17 @@ ammocoind --version
 
 ### Step 6: Create Data Directory and Configuration
 
-v1.1.1 uses the new default data folder `~/.ammocoincore` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling parameters live in `~/.ammocoin-params`.
+v1.1.1 uses the new default data folder `~/.ammocoin11` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling parameters live in `~/.ammocoin-params`.
 
 ```bash
 # Create the v1.1.1 data directory
-mkdir -p ~/.ammocoincore
+mkdir -p ~/.ammocoin11
 
 # Generate strong RPC password
 RPC_PASSWORD=$(openssl rand -base64 32)
 
 # Create ammocoin.conf
-cat > ~/.ammocoincore/ammocoin.conf <<EOF
+cat > ~/.ammocoin11/ammocoin.conf <<EOF
 # AMMOcoin v1.1.1 Seed Node Configuration
 # Generated: $(date)
 
@@ -214,8 +214,8 @@ debug=0
 printtoconsole=0
 EOF
 
-chmod 600 ~/.ammocoincore/ammocoin.conf
-echo "✅ Configuration created at ~/.ammocoincore/ammocoin.conf"
+chmod 600 ~/.ammocoin11/ammocoin.conf
+echo "✅ Configuration created at ~/.ammocoin11/ammocoin.conf"
 echo "⚠️  RPC Password: ${RPC_PASSWORD}"
 echo "    Save this password securely!"
 ```
@@ -257,8 +257,8 @@ Wants=network-online.target
 Type=simple
 User=root
 Environment=HOME=/root
-ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
-ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+ExecStart=/opt/ammocoin-v1.1.1/bin/ammocoind -datadir=/root/.ammocoin11 -daemon=0
+ExecStop=/opt/ammocoin-v1.1.1/bin/ammocoin-cli -datadir=/root/.ammocoin11 stop
 Restart=on-failure
 TimeoutStopSec=120
 
@@ -274,7 +274,7 @@ sudo systemctl enable --now ammocoind
 sudo systemctl status ammocoind
 ```
 
-If the service runs as another user, set `User=`, `Environment=HOME=/home/<user>` and `-datadir=/home/<user>/.ammocoincore` to match. The commands below assume the default data folder of the user running `ammocoin-cli`; as root, `ammocoin-cli` reads `/root/.ammocoincore` automatically.
+If the service runs as another user, set `User=`, `Environment=HOME=/home/<user>` and `-datadir=/home/<user>/.ammocoin11` to match. The commands below assume the default data folder of the user running `ammocoin-cli`; as root, `ammocoin-cli` reads `/root/.ammocoin11` automatically.
 
 ---
 
@@ -323,7 +323,7 @@ ammocoin-cli getblock $(ammocoin-cli getblockhash 0)
 
 ```bash
 # Watch the log file
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 
 # Or the service journal
 journalctl -u ammocoind -f
@@ -390,7 +390,7 @@ sudo systemctl daemon-reload && sudo systemctl restart ammocoind
 sudo ss -tulpn | grep 37020
 
 # Check log file for errors
-tail -100 ~/.ammocoincore/debug.log
+tail -100 ~/.ammocoin11/debug.log
 
 # Verify binaries are executable
 ls -lh /opt/ammocoin-v1.1.1/bin/
@@ -423,9 +423,9 @@ The node is running v1.1.0 (or connected only to v1.1.0 peers). Check `ammocoind
 sudo systemctl stop ammocoind
 
 # Delete blockchain data (keeps wallet)
-rm -rf ~/.ammocoincore/blocks
-rm -rf ~/.ammocoincore/chainstate
-rm -rf ~/.ammocoincore/database
+rm -rf ~/.ammocoin11/blocks
+rm -rf ~/.ammocoin11/chainstate
+rm -rf ~/.ammocoin11/database
 
 # Restart and it will re-sync
 sudo systemctl start ammocoind

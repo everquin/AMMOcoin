@@ -5,8 +5,8 @@
 **Critical:** This node will be the first peer - MUST have correct genesis!
 
 > **Updated for v1.1.1 (upcoming), October 16, 2026.** This was originally the v1.1.0 rebuild log; the facts below are now corrected for v1.1.1:
-> - v1.1.1 is a **hard fork**: Proof-of-Stake from block 2,776, no mining. New network magic (`a3 4d b1 e7`) - it will not peer with v1.0 or v1.1.0 nodes.
-> - Default data dir is now `~/.ammocoincore` (was `~/.ammocoincore`). Sapling params: `~/.ammocoin-params`.
+> - v1.1.1 is a **hard fork**: Proof-of-Stake from block 2,776, no mining. New network magic (`c7 9a e3 b5`) - it will not peer with v1.0 or v1.1.0 nodes.
+> - Default data dir is now `~/.ammocoin11` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling params: `~/.ammocoin-params`.
 > - OS: Ubuntu 22.04 or newer (24.04 tested); glibc 2.34+ required.
 > - Ports: P2P **37020**, RPC **51473**. Seeds: seed1 `78.141.194.140`, seed2.ammocoin.org `104.238.165.56`. `147.182.245.102` is dead.
 > - systemd units must set `Environment=HOME=/root`, or the node exits with "Cannot find the Sapling parameters".
@@ -56,12 +56,12 @@ BACKUP_DIR="$HOME/ammocoin-old-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
 # Backup data directory
-# (v1.0/v1.1.0 used ~/.ammocoincore; v1.1.1 uses ~/.ammocoincore)
+# (v1.0/v1.1.0 used ~/.ammocoin; v1.1.1 uses ~/.ammocoin11)
 if [ -d "$HOME/.ammocoin" ]; then
     mv "$HOME/.ammocoin" "$BACKUP_DIR/data-old"
 fi
-if [ -d "$HOME/.ammocoincore" ]; then
-    mv "$HOME/.ammocoincore" "$BACKUP_DIR/data"
+if [ -d "$HOME/.ammocoin11" ]; then
+    mv "$HOME/.ammocoin11" "$BACKUP_DIR/data"
 fi
 
 # Backup old binaries
@@ -361,13 +361,13 @@ strings /usr/local/bin/ammocoind | grep "000000593410213331b5adcc6a79054a984bfc9
 
 ### Step 1: Create Fresh Data Directory
 ```bash
-mkdir -p ~/.ammocoincore
-chmod 700 ~/.ammocoincore
+mkdir -p ~/.ammocoin11
+chmod 700 ~/.ammocoin11
 ```
 
 ### Step 2: Create Configuration File
 ```bash
-cat > ~/.ammocoincore/ammocoin.conf <<'EOF'
+cat > ~/.ammocoin11/ammocoin.conf <<'EOF'
 # AMMOcoin v1.1.1 Production Configuration
 # seed1.ammocoin.org
 
@@ -402,19 +402,19 @@ printtoconsole=0
 EOF
 
 # Secure the config file
-chmod 600 ~/.ammocoincore/ammocoin.conf
+chmod 600 ~/.ammocoin11/ammocoin.conf
 ```
 
 ### Step 3: CHANGE RPC PASSWORD!
 ```bash
-nano ~/.ammocoincore/ammocoin.conf
+nano ~/.ammocoin11/ammocoin.conf
 # Change rpcpassword to a strong random password
 # Save: Ctrl+O, Enter, Ctrl+X
 ```
 
 ### Step 4: Verify Configuration
 ```bash
-cat ~/.ammocoincore/ammocoin.conf | grep -E "rpcuser|rpcpassword|port"
+cat ~/.ammocoin11/ammocoin.conf | grep -E "rpcuser|rpcpassword|port"
 # Ensure password is NOT "CHANGE_THIS_PASSWORD_NOW"
 ```
 
@@ -489,7 +489,7 @@ ammocoin-cli getnetworkinfo
 
 ### Step 7: Monitor Logs
 ```bash
-tail -50 ~/.ammocoincore/debug.log
+tail -50 ~/.ammocoin11/debug.log
 ```
 
 **Look for:**
@@ -542,7 +542,7 @@ fi
 echo ""
 
 echo "5. RECENT LOG ENTRIES:"
-tail -10 ~/.ammocoincore/debug.log | grep -v "UpdateTip"
+tail -10 ~/.ammocoin11/debug.log | grep -v "UpdateTip"
 echo ""
 
 echo "========================================="
@@ -573,8 +573,8 @@ Type=simple
 User=root
 # Required - without HOME the node exits with "Cannot find the Sapling parameters"
 Environment=HOME=/root
-ExecStart=/usr/local/bin/ammocoind -datadir=/root/.ammocoincore -daemon=0
-ExecStop=/usr/local/bin/ammocoin-cli -datadir=/root/.ammocoincore stop
+ExecStart=/usr/local/bin/ammocoind -datadir=/root/.ammocoin11 -daemon=0
+ExecStop=/usr/local/bin/ammocoin-cli -datadir=/root/.ammocoin11 stop
 Restart=on-failure
 TimeoutStopSec=120
 
@@ -612,7 +612,7 @@ sudo netstat -tulpn | grep 37020
 ammocoin-cli getblockchaininfo | grep blocks
 
 # 5. No errors in log?
-tail -100 ~/.ammocoincore/debug.log | grep -i error
+tail -100 ~/.ammocoin11/debug.log | grep -i error
 
 # 6. DNS resolves correctly?
 dig seed1.ammocoin.org
@@ -663,7 +663,7 @@ make -j$(nproc)
 ### Node Won't Start
 ```bash
 # Check debug log
-cat ~/.ammocoincore/debug.log
+cat ~/.ammocoin11/debug.log
 
 # Check if port is already in use
 sudo netstat -tulpn | grep 37020
@@ -701,8 +701,8 @@ sudo cp "$BACKUP_DIR/ammocoin-cli-old" /usr/local/bin/ammocoin-cli
 sudo chmod +x /usr/local/bin/ammocoin*
 
 # Restore old data
-rm -rf ~/.ammocoincore
-cp -r "$BACKUP_DIR/data" ~/.ammocoincore
+rm -rf ~/.ammocoin11
+cp -r "$BACKUP_DIR/data" ~/.ammocoin11
 
 # Start old node
 ammocoind -daemon
@@ -725,7 +725,7 @@ Upgrade your nodes to v1.1.1 (v1.0/v1.1.0 nodes cannot connect):
 - Download: <v1.1.1 release URL - official GitHub release>
 - Add seed node: ammocoin-cli addnode "seed1.ammocoin.org:37020" "add"
 
-v1.1.1 uses a new data folder (~/.ammocoincore); do not copy old blockchain data.
+v1.1.1 uses a new data folder (~/.ammocoin11); do not copy old blockchain data.
 ```
 
 ### 2. Monitor Continuously
@@ -758,7 +758,7 @@ ammocoin-cli getpeerinfo
 
 ### View Logs
 ```bash
-tail -f ~/.ammocoincore/debug.log
+tail -f ~/.ammocoin11/debug.log
 ```
 
 ### Restart Node

@@ -160,9 +160,9 @@ When you first open your wallet:
 #### Method 2: Wallet.dat Backup
 1. **Close** AMMOcoin wallet
 2. **Navigate** to data directory:
-   - Windows: `%APPDATA%\AMMOcoinCore\`
-   - macOS: `~/Library/Application Support/AMMOcoinCore/`
-   - Linux: `~/.ammocoincore/`
+   - Windows: `%APPDATA%\AMMOcoin11\`
+   - macOS: `~/Library/Application Support/AMMOcoin11/`
+   - Linux: `~/.ammocoin11/`
    - (v1.0 and v1.1.0 used `AMMOcoin` / `.ammocoin` - keep any `wallet.dat` you find there too)
 3. **Copy** `wallet.dat` file
 4. **Store** in multiple secure locations
