@@ -19,24 +19,45 @@ Open [`data/quartermaster-pledges.csv`](data/quartermaster-pledges.csv) and
 find your address. Copy the **message** column for your address exactly —
 every character, on one line. Your pledge amount is in it.
 
-## 2. Sign it, offline if you like
+## 2. Sign it, offline
 
-Any wallet that holds the key for that address works, **v1.0 or v1.1.1**
-(same keys, same signing format). It does not need to be synced or online,
-and the v1.0 network does not need to be running.
+You need three things: a **copy** of your `wallet.dat` (or the private key
+for your address), any AMMOcoin wallet program, and your wallet passphrase if
+it is encrypted. No network and no synced chain are needed — v1.0 and v1.1.x
+use the same keys, addresses and message-signing format, so the v1.0 network
+does not have to be running.
 
-**Qt wallet:** File → Sign message. Paste your address, paste the message,
-click *Sign Message*, copy the signature.
+**Program:** the v1.0 wallet you already have, or v1.1.0 / v1.1.1 from the
+official GitHub releases (`https://github.com/everquin/AMMOcoin/releases`).
 
-**Command line** (start the wallet, unlock it if encrypted, then):
+**Always work on a copy, in a new empty folder.** Newer wallets may upgrade
+an old wallet file when they open it, and v1.1.0 uses the same default
+folder as v1.0 — so never point it at your original folder.
 
 ```bash
-ammocoin-cli signmessage "<your address>" "<the message, exactly>"
+mkdir ~/ammo-pledge
+cp <path to your old folder>/wallet.dat ~/ammo-pledge/
+ammocoind -datadir=$HOME/ammo-pledge -connect=0 -listen=0 -daemon        # offline: no peers, no sync
+ammocoin-cli -datadir=$HOME/ammo-pledge walletpassphrase "<passphrase>" 300   # only if encrypted
+ammocoin-cli -datadir=$HOME/ammo-pledge signmessage "<your address>" "<your message, exactly>"
+ammocoin-cli -datadir=$HOME/ammo-pledge stop
 ```
 
-If your key is only in an old v1.0 `wallet.dat`, you can start v1.0 offline
-on a copy of it just to sign. Don't copy v1.0 `blocks/` or `chainstate/`
-anywhere.
+On Windows use `%USERPROFILE%\ammo-pledge` and the `.exe` names.
+
+**Desktop app instead:** start it with `-datadir=<the new folder> -connect=0`
+(AMMOcoin-Qt), then File → Sign message: paste your address and the message,
+click *Sign Message*, copy the signature. It will say it is out of sync —
+ignore that; signing doesn't need the chain.
+
+**Only have the private key** (paper wallet, or an old `dumpprivkey`)? Start
+the same offline wallet with an empty folder, then
+`ammocoin-cli -datadir=$HOME/ammo-pledge importprivkey "<key>" "" false`
+and sign as above. Type the key yourself; never paste it into chat, email or
+a website.
+
+Afterwards you can delete the `~/ammo-pledge` folder (your original wallet
+is untouched).
 
 ## 3. Send back only two things
 
