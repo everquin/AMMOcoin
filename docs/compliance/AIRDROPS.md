@@ -27,9 +27,28 @@ The v1.1 chain is a new chain (new genesis, new network magic from v1.1.1). The 
 ### Order of use of the block-1 reserve (AMMO-P-06)
 
 1. The airdrop is paid **first**.
-2. Only what remains after the airdrop (including any amounts held back for signed-message claims, section 3) funds the QuarterMaster reserve that holds the structured-release tier positions (AMMO-D-2026-10-17-02).
+2. Only what remains after the airdrop (including any amounts held back for signed-message claims, section 3, and the contributors' pledges below) funds the QuarterMaster reserve that holds the structured-release tier positions (AMMO-D-2026-10-17-02).
 
 This order is an off-chain commitment. It becomes checkable only once the records in section 4 are published.
+
+### Contributor pledges (AMMO-D-2026-10-18-12)
+
+The QuarterMaster reserve (40,000,000 tiers + 50,000,000 contributor reserve) is larger than what a full airdrop leaves in the block-1 reserve (17,602,251.54978477). The 61 largest v1.0 holders are early contributors who agreed to make up the difference: each pledges **33.121679%** of their snapshot balance, and their airdrop is paid minus that pledge. The pledged AMMO never leaves the block-1 reserve.
+
+| | AMMO |
+|---|---|
+| Block-1 reserve | 250,000,000.00000000 |
+| Snapshot total (10,080 addresses) | 232,397,748.45021523 |
+| Pledged by the 61 contributors (holding 218,707,052.19975480) | 72,439,448.45021523 |
+| Airdrop actually paid (snapshot − pledges) | 159,958,300.00000000 |
+| Zerocoin set aside, unclaimable (section 4, supply difference) | 41,700.00000000 |
+| **Left for the QuarterMaster and contributor reserves** | **90,000,000.00000000** |
+
+- Each pledge is a `signmessage` signature from the pledging address over the exact text in `docs/migration/data/quartermaster-pledges.csv` (built by `scripts/migration/build-pledges.py`; `--check` proves the file matches a fresh build). Signatures are checked with `scripts/migration/verify-pledges.py` and published.
+- The holder signs. Nobody signs for someone else, and no wallet or key is handed over: a pledge signed by anyone but the holder is not proof that the holder agreed.
+- Pledges are voluntary and nothing is given in return — no tier position, reward or payment.
+- No payout is built until every pledge is signed. A contributor who does not sign is paid their full snapshot balance like everyone else, and the pledge list is rebuilt and re-decided.
+- Disclosure: these 61 early holders hold 94.1% of the v1.0 snapshot; after the pledges they receive 146,267,603.75 of the 159,958,300.00 AMMO paid out.
 
 ---
 
@@ -78,6 +97,7 @@ All of the following are published in this repository (and linked from ammocoin.
 | Snapshot totals | 10,080 addresses, 232,397,748.45021523 AMMO (file `snapshot_info.total_supply`). The file records `expected_supply` 232,439,448.45021522 and `supply_match: false` (difference 41,700 AMMO). **TO BE PUBLISHED:** explanation of the difference before payout |
 | Airdrop payout transactions | **TO BE PUBLISHED:** list of txids (one row per batch: txid, block height, number of outputs, total AMMO), plus the broadcast audit log |
 | Per-address reconciliation | **TO BE PUBLISHED:** CSV of snapshot address, snapshot balance, payout txid, v1.1 amount received, status (paid / claim pending / claim paid) |
+| Contributor pledges | `docs/migration/data/quartermaster-pledges.csv` (61 addresses, 72,439,448.45021523 AMMO). **TO BE PUBLISHED:** the 61 signatures and the `verify-pledges.py` result |
 | Signed-message claims | **TO BE PUBLISHED:** running list of v1.0 address, v1.1 address, amount, payout txid, date (signatures may be published too; they reveal nothing secret) |
 | Block-1 reserve address | `AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u` (block 1 output; `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` is only the unspendable genesis output) |
 | Reserve change / holding addresses used by the payout | **TO BE PUBLISHED** |
@@ -107,5 +127,6 @@ Copy about the airdrop (site, app, social posts, release notes) must follow sect
 
 - `scripts/migration/verify-claim.py` still describes the withdrawn disposal-address model as current and calls the signed-message claim deprecated (it refuses to run without `--i-accept-the-risk`). That is the reverse of AMMO-D-2026-10-16-01. Update it before any claim is processed. `scripts/migration/README.md` still describes the tools as v1.0 -> v1.1.0 and lists `distribute-to-top-holders.py` (the earlier "Option 2.5" plan).
 - `scripts/migration/migration-prepare.py` usage text refers to a `genesis-top-holders.json` holders file (from the earlier "Option 2.5" plan). The payout must be built from the published snapshot file (section 4), or from a file whose derivation from it is published.
-- The snapshot file records `supply_match: false` (section 4).
+- The snapshot file records `supply_match: false` (section 4). Most likely explanation (not yet proven): 41,700 AMMO of zerocoin mints, which count in the v1.0 supply total but have no address. Confirm with the zerocoin supply (`getinfo`) on a v1.0 node at block 434,881. Either way the 41,700 is set aside as unclaimable (AMMO-D-2026-10-18-12).
+- `scripts/migration/migration-prepare.py` pays snapshot balances in full. It must take the signed pledge list and pay `airdrop_after_pledge` for the 61 pledging addresses before it is used.
 - The user guide's example claim message (`docs/migration/V1.0_BALANCE_AIRDROP.md`) does not name a destination address; align it with section 3.

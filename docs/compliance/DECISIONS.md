@@ -181,6 +181,17 @@ Not legal advice. Counsel review status: **pending**.
 - **Not enforced until then:** live glibz.com `shop_sync.php` still reads `glibz_ammo_usd_rate` if an admin sets it.
 - **Owner approval:** owner chose "Remove the rate" in the 2026-10-18 session. **Prepared by:** Claude.
 
+## AMMO-D-2026-10-18-12 Early contributors fund the QuarterMaster reserve by signed pledges; zerocoin 41,700 set aside
+
+- **Date:** 2026-10-18
+- **Principles:** AMMO-P-02, AMMO-P-06, AMMO-P-07, AMMO-P-13, AMMO-P-14
+- **Decision:** the 61 largest v1.0 snapshot addresses belong to individuals who helped start AMMOcoin and ran nodes and masternodes; by their consensus they fund the QuarterMaster reserve. Each pledges the same share (33.121679%) of their snapshot balance; their airdrop is paid minus the pledge, and the pledged AMMO stays in the block-1 reserve (no donations sent after the fact). Total pledged 72,439,448.45021523 AMMO, so the reserve keeps exactly 90,000,000 for the 40M tiers + 50M contributor reserve, plus 41,700 set aside for unclaimable zerocoin. The v1.0 network is not needed: v1.0 and v1.1.1 share address, key and message-signing formats, and the snapshot is fixed.
+- **Why:** the published "funded from what remains of the block-1 reserve after the airdrop" was arithmetically impossible (17.6M left vs 90M). Pledges make it true and checkable. A smaller airdrop instead of after-the-fact donations means no follow-through risk.
+- **Safeguards:** each holder signs their own pledge (`signmessage`); no wallet or key is collected or used on anyone's behalf (a third-party signature would not prove consent and would put most of the supply under one person's control). Pledges are voluntary with nothing in return. No payout until all 61 are signed; anyone who does not sign is paid in full and the list is rebuilt. The 94.1% concentration among these holders is disclosed in AIRDROPS.md.
+- **Enforcement / evidence:** `scripts/migration/build-pledges.py` (deterministic, refuses a snapshot with a different SHA256), `docs/migration/data/quartermaster-pledges.csv`, `scripts/migration/verify-pledges.py`, `docs/migration/PLEDGE_GUIDE.md`, AIRDROPS.md section 1.
+- **Not enforced yet:** `migration-prepare.py` still pays full snapshot balances; signatures not collected; reserve addresses not published (G-06). Public copy saying "funded from what remains after the airdrop" must add "and the early contributors' pledges" before launch.
+- **Owner approval:** owner, 2026-10-18 session ("all wallets on list are OURS … willing and agreed to donate percentages"; pro-rata; include the zerocoin set-aside). **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
