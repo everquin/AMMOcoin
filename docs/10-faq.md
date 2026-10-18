@@ -8,7 +8,7 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 **AMMOcoin** is a decentralized cryptocurrency built on Proof of Stake consensus, featuring masternodes, governance voting, and staking rewards. It offers fast 3-minute block times and focuses on community-driven development.
 
 ### Do I need to upgrade to v1.1.1?
-**Yes - everyone must upgrade.** v1.1.1 (upcoming) is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+**Yes - everyone must upgrade.** v1.1.1 (upcoming) is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoincore`, `~/Library/Application Support/AMMOcoinCore`, `%APPDATA%\AMMOcoinCore`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ### How do I get started with AMMOcoin?
 1. **Download** the wallet from official sources

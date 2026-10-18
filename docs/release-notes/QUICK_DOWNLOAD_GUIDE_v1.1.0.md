@@ -1,6 +1,6 @@
 # Quick Download Guide - AMMOcoin v1.1.0
 
-> **⚠️ Superseded by v1.1.1 (upcoming).** v1.1.0 binaries cannot follow the network after block 2,775. Wait for the v1.1.1 release; see [v1.1.1 Release Notes (draft)](RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **⚠️ Superseded by v1.1.1 (upcoming).** v1.1.0 binaries cannot follow the network after block 2,775. Wait for the v1.1.1 release; see [v1.1.1 Release Notes](RELEASE_NOTES_v1.1.1.md).
 
 **Version:** v1.1.0
 **Release Date:** December 28, 2025

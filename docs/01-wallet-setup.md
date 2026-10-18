@@ -4,7 +4,7 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 
 ## 📥 Download & Installation
 
-> ⚠️ **v1.1.1 (upcoming) is a mandatory hard fork.** From block 2,776 the network runs Proof-of-Stake and uses new network magic bytes, so v1.0 and v1.1.0 wallets can no longer connect. Install v1.1.1 when it is published on the official GitHub releases page. Download links and checksums will be added at release time - do not install binaries from any other source. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> ⚠️ **v1.1.1 (upcoming) is a mandatory hard fork.** From block 2,776 the network runs Proof-of-Stake and uses new network magic bytes, so v1.0 and v1.1.0 wallets can no longer connect. Install v1.1.1 when it is published on the official GitHub releases page. Download links and checksums will be added at release time - do not install binaries from any other source. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ### Windows Installation
 1. **Download** the v1.1.1 Windows release from the official GitHub releases page (once published)

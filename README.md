@@ -20,7 +20,7 @@ v1.1.1 switches the network to **Proof-of-Stake from block 2,776**. There is no 
 
 v1.1.1 is not released yet. Binaries and checksums will be published on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases) page. Do not install binaries from any other source.
 
-**📋 [v1.1.1 Release Notes (draft)](docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md)**
+**📋 [v1.1.1 Release Notes](docs/release-notes/RELEASE_NOTES_v1.1.1.md)**
 
 **📋 Genesis Block Hash (unchanged):** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
@@ -313,7 +313,7 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 ### Quick Links
 - **📖 [Full Documentation](docs/README.md)** - Complete documentation index
 - **🔄 [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md)** - how v1.0 balances reach v1.1 (send nothing)
-- **📦 [Release Notes v1.1.1 (draft)](docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md)** - PoS hard fork, upgrade checklist
+- **📦 [Release Notes v1.1.1](docs/release-notes/RELEASE_NOTES_v1.1.1.md)** - PoS hard fork, upgrade checklist
 - **📦 [Release Notes v1.1.0](docs/release-notes/RELEASE_NOTES_v1.1.0.md)** - What was new in v1.1.0
 - **⚡ [Genesis Block Authority](V1.1.0_GENESIS_BLOCK_AUTHORITY.md)** - Official genesis parameters
 

@@ -2,7 +2,7 @@
 
 Set up your own AMMOcoin masternode to provide network services, vote in governance and receive the masternode payment set by the code. This comprehensive guide covers everything from requirements to maintenance.
 
-> **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoincore` (Linux), `~/Library/Application Support/AMMOcoinCore` (macOS), `%APPDATA%\AMMOcoinCore` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoincore` (Linux), `~/Library/Application Support/AMMOcoinCore` (macOS), `%APPDATA%\AMMOcoinCore` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ## 🤔 What is a Masternode?
 
