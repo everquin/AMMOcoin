@@ -532,14 +532,15 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-// v1.1.1 uses its own folder so it never opens v1.0 data (v1.0 used AMMOcoin / .ammocoin)
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\AMMOcoinCore
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\AMMOcoinCore
-// Mac: ~/Library/Application Support/AMMOcoinCore
-// Unix: ~/.ammocoincore
+// v1.1.1 uses its own folder so it never opens older data (v1.0/v1.1.0 used AMMOcoin / .ammocoin;
+// the pre-release v1.1.1 lab network used AMMOcoinCore / .ammocoincore). See docs/MAINNET_SEPARATION.md.
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\AMMOcoin11
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\AMMOcoin11
+// Mac: ~/Library/Application Support/AMMOcoin11
+// Unix: ~/.ammocoin11
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "AMMOcoinCore";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "AMMOcoin11";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -551,10 +552,10 @@ fs::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectories(pathRet);
-    return pathRet / "AMMOcoinCore";
+    return pathRet / "AMMOcoin11";
 #else
     // Unix
-    return pathRet / ".ammocoincore";
+    return pathRet / ".ammocoin11";
 #endif
 #endif
 }

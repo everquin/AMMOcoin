@@ -293,11 +293,14 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 4-byte int at any alignment.
          */
-        // v1.1.1: new magic so v1.1 never handshakes with v1.0 nodes (v1.0 used 76 63 7a f3)
-        pchMessageStart[0] = 0xa3;
-        pchMessageStart[1] = 0x4d;
-        pchMessageStart[2] = 0xb1;
-        pchMessageStart[3] = 0xe7;
+        // v1.1.1 mainnet separation: own magic so v1.1 mainnet never handshakes with, or
+        // exchanges blocks/addresses with, older nodes. v1.0/v1.1.0 used 76 63 7a f3; the
+        // pre-release v1.1.1 lab network used a3 4d b1 e7. Also distinct from PIVX
+        // main/test/regtest (90 c4 fd e9 / f5 e6 d5 ca / a1 cf 7e ac). See docs/MAINNET_SEPARATION.md.
+        pchMessageStart[0] = 0xc7;
+        pchMessageStart[1] = 0x9a;
+        pchMessageStart[2] = 0xe3;
+        pchMessageStart[3] = 0xb5;
         nDefaultPort = 37020;
 
         // Note that of those with the service bits flag, most only support a subset of possible options

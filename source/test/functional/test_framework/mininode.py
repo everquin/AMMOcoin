@@ -84,7 +84,7 @@ MESSAGEMAP = {
 }
 
 MAGIC_BYTES = {
-    "mainnet": b"\x90\xc4\xfd\xe9",   # mainnet
+    "mainnet": b"\xc7\x9a\xe3\xb5",   # mainnet (v1.1.1, see src/chainparams.cpp)
     "testnet3": b"\x45\x76\x65\xba",  # testnet3
     "regtest": b"\xa1\xcf\x7e\xac",   # regtest
 }

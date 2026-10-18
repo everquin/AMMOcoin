@@ -2,8 +2,8 @@
 
 # backward compatibility for existing gentoo layout
 #
-if [ -d "/var/lib/ammocoin/.ammocoin" ]; then
-	BITCOIND_DEFAULT_DATADIR="/var/lib/ammocoin/.ammocoin"
+if [ -d "/var/lib/ammocoin/.ammocoin11" ]; then
+	BITCOIND_DEFAULT_DATADIR="/var/lib/ammocoin/.ammocoin11"
 else
 	BITCOIND_DEFAULT_DATADIR="/var/lib/ammocoind"
 fi
