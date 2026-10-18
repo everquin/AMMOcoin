@@ -152,7 +152,7 @@ v1.0 balances from the official snapshot at **v1.0 block 434,881** are airdroppe
 - If an address is missed, a signed-message claim (`signmessage` with your v1.0 address) is the fallback. A signature proves ownership without revealing your key.
 - There is no deadline. Earlier instructions with a deadline or a disposal address are withdrawn.
 
-The airdrop is paid first. Only what remains of the block-1 reserve after the airdrop funds the QuarterMaster reserve described in Section 12.
+The airdrop is paid first. The QuarterMaster reserve described in Section 12 is funded from the block-1 reserve after the v1.0 airdrop, together with voluntary pledges from the early contributors who hold the largest v1.0 balances.
 
 ---
 
@@ -331,7 +331,7 @@ The 1st Edition said AMMO "has no limit supply" and estimated about 12,000,000 n
 The two late steps are set by the mainnet parameters `nRewardZCV2Height = 1,153,160` and `nRewardV55Height = 3,715,200`. v1.1.1 activates every PIVX network upgrade at block 2,776, but keeps reward heights separate so the fork does not change what blocks pay.
 
 ### The totals
-- **Block-1 reserve:** 250,000,000 AMMO (airdrop to v1.0 holders first; the remainder funds the QuarterMaster reserve, Section 12).
+- **Block-1 reserve:** 250,000,000 AMMO (airdrop to v1.0 holders first; the QuarterMaster reserve, Section 12, is funded from the block-1 reserve after the airdrop, together with voluntary pledges from the early contributors who hold the largest v1.0 balances).
 - **Block rewards through block 3,715,200:** 66,620,770 AMMO.
 - **Total issued through block 3,715,200:** 316,620,770 AMMO from block rewards and the reserve.
 - **Treasury ceiling through block 3,715,200:** at most 12,549,600 AMMO across 86 superblocks, and only if every cycle's budget is fully allocated to approved proposals. Unallocated budget is never created.
@@ -403,7 +403,7 @@ At GLiBz you can do all of these things in one place, with one login, while keep
 - **Coming to GLiBz** (built and being switched on): an Earn hub listing every way to earn NUGGETS and AMMO, AMMO airdrops for ranking up and for referrals, and a bridge to the sister ecosystem everQUIN.
 
 ### The QuarterMaster reserve
-The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from what remains of the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**: v1.0 holders come first.
+The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**, together with voluntary pledges from the early contributors who hold the largest v1.0 balances: v1.0 holders come first. The 61 largest v1.0 holders, early contributors, pledged 33.121679% of their snapshot balances by signed message; their airdrop is reduced by that amount (AMMO-D-2026-10-18-12).
 
 The tiers and the contributor reserve are an off-chain distribution programme run by the AMMOcoin project. They are not a consensus rule, and nothing in the code reserves them.
 
