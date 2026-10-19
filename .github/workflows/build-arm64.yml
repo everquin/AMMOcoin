@@ -185,8 +185,7 @@ jobs:
           echo "Build completed successfully"
 
           echo "Installing binaries..."
-          # make deletes the tracked source/.cargo/.configured-for-online (offline Rust vendoring) after the
-          # first stamp; mark it before `make install` re-runs genbuild.sh, or the version reads "-dirty"
+          # make install re-runs genbuild.sh: re-check that nothing tracked changed since configure
           "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
           make install
           echo "Installation complete"
