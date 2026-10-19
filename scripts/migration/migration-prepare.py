@@ -25,6 +25,7 @@ Usage:
 
 import argparse
 import json
+from decimal import ROUND_CEILING, ROUND_DOWN, Decimal
 import subprocess
 import sys
 from datetime import datetime
@@ -61,6 +62,33 @@ def load_holders(path: Path) -> list[dict[str, Any]]:
     return holders
 
 
+def split_oversize(holders: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Owner decision AMMO-D-2026-10-18-13: keep the per-recipient cap and
+    pay a larger balance in several outputs of at most MAX_PER_RECIPIENT_AMMO,
+    each in its own transaction (an address can appear only once per tx).
+
+    Returns (holders with each address once — oversize ones cut to their
+    first part, extra parts). Amounts are split exactly in satoshis."""
+    cap = Decimal(MAX_PER_RECIPIENT_AMMO)
+    sat = Decimal("0.00000001")
+    main: list[dict[str, Any]] = []
+    extras: list[dict[str, Any]] = []
+    for h in holders:
+        amt = Decimal(str(h["balance"]))
+        if amt <= cap:
+            main.append(h)
+            continue
+        n = int((amt / cap).to_integral_value(rounding=ROUND_CEILING))
+        part = (amt / n).quantize(sat, rounding=ROUND_DOWN)
+        parts = [part] * n
+        parts[-1] = amt - part * (n - 1)
+        assert sum(parts) == amt and all(x <= cap for x in parts)
+        main.append({**h, "balance": f"{parts[0]:.8f}", "part": f"1/{n}"})
+        for i, x in enumerate(parts[1:], start=2):
+            extras.append({**h, "balance": f"{x:.8f}", "part": f"{i}/{n}"})
+    return main, extras
+
+
 def enforce_bounds(holders: list[dict[str, Any]]) -> float:
     total = 0.0
     for h in holders:
@@ -75,80 +103,87 @@ def enforce_bounds(holders: list[dict[str, Any]]) -> float:
     return total
 
 
+def plan_chunks(main: list[dict[str, Any]], extras: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
+    """Recipient groups, one per transaction: the holders in groups of
+    MAX_RECIPIENTS_PER_TX, then each extra part of an oversize balance on its
+    own, so no address is ever paid twice in one transaction."""
+    chunks = [main[i : i + MAX_RECIPIENTS_PER_TX] for i in range(0, len(main), MAX_RECIPIENTS_PER_TX)]
+    chunks += [[x] for x in extras]
+    for c in chunks:
+        addrs = [h["address"] for h in c]
+        assert len(addrs) == len(set(addrs)), "address repeated inside one transaction"
+    return chunks
+
+
+def chunk_need(chunk: list[dict[str, Any]]) -> Decimal:
+    return sum((Decimal(str(h["balance"])) for h in chunk), Decimal(0)) + Decimal(str(FEE_PER_TX_AMMO))
+
+
 def list_watch_utxos(binary: str) -> list[dict[str, Any]]:
     raw = cli(binary, "listunspent", "1", "9999999", "[]", "true", '{"include_unsafe": false}')
     return json.loads(raw)
 
 
-def select_utxos(utxos: list[dict[str, Any]], target_ammo: float) -> list[dict[str, Any]]:
-    # Largest-first selection. We only need to cover target + fees; donor
-    # address change handling is left to the offline signer (it inspects
-    # the unsigned tx and adds change as needed).
-    sorted_u = sorted(utxos, key=lambda u: -float(u["amount"]))
-    picked: list[dict[str, Any]] = []
-    acc = 0.0
-    for u in sorted_u:
+def build_fanout(binary: str, chunks: list[list[dict[str, Any]]], fanout_addresses: list[str],
+                 change_address: str | None) -> dict[str, Any]:
+    """One unsigned transaction that splits the reserve into one UTXO per
+    payout batch (to the operator's own fan-out addresses, one per batch,
+    since an address can take only one output per tx). Without it every
+    batch would select the same reserve UTXO and all but the first would be
+    double spends."""
+    if len(fanout_addresses) < len(chunks):
+        raise RuntimeError(f"Need {len(chunks)} distinct fan-out addresses, got {len(fanout_addresses)}.")
+    needs = [chunk_need(c) for c in chunks]
+    target = sum(needs, Decimal(0)) + Decimal(str(FEE_PER_TX_AMMO))
+    utxos = sorted(list_watch_utxos(binary), key=lambda u: -Decimal(str(u["amount"])))
+    picked, acc = [], Decimal(0)
+    for u in utxos:
         picked.append(u)
-        acc += float(u["amount"])
-        if acc >= target_ammo:
-            return picked
-    raise RuntimeError(
-        f"Watch-only wallet UTXO total {acc:,.8f} is below target {target_ammo:,.8f}. "
-        "Verify the watch-only wallet is fully synced and contains the migration fund."
-    )
+        acc += Decimal(str(u["amount"]))
+        if acc >= target:
+            break
+    if acc < target:
+        raise RuntimeError(f"Watch-only UTXOs {acc} below fan-out target {target}.")
+    outputs = {a: f"{n:.8f}" for a, n in zip(fanout_addresses, needs)}
+    change = acc - target
+    if change > Decimal(str(DUST_TOLERANCE_AMMO)):
+        if not change_address or change_address in outputs:
+            raise RuntimeError("A separate --change-address is required for the fan-out change.")
+        outputs[change_address] = f"{change:.8f}"
+    inputs = [{"txid": u["txid"], "vout": u["vout"]} for u in picked]
+    raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
+    return {"batch_index": "fanout", "recipients": [], "inputs": inputs, "outputs": outputs, "unsigned_hex": raw_hex}
 
 
 def build_batches(
-    binary: str, holders: list[dict[str, Any]], change_address: str | None
+    binary: str, chunks: list[list[dict[str, Any]]], change_address: str | None
 ) -> list[dict[str, Any]]:
+    """One unsigned tx per chunk. Each spends its OWN UTXO (made by the
+    fan-out step): the closest unused UTXO that covers it. A UTXO is never
+    used by two batches."""
+    utxos = list_watch_utxos(binary)
+    used: set[tuple[str, int]] = set()
     batches: list[dict[str, Any]] = []
-    for start in range(0, len(holders), MAX_RECIPIENTS_PER_TX):
-        chunk = holders[start : start + MAX_RECIPIENTS_PER_TX]
-        chunk_total = sum(float(h["balance"]) for h in chunk) + FEE_PER_TX_AMMO
-
-        utxos = list_watch_utxos(binary)
-        picked = select_utxos(utxos, chunk_total)
-
-        inputs = [{"txid": u["txid"], "vout": u["vout"]} for u in picked]
-        outputs = {h["address"]: f"{float(h['balance']):.8f}" for h in chunk}
-
-        # Change is handled by the offline signer using fundrawtransaction
-        # OR by computing it here. We compute it here so the offline signer
-        # is deterministic and never has to call into the daemon for
-        # selection logic.
-        picked_total = sum(float(u["amount"]) for u in picked)
-        change = picked_total - sum(float(h["balance"]) for h in chunk) - FEE_PER_TX_AMMO
-        if change < -DUST_TOLERANCE_AMMO:
+    for idx, chunk in enumerate(chunks):
+        need = chunk_need(chunk)
+        free = [u for u in utxos if (u["txid"], u["vout"]) not in used and Decimal(str(u["amount"])) >= need]
+        if not free:
             raise RuntimeError(
-                f"Batch {start//MAX_RECIPIENTS_PER_TX + 1}: change={change:.8f} is negative; "
-                "selected UTXOs do not cover outputs + fee."
+                f"Batch {idx + 1}: no unused UTXO covers {need} AMMO. Run --fan-out first, "
+                "sign and broadcast it, wait for confirmations, then rerun."
             )
-        if change > DUST_TOLERANCE_AMMO:
-            if not change_address:
-                raise RuntimeError(
-                    "Change address required but not supplied. Pass --change-address."
-                )
+        u = min(free, key=lambda x: Decimal(str(x["amount"])))
+        used.add((u["txid"], u["vout"]))
+        inputs = [{"txid": u["txid"], "vout": u["vout"]}]
+        outputs = {h["address"]: f"{Decimal(str(h['balance'])):.8f}" for h in chunk}
+        change = Decimal(str(u["amount"])) - need
+        if change > Decimal(str(DUST_TOLERANCE_AMMO)):
+            if not change_address or change_address in outputs:
+                raise RuntimeError("Change address required (and must not be a recipient). Pass --change-address.")
             outputs[change_address] = f"{change:.8f}"
-
-        # createrawtransaction validates inputs/outputs structure but does
-        # NOT sign anything — perfect for the watch-only build step.
-        # Note: outputs is a JSON object string.
-        raw_hex = cli(
-            binary,
-            "createrawtransaction",
-            json.dumps(inputs),
-            json.dumps(outputs),
-        )
-
-        batches.append(
-            {
-                "batch_index": len(batches),
-                "recipients": chunk,
-                "inputs": inputs,
-                "outputs": outputs,
-                "unsigned_hex": raw_hex,
-            }
-        )
+        raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
+        batches.append({"batch_index": idx, "recipients": chunk, "inputs": inputs,
+                        "outputs": outputs, "unsigned_hex": raw_hex})
     return batches
 
 
@@ -158,6 +193,9 @@ def main() -> int:
     p.add_argument("--watch-wallet", default="ammocoin-cli", help="Path to ammocoin-cli")
     p.add_argument("--change-address", default=None, help="Address to receive change (watch-only)")
     p.add_argument("--output", default=None, type=Path, help="Output JSON path")
+    p.add_argument("--fan-out", default=None, type=Path, metavar="ADDRESSES_FILE",
+                   help="Build only the fan-out tx: one reserve UTXO per batch, to these "
+                        "operator-owned addresses (one per line). Run this first.")
     args = p.parse_args()
 
     out_path = args.output or Path(
@@ -168,8 +206,12 @@ def main() -> int:
     print("=" * 64)
 
     holders = load_holders(args.holders)
-    total = enforce_bounds(holders)
-    n_batches = (len(holders) + MAX_RECIPIENTS_PER_TX - 1) // MAX_RECIPIENTS_PER_TX
+    main_holders, extras = split_oversize(holders)
+    total = enforce_bounds(main_holders) + enforce_bounds(extras)
+    chunks = plan_chunks(main_holders, extras)
+    n_batches = len(chunks)
+    if extras:
+        print(f"  Oversize balances split: {len(extras)} extra output(s), each its own tx")
     fee_total = n_batches * FEE_PER_TX_AMMO
 
     print(f"  Holders to fund:       {len(holders)}")
@@ -184,7 +226,11 @@ def main() -> int:
         print("Aborted.")
         return 1
 
-    batches = build_batches(args.watch_wallet, holders, args.change_address)
+    if args.fan_out:
+        addrs = [l.strip() for l in args.fan_out.read_text().splitlines() if l.strip()]
+        batches = [build_fanout(args.watch_wallet, chunks, addrs, args.change_address)]
+    else:
+        batches = build_batches(args.watch_wallet, chunks, args.change_address)
 
     artifact = {
         "schema_version": "1",

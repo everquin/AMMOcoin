@@ -81,8 +81,8 @@ def main() -> None:
     }, indent=1))
     print(f"wrote {a.output}: {len(holders)} addresses, {total:,.8f} AMMO")
     if over:
-        print(f"NOTE: {len(over)} address(es) exceed migration-prepare.py's {MAX_PER_RECIPIENT:,} cap "
-              f"(largest {max(Decimal(h['balance']) for h in over):,.8f}); it will refuse until the owner decides.")
+        print(f"NOTE: {len(over)} address(es) exceed the {MAX_PER_RECIPIENT:,} cap; migration-prepare.py splits them into ≤cap outputs in separate transactions "
+              f"(largest {max(Decimal(h['balance']) for h in over):,.8f}).")
 
 
 if __name__ == "__main__":

@@ -192,6 +192,15 @@ Not legal advice. Counsel review status: **pending**.
 - **Not enforced yet:** `migration-prepare.py` still pays full snapshot balances; signatures not collected; reserve addresses not published (G-06). Public copy saying "funded from what remains after the airdrop" must add "and the early contributors' pledges" before launch.
 - **Owner approval:** owner, 2026-10-18 session ("all wallets on list are OURS … willing and agreed to donate percentages"; pro-rata; include the zerocoin set-aside). **Prepared by:** Claude.
 
+## AMMO-D-2026-10-18-13 Payout cap kept; oversize balance split; one reserve UTXO per batch
+
+- **Date:** 2026-10-18
+- **Principles:** AMMO-P-13 (safety in migrations and distributions)
+- **Decision:** the 10,000,000 AMMO per-recipient safety cap in `migration-prepare.py` stays. A balance above it (only `ANj3fDwDYTjf1Mb7XvgjHLrs6aSKeKXakL`, 24,713,345.21078793 after its pledge) is paid in outputs of at most 10M, each in its own transaction, exact to the satoshi.
+- **Also fixed:** every payout batch used to select the same reserve UTXO, so only the first transaction could confirm. The payout now starts with a fan-out transaction (one UTXO per batch, operator-owned addresses) and each batch spends a distinct UTXO.
+- **Enforcement / evidence:** `scripts/migration/migration-prepare.py` (`split_oversize`, `plan_chunks`, `build_fanout`, `build_batches`), `scripts/migration/test_migration_prepare.py`.
+- **Owner approval:** owner chose "Split into ≤10M outputs" in the 2026-10-18 session. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)

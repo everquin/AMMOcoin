@@ -49,7 +49,21 @@ Migration data files are located in `docs/migration/data/`:
 
 ## Usage
 
-See `docs/MIGRATION_COMPLETE_SUMMARY.md` for detailed usage instructions.
+v1.0 → v1.1 airdrop payout (AMMO-D-2026-10-18-12/-13; see docs/compliance/AIRDROPS.md):
+
+1. `build-pledges.py --check` — the pledge list matches the snapshot.
+2. `verify-pledges.py signatures.csv --cli "<ammocoin-cli -datadir=…>"` — all 61 signed.
+3. `build-payout-holders.py signatures.csv --cli … --output payout-holders.json`.
+4. `migration-prepare.py --holders payout-holders.json --fan-out fanout-addresses.txt --change-address <reserve change>` —
+   ONE transaction splitting the reserve into one UTXO per batch (fan-out addresses: one per batch, generated on the
+   offline signer and imported watch-only). Sign offline, broadcast, wait for confirmations.
+5. `migration-prepare.py --holders payout-holders.json --change-address <reserve change>` — the payout batches, each
+   spending its own fan-out UTXO; balances over 10M are split into ≤10M outputs in separate transactions.
+6. `migration-sign-offline.py`, then `migration-broadcast.py`, then `verify-migration.py`.
+
+Tests: `python3 scripts/migration/test_migration_prepare.py`.
+
+Older detail: `docs/MIGRATION_COMPLETE_SUMMARY.md`.
 
 ---
 
