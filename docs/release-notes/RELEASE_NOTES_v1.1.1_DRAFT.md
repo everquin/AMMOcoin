@@ -23,7 +23,7 @@ The v1.1 chain stopped at block 2,775 after its Proof-of-Work phase. v1.1.1 swit
 | Consensus | Proof-of-Work | **Proof-of-Stake from block 2,776** (no mining) |
 | Network magic | v1.0-compatible | `c7 9a e3 b5` (separate network) |
 | Default data folder | `.ammocoin` / `AMMOcoin` | `.ammocoin11` / `AMMOcoin11` (see below) |
-| Fixed seed nodes | 78.141.194.140, 147.182.245.102 (dead) | 78.141.194.140, 104.238.165.56 |
+| Fixed seed nodes | 78.141.194.140, 147.182.245.102 (dead) | 78.141.194.140, 104.238.165.56, 207.246.95.210, 45.76.116.97, 144.202.79.114 (DNS: seed1-3.ammocoin.org) |
 | Linux binaries | glibc 2.31+ | **glibc 2.34+** (Ubuntu 22.04 or newer) |
 
 Other fixes in this release:

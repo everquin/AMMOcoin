@@ -307,6 +307,7 @@ public:
         // AMMOcoin DNS seed nodes
         vSeeds.emplace_back("seed1.ammocoin.org", true);    // Primary DNS Seeder
         vSeeds.emplace_back("seed2.ammocoin.org", true);    // Secondary DNS Seeder
+        vSeeds.emplace_back("seed3.ammocoin.org", true);    // A records for the New York, Sydney and Dallas seeds
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 23);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 24);
