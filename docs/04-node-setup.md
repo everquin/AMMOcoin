@@ -2,7 +2,7 @@
 
 Set up your own AMMOcoin full node to contribute to network decentralization, improve privacy, and gain complete control over your transactions.
 
-> **v1.1.1 (upcoming):** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **v1.1.1 (upcoming):** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ## 🤔 What is a Full Node?
 

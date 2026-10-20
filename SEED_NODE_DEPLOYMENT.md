@@ -480,7 +480,7 @@ After successful setup, your seed node should show something like:
 
 - **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
 - **Documentation:** https://github.com/everquin/AMMOcoin/tree/main/docs
-- **Release notes:** [docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md](docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md)
+- **Release notes:** [docs/release-notes/RELEASE_NOTES_v1.1.1.md](docs/release-notes/RELEASE_NOTES_v1.1.1.md)
 
 ---
 

@@ -2,7 +2,7 @@
 
 Stake your AMMOcoin to help secure the network. This guide explains how Proof of Stake works and how block rewards are paid, in the terms the code uses.
 
-> ⚠️ **v1.1.1 (upcoming):** the network switches to Proof-of-Stake at **block 2,776**. There is no mining after the fork - staking is the only way new blocks are made. You must run **v1.1.1** to stake; v1.0 and v1.1.0 nodes cannot connect to the new network. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> ⚠️ **v1.1.1 (upcoming):** the network switches to Proof-of-Stake at **block 2,776**. There is no mining after the fork - staking is the only way new blocks are made. You must run **v1.1.1** to stake; v1.0 and v1.1.0 nodes cannot connect to the new network. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ## 🤔 What is Staking?
 
