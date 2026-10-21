@@ -1,6 +1,8 @@
-# Test AMMOcoin v1.1.0 Locally on macOS
+# Test AMMOcoin v1.1.1 (upcoming) Locally on macOS
 
-**Quick guide to run and test v1.1.0 on your Mac (Apple Silicon)**
+**Quick guide to run and test v1.1.1 on your Mac (Apple Silicon)**
+
+> **v1.1.1 notes:** Mainnet is Proof-of-Stake from block 2,776 - there is no mining. `generate` only works on **regtest**, so the block-generation steps below run a separate regtest node (`-regtest`). The default mainnet data dir on macOS is now `~/Library/Application Support/AMMOcoin11` (was `.../AMMOcoin`); this guide uses its own test folder so it never touches it. Mainnet ports: P2P 37020, RPC 51473 (regtest RPC defaults to 51477). v1.1.1 does not connect to v1.0 or v1.1.0 nodes.
 
 ---
 
@@ -29,7 +31,7 @@ Your macOS ARM64 binaries are at:
 
 **Verified:**
 - Architecture: ARM64 (Apple Silicon)
-- Version: v1.1.0.0-f89ff1e
+- Version: v1.1.1 (build from the v1.1.1 tag / `v1.1.1-pos-fork` branch)
 - Type: Mach-O 64-bit executable
 
 ---
@@ -43,7 +45,7 @@ Open Terminal and run:
 ```bash
 # Set convenient aliases for this session
 export AMMOCOIN_SRC="/Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src"
-export AMMOCOIN_TEST_DATA="$HOME/.ammocoin-v1.1.0-test"
+export AMMOCOIN_TEST_DATA="$HOME/.ammocoin-v1.1.1-test"
 
 # Verify binaries exist
 ls -lh "$AMMOCOIN_SRC/ammocoind"
@@ -87,7 +89,7 @@ RPC_PASS=$(openssl rand -hex 32)
 
 # Create test configuration
 cat > "$AMMOCOIN_TEST_DATA/ammocoin.conf" << EOF
-# AMMOcoin v1.1.0 Local Test Node
+# AMMOcoin v1.1.1 Local Test Node
 # This is for TESTING ONLY - isolated from production network
 
 # Server settings
@@ -163,8 +165,8 @@ fi
 **Expected output:**
 ```json
 {
-  "version": 1010000,
-  "protocolversion": 70016,
+  "version": 1010100,
+  "protocolversion": 70927,
   "walletversion": 61000,
   "balance": 0.00000000,
   "blocks": 0,
@@ -182,24 +184,29 @@ fi
 
 ### Step 6: Test Basic Commands
 
+`generate` is regtest-only, so start a regtest node next to the mainnet test node (same folder, data goes into `regtest/`):
+
 ```bash
+# Start a regtest node (PoW until block 250, PoS from 251 on regtest)
+"$AMMOCOIN_SRC/ammocoind" -datadir="$AMMOCOIN_TEST_DATA" -regtest -daemon
+sleep 10
 # Get blockchain info
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getblockchaininfo
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getblockchaininfo
 
 # Get new address
-TEST_ADDR=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getnewaddress "test")
+TEST_ADDR=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getnewaddress "test")
 echo "Test Address: $TEST_ADDR"
 
 # Generate a few test blocks
 echo "Generating 10 test blocks..."
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 10
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest generate 10
 
 # Check balance
-BALANCE=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getbalance)
+BALANCE=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getbalance)
 echo "Balance: $BALANCE AMMO"
 
 # List transactions
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" listtransactions "" 5
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest listtransactions "" 5
 ```
 
 ---
@@ -207,7 +214,7 @@ echo "Balance: $BALANCE AMMO"
 ### Step 7: Monitor Logs
 
 ```bash
-# Watch the debug log
+# Watch the debug log (mainnet test node; regtest logs to regtest/debug.log)
 tail -f "$AMMOCOIN_TEST_DATA/debug.log"
 
 # Press Ctrl+C to exit when done
@@ -239,13 +246,13 @@ tail -f "$AMMOCOIN_TEST_DATA/debug.log"
 
 ```bash
 # Generate blocks (for testing supply generation)
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 100
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest generate 100
 
 # Check current block height
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getblockcount
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getblockcount
 
 # Get specific block
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getblock $("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getblockhash 1)
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getblock $("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getblockhash 1)
 ```
 
 ---
@@ -274,8 +281,9 @@ tail -f "$AMMOCOIN_TEST_DATA/debug.log"
 ## 🛑 Stop Test Node
 
 ```bash
-# Graceful shutdown
+# Graceful shutdown (mainnet test node and regtest node)
 "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" stop
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest stop 2>/dev/null
 
 # Wait for clean shutdown
 sleep 5
@@ -302,11 +310,11 @@ echo "✓ Test data cleaned up"
 
 ### ✅ Success Criteria:
 
-1. **Binary runs:** `ammocoind --version` shows v1.1.0
+1. **Binary runs:** `ammocoind --version` shows v1.1.1
 2. **Daemon starts:** Process appears in `ps aux | grep ammocoind`
 3. **RPC works:** `ammocoin-cli getinfo` returns JSON
 4. **Correct genesis:** Block 0 hash is `0x000000593410...`
-5. **Can generate blocks:** `generate 10` creates 10 blocks
+5. **Can generate blocks (regtest only):** `-regtest generate 10` creates 10 blocks
 6. **Balance increases:** After generating blocks, balance > 0
 7. **Wallet works:** Can create addresses, send transactions
 
@@ -318,7 +326,7 @@ echo "✓ Test data cleaned up"
 
 ```bash
 # Time how long it takes to generate 100 blocks
-time "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 100
+time "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest generate 100
 ```
 
 ---
@@ -329,8 +337,8 @@ time "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 100
 # Generate significant supply
 for i in {1..10}; do
     echo "Batch $i: Generating 1000 blocks..."
-    "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 1000
-    BALANCE=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getbalance)
+    "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest generate 1000
+    BALANCE=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getbalance)
     echo "Current balance: $BALANCE AMMO"
 done
 ```
@@ -341,24 +349,24 @@ done
 
 ```bash
 # Generate supply first
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 100
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest generate 100
 
 # Create two addresses
-ADDR1=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getnewaddress "test1")
-ADDR2=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getnewaddress "test2")
+ADDR1=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getnewaddress "test1")
+ADDR2=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest getnewaddress "test2")
 
 # Send transaction
-TXID=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" sendtoaddress "$ADDR2" 100.0)
+TXID=$("$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest sendtoaddress "$ADDR2" 100.0)
 echo "Transaction ID: $TXID"
 
 # Get transaction details
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" gettransaction "$TXID"
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest gettransaction "$TXID"
 
 # Generate a block to confirm
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" generate 1
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest generate 1
 
 # Check transaction confirmations
-"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" gettransaction "$TXID" | grep confirmations
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" -regtest gettransaction "$TXID" | grep confirmations
 ```
 
 ---
@@ -411,10 +419,10 @@ cat "$AMMOCOIN_TEST_DATA/ammocoin.conf"
 ```
 Local Test Setup:
 ├── Binaries: /Volumes/CRUCIAL_2TB/GITHUB/AMMOcoin/source/src/
-├── Test Data: ~/.ammocoin-v1.1.0-test/
+├── Test Data: ~/.ammocoin-v1.1.1-test/
 ├── Parameters: ~/.ammocoin-params/
 ├── Credentials: ~/ammocoin-test-credentials.txt
-└── Config: ~/.ammocoin-v1.1.0-test/ammocoin.conf
+└── Config: ~/.ammocoin-v1.1.1-test/ammocoin.conf
 ```
 
 **NOTE:** This is completely separate from:
@@ -440,13 +448,14 @@ Once you've verified the macOS binaries work:
 To connect your local test node to the production seed:
 
 ```bash
-# Edit config to enable networking
+# Edit config to enable networking (remove the isolation lines first)
+sed -i '' '/^connect=0/d; /^listen=0/d' "$AMMOCOIN_TEST_DATA/ammocoin.conf"
 cat >> "$AMMOCOIN_TEST_DATA/ammocoin.conf" << EOF
 
-# Connect to production seed
+# Connect to production seeds (v1.1.1 mainnet)
 listen=1
-connect=1
-addnode=seed1.ammocoin.org:37020
+addnode=78.141.194.140:37020
+addnode=104.238.165.56:37020
 EOF
 
 # Restart daemon
@@ -454,8 +463,11 @@ EOF
 sleep 5
 "$AMMOCOIN_SRC/ammocoind" -datadir="$AMMOCOIN_TEST_DATA" -daemon
 
-# Check connections
+# Check connections (only v1.1.1 peers will connect)
 "$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getpeerinfo
+
+# Once synced, the height must be past 2,775 (PoS from 2,776)
+"$AMMOCOIN_SRC/ammocoin-cli" -datadir="$AMMOCOIN_TEST_DATA" getblockcount
 ```
 
 ---

@@ -9,7 +9,7 @@ AMMOcoin Core v1.1.0
 
 AMMOcoin is a modern, privacy-focused cryptocurrency built on advanced blockchain technology, emphasizing five core principles:
 
-**(1) Advanced Privacy Protection**: Through Sapling zero-knowledge proof technology, enabling completely private transactions while maintaining network transparency and auditability.
+**(1) Optional Privacy Protection**: Sapling zero-knowledge shielded addresses are available for users who choose them; the chain is transparent by default and remains auditable.
 
 **(2) Energy-Efficient Consensus**: Utilizing an advanced Proof-of-Stake protocol that dramatically reduces environmental impact while ensuring network security and broad participation.
 
@@ -24,7 +24,7 @@ For detailed specifications and community resources, visit [AMMOcoin.org](https:
 ## Key Features
 
 ### 🛡️ **Privacy Technology**
-- **Sapling Protocol**: Zero-knowledge proofs for completely private transactions
+- **Sapling Protocol**: Optional shielded (zero-knowledge) transactions; AMMO is transparent by default, the transparent side of shielding/unshielding is visible, and peers can see your IP
 - **Shielded Addresses**: Optional privacy for enhanced transaction confidentiality
 - **Selective Disclosure**: Users control transaction visibility
 
@@ -36,7 +36,7 @@ For detailed specifications and community resources, visit [AMMOcoin.org](https:
 ### 🏛️ **Governance & Economics**
 - **Decentralized Voting**: Community-driven development decisions
 - **Treasury System**: Sustainable funding for ecosystem growth
-- **Staking Rewards**: Passive income for network participants
+- **Staking Rewards**: Stakers who create a block receive the staker share set by `GetBlockValue()`
 
 ### 🔧 **Developer Features**
 - **JSON-RPC API**: Complete programmatic blockchain access

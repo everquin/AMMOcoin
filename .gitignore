@@ -98,3 +98,9 @@ releases/*.dmg
 
 # Blockchain data directories
 .ammocoin/
+
+# Rust vendoring stamps/config written by src/Makefile (make deletes/creates these; tracking
+# them made share/genbuild.sh stamp CI builds "-dirty")
+source/.cargo/.configured-for-online
+source/.cargo/.configured-for-offline
+source/.cargo/config

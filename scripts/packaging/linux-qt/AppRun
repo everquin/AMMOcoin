@@ -1,0 +1,20 @@
+#!/bin/sh
+# AppImage entry point for the AMMOcoin wallet.
+# The wallet needs the Sapling parameters at startup. This AppImage carries a verified copy:
+# on first run it is copied to ~/.ammocoin-params (so restarts, ammocoind and ammocoin-cli
+# find it too); if that fails the wallet is pointed at the bundled copy with -paramsdir.
+HERE=$(dirname "$(readlink -f "$0")")
+BIN="$HERE/usr/bin/ammocoin-qt"
+BUNDLED="$HERE/usr/share/ammocoin"
+
+for a in "$@"; do
+  case "$a" in -paramsdir=*) exec "$BIN" "$@" ;; esac
+done
+
+if "$HERE/usr/bin/ammocoin-fetch-params" --check >/dev/null 2>&1; then
+  exec "$BIN" "$@"
+fi
+if [ -n "$HOME" ] && "$HERE/usr/bin/ammocoin-fetch-params" --dir "$HOME/.ammocoin-params" >/dev/null 2>&1; then
+  exec "$BIN" "$@"
+fi
+exec "$BIN" -paramsdir="$BUNDLED" "$@"

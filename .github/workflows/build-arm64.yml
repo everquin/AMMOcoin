@@ -1,4 +1,5 @@
-name: Build AMMOcoin v1.1.0 Linux ARM64 (Raspberry Pi)
+name: Build AMMOcoin v1.1.1 Linux ARM64 (Raspberry Pi)
+run-name: Build AMMOcoin v1.1.1 Linux ARM64 (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
@@ -54,7 +55,7 @@ jobs:
 
       - name: Verify Genesis Block Hash
         run: |
-          echo "Verifying v1.1.0 genesis block in source code..."
+          echo "Verifying v1.1 genesis block in source code..."
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if grep -q "$GENESIS_HASH" source/src/chainparams.cpp; then
             echo "Correct genesis hash found: $GENESIS_HASH"
@@ -72,6 +73,9 @@ jobs:
             echo "ERROR: Boost fix not found!"
             exit 1
           fi
+
+      - name: Ensure Sapling params (packaged in the .deb)
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
 
       - name: Build dependencies for ARM64 - STATIC
         working-directory: source/depends
@@ -146,6 +150,10 @@ jobs:
             echo "Patched cargo build command with ARM64 target"
           fi
 
+          # configure rewrites tracked files (setup.nsi, Info.plist, test/config.ini, ...);
+          # without this share/genbuild.sh stamps the version "-dirty"
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+
           echo "Starting build with Rust 1.80..."
           CARGO="$(rustup which cargo --toolchain 1.80)" \
           RUSTC="$(rustup which rustc --toolchain 1.80)" \
@@ -165,9 +173,20 @@ jobs:
               exit 1
             fi
           }
+          # make can rewrite more tracked files after genbuild.sh ran: re-mark and re-stamp
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            CARGO="$(rustup which cargo --toolchain 1.80)" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
+            make -j$(nproc)
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h
           echo "Build completed successfully"
 
           echo "Installing binaries..."
+          # make install re-runs genbuild.sh: re-check that nothing tracked changed since configure
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
           make install
           echo "Installation complete"
 
@@ -188,6 +207,10 @@ jobs:
           [ -f dist/bin/ammocoind ] && echo "ammocoind found" || (echo "ammocoind missing" && exit 1)
           [ -f dist/bin/ammocoin-cli ] && echo "ammocoin-cli found" || (echo "ammocoin-cli missing" && exit 1)
           [ -f dist/bin/ammocoin-tx ] && echo "ammocoin-tx found" || (echo "ammocoin-tx missing" && exit 1)
+          for p in sapling-spend.params sapling-output.params; do
+            [ -f dist/share/ammocoin/$p ] || { echo "dist/share/ammocoin/$p missing"; exit 1; }
+          done
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h dist/bin/ammocoind dist/bin/ammocoin-cli
 
           GENESIS_HASH="000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"
           if strings dist/bin/ammocoind | grep -q "$GENESIS_HASH"; then
@@ -204,85 +227,273 @@ jobs:
 
       - name: Create Release Package
         run: |
-          echo "Creating ARM64 release package..."
-          mkdir -p release-package/bin
-          cp source/dist/bin/ammocoind release-package/bin/
-          cp source/dist/bin/ammocoin-cli release-package/bin/
-          cp source/dist/bin/ammocoin-tx release-package/bin/
-          cd release-package
-          tar -czf ../AMMOcoin-v1.1.0-Linux-ARM64.tar.gz bin/
-          cd ..
-          zip -r AMMOcoin-v1.1.0-Linux-ARM64.zip release-package/bin/
-          echo "Release packages created"
+          echo "Creating ARM64 release packages (bin/, ammocoin-fetch-params, install-node.sh, README.txt)..."
+          scripts/packaging/build-linux-archives.sh ARM64 source/dist .
 
       - name: Build Debian Package
         run: |
           echo "Building .deb package (arm64)..."
-          DEB_ROOT="deb-staging/ammocoin_1.1.0-1_arm64"
-          mkdir -p "$DEB_ROOT/DEBIAN"
-          mkdir -p "$DEB_ROOT/usr/bin"
-          mkdir -p "$DEB_ROOT/etc/ammocoin"
-          mkdir -p "$DEB_ROOT/lib/systemd/system"
-
-          cp source/dist/bin/ammocoind "$DEB_ROOT/usr/bin/"
-          cp source/dist/bin/ammocoin-cli "$DEB_ROOT/usr/bin/"
-          cp source/dist/bin/ammocoin-tx "$DEB_ROOT/usr/bin/"
-          cp source/contrib/debian/ammocoind.service "$DEB_ROOT/lib/systemd/system/"
-          cp source/contrib/debian/examples/ammocoin.conf "$DEB_ROOT/etc/ammocoin/"
-          cp source/contrib/debian/ammocoind.postinst "$DEB_ROOT/DEBIAN/postinst"
-          cp source/contrib/debian/ammocoind.postrm "$DEB_ROOT/DEBIAN/postrm"
-          chmod 755 "$DEB_ROOT/DEBIAN/postinst" "$DEB_ROOT/DEBIAN/postrm"
-
-          INSTALLED_SIZE=$(du -sk "$DEB_ROOT" | cut -f1)
-
-          cat > "$DEB_ROOT/DEBIAN/control" << EOF
-          Package: ammocoin
-          Version: 1.1.0-1
-          Architecture: arm64
-          Maintainer: AMMOcoin Core <dev@ammocoin.org>
-          Depends: libc6 (>= 2.31)
-          Section: net
-          Priority: optional
-          Homepage: https://www.ammocoin.org
-          Installed-Size: ${INSTALLED_SIZE}
-          Description: AMMOcoin daemon and CLI tools
-           AMMOcoin is a cryptocurrency focused on community and mining.
-           This package provides the headless daemon (ammocoind),
-           command-line interface (ammocoin-cli), and transaction
-           utility (ammocoin-tx) with systemd service integration.
-          EOF
-
-          sed -i 's/^          //' "$DEB_ROOT/DEBIAN/control"
-
-          dpkg-deb --build "$DEB_ROOT"
-          mv "deb-staging/ammocoin_1.1.0-1_arm64.deb" "AMMOcoin-v1.1.0-Linux-arm64.deb"
-          echo "arm64 .deb package created"
-          ls -lh AMMOcoin-v1.1.0-Linux-arm64.deb
-          dpkg -c AMMOcoin-v1.1.0-Linux-arm64.deb
+          scripts/packaging/build-deb.sh arm64 source/dist/bin source/dist/share/ammocoin AMMOcoin-v1.1.1-Linux-arm64.deb
+          dpkg-deb --info AMMOcoin-v1.1.1-Linux-arm64.deb
+          dpkg-deb --contents AMMOcoin-v1.1.1-Linux-arm64.deb
 
       - name: Generate checksums
         run: |
           echo "Generating SHA256 checksums..."
-          sha256sum AMMOcoin-v1.1.0-Linux-ARM64.tar.gz > AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
-          sha256sum AMMOcoin-v1.1.0-Linux-ARM64.zip >> AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
-          sha256sum AMMOcoin-v1.1.0-Linux-arm64.deb >> AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
-          cat AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.1-Linux-ARM64.tar.gz > AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.1-Linux-ARM64.zip >> AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
+          sha256sum AMMOcoin-v1.1.1-Linux-arm64.deb >> AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
+          cat AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
 
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: AMMOcoin-v1.1.0-Linux-ARM64
+          name: AMMOcoin-v1.1.1-Linux-ARM64
+          if-no-files-found: error
           path: |
-            AMMOcoin-v1.1.0-Linux-ARM64.tar.gz
-            AMMOcoin-v1.1.0-Linux-ARM64.zip
-            AMMOcoin-v1.1.0-Linux-arm64.deb
-            AMMOcoin-v1.1.0-Linux-ARM64-CHECKSUM.txt
+            AMMOcoin-v1.1.1-Linux-ARM64.tar.gz
+            AMMOcoin-v1.1.1-Linux-ARM64.zip
+            AMMOcoin-v1.1.1-Linux-arm64.deb
+            AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
 
       - name: Upload Individual Binaries
         uses: actions/upload-artifact@v4
         with:
           name: ARM64-Binaries
+          if-no-files-found: error
           path: |
             source/dist/bin/ammocoind
             source/dist/bin/ammocoin-cli
             source/dist/bin/ammocoin-tx
+
+  # The binaries are cross-compiled; run the real .deb + tarball on native arm64 hardware.
+  test-linux-arm64:
+    needs: build-linux-arm64
+    runs-on: ubuntu-22.04-arm
+    name: Test ARM64 packages on arm64
+    steps:
+      - name: Checkout test scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Download packages
+        uses: actions/download-artifact@v4
+        with:
+          name: AMMOcoin-v1.1.1-Linux-ARM64
+
+      - name: Verify checksums
+        run: sha256sum -c AMMOcoin-v1.1.1-Linux-ARM64-CHECKSUM.txt
+
+      - name: Tarball binaries run
+        run: |
+          mkdir t && tar -xzf AMMOcoin-v1.1.1-Linux-ARM64.tar.gz -C t
+          ls -l t t/bin
+          t/bin/ammocoind -version | head -1
+          t/bin/ammocoin-cli -version | head -1
+          t/bin/ammocoind -version | head -1 | grep -q 'v1\.1\.1'
+          if t/bin/ammocoind -version | head -1 | grep -q dirty; then echo "version is -dirty"; exit 1; fi
+          bash -n t/install-node.sh
+          t/bin/ammocoin-fetch-params --help | head -3
+
+      - name: Test Debian Package (install, run service, reinstall, remove)
+        run: scripts/test/test-deb.sh ./AMMOcoin-v1.1.1-Linux-arm64.deb
+
+  # GUI wallet for 64-bit ARM Linux: cross-compiled depends Qt 5.9 (static), tested and
+  # packaged natively on arm64 below. Separate job so the headless build is unaffected.
+  build-linux-arm64-qt:
+    runs-on: ubuntu-22.04
+    name: Build Linux ARM64 Qt wallet
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies and ARM64 cross-compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential autoconf autoconf-archive automake libtool \
+            pkg-config git curl wget python3 bsdmainutils cmake \
+            g++-aarch64-linux-gnu binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu
+
+      - name: Install Rust with ARM64 target
+        run: |
+          rustup toolchain install 1.80
+          rustup default 1.80
+          rustup target add aarch64-unknown-linux-gnu
+
+      - name: Vendor Rust dependencies
+        working-directory: source
+        run: cargo vendor vendor-sources
+
+      - name: Ensure Sapling params
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
+
+      - name: Build ARM64 dependencies with Qt (static)
+        working-directory: source/depends
+        run: |
+          make -j$(nproc) HOST=aarch64-linux-gnu NO_RUST=1
+          mkdir -p aarch64-linux-gnu/vendored-sources
+          cp -r ../vendor-sources/* aarch64-linux-gnu/vendored-sources/
+          # Qt is built with -no-xcb-xlib, but bitcoin_qt.m4 still asks pkg-config for x11-xcb
+          printf 'Name: x11-xcb\nDescription: empty shim, Qt is built without Xlib\nVersion: 1.6.0\nLibs:\nCflags:\n' \
+            > aarch64-linux-gnu/lib/pkgconfig/x11-xcb.pc
+          DEPENDS_NATIVE_BIN=aarch64-linux-gnu/native/bin
+          if [ -d "$DEPENDS_NATIVE_BIN" ]; then
+            rm -f "$DEPENDS_NATIVE_BIN/cargo" "$DEPENDS_NATIVE_BIN/rustc"
+            ln -sf "$(rustup which cargo --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/cargo"
+            ln -sf "$(rustup which rustc --toolchain 1.80)" "$DEPENDS_NATIVE_BIN/rustc"
+          fi
+
+      - name: Build ammocoin-qt (ARM64)
+        working-directory: source
+        env:
+          ACLOCAL: ":"
+          AUTOCONF: ":"
+          AUTOMAKE: ":"
+          AUTOHEADER: ":"
+        run: |
+          rm -f src/qt/moc_*.cpp src/qt/ammocoin/moc_*.cpp src/qt/ammocoin/settings/moc_*.cpp
+          rm -f src/qt/forms/ui_*.h src/qt/ammocoin/forms/ui_*.h src/qt/ammocoin/settings/forms/ui_*.h
+          rm -f src/qt/qrc_*.cpp src/qt/*.moc src/qt/locale/*.qm
+          CONFIG_SITE=$PWD/depends/aarch64-linux-gnu/share/config.site \
+          ./configure \
+            --prefix=$PWD/dist \
+            --host=aarch64-linux-gnu \
+            --disable-tests \
+            --disable-bench \
+            --with-gui=qt5 \
+            --enable-wallet \
+            --with-incompatible-bdb \
+            --disable-maintainer-mode \
+            --disable-online-rust \
+            CXXFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            CPPFLAGS="-DPTHREAD_STACK_MIN=16384" \
+            LDFLAGS="-static-libstdc++ -static-libgcc" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO="$(rustup which cargo --toolchain 1.80)"
+          grep -q 'define QT_STATICPLUGIN 1' src/config/ammocoin-config.h
+          grep -q 'define QT_QPA_PLATFORM_XCB 1' src/config/ammocoin-config.h
+          if grep -q '$(CARGO) build.*--manifest-path' src/Makefile; then
+            sed -i 's|\$(CARGO) build \(.*\)--manifest-path|\$(CARGO) build \1--target aarch64-unknown-linux-gnu --manifest-path|g' src/Makefile
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+          build() {
+            CARGO="$(rustup which cargo --toolchain 1.80)" \
+            RUSTC="$(rustup which rustc --toolchain 1.80)" \
+            CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu \
+            make -j$(nproc)
+          }
+          build || {
+            if [ -f target/aarch64-unknown-linux-gnu/release/librustzcash.a ]; then
+              mkdir -p target/release
+              ln -sf ../aarch64-unknown-linux-gnu/release/librustzcash.a target/release/librustzcash.a
+              build
+            else
+              exit 1
+            fi
+          }
+          if grep -q -- '-dirty' src/obj/build.h; then
+            "$GITHUB_WORKSPACE/scripts/ci/mark-tracked-build-outputs.sh"
+            build
+          fi
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" src/obj/build.h src/qt/ammocoin-qt
+          aarch64-linux-gnu-strip src/qt/ammocoin-qt
+          file src/qt/ammocoin-qt
+          ls -lh src/qt/ammocoin-qt
+
+      - name: Upload ARM64 Qt binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARM64-Qt-Binary
+          if-no-files-found: error
+          path: source/src/qt/ammocoin-qt
+
+  test-package-linux-arm64-qt:
+    # ammocoind/ammocoin-cli from the headless build pre-create the regtest wallet for the GUI smoke test
+    needs: [build-linux-arm64, build-linux-arm64-qt]
+    runs-on: ubuntu-22.04-arm
+    name: Test + package ARM64 Qt wallet on arm64
+    steps:
+      - name: Checkout packaging scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts
+            source/share/pixmaps
+
+      - name: Download ARM64 Qt binary
+        uses: actions/download-artifact@v4
+        with:
+          name: ARM64-Qt-Binary
+          path: qtbin
+
+      - name: Download ARM64 daemon binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: ARM64-Binaries
+          path: daemonbin
+
+      - name: Install test tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb xauth
+          chmod +x qtbin/ammocoin-qt daemonbin/ammocoind daemonbin/ammocoin-cli daemonbin/ammocoin-tx
+
+      - name: Check dependencies and smoke test (Xvfb)
+        run: |
+          ldd qtbin/ammocoin-qt
+          if ldd qtbin/ammocoin-qt | grep -E 'not found|libQt5|libboost|libssl\.|libcrypto\.|libdb(_cxx)?-'; then
+            echo "❌ unexpected or missing shared libraries"; exit 1
+          fi
+          VER=$(xvfb-run -a qtbin/ammocoin-qt -version | head -1)
+          echo "$VER"
+          echo "$VER" | grep -q 'v1\.1\.1' || { echo "❌ ammocoin-qt -version does not report v1.1.1"; exit 1; }
+          if echo "$VER" | grep -q dirty; then echo "❌ -dirty version"; exit 1; fi
+
+      - name: Fetch Sapling params and pinned appimagetool (aarch64)
+        run: |
+          mkdir -p params
+          scripts/packaging/ammocoin-fetch-params --dir params
+          curl -fsSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-aarch64.AppImage
+          curl -fsSL -o runtime-aarch64 https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-aarch64
+          sha256sum -c - <<'SUMS'
+          f0837e7448a0c1e4e650a93bb3e85802546e60654ef287576f46c71c126a9158  appimagetool
+          00cbdfcf917cc6c0ff6d3347d59e0ca1f7f45a6df1a428a0d6d8a78664d87444  runtime-aarch64
+          SUMS
+          chmod +x appimagetool
+
+      - name: Smoke test ammocoin-qt -regtest (Xvfb)
+        run: |
+          # regtest only, throwaway datadir: pre-create the wallet with ammocoind so the GUI skips
+          # its first-run tutorial, then start the GUI, wait for the Sapling params + RPC,
+          # getnewshieldaddress, stop via RPC. Fails hard.
+          xvfb-run -a qtbin/ammocoin-qt -help | grep -q -- '-paramsdir'
+          scripts/test/linux-qt-smoke-test.sh qtbin/ammocoin-qt daemonbin params "$RUNNER_TEMP/qt-smoke"
+
+      - name: Package Qt wallet (tarball + AppImage)
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+          APPIMAGETOOL: ${{ github.workspace }}/appimagetool
+          APPIMAGE_RUNTIME: ${{ github.workspace }}/runtime-aarch64
+          APPIMAGE_ARCH: aarch64
+        run: |
+          scripts/packaging/build-linux-qt-packages.sh ARM64 qtbin/ammocoin-qt params .
+          VER=$(xvfb-run -a ./AMMOcoin-v1.1.1-Linux-ARM64-Qt.AppImage -version | head -1)
+          echo "AppImage: $VER"
+          echo "$VER" | grep -q 'v1\.1\.1'
+          sha256sum AMMOcoin-v1.1.1-Linux-ARM64-Qt.tar.gz AMMOcoin-v1.1.1-Linux-ARM64-Qt.AppImage \
+            > AMMOcoin-v1.1.1-Linux-ARM64-Qt-CHECKSUM.txt
+          cat AMMOcoin-v1.1.1-Linux-ARM64-Qt-CHECKSUM.txt
+
+      - name: Upload ARM64 Qt wallet artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMMOcoin-v1.1.1-Linux-ARM64-Qt
+          if-no-files-found: error
+          path: |
+            AMMOcoin-v1.1.1-Linux-ARM64-Qt.tar.gz
+            AMMOcoin-v1.1.1-Linux-ARM64-Qt.AppImage
+            AMMOcoin-v1.1.1-Linux-ARM64-Qt-CHECKSUM.txt

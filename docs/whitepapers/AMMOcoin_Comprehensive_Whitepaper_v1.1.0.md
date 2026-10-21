@@ -1,3 +1,5 @@
+> **Superseded.** This paper describes v1.1.0 and some of its figures (reward splits, initial reward) never matched the code. It is replaced by the [2nd Edition white paper](AMMOcoin_Whitepaper_2ndEdition_v1.1.1.md). Any yield, return, investment, "anonymous" or exchange/DEX claim in this paper is **withdrawn**: the project promises no return, yield, profit or price, AMMO is transparent by default with optional Sapling shielding, and AMMO is not listed or traded by the project. Withdrawn claims are struck through below. For current consensus values see [docs/02-staking-guide.md](../02-staking-guide.md), [docs/03-masternode-setup.md](../03-masternode-setup.md) and the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1.md).
+
 # AMMOcoin: A Privacy-Focused Proof-of-Stake Cryptocurrency
 
 ## Technical Whitepaper v1.1.0
@@ -338,10 +340,10 @@ The inflation rate decreases over time:
 
 #### 6.2.1 Staking Rewards
 
-Staking provides sustainable yields:
+~~Staking provides sustainable yields:~~ *[Withdrawn: no yield or return is promised; rewards are only what the code pays per block. See the 2nd Edition.]*
 - **Base Reward**: 60% of block reward to successful stakers
-- **Annual Yield**: 8-12% depending on network participation
-- **Compound Staking**: Automatic restaking of rewards
+- ~~**Annual Yield**: 8-12% depending on network participation~~ *[Withdrawn]*
+- ~~**Compound Staking**: Automatic restaking of rewards~~ *[Withdrawn]*
 
 #### 6.2.2 Staking Parameters
 
@@ -611,12 +613,14 @@ Proof-of-Stake provides dramatic energy savings:
 - **Identity Security**: Prevent transaction correlation
 - **Freedom**: Transact without surveillance
 
-#### 11.1.2 Investment and Savings
+#### ~~11.1.2 Investment and Savings~~
 
-- **Staking Yields**: Earn 8-12% annual returns
-- **Portfolio Diversification**: Privacy-focused cryptocurrency
-- **Long-term Storage**: Secure wealth preservation
-- **Inflation Hedge**: Protection against currency debasement
+*[Withdrawn: AMMO is not an investment and the project makes no value claims. See the 2nd Edition.]*
+
+- ~~**Staking Yields**: Earn 8-12% annual returns~~
+- ~~**Portfolio Diversification**: Privacy-focused cryptocurrency~~
+- ~~**Long-term Storage**: Secure wealth preservation~~
+- ~~**Inflation Hedge**: Protection against currency debasement~~
 
 ### 11.2 Businesses and Enterprises
 
@@ -639,8 +643,8 @@ Proof-of-Stake provides dramatic energy savings:
 #### 11.3.1 Decentralized Finance
 
 - **Private Lending**: Confidential loan markets
-- **Anonymous Trading**: Private DEX transactions
-- **Yield Farming**: Private liquidity provision
+- ~~**Anonymous Trading**: Private DEX transactions~~ *[Withdrawn: AMMO is not anonymous; no exchange or DEX is operated or integrated by the project.]*
+- ~~**Yield Farming**: Private liquidity provision~~ *[Withdrawn: no yield is promised.]*
 - **Insurance**: Confidential coverage
 
 #### 11.3.2 Smart Contracts
@@ -648,7 +652,7 @@ Proof-of-Stake provides dramatic energy savings:
 Future smart contract capabilities:
 - **Private Computation**: Zero-knowledge smart contracts
 - **Confidential Auctions**: Sealed-bid auctions
-- **Private Voting**: Anonymous governance
+- **Private Voting**: Confidential governance (not planned; AMMO is not anonymous)
 - **Identity Systems**: Privacy-preserving credentials
 
 ---
@@ -752,7 +756,7 @@ Future smart contract capabilities:
 
 **Mitigation Strategies:**
 - Utility-driven adoption
-- Staking yield stability
+- ~~Staking yield stability~~ *[Withdrawn]*
 - Real-world use cases
 - Long-term value creation
 
@@ -825,7 +829,7 @@ Monetary Policy:
 ├── Halving Schedule: Every 2,100,000 blocks
 ├── Minimum Reward: 1 AMMO (permanent)
 ├── Max Supply: ~21,000,000 AMMO
-├── Premine: 0% (completely fair launch)
+├── Premine: [Corrected] 250,000,000 AMMO block-1 reserve (v1.0 airdrop first; see 2nd Edition)
 └── ICO/Presale: None
 
 Reward Distribution:

@@ -45,7 +45,7 @@ void enableMnSyncAndSuperblocksPayment()
 BOOST_AUTO_TEST_CASE(masternode_value)
 {
     SelectParams(CBaseChainParams::REGTEST);
-    int nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight + 1;
+    int nHeightTest = Params().GetConsensus().nRewardV55Height + 1;
     BOOST_CHECK_EQUAL(GetMasternodePayment(nHeightTest - 1), 3 * COIN);
     BOOST_CHECK_EQUAL(GetMasternodePayment(nHeightTest), 6 * COIN);
 }
@@ -53,21 +53,21 @@ BOOST_AUTO_TEST_CASE(masternode_value)
 BOOST_AUTO_TEST_CASE(budget_value)
 {
     SelectParams(CBaseChainParams::TESTNET);
-    int nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight + 1;
+    int nHeightTest = Params().GetConsensus().nRewardZCV2Height + 1;
     CheckBudgetValue(nHeightTest-1, "testnet", 7200*COIN);
     CheckBudgetValue(nHeightTest, "testnet", 144*COIN);
 
     SelectParams(CBaseChainParams::MAIN);
-    nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight + 1;
+    nHeightTest = Params().GetConsensus().nRewardZCV2Height + 1;
     CheckBudgetValue(nHeightTest, "mainnet", 43200*COIN);
 
     SelectParams(CBaseChainParams::TESTNET);
-    nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight + 1;
+    nHeightTest = Params().GetConsensus().nRewardV55Height + 1;
     CheckBudgetValue(nHeightTest-1, "testnet", 144*COIN);
     CheckBudgetValue(nHeightTest, "testnet", 1440*COIN);
 
     SelectParams(CBaseChainParams::MAIN);
-    nHeightTest = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight + 1;
+    nHeightTest = Params().GetConsensus().nRewardV55Height + 1;
     CheckBudgetValue(nHeightTest-1, "mainnet", 43200*COIN);
     CheckBudgetValue(nHeightTest, "mainnet", 432000*COIN);
 

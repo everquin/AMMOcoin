@@ -35,10 +35,10 @@ def check_json_precision():
 def determine_db_dir():
     """Return the default location of the ammocoin data directory"""
     if platform.system() == "Darwin":
-        return os.path.expanduser("~/Library/Application Support/AMMOcoin/")
+        return os.path.expanduser("~/Library/Application Support/AMMOcoin11/")
     elif platform.system() == "Windows":
-        return os.path.join(os.environ['APPDATA'], "AMMOcoin")
-    return os.path.expanduser("~/.ammocoin")
+        return os.path.join(os.environ['APPDATA'], "AMMOcoin11")
+    return os.path.expanduser("~/.ammocoin11")
 
 def read_bitcoin_config(dbdir):
     """Read the ammocoin.conf file from dbdir, returns dictionary of settings"""

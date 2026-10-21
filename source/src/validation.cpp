@@ -816,7 +816,7 @@ double ConvertBitsToDouble(unsigned int nBits)
 CAmount GetBlockValue(int nHeight)
 {
     // Set V5.5 upgrade block for regtest as well as testnet and mainnet
-    const int nLast = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight;
+    const int nLast = Params().GetConsensus().nRewardV55Height;
 
     // Regtest block reward reduction schedule
     if (Params().IsRegTestNet()) {
@@ -830,7 +830,7 @@ CAmount GetBlockValue(int nHeight)
         return 250000 * COIN;
     }
     // Mainnet/Testnet block reward reduction schedule
-    const int nZerocoinV2 = Params().GetConsensus().vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight;
+    const int nZerocoinV2 = Params().GetConsensus().nRewardZCV2Height;
     if (nHeight > nLast) return 10 * COIN;
     if (nHeight > nZerocoinV2) return 5 * COIN;
     if (nHeight > 648000) return 4.5 * COIN;
@@ -845,15 +845,16 @@ CAmount GetBlockValue(int nHeight)
     if (nHeight > 151200) return 45 * COIN;
     if (nHeight > 86400) return 225 * COIN;
     if (nHeight != 1) return 250 * COIN;
-    // Block 1: 250M AMMO distribution premine for v1.0 user migration
-    // Sent to distribution address AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
+    // Block 1: 250M AMMO block-1 reserve (v1.0 balance airdrop first; the remainder, together with the early contributors' voluntary pledges, funds the QuarterMaster reserve)
+    // The block-1 output is AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u.
+    // (AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME is only the unspendable genesis (block 0) output.)
     // Genesis block (block 0) coinbase is unspendable by design, so premine must be at block 1
     return 250000000 * COIN;
 }
 
 int64_t GetMasternodePayment(int nHeight)
 {
-    if (nHeight > Params().GetConsensus().vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight) {
+    if (nHeight > Params().GetConsensus().nRewardV55Height) {
         return Params().GetConsensus().nNewMNBlockReward;
     }
 

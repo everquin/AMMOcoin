@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# ammocoin-fetch-params: install the Sapling zk-SNARK parameters AMMOcoin needs to start.
+#
+# ammocoind and ammocoin-qt refuse to start ("Cannot find the Sapling parameters") unless
+# sapling-spend.params and sapling-output.params are in the params folder:
+#   Linux  ~/.ammocoin-params                      (also searched: /usr/share/ammocoin, /usr/local/share/ammocoin)
+#   macOS  ~/Library/Application Support/AMMOcoinParams
+#
+#   ammocoin-fetch-params                 install into your own params folder
+#   ammocoin-fetch-params --dir DIR       install into DIR instead (e.g. for a service user)
+#   ammocoin-fetch-params --owner USER    chown the installed files to USER (needs root)
+#   ammocoin-fetch-params --check         only report whether usable params exist; changes nothing
+#
+# Local copies are used first (../share/ammocoin next to this script, /usr/share/ammocoin,
+# /usr/local/share/ammocoin); otherwise the files are downloaded from download.z.cash.
+# Every file is SHA-256 verified before it is installed.
+set -euo pipefail
+
+PARAMS_URL=${AMMOCOIN_PARAMS_URL:-https://download.z.cash/downloads}
+SPEND_SHA=8e48ffd23abb3a5fd9c5589204f32d9c31285a04b78096ba40a79b75677efc13
+OUTPUT_SHA=2f0ebbcbb9bb0bcffe95a397e7eba89c29eb4dde6191c339db88570e3f3fb0e4
+FILES="sapling-spend.params:$SPEND_SHA sapling-output.params:$OUTPUT_SHA"
+
+die() { echo "ammocoin-fetch-params: $*" >&2; exit 1; }
+
+if [ "$(uname -s)" = Darwin ]; then
+  DIR="${HOME:-}/Library/Application Support/AMMOcoinParams"
+else
+  DIR="${HOME:-}/.ammocoin-params"
+fi
+OWNER="" CHECK=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --dir)   [ $# -ge 2 ] || die "--dir needs a folder"; DIR=$2; shift 2 ;;
+    --owner) [ $# -ge 2 ] || die "--owner needs a user name"; OWNER=$2; shift 2 ;;
+    --check) CHECK=1; shift ;;
+    -h|--help) sed -n '2,16p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    *) die "unknown option $1 (see --help)" ;;
+  esac
+done
+[ -n "$DIR" ] && [ "$DIR" != "/.ammocoin-params" ] || die "HOME is not set; pass --dir <folder>"
+
+sha256_of() {
+  if command -v sha256sum >/dev/null 2>&1; then sha256sum "$1" | awk '{print $1}'
+  else shasum -a 256 "$1" | awk '{print $1}'; fi
+}
+valid() { [ -f "$1" ] && [ "$(sha256_of "$1")" = "$2" ]; }
+
+SELF_DIR=$(cd "$(dirname "$0")" && pwd)
+SEARCH="$SELF_DIR/../share/ammocoin $SELF_DIR/share/ammocoin /usr/share/ammocoin /usr/local/share/ammocoin"
+
+if [ "$CHECK" = 1 ]; then
+  missing=0
+  for f in $FILES; do
+    name=${f%%:*} sum=${f#*:} found=""
+    for d in "$DIR" /usr/share/ammocoin /usr/local/share/ammocoin; do
+      if valid "$d/$name" "$sum"; then found="$d/$name"; break; fi
+    done
+    if [ -n "$found" ]; then echo "ok       $found"; else echo "missing  $name"; missing=1; fi
+  done
+  exit $missing
+fi
+
+mkdir -p "$DIR" || die "cannot create $DIR"
+TMP=$(mktemp -d "${TMPDIR:-/tmp}/ammocoin-params.XXXXXX")
+trap 'rm -rf "$TMP"' EXIT
+
+download() {  # url dest
+  if command -v curl >/dev/null 2>&1; then
+    curl -fL --retry 3 --connect-timeout 20 -o "$2" "$1"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -q --tries=3 --timeout=20 -O "$2" "$1"
+  else
+    die "neither curl nor wget is installed; install one, or copy the two .params files into $DIR"
+  fi
+}
+
+for f in $FILES; do
+  name=${f%%:*} sum=${f#*:} dest="$DIR/$name"
+  if valid "$dest" "$sum"; then echo "ok       $dest"; continue; fi
+  src=""
+  for d in $SEARCH; do
+    if [ "$(cd "$d" 2>/dev/null && pwd)" = "$(cd "$DIR" && pwd)" ]; then continue; fi
+    if valid "$d/$name" "$sum"; then src="$d/$name"; break; fi
+  done
+  if [ -n "$src" ]; then
+    echo "copying  $src -> $dest"
+    cp "$src" "$TMP/$name"
+  else
+    echo "fetching $PARAMS_URL/$name"
+    download "$PARAMS_URL/$name" "$TMP/$name" \
+      || die "could not download $name (offline?). Copy sapling-spend.params and sapling-output.params into $DIR by hand, or re-run this when online."
+    valid "$TMP/$name" "$sum" || die "$name failed its SHA-256 check (expected $sum); not installed"
+  fi
+  mv -f "$TMP/$name" "$dest"
+  chmod 644 "$dest"
+  [ -z "$OWNER" ] || chown "$OWNER:" "$dest"
+  echo "ok       $dest"
+done
+[ -z "$OWNER" ] || chown "$OWNER:" "$DIR"
+echo "Sapling parameters are ready in $DIR"

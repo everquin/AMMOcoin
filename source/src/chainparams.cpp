@@ -195,9 +195,9 @@ public:
         strNetworkID = "main";
 
         // v1.1.0 Genesis Block (genesis coinbase is unspendable by design)
-        // The 250M AMMO distribution premine is in block 1 via GetBlockValue()
-        // Distribution address: AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME (team-controlled wallet)
-        // Team will manually distribute to verified v1.0 users via signed claim process
+        // The 250M AMMO distribution premine is in block 1 via GetBlockValue(). On chain it was
+        // paid to the block-1 miner's address (AJSpvakMXqZD...), not the genesis output address.
+        // v1.0 balances (snapshot at v1.0 height 434,881) are airdropped to the same addresses.
         genesis = CreateGenesisBlock(1623089845, 1299391, 0x1e0ffff0, 1, 250000000 * COIN);
 
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -205,7 +205,7 @@ public:
         consensus.powLimit   = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.posLimitV1 = uint256S("0x000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.posLimitV2 = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 30 days
+        consensus.nBudgetCycleBlocks = 43200;       // approx. 1 every 90 days at 3-minute blocks
         consensus.nBudgetFeeConfirmations = 6;      // Number of confirmations for the finalization fee
         consensus.nCoinbaseMaturity = 100;
         consensus.nFutureTimeDriftPoW = 7200;
@@ -259,34 +259,30 @@ public:
                 Consensus::NetworkUpgrade::ALWAYS_ACTIVE;
         consensus.vUpgrades[Consensus::UPGRADE_TESTDUMMY].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
-        consensus.vUpgrades[Consensus::UPGRADE_POS].nActivationHeight           = 259201;
-        consensus.vUpgrades[Consensus::UPGRADE_POS_V2].nActivationHeight        = 615800;
-        consensus.vUpgrades[Consensus::UPGRADE_ZC].nActivationHeight            = 863787;
-        consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight         = 1153160;
-        consensus.vUpgrades[Consensus::UPGRADE_BIP65].nActivationHeight         = 1808634;
-        consensus.vUpgrades[Consensus::UPGRADE_ZC_PUBLIC].nActivationHeight     = 1880000;
-        consensus.vUpgrades[Consensus::UPGRADE_V3_4].nActivationHeight          = 1967000;
-        consensus.vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight          = 2153200;
-        consensus.vUpgrades[Consensus::UPGRADE_V5_0].nActivationHeight          = 2700500;
-        consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = 2927000;
-        consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = 3014000;
-        consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight          = 3715200;
-        consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 4281680;  // Estimate Feb 29th 12:00 UTC
+        // v1.1.1 PoS fork: the v1.1 chain stopped at 2,775 PoW blocks (Jul 2026) and no further
+        // mining is planned, so every upgrade through V5_6 activates at the next block. Same
+        // single-height layout as testnet (all at 201). The PIVX hashActivationBlock values
+        // inherited from upstream belong to PIVX's chain and are removed.
+        const int nPoSForkHeight = 2776;
+        consensus.vUpgrades[Consensus::UPGRADE_POS].nActivationHeight           = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_POS_V2].nActivationHeight        = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_ZC].nActivationHeight            = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight         = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_BIP65].nActivationHeight         = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_ZC_PUBLIC].nActivationHeight     = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V3_4].nActivationHeight          = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V4_0].nActivationHeight          = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_0].nActivationHeight          = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_2].nActivationHeight          = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_3].nActivationHeight          = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight          = nPoSForkHeight;
+        consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = nPoSForkHeight;
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
-
-        consensus.vUpgrades[Consensus::UPGRADE_ZC].hashActivationBlock =
-                uint256S("0x5b2482eca24caf2a46bb22e0545db7b7037282733faa3a42ec20542509999a64");
-        consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].hashActivationBlock =
-                uint256S("0x37ea75fe1c9314171cff429a91b25b9f11331076d1c9de50ee4054d61877f8af");
-        consensus.vUpgrades[Consensus::UPGRADE_BIP65].hashActivationBlock =
-                uint256S("0x82629b7a9978f5c7ea3f70a12db92633a7d2e436711500db28b97efd48b1e527");
-        consensus.vUpgrades[Consensus::UPGRADE_ZC_PUBLIC].hashActivationBlock =
-                uint256S("0xe2448b76d88d37aba4194ffed1041b680d779919157ddf5cbf423373d7f8078e");
-        consensus.vUpgrades[Consensus::UPGRADE_V3_4].hashActivationBlock =
-                uint256S("0x0ef2556e40f3b9f6e02ce611b832e0bbfe7734a8ea751c7b555310ee49b61456");
-        consensus.vUpgrades[Consensus::UPGRADE_V4_0].hashActivationBlock =
-                uint256S("0x14e477e597d24549cac5e59d97d32155e6ec2861c1003b42d0566f9bf39b65d5");
+        // Rewards keep the original v1.1 schedule (250 AMMO/block, 3 AMMO to masternodes, budget at 20%)
+        // instead of following ZC_V2/V5_5, which now activate at the PoS fork height.
+        consensus.nRewardZCV2Height = 1153160;
+        consensus.nRewardV55Height = 3715200;
 
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2"));
@@ -297,16 +293,21 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 4-byte int at any alignment.
          */
-        pchMessageStart[0] = 0x76;
-        pchMessageStart[1] = 0x63;
-        pchMessageStart[2] = 0x7a;
-        pchMessageStart[3] = 0xf3;
+        // v1.1.1 mainnet separation: own magic so v1.1 mainnet never handshakes with, or
+        // exchanges blocks/addresses with, older nodes. v1.0/v1.1.0 used 76 63 7a f3; the
+        // pre-release v1.1.1 lab network used a3 4d b1 e7. Also distinct from PIVX
+        // main/test/regtest (90 c4 fd e9 / f5 e6 d5 ca / a1 cf 7e ac). See docs/MAINNET_SEPARATION.md.
+        pchMessageStart[0] = 0xc7;
+        pchMessageStart[1] = 0x9a;
+        pchMessageStart[2] = 0xe3;
+        pchMessageStart[3] = 0xb5;
         nDefaultPort = 37020;
 
         // Note that of those with the service bits flag, most only support a subset of possible options
         // AMMOcoin DNS seed nodes
         vSeeds.emplace_back("seed1.ammocoin.org", true);    // Primary DNS Seeder
         vSeeds.emplace_back("seed2.ammocoin.org", true);    // Secondary DNS Seeder
+        vSeeds.emplace_back("seed3.ammocoin.org", true);    // A records for the New York, Sydney and Dallas seeds
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 23);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 24);
@@ -364,10 +365,10 @@ public:
     {
         strNetworkID = "test";
 
-        genesis = CreateGenesisBlock(1454124731, 2402015, 0x1e0ffff0, 1, 250 * COIN);
+        genesis = CreateGenesisBlock(1454124731, 2562055, 0x1e0ffff0, 1, 250 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000041e482b9b9691d98eefb48473405c0b8ec31b76df3797c74a78680ef818"));
-        assert(genesis.hashMerkleRoot == uint256S("0x1b2ef6e2f28be914103a277377ae7729dcd125dfeb8bf97bd5964ba72b6dc39b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000ec77c090fddc857190a4b8ecf49b8fb804d0ef5736997cf6aff8f457c9f"));
+        assert(genesis.hashMerkleRoot == uint256S("0x17a851ff9ce74a503a3ae6d0fbd8c775b1a20cf47961d764a0bd16713ededa39"));
 
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
@@ -439,6 +440,8 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1624280; // Estimate Feb 23 Midnight UTC
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
+        consensus.nRewardZCV2Height = consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight;
+        consensus.nRewardV55Height = consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -513,8 +516,8 @@ public:
 
         genesis = CreateGenesisBlock(1454124731, 1, 0x207fffff, 1, 250 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x7445589c4c8e52b105247b13373e5ee325856aa05d53f429e59ea46b7149ae3f"));
-        assert(genesis.hashMerkleRoot == uint256S("0x1b2ef6e2f28be914103a277377ae7729dcd125dfeb8bf97bd5964ba72b6dc39b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0b43ad86152bd7a6da52a652f3215c324190cdab18b1f234a29a9f3c6288153e"));
+        assert(genesis.hashMerkleRoot == uint256S("0x17a851ff9ce74a503a3ae6d0fbd8c775b1a20cf47961d764a0bd16713ededa39"));
 
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
@@ -592,6 +595,8 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_V5_6].nActivationHeight          = 1000;
         consensus.vUpgrades[Consensus::UPGRADE_V6_0].nActivationHeight =
                 Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
+        consensus.nRewardZCV2Height = consensus.vUpgrades[Consensus::UPGRADE_ZC_V2].nActivationHeight;
+        consensus.nRewardV55Height = consensus.vUpgrades[Consensus::UPGRADE_V5_5].nActivationHeight;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.

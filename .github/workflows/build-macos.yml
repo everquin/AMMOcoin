@@ -1,0 +1,265 @@
+name: Build AMMOcoin v1.1.1 macOS
+run-name: Build AMMOcoin v1.1.1 macOS arm64 + x86_64 (${{ github.ref_name }})
+
+# Native builds on GitHub's macOS runners. Every dependency (boost, Berkeley DB 4.8, libevent,
+# gmp, libsodium, zeromq, miniupnpc, libnatpmp, qrencode, Qt 5.15) is built from source by
+# scripts/build/macos-deps.sh with MACOSX_DEPLOYMENT_TARGET=13.0 and cached, so nothing comes
+# from Homebrew and every Mach-O in the packages runs on macOS 13 Ventura or newer.
+
+on:
+  workflow_dispatch:
+  # workflow_dispatch only works once this file is on the default branch; until then a push to
+  # the release branch that touches the macOS build runs it.
+  push:
+    branches: [v1.1.1-pos-fork]
+    paths:
+      - .github/workflows/build-macos.yml
+      - source/**
+      - scripts/build/macos-*
+      - scripts/build/build-macos.sh
+      - scripts/packaging/macos/**
+      - scripts/test/macos-smoke-test.sh
+
+env:
+  MACOSX_DEPLOYMENT_TARGET: "13.0"
+  VERSION: "1.1.1"
+
+jobs:
+  build-macos:
+    name: macOS ${{ matrix.label }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            label: ARM64
+            runner: macos-15
+          # macos-13 (the last macOS 13 Intel image) was retired by GitHub in December 2025;
+          # macos-15-intel is the remaining x86_64 image. The deployment target, not the
+          # runner's macOS version, sets the minimum macOS of the binaries.
+          - arch: x86_64
+            label: x86_64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Toolchain info
+        run: |
+          set -x
+          uname -m
+          sw_vers
+          xcodebuild -version
+          xcrun --sdk macosx --show-sdk-path
+          [ "$(uname -m)" = "${{ matrix.arch }}" ] || { echo "runner arch mismatch"; exit 1; }
+          cmake --version | head -1
+          rustup --version
+          echo "rust-toolchain: $(cat source/rust-toolchain)"
+
+      - name: Install build tools
+        run: |
+          # Only build tools; no libraries are linked from Homebrew (the package check enforces it).
+          brew list pkgconf >/dev/null 2>&1 || brew list pkg-config >/dev/null 2>&1 || brew install pkgconf
+          rustup toolchain install "$(cat source/rust-toolchain)" --profile minimal
+          ( cd source && cargo --version && rustc --version )
+
+      - name: Cache dependencies
+        id: deps-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/macos-deps
+          key: macos-deps-v1-${{ matrix.arch }}-${{ env.MACOSX_DEPLOYMENT_TARGET }}-${{ hashFiles('scripts/build/macos-deps.sh', 'source/depends/config.guess', 'source/depends/config.sub') }}
+
+      - name: Build dependencies from source (MACOSX_DEPLOYMENT_TARGET=13.0)
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: scripts/build/macos-deps.sh "$RUNNER_TEMP/macos-deps" "$RUNNER_TEMP/macos-deps-work"
+
+      - name: Upload dependency build logs on failure
+        if: failure() && steps.deps-cache.outputs.cache-hit != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-deps-logs-${{ matrix.label }}
+          path: ${{ runner.temp }}/macos-deps-work/*.log
+          if-no-files-found: ignore
+
+      - name: Ensure Sapling params (bundled into AMMOcoin-Qt.app)
+        run: scripts/packaging/ammocoin-fetch-params --dir source/params
+
+      - name: Build AMMOcoin
+        run: |
+          # configure + make; marks configure-rewritten tracked files assume-unchanged
+          # (scripts/ci/mark-tracked-build-outputs.sh) and fails on a -dirty version
+          # (scripts/ci/check-build-version.sh).
+          scripts/build/build-macos.sh "$RUNNER_TEMP/macos-deps" all
+
+      - name: Upload config.log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: config-log-${{ matrix.label }}
+          path: source/config.log
+          if-no-files-found: ignore
+
+      - name: Set up Developer ID signing (falls back to ad-hoc without secrets)
+        id: signing
+        env:
+          MACOS_CERT_P12_BASE64: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+          APPLE_API_KEY_P8_BASE64: ${{ secrets.APPLE_API_KEY_P8_BASE64 }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          missing=""
+          for v in MACOS_CERT_P12_BASE64 MACOS_CERT_PASSWORD APPLE_API_KEY_P8_BASE64 APPLE_API_KEY_ID APPLE_API_ISSUER_ID APPLE_TEAM_ID; do
+            [ -n "${!v:-}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "::warning title=Unsigned macOS build::Signing secrets missing or empty:${missing}. The ${{ matrix.label }} packages will be AD-HOC signed and NOT notarized; Gatekeeper will block them on users' Macs. Do not publish them as a release."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          umask 077
+          KEYCHAIN="$RUNNER_TEMP/ammocoin-signing.keychain-db"
+          KC_PASS=$(openssl rand -base64 32)
+          echo "::add-mask::$KC_PASS"
+          security create-keychain -p "$KC_PASS" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KC_PASS" "$KEYCHAIN"
+          printf '%s' "$MACOS_CERT_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -k "$KEYCHAIN" -P "$MACOS_CERT_PASSWORD" -f pkcs12 \
+            -T /usr/bin/codesign -T /usr/bin/security >/dev/null
+          rm -f "$RUNNER_TEMP/cert.p12"
+          # Developer ID intermediates, in case the runner image lacks them (codesign needs the chain).
+          for ca in DeveloperIDG2CA.cer DeveloperIDCA.cer; do
+            if curl -fsSL --retry 3 -o "$RUNNER_TEMP/$ca" "https://www.apple.com/certificateauthority/$ca"; then
+              security import "$RUNNER_TEMP/$ca" -k "$KEYCHAIN" >/dev/null 2>&1 || true
+            fi
+            rm -f "$RUNNER_TEMP/$ca"
+          done
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KC_PASS" "$KEYCHAIN" >/dev/null
+          # put the temporary keychain first in the search list (restored in the cleanup step)
+          security list-keychains -d user | tr -d '" ' > "$RUNNER_TEMP/keychains.orig"
+          ORIG=(); while IFS= read -r k; do [ -n "$k" ] && ORIG+=("$k"); done < "$RUNNER_TEMP/keychains.orig"
+          security list-keychains -d user -s "$KEYCHAIN" ${ORIG[@]+"${ORIG[@]}"}
+          IDENT=$(security find-identity -v -p codesigning "$KEYCHAIN" \
+                  | awk -v team="($APPLE_TEAM_ID)" '/"Developer ID Application:/ && index($0, team) {print $2; exit}')
+          if [ -z "$IDENT" ]; then
+            echo "::error::No 'Developer ID Application' identity for team $APPLE_TEAM_ID in MACOS_CERT_P12_BASE64"
+            exit 1
+          fi
+          printf '%s' "$APPLE_API_KEY_P8_BASE64" | base64 --decode > "$RUNNER_TEMP/AuthKey.p8"
+          {
+            echo "SIGN_IDENTITY=$IDENT"
+            echo "KEYCHAIN=$KEYCHAIN"
+            echo "NOTARIZE=1"
+            echo "APPLE_API_KEY_PATH=$RUNNER_TEMP/AuthKey.p8"
+          } >> "$GITHUB_ENV"
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
+          echo "Developer ID signing enabled (identity SHA-1 $IDENT, team $APPLE_TEAM_ID)"
+
+      - name: Package, sign and notarize (dmg, tar.gz, zip, SHA256)
+        env:
+          QT_PREFIX: ${{ runner.temp }}/macos-deps/qt
+          MAX_MINOS: ${{ env.MACOSX_DEPLOYMENT_TARGET }}
+          # used only when the signing step enabled NOTARIZE (SIGN_IDENTITY/KEYCHAIN/key path via GITHUB_ENV)
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+        run: |
+          scripts/packaging/macos/package-macos.sh dist
+          "$GITHUB_WORKSPACE/scripts/ci/check-build-version.sh" source/src/obj/build.h
+          ls -l dist
+
+      - name: Verify package (otool minos <= 13.0, no Homebrew paths, signature, Gatekeeper)
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          NAME="AMMOcoin-v${VERSION}-macOS-${{ matrix.label }}"
+          M="$RUNNER_TEMP/dmg"; mkdir -p "$M" "$RUNNER_TEMP/tgz"
+          hdiutil attach -readonly -nobrowse -mountpoint "$M" "dist/$NAME.dmg"
+          tar -C "$RUNNER_TEMP/tgz" -xzf "dist/$NAME.tar.gz"
+          ( cd dist && shasum -a 256 -c "$NAME.SHA256" )
+          bad=0; n=0
+          while IFS= read -r -d '' f; do
+            [[ "$(file -b "$f")" == *Mach-O* ]] || continue
+            n=$((n+1))
+            file -b "$f" | grep -q "${{ matrix.arch }}" || { echo "WRONG ARCH: $f: $(file -b "$f")"; bad=1; }
+            m=$(otool -l "$f" | awk '/LC_BUILD_VERSION/{b=1} b&&/minos/{print $2; exit} /LC_VERSION_MIN_MACOSX/{v=1} v&&/version/{print $2; exit}')
+            if [ "$(printf '%s\n%s\n' "$m" "$MACOSX_DEPLOYMENT_TARGET" | sort -V | tail -1)" != "$MACOSX_DEPLOYMENT_TARGET" ]; then
+              echo "MINOS $m > $MACOSX_DEPLOYMENT_TARGET: $f"; bad=1
+            fi
+            if otool -L "$f" | tail -n +2 | awk '{print $1}' | grep -E '^(/opt/homebrew|/usr/local)/'; then
+              echo "HOMEBREW/USR-LOCAL REFERENCE: $f"; bad=1
+            fi
+            if otool -l "$f" | awk '/LC_RPATH/{getline;getline;print $2}' | grep -E '^/'; then
+              echo "ABSOLUTE RPATH: $f"; bad=1
+            fi
+          done < <(find "$M" "$RUNNER_TEMP/tgz" -type f -print0)
+          echo "checked $n Mach-O files (minos <= $MACOSX_DEPLOYMENT_TARGET, no Homebrew paths)"
+          otool -L "$M/AMMOcoin-Qt.app/Contents/MacOS/AMMOcoin-Qt"
+          otool -L "$M/bin/ammocoind"
+          codesign --verify --deep --strict --verbose=1 "$M/AMMOcoin-Qt.app"
+          for f in "$M"/bin/ammocoin*; do codesign --verify --strict "$f"; done
+          if [ "${{ steps.signing.outputs.enabled }}" = true ]; then
+            codesign -dvv "$M/AMMOcoin-Qt.app" 2>&1 | grep -E '^(Authority|TeamIdentifier|Timestamp)='
+            codesign -dvv "$M/AMMOcoin-Qt.app" 2>&1 | grep -q 'flags=.*runtime' || { echo "hardened runtime not set"; bad=1; }
+            codesign -dvv "$M/AMMOcoin-Qt.app" 2>&1 | grep -qx "TeamIdentifier=$APPLE_TEAM_ID" || { echo "wrong Team ID"; bad=1; }
+            spctl -a -vvv -t install "dist/$NAME.dmg"
+            spctl -a -vvv -t exec "$M/AMMOcoin-Qt.app"
+            for i in 1 2 3 4 5; do xcrun stapler validate "dist/$NAME.dmg" && break; [ $i = 5 ] && exit 1; echo "stapler validate: Apple lookup failed, retry $i/5"; sleep $((i*10)); done
+            # the app inside the DMG was stapled before packaging and spctl above already reports "Notarized Developer ID";
+            # Apple's online ticket lookup for it flakes on the ARM runners, so this one only warns
+            xcrun stapler validate "$M/AMMOcoin-Qt.app" || echo "::warning::stapler validate (app inside DMG) could not reach Apple; Gatekeeper check passed"
+          else
+            echo "::warning::${{ matrix.label }}: ad-hoc signed only (no Developer ID secrets) - skipped spctl/stapler checks"
+          fi
+          plutil -p "$M/AMMOcoin-Qt.app/Contents/Info.plist" | grep -E 'ShortVersion|LSMinimumSystemVersion'
+          hdiutil detach "$M"
+          [ $bad = 0 ]
+
+      - name: Smoke test (regtest daemon + offscreen Qt)
+        run: |
+          set -euo pipefail
+          NAME="AMMOcoin-v${VERSION}-macOS-${{ matrix.label }}"
+          M="$RUNNER_TEMP/dmg-test"; mkdir -p "$M"
+          hdiutil attach -readonly -nobrowse -mountpoint "$M" "dist/$NAME.dmg"
+          "$M/bin/ammocoind" -version | head -1
+          "$M/bin/ammocoin-cli" -version | head -1
+          "$M/bin/ammocoin-tx" -help | head -1
+          scripts/test/macos-smoke-test.sh "$RUNNER_TEMP/tgz/$NAME/bin" "$M/AMMOcoin-Qt.app" source/params "$RUNNER_TEMP/smoke"
+          hdiutil detach "$M"
+
+      - name: Remove signing keychain and API key
+        if: always() && steps.signing.outputs.enabled == 'true'
+        run: |
+          if [ -f "$RUNNER_TEMP/keychains.orig" ]; then
+            ORIG=(); while IFS= read -r k; do [ -n "$k" ] && ORIG+=("$k"); done < "$RUNNER_TEMP/keychains.orig"
+            security list-keychains -d user -s ${ORIG[@]+"${ORIG[@]}"} || true
+          fi
+          security delete-keychain "$RUNNER_TEMP/ammocoin-signing.keychain-db" || true
+          rm -f "$RUNNER_TEMP/AuthKey.p8" "$RUNNER_TEMP/cert.p12" "$RUNNER_TEMP/keychains.orig"
+
+      - name: Upload debug logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-logs-${{ matrix.label }}
+          path: ${{ runner.temp }}/smoke/**/debug*.log
+          if-no-files-found: ignore
+
+      - name: Upload macOS ${{ matrix.label }} packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}
+          path: |
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.dmg
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.tar.gz
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.zip
+            dist/AMMOcoin-v${{ env.VERSION }}-macOS-${{ matrix.label }}.SHA256
+          if-no-files-found: error
+          retention-days: 30

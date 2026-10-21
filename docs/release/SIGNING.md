@@ -63,6 +63,28 @@ to encrypted offline storage — losing it forces a key-rotation announcement.
    (copy from `~/.ssh/ammocoin_release_ed25519.pub` and prepend the identity).
 3. Commit and tag. Once tagged, users at that tag (or later) can verify.
 
+**Producing the combined checksums file:**
+
+The `Release combined checksums` workflow (`.github/workflows/release-checksums.yml`)
+runs when a release is published and writes `AMMOcoin-vX.Y.Z-ALL-PLATFORMS-CHECKSUMS.txt`
+(SHA256 of every asset, cross-checked against the per-platform `…-CHECKSUM.txt`
+files) to the release. Upload all binaries **before** publishing, or re-run the
+workflow afterwards (Actions → Release combined checksums → Run workflow, tag
+`vX.Y.Z`; it deletes a now-stale `.sig`). A release published by a workflow's
+`GITHUB_TOKEN` does not trigger it; run it by hand then. Note that
+`workflow_dispatch` only appears once the workflow file is on the default branch.
+
+Equivalent one-liner (needs `gh` logged in, run in an empty folder):
+
+```bash
+TAG=v1.1.1; gh release download "$TAG" --repo everquin/AMMOcoin && \
+  ls | grep -vE -- '-CHECKSUMS?\.txt(\.sig)?$|\.sig$|\.asc$' | sort | xargs sha256sum \
+  > "AMMOcoin-${TAG}-ALL-PLATFORMS-CHECKSUMS.txt" && \
+  gh release upload "$TAG" "AMMOcoin-${TAG}-ALL-PLATFORMS-CHECKSUMS.txt" --repo everquin/AMMOcoin --clobber
+```
+
+(On macOS use `shasum -a 256` instead of `sha256sum`.) Then download the file and sign it:
+
 **Signing a release:**
 
 ```bash

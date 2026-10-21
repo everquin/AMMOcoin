@@ -1,0 +1,16 @@
+#!/bin/sh
+# ammocoin-node-cli: run ammocoin-cli against the packaged ammocoind service
+# (user "ammocoin", data folder /var/lib/ammocoin/.ammocoin11). Example:
+#   ammocoin-node-cli getblockcount
+# Plain `ammocoin-cli` talks to a node run by *your* user (~/.ammocoin11) instead.
+SVC_USER=ammocoin
+SVC_HOME=/var/lib/ammocoin
+DATADIR=$SVC_HOME/.ammocoin11
+
+if [ "$(id -un)" = "$SVC_USER" ]; then
+  HOME=$SVC_HOME exec /usr/bin/ammocoin-cli -datadir="$DATADIR" "$@"
+elif [ "$(id -u)" = 0 ] && command -v runuser >/dev/null 2>&1; then
+  exec runuser -u "$SVC_USER" -- env HOME="$SVC_HOME" /usr/bin/ammocoin-cli -datadir="$DATADIR" "$@"
+else
+  exec sudo -u "$SVC_USER" env HOME="$SVC_HOME" /usr/bin/ammocoin-cli -datadir="$DATADIR" "$@"
+fi

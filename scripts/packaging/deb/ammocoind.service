@@ -1,0 +1,34 @@
+# AMMOcoin node, installed by the ammocoin .deb package.
+# Same layout as scripts/deployment/install-node.sh: user "ammocoin", HOME /var/lib/ammocoin,
+# data and ammocoin.conf in /var/lib/ammocoin/.ammocoin11, P2P 37020, RPC 51473 (localhost).
+#
+# Don't edit this file (upgrades replace it). Override with:  sudo systemctl edit ammocoind
+# Admin RPC as the service user:                            ammocoin-node-cli getblockcount
+
+[Unit]
+Description=AMMOcoin node
+Documentation=file:///usr/share/doc/ammocoin/README.Debian
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=ammocoin
+Group=ammocoin
+# The node looks for its Sapling parameters and default data folder under $HOME;
+# without this it looks in "/.ammocoin-params" and exits at startup.
+Environment=HOME=/var/lib/ammocoin
+ExecStart=/usr/bin/ammocoind -datadir=/var/lib/ammocoin/.ammocoin11 -daemon=0
+# SIGTERM makes the node flush and shut down cleanly; give it time on slow disks.
+TimeoutStopSec=600
+Restart=on-failure
+RestartSec=30
+
+# Hardening
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target

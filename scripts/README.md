@@ -27,6 +27,7 @@ Scripts for compiling AMMOcoin binaries across different platforms.
 ### `deployment/` - Deployment Scripts
 Scripts for deploying and managing AMMOcoin nodes.
 
+- `install-node.sh` - **v1.1.1 one-command installer** (Ubuntu 22.04+): node, cold staker or masternode as a systemd service; verifies the release checksum and Sapling parameters, opens port 37020
 - `deploy-seed-node.sh` - Deploy a seed node
 - `setup-seed-node.sh` - Setup and configure seed node
 - `deploy-and-start-network.sh` - Deploy and start network

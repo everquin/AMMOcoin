@@ -2,6 +2,8 @@
 
 Complete reference guide for AMMOcoin CLI (Command Line Interface) commands. Master the terminal for advanced wallet management and network operations.
 
+> ℹ️ Written for **v1.1.1 (upcoming)**: Proof-of-Stake from block 2,776, no mining. Mainnet ports: **P2P 37020**, **RPC 51473**. Default data folder: Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11`. Run `ammocoin-cli help` on your node for the authoritative command list.
+
 ## 🚀 Getting Started with CLI
 
 ### Installation & Setup
@@ -31,6 +33,7 @@ ammocoin-cli help <command>
 ### Common Options
 ```bash
 -conf=<file>       # Specify config file location
+-datadir=<dir>     # Data directory (default: ~/.ammocoin11 on Linux)
 -rpcuser=<user>    # RPC username
 -rpcpassword=<pw>  # RPC password
 -rpcport=<port>    # RPC port (default: 51473)
@@ -51,14 +54,14 @@ ammocoin-cli getunconfirmedbalance
 # Get wallet info
 ammocoin-cli getwalletinfo
 
-# List account balances
-ammocoin-cli listaccounts
+# List labels
+ammocoin-cli listlabels
 
-# Get account balance
-ammocoin-cli getbalance "account_name"
+# Addresses for a label
+ammocoin-cli getaddressesbylabel "label_name"
 
-# Create new account
-ammocoin-cli getaccountaddress "new_account"
+# Shielded (Sapling) balance
+ammocoin-cli getshieldbalance
 ```
 
 ### Address Management
@@ -78,11 +81,11 @@ ammocoin-cli getaddressinfo "address"
 # Validate address
 ammocoin-cli validateaddress "address"
 
-# Get account for address
-ammocoin-cli getaccount "address"
+# Set label for address
+ammocoin-cli setlabel "address" "label_name"
 
-# Set account for address
-ammocoin-cli setaccount "address" "account_name"
+# New shielded (Sapling) address
+ammocoin-cli getnewshieldaddress
 ```
 
 ### Sending Transactions
@@ -93,11 +96,8 @@ ammocoin-cli sendtoaddress "address" amount
 # Send with comment
 ammocoin-cli sendtoaddress "address" amount "comment" "to_comment"
 
-# Send from specific account
-ammocoin-cli sendfrom "account" "address" amount
-
-# Send to multiple addresses
-ammocoin-cli sendmany "account" '{"addr1":amount1,"addr2":amount2}'
+# Send to multiple addresses (first argument is a dummy, use "")
+ammocoin-cli sendmany "" '{"addr1":amount1,"addr2":amount2}'
 
 # Create raw transaction
 ammocoin-cli createrawtransaction '[{"txid":"id","vout":n}]' '{"address":amount}'
@@ -117,8 +117,6 @@ ammocoin-cli listtransactions
 # List specific number of transactions
 ammocoin-cli listtransactions "*" 50
 
-# List transactions for account
-ammocoin-cli listtransactions "account_name" 10
 
 # Get transaction details
 ammocoin-cli gettransaction "txid"
@@ -187,10 +185,7 @@ ammocoin-cli getnewaddress
 
 ### Staking Information
 ```bash
-# Get staking information
-ammocoin-cli getstakinginfo
-
-# Check if wallet is staking
+# Check if wallet is staking (staking_status, mature UTXOs, wallet unlocked, etc.)
 ammocoin-cli getstakingstatus
 
 # Get stake split threshold
@@ -198,74 +193,88 @@ ammocoin-cli getstakesplitthreshold
 
 # Set stake split threshold
 ammocoin-cli setstakesplitthreshold amount
-
-# Get reserve balance
-ammocoin-cli getreservebalance
-
-# Set reserve balance (coins not used for staking)
-ammocoin-cli setreservebalance amount
 ```
 
 ### Staking Optimization
 ```bash
-# Split staking UTXOs for optimal staking
-ammocoin-cli splitstakingutxos target_size
+# Auto-combine small UTXOs (threshold in AMMO)
+ammocoin-cli setautocombinethreshold true 500
+ammocoin-cli getautocombinethreshold
 
-# Combine small UTXOs
-ammocoin-cli combineutxos [amount]
+# List stakeable coins (600 confirmations needed to stake)
+ammocoin-cli listunspent 600
 
-# List stakeable coins
-ammocoin-cli listunspent 1 999999 [] true
-
-# Check coin age
+# Check coin maturity
 ammocoin-cli listunspent | grep -A5 -B5 "confirmations"
+```
+
+### Cold Staking
+```bash
+# Staking server: create a staking (S...) address
+ammocoin-cli getnewstakingaddress
+ammocoin-cli liststakingaddresses
+
+# Owner wallet: delegate coins to the staking address
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" amount
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" amount "A_OWNER_ADDRESS"
+# Owner address not in this wallet (e.g. offline): ext_owner=true
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" amount "A_OWNER_ADDRESS" true
+
+# Staking server: whitelist the owner so its delegations are staked
+ammocoin-cli delegatoradd "A_OWNER_ADDRESS"
+ammocoin-cli listdelegators
+ammocoin-cli delegatorremove "A_OWNER_ADDRESS"
+
+# Balances and UTXOs
+ammocoin-cli getcoldstakingbalance    # server: coins delegated to it
+ammocoin-cli getdelegatedbalance      # owner: coins it has delegated
+ammocoin-cli listcoldutxos            # server: delegated UTXOs
 ```
 
 ## 🏛️ Masternode Commands
 
+There is no `masternode` command group (no `masternode genkey`, `masternode start-alias`, etc.). Use these commands:
+
 ### Masternode Management
 ```bash
 # Generate masternode private key
-ammocoin-cli masternode genkey
+ammocoin-cli createmasternodekey
 
-# Get masternode outputs (collateral)
-ammocoin-cli masternode outputs
+# Get masternode outputs (10,000 AMMO collateral txid + index)
+ammocoin-cli getmasternodeoutputs
 
-# Start masternode
-ammocoin-cli masternode start-alias "alias_name"
+# Start one masternode from the controller wallet (alias from masternode.conf)
+ammocoin-cli startmasternode alias false "alias_name"
 
-# Start all masternodes
-ammocoin-cli masternode start-all
+# Start all masternodes in masternode.conf
+ammocoin-cli startmasternode all false
 
-# Get masternode status
-ammocoin-cli masternode status
+# Get masternode status (run on the masternode itself)
+ammocoin-cli getmasternodestatus
 
-# List masternode configuration
-ammocoin-cli masternode list-conf
-
-# Debug masternode
-ammocoin-cli masternode debug
+# List masternode configuration (masternode.conf entries)
+ammocoin-cli listmasternodeconf
 ```
 
 ### Masternode Network Information
 ```bash
 # List all masternodes
-ammocoin-cli masternode list
+ammocoin-cli listmasternodes
 
-# List active masternodes
-ammocoin-cli masternode list active
-
-# List masternode protocol versions
-ammocoin-cli masternode list protocol
+# Filter by text (e.g. your IP or address)
+ammocoin-cli listmasternodes "YOUR_VPS_IP"
 
 # Get masternode count
-ammocoin-cli masternode count
+ammocoin-cli getmasternodecount
 
 # Get masternode winners
-ammocoin-cli masternode winners
+ammocoin-cli getmasternodewinners
 
 # Current masternode winner
-ammocoin-cli masternode current
+ammocoin-cli masternodecurrent
+
+# Masternode sync status
+ammocoin-cli mnsync status
 ```
 
 ## 🌐 Network Commands
@@ -284,16 +293,15 @@ ammocoin-cli getpeerinfo
 # Get connection count
 ammocoin-cli getconnectioncount
 
-# Get network hash rate
-ammocoin-cli getnetworkhashps
-
 # Get difficulty
 ammocoin-cli getdifficulty
 ```
 
+> Mining/hashrate commands are not used on mainnet: there is no mining after block 2,775.
+
 ### Peer Management
 ```bash
-# Add peer node
+# Add peer node (seeds: 78.141.194.140:37020, 104.238.165.56:37020)
 ammocoin-cli addnode "ip:port" "add"
 
 # Remove peer node
@@ -373,20 +381,11 @@ ammocoin-cli getnextsuperblock
 
 ### Voting & Governance
 ```bash
-# Vote on governance proposal
-ammocoin-cli gobject vote-conf "governance_hash" funding yes "alias_name"
+# Finalized budgets
+ammocoin-cli mnfinalbudget show
 
-# List governance objects
-ammocoin-cli gobject list
-
-# Get governance info
-ammocoin-cli getgovernanceinfo
-
-# Prepare governance object
-ammocoin-cli gobject prepare parent_hash revision_number time data_hex
-
-# Submit governance object
-ammocoin-cli gobject submit parent_hash revision_number time data_hex "fee_txid"
+# Check budgets
+ammocoin-cli checkbudgets
 ```
 
 ## 🔧 System & Debug Commands
@@ -399,25 +398,19 @@ ammocoin-cli stop
 # Get info
 ammocoin-cli getinfo
 
-# Get uptime
-ammocoin-cli uptime
-
 # Get memory info
 ammocoin-cli getmemoryinfo
 
-# Get RPC info
-ammocoin-cli getrpcinfo
+# Get supply info
+ammocoin-cli getsupplyinfo
 ```
 
 ### Debug & Monitoring
 ```bash
-# Get debug info
-ammocoin-cli getdebuginfo
-
 # Set log level
 ammocoin-cli logging '["net","tor"]' '["http"]'
 
-# Generate blocks (regtest only)
+# Generate blocks (regtest only - not available on mainnet, which is PoS)
 ammocoin-cli generate numblocks
 
 # Invalidate block
@@ -433,20 +426,11 @@ ammocoin-cli ping
 ammocoin-cli getnettotals
 ```
 
-### Configuration Commands
-```bash
-# Get configuration setting
-ammocoin-cli getconfig setting_name
-
-# List configuration
-ammocoin-cli listconfig
-
-# Reload configuration
-ammocoin-cli reloadconfig
-
-# Get data directory
-ammocoin-cli getdatadir
-```
+### Configuration
+Configuration is read from `ammocoin.conf` in the data folder at startup; restart the node after changes. There are no config RPC commands.
+- Linux: `~/.ammocoin11/ammocoin.conf`
+- macOS: `~/Library/Application Support/AMMOcoin11/ammocoin.conf`
+- Windows: `%APPDATA%\AMMOcoin11\ammocoin.conf`
 
 ## 📊 Advanced Commands
 
@@ -488,28 +472,19 @@ ammocoin-cli estimatefee num_blocks
 # Estimate smart fee
 ammocoin-cli estimatesmartfee num_blocks
 
-# Get new address for specific type
-ammocoin-cli getnewaddress "label" "legacy|p2sh-segwit|bech32"
+# Get new exchange address (EXM...)
+ammocoin-cli getnewexchangeaddress
 ```
 
 ## 🛡️ Security Commands
 
 ### Wallet Security
 ```bash
-# Check wallet integrity
-ammocoin-cli checkwallet
-
-# Repair wallet
-ammocoin-cli repairwallet
-
 # Rescan blockchain
 ammocoin-cli rescanblockchain start_height
 
 # Abandon transaction
 ammocoin-cli abandontransaction "txid"
-
-# Bump transaction fee
-ammocoin-cli bumpfee "txid"
 ```
 
 ### Network Security
@@ -522,26 +497,16 @@ ammocoin-cli clearbanned
 
 # Set network active
 ammocoin-cli setnetworkactive true|false
-
-# Get warnings
-ammocoin-cli getwarnings
-
-# Get chainwork
-ammocoin-cli getchainwork
 ```
 
 ## 📝 Batch Operations & Scripting
 
 ### Batch Commands
 ```bash
-# Execute multiple commands from file
-ammocoin-cli batch commands.txt
-
-# Example batch file (commands.txt):
-getbalance
-getblockcount
-getstakinginfo
-getnetworkinfo
+# Run several commands in a loop
+for cmd in getbalance getblockcount getstakingstatus getnetworkinfo; do
+  ammocoin-cli $cmd
+done
 ```
 
 ### Useful Scripts
@@ -552,7 +517,7 @@ getnetworkinfo
 # monitor_staking.sh
 while true; do
   echo "=== $(date) ==="
-  ammocoin-cli getstakinginfo | grep -E "(enabled|staking|weight)"
+  ammocoin-cli getstakingstatus | grep -E "(staking_status|mnsync|walletunlocked|stakeablecoins)"
   echo ""
   sleep 300  # Check every 5 minutes
 done
@@ -592,11 +557,8 @@ ammocoind -reindex
 # Start with rescan
 ammocoind -rescan
 
-# Start in safe mode
-ammocoind -safemode
-
-# Recovery from corrupted blockchain
-rm -rf ~/.ammocoin/blocks ~/.ammocoin/chainstate
+# Recovery from corrupted blockchain (keep wallet.dat!)
+rm -rf ~/.ammocoin11/blocks ~/.ammocoin11/chainstate
 ammocoind
 ```
 
@@ -625,7 +587,7 @@ ammocoin-cli getconnectioncount
 # Add to ~/.bashrc or ~/.zshrc
 alias ac='ammocoin-cli'
 alias balance='ammocoin-cli getbalance'
-alias stake='ammocoin-cli getstakinginfo'
+alias stake='ammocoin-cli getstakingstatus'
 alias peers='ammocoin-cli getconnectioncount'
 alias sync='ammocoin-cli getblockchaininfo | grep blocks'
 ```
@@ -644,8 +606,8 @@ ammocoin-cli listtransactions "*" 50 | grep -A5 -B5 "stake"
 # Check all address balances
 ammocoin-cli listaddressgroupings | grep -E "\s+[0-9]+\."
 
-# Monitor network weight
-watch -n 30 'ammocoin-cli getstakinginfo | grep netstakeweight'
+# Monitor staking status
+watch -n 30 'ammocoin-cli getstakingstatus'
 ```
 
 ### JSON Processing with jq
@@ -659,7 +621,7 @@ ammocoin-cli getinfo | jq .
 
 # Extract specific values
 ammocoin-cli getblockchaininfo | jq .blocks
-ammocoin-cli getstakinginfo | jq .enabled
+ammocoin-cli getstakingstatus | jq .staking_status
 
 # Complex filtering
 ammocoin-cli listunspent | jq '.[] | select(.amount > 100)'
@@ -701,15 +663,16 @@ ammocoin-cli help | grep stake
 - [ ] `getbalance` - Check wallet balance
 - [ ] `getnewaddress` - Generate receiving address
 - [ ] `sendtoaddress` - Send transactions
-- [ ] `getstakinginfo` - Monitor staking
+- [ ] `getstakingstatus` - Monitor staking
 - [ ] `getnetworkinfo` - Check network status
 - [ ] `walletpassphrase` - Unlock wallet
 - [ ] `backupwallet` - Create backups
 - [ ] `listtransactions` - View transaction history
 
 ### Advanced Commands for Power Users
-- [ ] `masternode` commands - Manage masternodes
-- [ ] `gobject` commands - Governance voting
+- [ ] Masternode commands (`createmasternodekey`, `getmasternodeoutputs`, `startmasternode`, `getmasternodestatus`, `listmasternodes`)
+- [ ] Cold staking commands (`getnewstakingaddress`, `delegatestake`, `delegatoradd`, `listcoldutxos`)
+- [ ] Budget commands (`getbudgetinfo`, `mnbudgetvote`) - Governance voting
 - [ ] Raw transaction commands
 - [ ] Debug and monitoring commands
 - [ ] Batch operation scripts

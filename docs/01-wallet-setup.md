@@ -4,8 +4,10 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 
 ## 📥 Download & Installation
 
+> ⚠️ **v1.1.1 (upcoming) is a mandatory hard fork.** From block 2,776 the network runs Proof-of-Stake and uses new network magic bytes, so v1.0 and v1.1.0 wallets can no longer connect. Install v1.1.1 when it is published on the official GitHub releases page. Download links and checksums will be added at release time - do not install binaries from any other source. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md).
+
 ### Windows Installation
-1. **Download** the latest `AMMOcoin-v1.1.0-Windows-x86_64-Setup.exe` from GitHub releases
+1. **Download** the v1.1.1 Windows release from the official GitHub releases page (once published)
 2. **Run** the installer as Administrator
 3. **Accept** the license agreement
 4. **Choose** installation directory (default recommended)
@@ -13,23 +15,21 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 6. **Launch** AMMOcoin-Qt from Start Menu
 
 ### macOS Installation
-1. **Download** `AMMOcoin-v1.1.0-macOS-ARM64.dmg` from GitHub releases
+1. **Download** the v1.1.1 macOS release from the official GitHub releases page (once published)
 2. **Open** the .dmg file
 3. **Drag** AMMOcoin-Qt to Applications folder
 4. **Right-click** → Open (first time only, for security)
 5. **Allow** network connections in firewall prompt
 
 ### Linux Installation
+The Linux binaries need **glibc 2.34 or newer** (Ubuntu 22.04 LTS or newer; Ubuntu 24.04 is tested). Ubuntu 18.04 and 20.04 cannot run them - upgrade or reinstall the OS first. Check with `ldd --version`.
+
 ```bash
-# Ubuntu/Debian
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+# Ubuntu/Debian (22.04+) - after downloading the v1.1.1 release archive
+tar -xzf AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
 cd bin
 chmod +x ammocoind ammocoin-cli ammocoin-tx
 ./ammocoind -daemon
-
-# Or install the .deb package
-sudo dpkg -i AMMOcoin-v1.1.0-Linux-amd64.deb
 ```
 
 ## 🚀 First Launch Setup
@@ -45,6 +45,8 @@ When you first open your wallet:
 2. **Create/Restore Wallet**
    - **New wallet**: Auto-generated on first run
    - **Restore wallet**: Use backup seed phrase or wallet.dat file
+
+3. **v1.0 holders** - Your v1.0 balance (snapshot at block 434,881) is airdropped to the **same addresses** on v1.1. Keep your v1.0 `wallet.dat`, put a copy in the v1.1.1 data folder, and **send nothing anywhere**. Never trust an emailed "disposal address". See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md).
 
 ### Wallet Encryption (CRITICAL SECURITY STEP)
 **🔒 Encrypt your wallet immediately after setup:**
@@ -158,9 +160,10 @@ When you first open your wallet:
 #### Method 2: Wallet.dat Backup
 1. **Close** AMMOcoin wallet
 2. **Navigate** to data directory:
-   - Windows: `%APPDATA%\AMMOcoin\`
-   - macOS: `~/Library/Application Support/AMMOcoin/`
-   - Linux: `~/.ammocoin/`
+   - Windows: `%APPDATA%\AMMOcoin11\`
+   - macOS: `~/Library/Application Support/AMMOcoin11/`
+   - Linux: `~/.ammocoin11/`
+   - (v1.0 and v1.1.0 used `AMMOcoin` / `.ammocoin` - keep any `wallet.dat` you find there too)
 3. **Copy** `wallet.dat` file
 4. **Store** in multiple secure locations
 5. **Test restore** on different computer
@@ -174,7 +177,7 @@ When you first open your wallet:
 
 ### Basic Settings
 - **Language** - Choose your preferred language
-- **Currency Display** - USD, EUR, BTC equivalent
+- **Display Unit** - AMMO, mAMMO or µAMMO (the wallet shows amounts in AMMO only; it has no price feed)
 - **Decimal Places** - Precision for amounts
 - **Theme** - Light or dark mode
 
@@ -194,6 +197,7 @@ rpcuser=yourusername
 rpcpassword=strongpassword
 rpcallowip=127.0.0.1
 staking=1
+# Mainnet ports (defaults): P2P 37020, RPC 51473
 ```
 
 ## 📱 Mobile & Remote Access
@@ -214,13 +218,15 @@ staking=1
 1. **Check** if another instance is running
 2. **Restart** computer
 3. **Check** available disk space (need 5GB+)
-4. **Verify** wallet.dat isn't corrupted
+4. **Linux:** "Cannot find the Sapling parameters" means `~/.ammocoin-params` is missing or `HOME` is not set (systemd units need `Environment=HOME=...`)
+5. **Verify** wallet.dat isn't corrupted
 
 ### Sync Issues
 1. **Check** internet connection
 2. **Add** manual nodes:
    - Settings → Options → Network
-   - Add peer addresses
+   - Add peer addresses, e.g. `78.141.194.140:37020` (seed1) and `104.238.165.56:37020` (seed2.ammocoin.org)
+   - Make sure you are running v1.1.1 - older versions cannot connect after the fork
 3. **Reset** blockchain data (keep wallet.dat!)
 
 ### Transaction Not Confirming
@@ -254,11 +260,11 @@ staking=1
 
 ## ✅ Quick Setup Checklist
 
-- [ ] Downloaded wallet from official source
+- [ ] Downloaded v1.1.1 from the official GitHub releases page
 - [ ] Installed and launched successfully
 - [ ] Wallet fully synchronized
 - [ ] Created strong encryption password
-- [ ] Backed up wallet (seed + wallet.dat)
+- [ ] Backed up wallet (seed + wallet.dat), and kept any v1.0 wallet.dat
 - [ ] Tested receiving address generation
 - [ ] Made small test transaction
 - [ ] Documented password securely

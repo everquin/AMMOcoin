@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AMMOcoin Wallet
+GenericName=Cryptocurrency wallet
+Comment=AMMOcoin v1.1.1 Proof-of-Stake wallet
+Exec=ammocoin-qt %u
+Icon=ammocoin
+Terminal=false
+MimeType=x-scheme-handler/ammocoin;
+Categories=Office;Finance;

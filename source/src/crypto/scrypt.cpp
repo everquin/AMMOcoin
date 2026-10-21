@@ -39,8 +39,9 @@
 #include <string.h>
 #include <stdint.h>
 
-#if !defined(__FreeBSD__) && !defined(__APPLE__)
-static inline void be32enc(void *pp, uint32_t x)
+// Own copy under a private name: some SDKs (FreeBSD, newer macOS) declare be32enc and some
+// (the macOS SDK on GitHub's Xcode 16 runners) don't, so relying on the system one breaks builds.
+static inline void scrypt_be32enc(void *pp, uint32_t x)
 {
     uint8_t *p = (uint8_t *)pp;
     p[3] = x & 0xff;
@@ -48,7 +49,6 @@ static inline void be32enc(void *pp, uint32_t x)
     p[1] = (x >> 16) & 0xff;
     p[0] = (x >> 24) & 0xff;
 }
-#endif
 
 
 /**
@@ -74,7 +74,7 @@ PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen, const uint8_t *salt,
     /* Iterate through the blocks. */
     for (i = 0; i * 32 < dkLen; i++) {
         /* Generate INT(i + 1). */
-        be32enc(ivec, (uint32_t)(i + 1));
+        scrypt_be32enc(ivec, (uint32_t)(i + 1));
 
         /* Compute U_1 = PRF(P, S || INT(i)). */
         CHMAC_SHA256(PShctx).Write(ivec, 4).Finalize(U);

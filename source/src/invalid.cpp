@@ -28,8 +28,11 @@ namespace invalid_out
     {
         UniValue v = read_json(LoadInvalidOutPoints());
 
+        // AMMOcoin's compiled-in list is "[]": a valid load with nothing to prune.
+        // Returning false here made PruneInvalidEntries assert on every restart once
+        // UPGRADE_ZC was active (v1.1.1 PoS fork).
         if (v.empty())
-            return false;
+            return true;
 
         for (unsigned int idx = 0; idx < v.size(); idx++) {
             const UniValue &val = v[idx];

@@ -21,3 +21,6 @@
 # artifact + its `.sig`. The verifier hard-fails if this file is empty.
 #
 # --- TRUSTED KEYS BELOW THIS LINE ---
+# Owner decision 2026-10-18: the everquin GitHub account's SSH key (RSA 3072,
+# SHA256:yJiO57VeB7XYp4560L7Q5RZcphLvJujaJKJIDlAUw1I, also at https://github.com/everquin.keys).
+release@ammocoin.org namespaces="file" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6ErkOODwAe+bC1P1VDA1TybpSLHKHMd3rekHCsOFgSMf3e4RNOkBVgs6lIOxnoEMOxu+HE5kv1jHHppUba08ALZ67F+7ebrnGhRUlmNtpVfHTcTRY96vN6xfjqQ8yTgatoKQguAlRy1jnaGpFA5jaRg8faToFtNdoEp/nfEnvM0ovlFzSVJcpH1oQnLDQ/nNZw9UvNEjY/NZtePU4C9L6S7DGPYUOpF6j0ZfBJIXP3ojHb/vJKPogc+4YrP1juxd4zBvCxYIWYmNnHDhAV7M9i+adUP1eEDofRTBcPtOfN8ubd2qwoAN0y2gq2ICRWLgiqj2JVa52BAC2rL4T3VO+xlQiLSppphS0fsW5AC9P4jvLmLZFfFCBbo5mzAt6IiXVdbXocsVryC14bjmDoZJw9PfSxU9ue5xeIalDqDtGfVH9pMdrgDaPjTznO+IotZ2LFIm9NlpFGddv0w/kbhmreUl6wo9J/tkyzus8IIMzYYO7Jmv1sNXUVUVlXP/Myx8= everquin-github

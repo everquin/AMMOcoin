@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+if [ -d /run/systemd/system ]; then
+  systemctl daemon-reload >/dev/null 2>&1 || true
+fi
+if [ "$1" = purge ]; then
+  # Wallets live in /var/lib/ammocoin; never delete them automatically.
+  cat <<EOF
+
+ammocoin purged. The "ammocoin" user and /var/lib/ammocoin (blockchain data and any
+wallet.dat) were left in place. Back up wallet.dat first, then remove them with:
+  sudo deluser --remove-home ammocoin
+
+EOF
+fi
+exit 0

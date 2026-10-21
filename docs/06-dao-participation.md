@@ -128,9 +128,15 @@ ammocoin-cli preparebudget "proposal_name" "url" payment_count block_start "addr
 # Submit with fee transaction
 ammocoin-cli submitbudget "proposal_name" "url" payment_count block_start "address" monthly_payment "fee_txid"
 
-# Example:
-ammocoin-cli preparebudget "dev_team_q1_2025" "https://forum.ammocoin.org/proposal/123" 3 850000 "AQjZ4xNGvx8E7rCdB9tQw1L5x" 5000
+# Example (start must be a future superblock height - see getnextsuperblock):
+ammocoin-cli getnextsuperblock
+ammocoin-cli preparebudget "dev_team_q1" "https://example.org/proposal-123" 3 NEXT_SUPERBLOCK_HEIGHT "YOUR_AMMO_ADDRESS" 5000
+
+# Wait for the fee transaction to confirm, then submit with the returned fee txid
+ammocoin-cli submitbudget "dev_team_q1" "https://example.org/proposal-123" 3 NEXT_SUPERBLOCK_HEIGHT "YOUR_AMMO_ADDRESS" 5000 "fee_txid"
 ```
+
+> Note: the RPC calls each payment "monthly", but on AMMOcoin mainnet one payment cycle is 43,200 blocks (about 90 days at 3-minute blocks).
 
 #### GUI Submission (if available)
 1. **Open Wallet** → Governance tab
@@ -141,7 +147,8 @@ ammocoin-cli preparebudget "dev_team_q1_2025" "https://forum.ammocoin.org/propos
 
 ### Proposal Fees
 - **Purpose**: Prevent spam proposals
-- **Amount**: 5 AMMO (subject to change via governance)
+- **Proposal fee**: 50 AMMO (paid by `preparebudget`)
+- **Budget finalization fee**: 5 AMMO (paid by masternodes that finalize a budget)
 - **Payment**: Burned/destroyed upon submission
 - **Refund**: No refund regardless of outcome
 
@@ -149,10 +156,9 @@ ammocoin-cli preparebudget "dev_team_q1_2025" "https://forum.ammocoin.org/propos
 
 ### Voting Timeline
 ```
-Phase 1: Submission (24 hours)
-Phase 2: Discussion (7 days)
-Phase 3: Voting (30 days)
-Phase 4: Implementation (varies)
+Phase 1: Submission - proposal must be at least 24 hours old to enter a budget
+Phase 2: Voting - until the target superblock (cycle = 43,200 blocks, ~90 days)
+Phase 3: Payment - automatic at the superblock if the proposal passed
 ```
 
 ### How to Vote
@@ -189,8 +195,8 @@ ammocoin-cli getbudgetvotes "proposal_name"
 - **⚪ ABSTAIN** - No opinion (counts toward quorum)
 
 ### Voting Requirements
-- **Quorum**: Minimum 10% of masternodes must vote
-- **Approval**: >50% of votes must be "YES"
+- **Approval**: YES votes minus NO votes must be more than 10% of enabled masternodes
+- **Rejection**: a proposal is dropped if NO minus YES exceeds 30% of enabled masternodes
 - **Active Masternodes**: Only enabled masternodes can vote
 - **One Vote per MN**: Each masternode gets exactly one vote
 
@@ -247,14 +253,14 @@ ammocoin-cli getbudgetprojection
 ## 💰 Treasury Management
 
 ### Budget Allocation System
-- **Monthly Budget**: 10% of block rewards
-- **Allocation Period**: Monthly cycles
+- **Budget per cycle**: 20% of the block value x 43,200 blocks; today 50 AMMO x 43,200 = **2,160,000 AMMO** (250 AMMO block value). It shrinks as the block value drops (225 AMMO from block 86,401, 45 AMMO from 151,201) and becomes 100% of the block value only after block 3,715,200
+- **Allocation Period**: 43,200-block cycles (~90 days)
 - **Distribution**: Automatic via superblocks
-- **Unused Funds**: Burned (not carried over)
+- **Unused Funds**: Never minted (not carried over)
 
 ### Superblock System
 ```
-Superblock Frequency: Every 25,200 blocks (~30 days)
+Superblock Frequency: Every 43,200 blocks (~90 days at 3-minute blocks)
 Budget Distribution: Automatic payment to approved proposals
 Verification: Network validates payments match votes
 ```
@@ -321,10 +327,17 @@ bool CMasternode::IsValidForVoting() {
 
 ### Budget Calculations
 ```cpp
-// Monthly budget calculation
-CAmount GetBudgetPaymentCycleTotal() {
-    CAmount nSubsidy = GetBlockSubsidy(nBestHeight);
-    return ((nSubsidy / 100) * 10) * Params().GetBudgetPaymentCycleBlocks();
+// Budget per cycle (source/src/budget/budgetmanager.cpp)
+CAmount CBudgetManager::GetTotalBudget(int nHeight) {
+    // 100% of block reward after nRewardV55Height (3,715,200 on mainnet)
+    CAmount nSubsidy = GetBlockValue(nHeight);
+
+    // 20% of block reward up to nRewardV55Height (the case today)
+    if (nHeight <= Params().GetConsensus().nRewardV55Height) {
+        nSubsidy /= 5;
+    }
+
+    return nSubsidy * Params().GetConsensus().nBudgetCycleBlocks;  // 43,200 on mainnet
 }
 ```
 
@@ -341,7 +354,7 @@ Track key metrics:
 ```bash
 # Governance health check
 echo "=== AMMOcoin Governance Stats ==="
-echo "Active Masternodes: $(ammocoin-cli masternode count enabled)"
+echo "Active Masternodes: $(ammocoin-cli getmasternodecount | jq .enabled)"
 echo "Active Proposals: $(ammocoin-cli getbudgetinfo | jq length)"
 echo "Next Superblock: $(ammocoin-cli getnextsuperblock)"
 echo "Treasury Balance: $(ammocoin-cli getbudgetprojection | jq .TotalBudget)"
@@ -361,10 +374,10 @@ Examples of successful proposals:
 #### Vote Not Registering
 ```bash
 # Check masternode status
-ammocoin-cli masternode status
+ammocoin-cli getmasternodestatus
 
 # Verify masternode is enabled
-ammocoin-cli masternode list | grep "your_ip"
+ammocoin-cli listmasternodes | grep "your_ip"
 
 # Check vote submission
 ammocoin-cli getbudgetvotes "proposal_name" | grep "your_vote_hash"

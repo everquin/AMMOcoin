@@ -1,3 +1,5 @@
+> **Superseded.** This paper describes v1.1.0 and some of its figures (reward splits, initial reward) never matched the code. It is replaced by the [2nd Edition white paper](AMMOcoin_Whitepaper_2ndEdition_v1.1.1.md). Any yield, return, investment, "anonymous" or exchange/DEX claim in this paper is **withdrawn**: the project promises no return, yield, profit or price, AMMO is transparent by default with optional Sapling shielding, and AMMO is not listed or traded by the project. Withdrawn claims are struck through below. For current consensus values see [docs/02-staking-guide.md](../02-staking-guide.md), [docs/03-masternode-setup.md](../03-masternode-setup.md) and the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1.md).
+
 # AMMOcoin Whitepaper v1.1.0
 
 **A Privacy-Focused, Community-Driven Cryptocurrency Platform**
@@ -85,7 +87,7 @@ v1.1.0 launched on January 3, 2026 with the following genesis parameters:
 - **Genesis Hash**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - **Genesis Timestamp**: June 7, 2021 23:04:05 UTC (commemorative)
 - **Genesis Nonce**: 1299391
-- **Distribution Output**: 250,000,000 AMMO to AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME
+- **Distribution Output**: 250,000,000 AMMO in block 1 to AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u (the genesis output to AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME is unspendable)
 
 This represents a clean start with proper architectural foundation for long-term growth while maintaining fairness to the existing community.
 
@@ -164,7 +166,7 @@ The masternode network provides:
 AMMOcoin supports multiple transaction types:
 
 1. **Transparent Transactions**: Standard Bitcoin-style transactions
-2. **Shielded Transactions**: Fully private using Sapling protocol
+2. **Shielded Transactions**: ~~Fully private~~ Optional shielding using the Sapling protocol *[Corrected: the transparent side of shield/unshield is visible and peers can see your IP.]*
 3. **Mixed Transactions**: Combining transparent and shielded outputs
 
 ### 3.2 Address Types

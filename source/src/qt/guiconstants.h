@@ -49,9 +49,13 @@ static const int MAX_URI_LENGTH = 255;
 #define EXPORT_IMAGE_SIZE 256
 
 
-#define QAPP_ORG_NAME "AMMOcoin"
+// v1.1.1: own QSettings namespace so the GUI never reuses a v1.0 setting (notably the saved
+// "strDataDir", which would point v1.1 at the v1.0 data folder). Linux/Windows key settings by
+// org + app name; macOS keys them by domain + app name (org.ammocoin.<app>.plist), so the app
+// name must change too. See docs/MAINNET_SEPARATION.md.
+#define QAPP_ORG_NAME "AMMOcoin11"
 #define QAPP_ORG_DOMAIN "ammocoin.org"
-#define QAPP_APP_NAME_DEFAULT "AMMOcoin-Qt"
-#define QAPP_APP_NAME_TESTNET "AMMOcoin-Qt-testnet"
+#define QAPP_APP_NAME_DEFAULT "AMMOcoin11-Qt"
+#define QAPP_APP_NAME_TESTNET "AMMOcoin11-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

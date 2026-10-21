@@ -1,4 +1,4 @@
-# AMMOcoin v1.1.0
+# AMMOcoin v1.1.1 (upcoming)
 
 **Privacy-Focused Cryptocurrency Platform with Multi-Platform Support**
 
@@ -8,22 +8,36 @@
 
 ---
 
-## 📢 **v1.1.0 Release - January 3, 2026**
+## ⚠️ **v1.1.1 (upcoming) - Proof-of-Stake Hard Fork - Everyone Must Upgrade**
 
-AMMOcoin v1.1.0 is now available! This major release features a new genesis block and complete multi-platform support.
+v1.1.1 switches the network to **Proof-of-Stake from block 2,776**. There is no mining after the fork.
 
-**🔗 [Download Latest Release](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0)**
+- **New network magic** (`c7 9a e3 b5`): v1.1.1 nodes do **not** connect to v1.0 or v1.1.0 nodes. Every wallet, staker, masternode and seed must upgrade.
+- **New data folder:** Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11` (was `.ammocoin` / `AMMOcoin`).
+- **Ports:** P2P **37020**, RPC **51473**.
+- **Linux:** binaries need **glibc 2.34+** (Ubuntu 22.04 or newer; 24.04 tested). Ubuntu 18.04/20.04 must upgrade or reinstall the OS.
+- **v1.0 holders:** balances from the block 434,881 snapshot are **airdropped to the same addresses**. Keep your v1.0 `wallet.dat` and **send nothing anywhere**. See [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md).
 
-**📋 Genesis Block Hash:** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
+v1.1.1 is not released yet. Binaries and checksums will be published on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases) page. Do not install binaries from any other source.
 
-### What's New
+**📋 [v1.1.1 Release Notes](docs/release-notes/RELEASE_NOTES_v1.1.1.md)**
+
+**📋 Genesis Block Hash (unchanged):** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
+
+---
+
+## 📢 **v1.1.0 Release - January 3, 2026** (superseded by v1.1.1)
+
+v1.1.0 introduced the new genesis block and multi-platform support. Its PoW phase ended at block 2,775; v1.1.0 nodes cannot follow the v1.1.1 chain.
+
+### What's New in v1.1.0
 - ✅ New genesis block for clean blockchain start
 - ✅ Multi-platform binaries (macOS, Linux, Windows)
-- ✅ 250M AMMO distribution fund for v1.0 user migration
+- ✅ 250M AMMO distribution fund in block 1 for v1.0 user migration
 - ✅ Enhanced build system with automated CI/CD
 - ✅ Comprehensive documentation and migration guides
 
-**Important:** v1.1.0 is a new blockchain, not compatible with v1.0. See [Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md) for details.
+**Important:** v1.1 is a new blockchain, not compatible with v1.0. See [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md) for how v1.0 balances move over.
 
 ---
 
@@ -34,7 +48,7 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 ### Key Features
 
 🛡️ **Privacy Technology**
-- **Sapling Protocol**: Zero-knowledge proofs for completely private transactions
+- **Sapling Protocol**: Optional shielded (zero-knowledge) transactions; AMMO is transparent by default, the transparent side of shielding/unshielding is visible, and peers can see your IP
 - **Shielded Addresses**: Optional privacy for enhanced transaction confidentiality
 - **Selective Disclosure**: Users control transaction visibility
 
@@ -46,7 +60,7 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 🏛️ **Governance & Economics**
 - **Decentralized Voting**: Community-driven development decisions
 - **Treasury System**: Sustainable funding for ecosystem growth
-- **Staking Rewards**: Passive income for network participants
+- **Staking Rewards**: Stakers who create a block receive the staker share set by `GetBlockValue()`
 
 🔧 **Developer Features**
 - **JSON-RPC API**: Complete programmatic blockchain access
@@ -57,17 +71,17 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 
 ## 📦 **Download Binaries**
 
-### Official v1.1.0 Releases
+### v1.1.1 (upcoming)
 
-**Download from GitHub Releases:** https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0
+v1.1.1 binaries are not published yet. When released they will be on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases) page with SHA256 checksums. **v1.1.0 binaries below no longer follow the network after block 2,775** and are listed for reference only.
+
+### v1.1.0 Releases (obsolete after the fork)
 
 | Platform | Download | Size | Checksum (SHA256) |
 |----------|----------|------|-------------------|
 | **macOS ARM64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.zip) | 4.0 MB | `71048bb009...` |
 | **Linux x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz) | 112 MB | `082f1eb063...` |
 | **Windows x86_64** | [.tar.gz](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.tar.gz) / [.zip](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Windows-x86_64.zip) | 17 MB | `66bd10254f...` |
-
-**Verify Checksums:** [Download CHECKSUMS.txt](https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt)
 
 ### Each platform includes:
 - `ammocoind` - Core daemon server
@@ -80,14 +94,15 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 
 ### Using Pre-Built Binaries (Recommended)
 
+Download the v1.1.1 archive for your platform from the official GitHub release once it is published, verify its SHA256 checksum, then:
+
 #### macOS
 ```bash
-# Download and extract
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-tar -xzf AMMOcoin-v1.1.0-macOS-ARM64.tar.gz
-cd AMMOcoin-v1.1.0-macOS-ARM64/bin
+# Extract (file name from the v1.1.1 release page)
+tar -xzf AMMOcoin-v1.1.1-<platform>.tar.gz
+cd <extracted folder>/bin
 
-# Start daemon
+# Start daemon (data folder: ~/Library/Application Support/AMMOcoin11)
 ./ammocoind -daemon
 
 # Check status
@@ -98,29 +113,33 @@ cd AMMOcoin-v1.1.0-macOS-ARM64/bin
 # Should return: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 ```
 
-#### Linux
+#### Linux (glibc 2.34+, Ubuntu 22.04 or newer)
 ```bash
-# Download and extract
-wget https://github.com/everquin/AMMOcoin/releases/download/v1.1.0/AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-tar -xzf AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
-cd bin
+# Check glibc first - must be 2.34 or newer
+ldd --version
+
+# Extract (file name from the v1.1.1 release page)
+tar -xzf AMMOcoin-v1.1.1-<platform>.tar.gz
+cd <extracted folder>/bin
 
 # Install system-wide (optional)
 sudo install -m 0755 -o root -g root -t /usr/local/bin ammocoind ammocoin-cli ammocoin-tx
 
-# Start daemon
+# Start daemon (data folder: ~/.ammocoin11)
 ammocoind -daemon
 
-# Check status
+# Check status - block height should pass 2,775 once synced
 ammocoin-cli getinfo
 ```
+
+For a server, run the node under systemd and set `Environment=HOME=/root` (or the service user's home) in the unit, otherwise it exits with "Cannot find the Sapling parameters". See [Node Setup](docs/04-node-setup.md).
 
 #### Windows
 ```powershell
 # Extract the ZIP file
 # Navigate to the bin directory
 
-# Start daemon
+# Start daemon (data folder: %APPDATA%\AMMOcoin11)
 .\ammocoind.exe -daemon
 
 # Check status (in new command prompt)
@@ -176,7 +195,7 @@ For detailed build instructions, see:
 |----------|--------|------------|-------|
 | **macOS ARM64** | ✅ Production | macOS 11 Big Sur | Native Apple Silicon (M1/M2/M3) |
 | **macOS Intel** | ✅ Production | macOS 10.15 | Via Rosetta 2 on ARM64 |
-| **Linux x86_64** | ✅ Production | Ubuntu 20.04, Debian 11, RHEL 8 | glibc 2.31+ |
+| **Linux x86_64** | ✅ Production | Ubuntu 22.04+ (24.04 tested), Debian 12+ | glibc 2.34+ (Ubuntu 18.04/20.04 not supported) |
 | **Windows x86_64** | ✅ Production | Windows 10/11 64-bit | Built with MinGW |
 | **ARM64/RPi** | ✅ Production | Raspberry Pi OS (64-bit) | Headless daemon + CLI |
 
@@ -201,8 +220,8 @@ ammocoin-cli getnewaddress
 # Send transaction
 ammocoin-cli sendtoaddress "ADDRESS" 10.0
 
-# Enable staking
-ammocoin-cli walletpassphrase "YOUR_PASSPHRASE" 999999 true
+# Enable staking (unlock for staking only; coins need 600 confirmations)
+ammocoin-cli walletpassphrase "YOUR_PASSPHRASE" 0 true
 
 # Check staking status
 ammocoin-cli getstakingstatus
@@ -211,13 +230,13 @@ ammocoin-cli getstakingstatus
 ### Privacy Transactions
 ```bash
 # Create shielded address (Sapling)
-ammocoin-cli getnewshieldedaddress
+ammocoin-cli getnewshieldaddress
 
 # Shield coins for privacy
 ammocoin-cli shieldsendmany "from_address" '[{"address":"shielded_address","amount":10}]'
 
 # List shielded balances
-ammocoin-cli z_gettotalbalance
+ammocoin-cli getshieldbalance
 ```
 
 ### Masternode Setup
@@ -225,10 +244,36 @@ ammocoin-cli z_gettotalbalance
 # Generate masternode key
 ammocoin-cli createmasternodekey
 
-# Get collateral output
+# Get collateral output (10,000 AMMO, 15 confirmations)
 ammocoin-cli getmasternodeoutputs
 
+# masternode.conf line:  mn1 VPS_PUBLIC_IP:37020 mnprivkey collateral_txid index
+# Start from the controller wallet
+ammocoin-cli startmasternode alias false "mn1"
+
+# Check
+ammocoin-cli getmasternodestatus
+ammocoin-cli listmasternodes
+
 # See full guide: docs/03-masternode-setup.md
+```
+
+### Cold Staking
+```bash
+# On the staking server
+ammocoin-cli getnewstakingaddress
+# ...and whitelist the owner address, or the delegated coins will not stake
+ammocoin-cli delegatoradd "OWNER_ADDRESS"
+
+# In the owner wallet
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000
+# owner address not in this wallet (e.g. offline): pass it plus ext_owner=true
+ammocoin-cli delegatestake "S_STAKING_ADDRESS" 5000 "OWNER_ADDRESS" true
+
+# Check
+ammocoin-cli getcoldstakingbalance   # staking server
+ammocoin-cli listcoldutxos           # staking server
+ammocoin-cli getstakingstatus
 ```
 
 ---
@@ -238,17 +283,20 @@ ammocoin-cli getmasternodeoutputs
 ### Network Parameters
 - **P2P Port**: 37020 (mainnet)
 - **RPC Port**: 51473 (mainnet)
+- **Network Magic**: `c7 9a e3 b5` (v1.1.1)
 - **Block Time**: 3 minutes
-- **Algorithm**: Proof-of-Stake
-- **Masternode Collateral**: 10,000 AMMO
-- **Staking Minimum**: Variable by tier
+- **Algorithm**: Proof-of-Stake from block 2,776 (blocks 1-2,775 were PoW; no mining after the fork)
+- **Stake Maturity**: 600 confirmations
+- **Block Reward**: 250 AMMO today, original schedule kept after the fork (225 AMMO from block 86,401, 45 AMMO from 151,201, lower later); masternode payment 3 AMMO, staker 247 AMMO
+- **Masternode Collateral**: 10,000 AMMO (15 confirmations)
+- **Seed Nodes**: seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56)
 
 ### Genesis Block
 - **Hash**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 - **Merkle Root**: `a4b9dffe1a0e162f632ee851de1414adb433ab2303619c54fb859caa315042ab`
 - **Timestamp**: June 7, 2021 - 23:04:05 UTC
 - **Nonce**: 1299391
-- **Distribution Fund**: 250,000,000 AMMO
+- **Distribution Fund**: 250,000,000 AMMO (block 1, paid to `AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u`)
 
 See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for complete genesis block details.
 
@@ -264,9 +312,11 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 
 ### Quick Links
 - **📖 [Full Documentation](docs/README.md)** - Complete documentation index
-- **🔄 [Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)** - v1.0 → v1.1.0 migration
-- **📦 [Release Notes](docs/release-notes/RELEASE_NOTES_v1.1.0.md)** - What's new in v1.1.0
+- **🔄 [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md)** - how v1.0 balances reach v1.1 (send nothing)
+- **📦 [Release Notes v1.1.1](docs/release-notes/RELEASE_NOTES_v1.1.1.md)** - PoS hard fork, upgrade checklist
+- **📦 [Release Notes v1.1.0](docs/release-notes/RELEASE_NOTES_v1.1.0.md)** - What was new in v1.1.0
 - **⚡ [Genesis Block Authority](V1.1.0_GENESIS_BLOCK_AUTHORITY.md)** - Official genesis parameters
+- **⚖️ [Compliance record](docs/compliance/README.md)** - no ICO, no sale, no price, no ROI: binding principles, decision log and the pre-merge review checklist
 
 ### Installation & Setup
 - [macOS Installation](docs/installation/INSTALL_MACOS.md)
@@ -280,9 +330,9 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 - [Testing Guide](docs/operations/TEST_LOCAL_NODE_MACOS.md)
 
 ### Migration & Distribution
-- [User Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md)
-- [Distribution Process Guide](docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
+- [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md) - current process
 - [Side-by-Side Operation Guide](docs/migration/SIDE_BY_SIDE_OPERATION_GUIDE.md)
+- Superseded (history only): [User Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md), [Distribution Process Guide](docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
 
 ### Technical Documentation
 - [Comprehensive Whitepaper](docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md)
@@ -341,6 +391,7 @@ For security concerns, please email: **security@ammocoin.org**
 - ✅ Regular backup of wallet.dat file
 - ✅ Keep software updated to latest version
 - ✅ Use official releases only from GitHub
+- ✅ Never send coins to an emailed "disposal" or "migration" address - the v1.0 airdrop needs no action
 - ✅ Verify checksums before installation
 - ✅ Store large amounts in cold storage
 - ✅ Use hardware wallets when available
@@ -350,8 +401,8 @@ For security concerns, please email: **security@ammocoin.org**
 # Encrypt wallet
 ammocoin-cli encryptwallet "STRONG_PASSPHRASE"
 
-# Unlock for staking
-ammocoin-cli walletpassphrase "PASSPHRASE" 999999 true
+# Unlock for staking only
+ammocoin-cli walletpassphrase "PASSPHRASE" 0 true
 
 # Unlock for sending (60 seconds)
 ammocoin-cli walletpassphrase "PASSPHRASE" 60
@@ -415,9 +466,11 @@ We acknowledge and thank the broader cryptocurrency development community for th
 - Comprehensive documentation
 - Migration guides and tools
 
+- v1.1.1 Proof-of-Stake hard fork (block 2,776) - upcoming
+
 ### In Progress 🔄
-- Network bootstrap and seed nodes
-- User distribution processing
+- v1.1.1 release and network upgrade
+- v1.0 balance airdrop to the same addresses
 - Mobile wallet development
 - Additional exchange listings
 
@@ -429,7 +482,6 @@ We acknowledge and thank the broader cryptocurrency development community for th
 
 ---
 
-**Current Version**: v1.1.0
-**Release Date**: January 3, 2026
-**Status**: Production Ready ✅
+**Current Version**: v1.1.0 (v1.1.1 upcoming - mandatory PoS hard fork at block 2,776)
+**Release Date**: v1.1.0 January 3, 2026; v1.1.1 not yet released
 **Genesis Block**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
