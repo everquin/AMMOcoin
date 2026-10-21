@@ -17,7 +17,7 @@ Check with `ssh-keygen -Y verify 2>&1 | head -1` — if you see a usage message,
 you're good.
 
 1. Download from the same release:
-   - the binary you want to install (e.g. `AMMOcoin-v1.1.0-Linux-x86_64.tar.gz`)
+   - the binary you want to install (e.g. `AMMOcoin-v1.1.1-Linux-x86_64.tar.gz`)
    - the `…CHECKSUMS.txt` file
    - the `…CHECKSUMS.txt.sig` file (must be from the *same* release tag)
 2. Clone this repository (or download `scripts/release/`) — you need
@@ -26,13 +26,13 @@ you're good.
    that file is the trust root.
 3. Verify the signature:
    ```
-   ./scripts/release/verify-release.sh AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
+   ./scripts/release/verify-release.sh AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt
    ```
    Expected output ends with `✅ Signature is valid.`
 4. Verify the binary's checksum matches the (now-trusted) CHECKSUMS file:
    ```
-   sha256sum -c AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt 2>&1 \
-     | grep AMMOcoin-v1.1.0-Linux-x86_64.tar.gz
+   sha256sum -c AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt 2>&1 \
+     | grep AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
    ```
    Expected: `…tar.gz: OK`.
 
@@ -40,6 +40,15 @@ If either step fails, **do not run the binary.** Open an issue against the
 GitHub repo. A failed verification is more likely a corrupt download or an
 outdated `allowed_signers` than a real attack — but treat it as the latter
 until you confirm.
+
+### Verifying a release tag (optional)
+
+Release tags are signed with the same key. Using `allowed_signers` from `main` (it allows the key for both the `file` and `git` namespaces):
+```
+git -c gpg.format=ssh -c gpg.ssh.allowedSignersFile=scripts/release/allowed_signers verify-tag v1.1.1
+```
+Expected: `Good "git" signature for release@ammocoin.org with RSA key SHA256:yJiO57VeB7XYp4560L7Q5RZcphLvJujaJKJIDlAUw1I`.
+The copy of `allowed_signers` inside the v1.1.1 tag only allows the `file` namespace, so use the one from `main` for the tag check. Checksum verification (above) works with either.
 
 ## For the release maintainer: signing a release
 
@@ -90,7 +99,7 @@ TAG=v1.1.1; gh release download "$TAG" --repo everquin/AMMOcoin && \
 ```bash
 AMMOCOIN_SIGN_KEY=~/.ssh/ammocoin_release_ed25519 \
   ./scripts/release/sign-release.sh \
-    releases/AMMOcoin-v1.1.0-ALL-PLATFORMS-CHECKSUMS.txt
+    releases/AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt
 ```
 
 This produces `…CHECKSUMS.txt.sig`. Upload **both** files to the GitHub
