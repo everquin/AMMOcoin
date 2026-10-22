@@ -26,6 +26,7 @@ Principle IDs (`AMMO-P-xx`) are the same in all three AMMOcoin repositories. Thi
 | [REVIEW_CHECKLIST.md](REVIEW_CHECKLIST.md) | Pre-merge checklist for any change that touches rewards, the reserve, prices, payments, exchanges, privacy claims or copy. |
 | [AIRDROPS.md](AIRDROPS.md) | The v1.0 -> v1.1 migration airdrop: how it works, what is published (placeholders marked TO BE PUBLISHED), why it is not a sale. |
 | [RESERVES.md](RESERVES.md) | Every project-held pool of AMMO, its purpose, addresses and movements (D-2026-10-24-04). |
+| [SOCIAL_KIT_2026-11.md](SOCIAL_KIT_2026-11.md) | The Oct 24 -> Nov 20, 2026 social kit (X, Facebook, YouTube, Instagram, TikTok): content rules, claim sources, review results and owner sign-off. |
 
 ## How to use this folder in reviews
 
