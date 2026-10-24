@@ -2,7 +2,7 @@
 
 Welcome to the AMMOcoin documentation. This directory contains all official documentation for the project.
 
-> **⚠️ v1.1.1 (upcoming) is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic, so it does not connect to v1.0 or v1.1.0 nodes - everyone must upgrade. New data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`), ports 37020 (P2P) / 51473 (RPC), Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1.md).
+> **⚠️ v1.1.1 is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic, so it does not connect to v1.0 or v1.1.0 nodes - everyone must upgrade. New data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`), ports 37020 (P2P) / 51473 (RPC), Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ## Quick Links
 
@@ -37,7 +37,7 @@ Welcome to the AMMOcoin documentation. This directory contains all official docu
 - [Standard Whitepaper](whitepapers/AMMOcoin_Whitepaper_v1.1.0.md) - Concise whitepaper
 
 ### Release Information
-- [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md) - PoS hard fork at block 2,776 (upcoming)
+- [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md) - PoS hard fork at block 2,776
 - [Release Notes v1.1.0](release-notes/RELEASE_NOTES_v1.1.0.md) - What's new in v1.1.0
 - [GitHub Release Notes](release-notes/RELEASE_NOTES_GITHUB.md) - GitHub-formatted notes
 
