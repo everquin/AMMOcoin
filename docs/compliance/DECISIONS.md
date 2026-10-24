@@ -221,6 +221,17 @@ Not legal advice. Counsel review status: **pending**.
 - **Not changed (historical or required):** `docs/compliance/*` (negations and history); superseded v1.1.0 white papers and v1.1.0 release notes bodies (archived, banners already withdraw their claims); `V1.1.0_GENESIS_BLOCK_AUTHORITY.md` (genesis code record); `docs/migration/PLEDGE_GUIDE.md` (signers need the exact pledge share); `docs/migration/DISPOSAL_ADDRESS.md`, `MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md`, `SIDE_BY_SIDE_OPERATION_GUIDE.md` (superseded v1.0/v1.1.0 migration records); `payment-gateway/PAYOUTS.md` ("earned NUGGETS" is the gate the code relies on); `docs/RELEASE_CHECKLIST_1.1.1.md` (internal checklist); RPC names such as `getnewexchangeaddress`; the white paper heading "Initial Valuation: No ICO, No Exchanges, The Closed Loop" (named by PRINCIPLES.md) and its "Coming to GLiBz" line (flip at GLiBz activation). Source code was not touched; no consensus fact changed.
 - **Owner approval:** requested by the owner in the 2026-10-24 launch-review session (relayed); approval is the merge of the PR into `main`. **Prepared by:** Claude.
 
+## AMMO-D-2026-10-24-03 Project-run masternodes for network health; they abstain from listing votes
+
+- **Date:** 2026-10-24
+- **Principles:** AMMO-P-08 (listings only by masternode vote), AMMO-P-02 (never sold)
+- **Context:** On 2026-10-23 and 2026-10-24 the nodes split by banning each other as "misbehaving". With no masternodes on the network, each node resets its masternode sync after every pass (`source/src/masternode-sync.cpp`, `mnodeman.CountEnabled(true) <= 1` -> `Reset()`), about every 2 minutes. Each restart repeats `mnget` (+20, `masternode-payments.cpp:424`) and `mnvs` (+10, `budget/budgetmanager.cpp`) to peers that already answered, so long-lived connections reach the ban score of 100. Blocks were never rejected.
+- **Decision:** The project runs three legacy masternodes on its own Vultr nodes (ammo-03, ammo-05, ammo-08). The collateral comes from project-held AMMO already on chain. Nothing is sold or bought, and no outside party funds them. Until at least as many independent masternodes are enabled as project ones, the project masternodes **abstain from every exchange-listing vote**. A listing therefore needs independent operators, as P-08 intends. They may vote on other proposals. Each such vote is recorded here, with the proposal hash.
+- **Also:** our nodes whitelist each other (`whitelist=` in `ammocoin.conf`; whitelisted peers are not banned, `net_processing.cpp:2243`). A code fix for the reset loop is tracked as a separate decision if a v1.1.2 is cut.
+- **Wording:** public copy may say the project runs masternodes to keep the network healthy. It states no payment amounts (D-2026-10-24-02).
+- **Enforcement / evidence:** governance commitment, not code. The masternode collateral outputs and IPs are to be listed here once they are confirmed.
+- **Owner approval:** the owner asked for masternodes on the spare Vultr nodes on 2026-10-24 ("run a few masternodes … through those"). The abstention rule is **proposed by Claude, pending owner approval** (approval is the merge).
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
