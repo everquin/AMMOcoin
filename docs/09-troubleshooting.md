@@ -2,7 +2,7 @@
 
 Complete solutions for common AMMOcoin issues. Find quick fixes and detailed diagnostics for wallet, staking, masternode, and network problems.
 
-> **v1.1.1 (upcoming):** paths below use the new default data folder - Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11` (v1.0/v1.1.0 used `.ammocoin` / `AMMOcoin`). Mainnet ports: P2P **37020**, RPC **51473**.
+> **v1.1.1:** paths below use the new default data folder - Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11` (v1.0/v1.1.0 used `.ammocoin` / `AMMOcoin`). Mainnet ports: P2P **37020**, RPC **51473**.
 
 ## 🔀 v1.1.1 Upgrade Issues
 
@@ -252,8 +252,8 @@ grep staking ~/.ammocoin11/ammocoin.conf
 ammocoin-cli stop && ammocoind
 ```
 
-#### ❌ "No Staking Rewards"
-**Symptoms**: Staking active but no rewards
+#### ❌ "No Stakes"
+**Symptoms**: Staking active but no blocks staked
 **Diagnosis**:
 ```bash
 # Check stakeable coins and staking balance
@@ -286,8 +286,7 @@ tail -f ~/.ammocoin11/debug.log | grep -i stake
 ammocoin-cli sendtoaddress "YOUR_OWN_ADDRESS" AMOUNT
 # (the new UTXO must reach 600 confirmations again before staking)
 
-# Increase coin amount
-# Buy more AMMO
+# Stake more of the coins you already hold
 
 # Check network conditions
 ammocoin-cli getdifficulty
@@ -406,7 +405,7 @@ ammocoin-cli startmasternode alias false mn1
 ssh user@vps tail -f ~/.ammocoin11/debug.log
 ```
 
-#### ❌ "Low Masternode Rewards"
+#### ❌ "Masternode Rarely Paid"
 **Symptoms**: Infrequent or no masternode payments
 **Diagnosis**:
 ```bash
@@ -419,7 +418,7 @@ ammocoin-cli listmasternodes | grep "your_ip"
 # Check network masternode count
 ammocoin-cli getmasternodecount
 
-# Expected: 3 AMMO per paid block (6 AMMO only after block 3,715,200)
+# Expected: one turn about every N blocks, where N = enabled masternodes
 ```
 
 **Solutions**:

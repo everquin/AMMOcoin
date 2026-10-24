@@ -6,7 +6,7 @@
 
 ---
 
-## ⚠️ CRITICAL: v1.1.1 (upcoming) Hard Fork
+## ⚠️ CRITICAL: v1.1.1 Hard Fork
 
 - **Everyone must upgrade to v1.1.1.** Proof-of-Stake starts at block 2,776; there is no mining after it.
 - v1.1.1 uses new network magic bytes (`c7 9a e3 b5`) and does **not** connect to v1.0 or v1.1.0 nodes.
@@ -419,5 +419,5 @@ ammocoin-cli addnode "IP:37020" "add"
 
 **Last Updated:** December 28, 2025
 **Node:** seed1.ammocoin.org
-**Network:** AMMOcoin v1.1 Mainnet (v1.1.1 upcoming)
+**Network:** AMMOcoin v1.1 Mainnet (v1.1.1)
 

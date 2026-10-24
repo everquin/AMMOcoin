@@ -59,7 +59,7 @@ Technical changes to the protocol:
 
 - **⚡ Performance Improvements** - Faster transactions
 - **🔒 Security Enhancements** - New security features
-- **🎛️ Parameter Adjustments** - Block rewards, fees
+- **🎛️ Parameter Adjustments** - Issuance schedule, fees (consensus changes, announced as such)
 - **🆕 New Features** - Smart contracts, privacy features
 - **🔧 Bug Fixes** - Critical issue resolution
 
@@ -253,7 +253,7 @@ ammocoin-cli getbudgetprojection
 ## 💰 Treasury Management
 
 ### Budget Allocation System
-- **Budget per cycle**: 20% of the block value x 43,200 blocks; today 50 AMMO x 43,200 = **2,160,000 AMMO** (250 AMMO block value). It shrinks as the block value drops (225 AMMO from block 86,401, 45 AMMO from 151,201) and becomes 100% of the block value only after block 3,715,200
+- **Budget per cycle**: set by `GetTotalBudget()` (`source/src/budget/budgetmanager.cpp`) from the block issuance and the 43,200-block cycle; it follows the declining `GetBlockValue()` schedule and changes at block 3,715,200
 - **Allocation Period**: 43,200-block cycles (~90 days)
 - **Distribution**: Automatic via superblocks
 - **Unused Funds**: Never minted (not carried over)
@@ -284,7 +284,7 @@ Verification: Network validates payments match votes
 
 #### Voting Responsibility
 - **🗳️ Vote on Every Proposal** - Your voice matters
-- **⏰ Vote Early** - Don't wait until deadline
+- **⏰ Vote in Good Time** - Don't wait until the deadline
 - **🤔 Think Independently** - Don't follow crowds blindly
 - **📊 Track Results** - Monitor proposal outcomes
 - **🔄 Learn from History** - Analyze past decisions
@@ -299,7 +299,7 @@ Verification: Network validates payments match votes
 - **📈 Success Metrics** - How to measure success
 
 #### Community Engagement
-- **💬 Early Discussion** - Gauge community interest
+- **💬 Discuss First** - Gauge community interest
 - **🔄 Incorporate Feedback** - Refine based on input
 - **📢 Active Promotion** - Explain benefits clearly
 - **🤝 Build Support** - Work with community leaders
@@ -361,11 +361,12 @@ echo "Treasury Balance: $(ammocoin-cli getbudgetprojection | jq .TotalBudget)"
 ```
 
 ### Success Stories
-Examples of successful proposals:
-- **Security Audit 2024** - Comprehensive code review
+Kinds of proposals the treasury can fund (illustrative, not a record of past votes):
+- **Security Audit** - Comprehensive code review
 - **Mobile Wallet Development** - iOS/Android applications
-- **Exchange Listings** - Major exchange partnerships
-- **Community Outreach** - Marketing and education campaigns
+- **Community Outreach** - Education campaigns
+
+An exchange listing is never sought by the project; it could only happen through an explicit masternode vote like any other proposal.
 
 ## 🆘 Troubleshooting Governance Issues
 
@@ -453,4 +454,4 @@ Governance priorities decided by DAO:
 
 ---
 
-*Next: Learn [Security Best Practices](./08-security-guide.md) to protect your investments.*
+*Next: Learn [Security Best Practices](./08-security-guide.md) to protect your wallet and keys.*

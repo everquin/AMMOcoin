@@ -1,6 +1,6 @@
 # AMMOcoin v1.1.0 - Official Release
 
-> **⚠️ Superseded by v1.1.1 (upcoming).** v1.1.0 nodes cannot follow the network after block 2,775. seed2 is now 104.238.165.56 (147.182.245.102 is dead). See [v1.1.1 Release Notes (draft)](RELEASE_NOTES_v1.1.1_DRAFT.md).
+> **⚠️ Superseded by v1.1.1.** v1.1.0 nodes cannot follow the network after block 2,775. seed2 is now 104.238.165.56 (147.182.245.102 is dead). See [v1.1.1 Release Notes](RELEASE_NOTES_v1.1.1.md).
 
 **Release Date:** February 22, 2026
 **Tag:** v1.1.0

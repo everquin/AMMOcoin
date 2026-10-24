@@ -4,7 +4,7 @@
 **Objective:** Clean build and deployment of v1.1.0 with CORRECT genesis
 **Critical:** This node will be the first peer - MUST have correct genesis!
 
-> **Updated for v1.1.1 (upcoming), October 16, 2026.** This was originally the v1.1.0 rebuild log; the facts below are now corrected for v1.1.1:
+> **Updated for v1.1.1, October 16, 2026.** This was originally the v1.1.0 rebuild log; the facts below are now corrected for v1.1.1:
 > - v1.1.1 is a **hard fork**: Proof-of-Stake from block 2,776, no mining. New network magic (`c7 9a e3 b5`) - it will not peer with v1.0 or v1.1.0 nodes.
 > - Default data dir is now `~/.ammocoin11` (v1.0/v1.1.0 used `~/.ammocoin`). Sapling params: `~/.ammocoin-params`.
 > - OS: Ubuntu 22.04 or newer (24.04 tested); glibc 2.34+ required.
