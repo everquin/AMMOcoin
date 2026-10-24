@@ -4,7 +4,7 @@
 **Target:** Linux x86_64 v1.1.1 binaries (genesis block unchanged from v1.1.0)
 **Node:** seed1.ammocoin.build
 
-> **Updated for v1.1.1 (upcoming), October 16, 2026.** v1.1.1 is the Proof-of-Stake hard fork (PoS from block 2,776, no mining, new network magic - no peering with v1.0/v1.1.0). Build on **Ubuntu 22.04 or 24.04** (24.04 tested): the resulting binaries need **glibc 2.34+**, so they will not run on Ubuntu 18.04/20.04. Default data dir is now `~/.ammocoin11`.
+> **Updated for v1.1.1, October 16, 2026.** v1.1.1 is the Proof-of-Stake hard fork (PoS from block 2,776, no mining, new network magic - no peering with v1.0/v1.1.0). Build on **Ubuntu 22.04 or 24.04** (24.04 tested): the resulting binaries need **glibc 2.34+**, so they will not run on Ubuntu 18.04/20.04. Default data dir is now `~/.ammocoin11`.
 
 ---
 

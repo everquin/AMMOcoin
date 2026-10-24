@@ -1,6 +1,6 @@
 # QuarterMaster pledge: how to sign yours
 
-For the early contributors who agreed to fund the QuarterMaster reserve
+For the founding contributors who agreed to fund the QuarterMaster reserve
 (decision AMMO-D-2026-10-18-12). Takes about ten minutes. You sign one
 message with your own key. **You never send coins, and you never send your
 wallet, your private key or your passphrase to anyone.**

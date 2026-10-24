@@ -14,7 +14,7 @@
 - **Real-time blockchain data** - Live blocks, transactions, and network statistics
 - **Advanced search** - Search by block height, transaction hash, or address
 - **Privacy transactions** - Full support for Sapling shielded transactions
-- **Masternode monitoring** - Track masternode network and rewards
+- **Masternode monitoring** - Track the masternode network and payment queue
 - **Network statistics** - Comprehensive blockchain metrics and analytics
 - **No price data** - the explorer shows on-chain data only: no price, market cap, exchange rate, fiat value or return figures, and no market-data API (see `docs/compliance`, AMMO-P-03)
 

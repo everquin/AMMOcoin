@@ -1,9 +1,9 @@
-# AMMOcoin v1.1.1 (upcoming) Vultr VPS Masternode Deployment Guide
+# AMMOcoin v1.1.1 Vultr VPS Masternode Deployment Guide
 
 ## Overview
 This guide covers deploying AMMOcoin v1.1.1 Linux binaries on Vultr VPS for masternode operation.
 
-> **v1.1.1 is a mandatory hard fork.** Proof-of-Stake from block 2,776, no mining, new network magic (`c7 9a e3 b5`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes. Default data dir is now `~/.ammocoin11` (was `~/.ammocoin`). v1.1.1 is not released yet - use only the official GitHub release once published.
+> **v1.1.1 is a mandatory hard fork.** Proof-of-Stake from block 2,776, no mining, new network magic (`c7 9a e3 b5`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes. Default data dir is now `~/.ammocoin11` (was `~/.ammocoin`). Use only the official GitHub release (https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1).
 
 **Key facts:**
 - Collateral: **10,000 AMMO** (15 confirmations)
@@ -35,7 +35,7 @@ This guide covers deploying AMMOcoin v1.1.1 Linux binaries on Vultr VPS for mast
    - **Server Type**: Regular Performance
    - **Server Location**: Choose closest to your location
    - **Server Image**: Ubuntu 24.04 x64
-   - **Server Size**: $12/mo (2 vCPU, 4GB RAM, 80GB SSD)
+   - **Server Size**: 2 vCPU, 4GB RAM, 80GB SSD
    - **SSH Keys**: Add your public key
 
 ### Initial Server Configuration
@@ -71,7 +71,7 @@ mkdir -p ~/ammocoin-v1.1.1
 cd ~/ammocoin-v1.1.1
 
 # Download the v1.1.1 Linux x86_64 archive and checksums from the official
-# GitHub release (not published yet): <v1.1.1 release URL>
+# GitHub release: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1
 # Verify: sha256sum <archive> must match the published checksum
 
 # Extract binaries
@@ -419,4 +419,4 @@ sudo systemctl status ammocoin.service
 
 **Performance Note**: Monitor your VPS resources regularly. If you experience performance issues, consider upgrading to a higher tier VPS.
 
-**Network Note**: Ensure your VPS has a stable internet connection. Intermittent connectivity can affect masternode rewards.
+**Network Note**: Ensure your VPS has a stable internet connection. Intermittent connectivity can drop the masternode out of the payment queue.

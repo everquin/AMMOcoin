@@ -201,6 +201,57 @@ Not legal advice. Counsel review status: **pending**.
 - **Enforcement / evidence:** `scripts/migration/migration-prepare.py` (`split_oversize`, `plan_chunks`, `build_fanout`, `build_batches`), `scripts/migration/test_migration_prepare.py`.
 - **Owner approval:** owner chose "Split into ≤10M outputs" in the 2026-10-18 session. **Prepared by:** Claude.
 
+## AMMO-D-2026-10-24-02 Launch wording on `main`: no reward amounts, no earn/buy wording, Proudly Worthless™ in the user docs
+
+- **Date:** 2026-10-24 (branch `docs-compliance-main`, PR into `main`)
+- **Principles:** AMMO-P-01, P-02, P-03, P-04, P-08, P-09, P-12
+- **Shared ID / follows:** website AMMO-D-2026-10-23-01 (launch wording sweep) and AMMO-D-2026-10-23-02 (Proudly Worthless™ brand line); AMMO-D-2026-10-24-01 (AMMO.capital removed).
+- **Context:** `main` is the default branch that visitors and the launch posts land on (a scheduled 2026-11-13 post links `blob/main/docs/02-staking-guide.md`). The launch-wording PRs #3 (release notes) and #4 (white paper) were merged into `v1.1.1-pos-fork` only, so `main` still showed per-block reward amounts (250/247/3/6 AMMO), daily and per-cycle AMMO totals, "earn" wording, "Where can I buy AMMOcoin?", "investments", "Buy more AMMO", "(upcoming)"/"not released yet" banners and stale unofficial channels.
+- **Decision:** the user documentation on `main` follows the website launch wording. It states no reward or payment amounts, no daily/per-cycle AMMO totals and no hosting prices; it uses no affirmative "earn", "buy", "purchase", "invest", "income", "value" or "price" wording; it carries no "yet", "for now", "early" or "be there first" framing. Staking and masternodes are described as running the network with your crew: making blocks, the masternode payment queue, governance votes and the treasury, with the amounts left to the code (`GetBlockValue()`, `GetMasternodePayment()`, `nMNBlockReward`, `nNewMNBlockReward`, `GetTotalBudget()`). Protocol parameters stay as numbers (10,000 AMMO collateral, 600 confirmations, 43,200-block cycle, fork height 2,776, ports, proposal fee, vote thresholds). This is stricter than AMMO-P-04 ("rewards in code terms") for user docs; P-04 is not changed. P-08 drops its AMMO.capital sentence (per D-2026-10-24-01). Required negations stay ("no ICO", "sells nothing", "publishes no price", not-an-offer notes).
+- **Changes:**
+  - White paper 2nd Edition: brought to the `v1.1.1-pos-fork` text (PR #4, `a1544fe31`, plus `b77a081dc`): no reward table or amounts, rev. 2026/10/23. In addition "Early Birds" ("the only edge is being there first") becomes "First Operators" (no edge in arriving first), and the pledge share is referenced to `docs/migration/data/quartermaster-pledges.csv` instead of a percentage.
+  - Release notes v1.1.1: subsidy, masternode-payment and treasury rows from PR #3 (`7b13f0a1a`) applied; relative doc links kept so they resolve to the cleaned `main` docs; macOS check uses `--ignore-missing` against the all-platforms checksums file.
+  - `README.md`: technical spec names `GetBlockValue()` instead of amounts; "Staking Rewards" feature line rewritten; "Additional exchange listings" and "Decentralized exchange (DEX)" roadmap items removed and replaced by the masternode-vote rule; v1.1.1 shown as released (2026-10-21).
+  - `docs/10-faq.md`: "Where can I buy AMMOcoin?" -> "Can I get AMMO?" (the project sells nothing; airdrop, staking, masternodes, contributions, NUGGETS from activity); "How much can I earn from staking?" -> "What does a staked block pay?" (code terms only); minimum-for-rewards amounts, "~120,000 AMMO/day", "~1,440 AMMO/day", "3 AMMO" and hosting prices removed; "Value Questions" -> "Proudly Worthless™"; Discord/Telegram/Reddit/forum and `@AMMOcoinOfficial` replaced by ammocoin.org, x.com/ammocoin and GitHub, with the note that AMMOcoin has no official Discord or Telegram.
+  - `docs/02-staking-guide.md`: reward table, "Earn block rewards", "247 AMMO" removed; "Transaction fees also go to the staker" corrected to the code (PoS blocks destroy fees, `source/src/validation.cpp`); "Track fair market value" removed from the tax section.
+  - `docs/03-masternode-setup.md`: "Masternode Rewards", "Reward Calculation", "14.4 AMMO/day", "Active and earning", "earning rewards", "Purchase ... to accumulate", VPS prices and the unofficial Discord/Telegram/forum removed; payment queue described in code terms.
+  - `docs/01`, `04`, `05`, `06`, `08`, `09`: "earn rewards", "investments", "Buy more AMMO", "Exchange Listings" success story, the treasury "2,160,000 AMMO" figure and "Vote Early" reworded; `06` budget described by `GetTotalBudget()`.
+  - `docs/protocols/AMMO-AUTH-v1.md`: the "Price feed integration: item valuation in AMMO" future extension withdrawn (P-03).
+  - Release status: "(upcoming)" / "not released yet" banners updated in `README.md`, `SEED_NODE_DEPLOYMENT.md`, `docs/README.md`, `docs/01`-`09`, `docs/migration/V1.0_BALANCE_AIRDROP.md`, `docs/operations/*` and the superseded-banner lines of the v1.1.0 release notes.
+- **Not changed (historical or required):** `docs/compliance/*` (negations and history); superseded v1.1.0 white papers and v1.1.0 release notes bodies (archived, banners already withdraw their claims); `V1.1.0_GENESIS_BLOCK_AUTHORITY.md` (genesis code record); `docs/migration/PLEDGE_GUIDE.md` (signers need the exact pledge share); `docs/migration/DISPOSAL_ADDRESS.md`, `MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md`, `SIDE_BY_SIDE_OPERATION_GUIDE.md` (superseded v1.0/v1.1.0 migration records); `payment-gateway/PAYOUTS.md` ("earned NUGGETS" is the gate the code relies on); `docs/RELEASE_CHECKLIST_1.1.1.md` (internal checklist); RPC names such as `getnewexchangeaddress`; the white paper heading "Initial Valuation: No ICO, No Exchanges, The Closed Loop" (named by PRINCIPLES.md) and its "Coming to GLiBz" line (flip at GLiBz activation). Source code was not touched; no consensus fact changed.
+- **Owner approval:** requested by the owner in the 2026-10-24 launch-review session (relayed); approval is the merge of the PR into `main`. **Prepared by:** Claude.
+
+## AMMO-D-2026-10-24-03 Project-run masternodes for network health; they abstain from listing votes
+
+- **Date:** 2026-10-24
+- **Principles:** AMMO-P-08 (listings only by masternode vote), AMMO-P-02 (never sold)
+- **Context:** On 2026-10-23 and 2026-10-24 the nodes split by banning each other as "misbehaving". With no masternodes on the network, each node resets its masternode sync after every pass (`source/src/masternode-sync.cpp`, `mnodeman.CountEnabled(true) <= 1` -> `Reset()`), about every 2 minutes. Each restart repeats `mnget` (+20, `masternode-payments.cpp:424`) and `mnvs` (+10, `budget/budgetmanager.cpp`) to peers that already answered, so long-lived connections reach the ban score of 100. Blocks were never rejected.
+- **Decision:** The project runs three legacy masternodes on its own Vultr nodes (ammo-03, ammo-05, ammo-08). The collateral comes from project-held AMMO already on chain. Nothing is sold or bought, and no outside party funds them. Until at least as many independent masternodes are enabled as project ones, the project masternodes **abstain from every exchange-listing vote**. A listing therefore needs independent operators, as P-08 intends. They may vote on other proposals. Each such vote is recorded here, with the proposal hash.
+- **Also:** our nodes whitelist each other (`whitelist=` in `ammocoin.conf`; whitelisted peers are not banned, `net_processing.cpp:2243`). A code fix for the reset loop is tracked as a separate decision if a v1.1.2 is cut.
+- **Wording:** public copy may say the project runs masternodes to keep the network healthy. It states no payment amounts (D-2026-10-24-02).
+- **Enforcement / evidence:** governance commitment, not code. The masternode collateral outputs and IPs are to be listed here once they are confirmed.
+- **Owner approval:** the owner asked for masternodes on the spare Vultr nodes on 2026-10-24 ("run a few masternodes … through those"). The abstention rule is **proposed by Claude, pending owner approval** (approval is the merge).
+
+## AMMO-D-2026-10-24-04 Purpose wallets: one labelled, published pool per purpose; no random splitting
+
+- **Date:** 2026-10-24
+- **Principles:** AMMO-P-02, P-06, P-07, P-13
+- **Context:** before funding the reserves and the masternode collateral, the owner asked whether to split the project's AMMO across about 100 randomly funded v1.1.1 wallets and draw on them as needed. A read of the chain on 2026-10-24 showed the block-1 reserve already cold-staked: 4,996 x 50,000 AMMO, coin owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` (paper wallet), staker ammo-02, plus 200,245 AMMO of change in five addresses.
+- **Decision:** project AMMO is held in a small set of named pools, each with its addresses published in [RESERVES.md](RESERVES.md):
+  1. block-1 reserve;
+  2. v1.0 airdrop (paid to holders) plus its claim hold-back;
+  3. QuarterMaster tiers, 40,000,000;
+  4. contributor reserve, 50,000,000;
+  5. zerocoin set-aside, 41,700;
+  6. masternode collateral;
+  7. a capped GLiBz payout float.
+
+  A pool may hold many outputs for staking and batching (D-2026-10-18-13). Every movement between pools is logged in RESERVES.md section 4 within 7 days. Large pools stay cold (offline owner key, cold-staking delegation). Airdrop first (P-06) still applies.
+- **Alternatives rejected:** about 100 randomly funded wallets. They would make one project holding look like many independent holders, which misleads anyone reading the chain. They would also leave the reserves unauditable (G-06), and they multiply the backups, passphrases and files that can be lost or leaked.
+- **Open:** the funding source for pool 6 (masternode collateral) and pool 7 (GLiBz float). Taking either from pools 3–5 changes the published amounts, so it needs its own decision. Using the change addresses of pool 1 or the PoW mining rewards needs a recorded row in section 4.
+- **Enforcement / evidence:** [RESERVES.md](RESERVES.md) (chain data read from ammo-02 at height ~3556); owner's private ledger `LEDGER.md` on the encrypted wallets volume (no secrets). Not enforced in code.
+- **Owner approval:** owner asked for this draft on 2026-10-24 ("draft the purpose-wallet decision and reserve page"); approval is the merge. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
@@ -217,7 +268,7 @@ Open until fixed; record the fixing commit in the Status column.
 | G-03 | White paper 2nd Ed. line 357 (and website `whitepaper.html:1012`) | "AMMO has no intrinsic value as of right now. But, then again, Bitcoin had a value of zero on its release." implies expected appreciation. Line 305 frames supply in terms of what a bitcoin can "fetch". | P-03 | Fixed in `be2c0aad6` (D-2026-10-17-08); website copy `website 59883d1` |
 | G-04 | White paper 2nd Ed. line 155 | Sentence fragment: "Only what remains of the block-1 reserve after it funds the QuarterMaster reserve described in Section 12." The airdrop-first rule should read unambiguously. | P-06 | Fixed in `be2c0aad6` (D-2026-10-17-08) |
 | G-05 | `docs/10-faq.md:20-24` | "Where can I buy AMMOcoin? Exchanges: Check CoinMarketCap for current listings; DEX Trading; OTC Trading" contradicts "not on any exchange". | P-02, P-08 | Fixed in `be2c0aad6` (D-2026-10-17-08) |
-| G-06 | (missing) | No published QuarterMaster reserve addresses or airdrop distribution record (txids reconciled against the snapshot), so "airdrop first" and tier allocations cannot be audited on-chain. | P-06, P-07 | Open: what must be published is now defined in `AIRDROPS.md` (D-2026-10-17-10); values still TO BE PUBLISHED |
+| G-06 | (missing) | No published QuarterMaster reserve addresses or airdrop distribution record (txids reconciled against the snapshot), so "airdrop first" and tier allocations cannot be audited on-chain. | P-06, P-07 | Open: what must be published is now defined in `AIRDROPS.md` (D-2026-10-17-10); values still TO BE PUBLISHED. Pool addresses and the block-1 reserve's current outputs are in `RESERVES.md` (D-2026-10-24-04); pools 2–7 still TO BE CREATED |
 | G-07 | `payment-gateway/PAYOUTS.md:4,18,19,63`, `payment-gateway/src/app/api/payouts/route.ts:4`, `payment-gateway/src/types/payout.ts:5` | Describes the GLiBz swap as "sell Nuggets for AMMO", memo "GLiBz Nuggets sale", key `glibz_sell:`. Wording frames AMMO as being sold. The gateway cannot tell earned from purchased NUGGETS; the earned-only gate lives on GLiBz only. | P-02, P-09 | Wording fixed in `be2c0aad6` (D-2026-10-17-08); GLiBz-side memo/function name still say "sell"/"sale" (GLiBz repo); gate by design |
 | G-08 | `blockchain-explorer/src/types/blockchain.ts:100-101,160-166`; `blockchain-explorer/README.md:182`, `DEPLOYMENT_GUIDE.md:161`, `SECURITY_AUDIT_v1.1.0.md:390` | `price`, `marketCap`, `PriceData` types and a CoinMarketCap API key / "Add price data integration" to-do. No UI use found, but the plumbing for a price display exists. | P-03, P-08 | Fixed on `compliance-docs` (AMMO-D-2026-10-17-09); merge to `v1.1.1-pos-fork` pending |
 | G-09 | `docs/01-wallet-setup.md:180` | "Currency Display - USD, EUR, BTC equivalent" setting described. | P-03 | Fixed in `be2c0aad6` (D-2026-10-17-08) |

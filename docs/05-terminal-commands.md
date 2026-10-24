@@ -2,7 +2,7 @@
 
 Complete reference guide for AMMOcoin CLI (Command Line Interface) commands. Master the terminal for advanced wallet management and network operations.
 
-> ℹ️ Written for **v1.1.1 (upcoming)**: Proof-of-Stake from block 2,776, no mining. Mainnet ports: **P2P 37020**, **RPC 51473**. Default data folder: Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11`. Run `ammocoin-cli help` on your node for the authoritative command list.
+> ℹ️ Written for **v1.1.1**: Proof-of-Stake from block 2,776, no mining. Mainnet ports: **P2P 37020**, **RPC 51473**. Default data folder: Linux `~/.ammocoin11`, macOS `~/Library/Application Support/AMMOcoin11`, Windows `%APPDATA%\AMMOcoin11`. Run `ammocoin-cli help` on your node for the authoritative command list.
 
 ## 🚀 Getting Started with CLI
 
@@ -600,7 +600,7 @@ ammocoin-cli getblockchaininfo | grep -E "(blocks|headers|verificationprogress)"
 # Monitor mempool
 watch -n 5 'ammocoin-cli getmempoolinfo'
 
-# List recent staking rewards
+# List recent stake transactions
 ammocoin-cli listtransactions "*" 50 | grep -A5 -B5 "stake"
 
 # Check all address balances

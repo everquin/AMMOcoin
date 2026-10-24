@@ -1,4 +1,4 @@
-# Test AMMOcoin v1.1.1 (upcoming) Locally on macOS
+# Test AMMOcoin v1.1.1 Locally on macOS
 
 **Quick guide to run and test v1.1.1 on your Mac (Apple Silicon)**
 

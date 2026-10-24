@@ -1,6 +1,6 @@
 # Seed Node Deploy Checklist — RPC Hardening Patch
 
-> **v1.1.1 (upcoming) note:** This checklist was written for the v1.1.0 RPC
+> **v1.1.1 note:** This checklist was written for the v1.1.0 RPC
 > hardening patch. v1.1.1 is a **hard fork** (Proof-of-Stake from block 2,776,
 > new network magic `c7 9a e3 b5`), so a v1.1.1 node does **not** interoperate
 > with v1.1.0 nodes, and rolling back to a pre-v1.1.1 binary leaves the seed
