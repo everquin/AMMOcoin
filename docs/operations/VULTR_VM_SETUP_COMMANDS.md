@@ -4,7 +4,7 @@
 
 ---
 
-## ⚠️ CRITICAL: v1.1.1 (upcoming) Hard Fork
+## ⚠️ CRITICAL: v1.1.1 Hard Fork
 
 - **v1.1.1 is mandatory.** Proof-of-Stake from block 2,776, no mining. New network magic (`c7 9a e3 b5`): v1.1.1 does not connect to v1.0 or v1.1.0 nodes.
 - **OS:** Ubuntu 22.04 or 24.04 (24.04 tested). v1.1.1 needs glibc 2.34+; on Ubuntu 18.04/20.04 upgrade or reinstall the OS first (`ldd --version`).

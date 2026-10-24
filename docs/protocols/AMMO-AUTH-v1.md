@@ -353,7 +353,8 @@ Returns all AMMO-AUTH records for a given chip public key hash.
 - **Metadata update:** New message type to update the metadata hash without transferring ownership
 - **Multi-signature ownership:** Require M-of-N signatures for high-value items
 - **Time-locked transfers:** Transfers that become valid after a specified block height
-- **Price feed integration:** Embed item valuation in AMMO at time of registration
+
+No price feed or valuation in AMMO will be added: the project publishes no price for AMMO (docs/compliance, AMMO-P-03).
 
 ## Reference Implementation
 

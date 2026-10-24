@@ -1,4 +1,4 @@
-# AMMOcoin v1.1.1 (upcoming)
+# AMMOcoin v1.1.1
 
 **Privacy-Focused Cryptocurrency Platform with Multi-Platform Support**
 
@@ -8,7 +8,7 @@
 
 ---
 
-## ⚠️ **v1.1.1 (upcoming) - Proof-of-Stake Hard Fork - Everyone Must Upgrade**
+## ⚠️ **v1.1.1 - Proof-of-Stake Hard Fork - Everyone Must Upgrade**
 
 v1.1.1 switches the network to **Proof-of-Stake from block 2,776**. There is no mining after the fork.
 
@@ -18,9 +18,9 @@ v1.1.1 switches the network to **Proof-of-Stake from block 2,776**. There is no 
 - **Linux:** binaries need **glibc 2.34+** (Ubuntu 22.04 or newer; 24.04 tested). Ubuntu 18.04/20.04 must upgrade or reinstall the OS.
 - **v1.0 holders:** balances from the block 434,881 snapshot are **airdropped to the same addresses**. Keep your v1.0 `wallet.dat` and **send nothing anywhere**. See [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md).
 
-v1.1.1 is not released yet. Binaries and checksums will be published on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases) page. Do not install binaries from any other source.
+v1.1.1 is released. Binaries, SHA256 checksums and the signed checksums file are on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1) page. Do not install binaries from any other source.
 
-**📋 [v1.1.1 Release Notes (draft)](docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md)**
+**📋 [v1.1.1 Release Notes](docs/release-notes/RELEASE_NOTES_v1.1.1.md)**
 
 **📋 Genesis Block Hash (unchanged):** `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
 
@@ -59,8 +59,8 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 
 🏛️ **Governance & Economics**
 - **Decentralized Voting**: Community-driven development decisions
-- **Treasury System**: Sustainable funding for ecosystem growth
-- **Staking Rewards**: Stakers who create a block receive the staker share set by `GetBlockValue()`
+- **Treasury System**: Superblock budget paid only to proposals approved by masternode vote
+- **Staking**: Stakers run the network with their crew: each block is made by a staking wallet chosen in proportion to mature coins staking
 
 🔧 **Developer Features**
 - **JSON-RPC API**: Complete programmatic blockchain access
@@ -71,9 +71,9 @@ AMMOcoin is a modern, privacy-focused cryptocurrency built on proven blockchain 
 
 ## 📦 **Download Binaries**
 
-### v1.1.1 (upcoming)
+### v1.1.1 (current)
 
-v1.1.1 binaries are not published yet. When released they will be on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases) page with SHA256 checksums. **v1.1.0 binaries below no longer follow the network after block 2,775** and are listed for reference only.
+v1.1.1 binaries are on the [GitHub Releases](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1) page with SHA256 checksums. **v1.1.0 binaries below no longer follow the network after block 2,775** and are listed for reference only.
 
 ### v1.1.0 Releases (obsolete after the fork)
 
@@ -94,7 +94,7 @@ v1.1.1 binaries are not published yet. When released they will be on the [GitHub
 
 ### Using Pre-Built Binaries (Recommended)
 
-Download the v1.1.1 archive for your platform from the official GitHub release once it is published, verify its SHA256 checksum, then:
+Download the v1.1.1 archive for your platform from the official GitHub release, verify its SHA256 checksum, then:
 
 #### macOS
 ```bash
@@ -287,7 +287,7 @@ ammocoin-cli getstakingstatus
 - **Block Time**: 3 minutes
 - **Algorithm**: Proof-of-Stake from block 2,776 (blocks 1-2,775 were PoW; no mining after the fork)
 - **Stake Maturity**: 600 confirmations
-- **Block Reward**: 250 AMMO today, original schedule kept after the fork (225 AMMO from block 86,401, 45 AMMO from 151,201, lower later); masternode payment 3 AMMO, staker 247 AMMO
+- **Issuance**: the original declining schedule in `GetBlockValue()` (`source/src/validation.cpp`), unchanged by the fork; each block pays the masternode selected by the payment queue its share (`nMNBlockReward`) and the staker the rest
 - **Masternode Collateral**: 10,000 AMMO (15 confirmations)
 - **Seed Nodes**: seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56)
 
@@ -313,7 +313,7 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 ### Quick Links
 - **📖 [Full Documentation](docs/README.md)** - Complete documentation index
 - **🔄 [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md)** - how v1.0 balances reach v1.1 (send nothing)
-- **📦 [Release Notes v1.1.1 (draft)](docs/release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md)** - PoS hard fork, upgrade checklist
+- **📦 [Release Notes v1.1.1](docs/release-notes/RELEASE_NOTES_v1.1.1.md)** - PoS hard fork, upgrade checklist
 - **📦 [Release Notes v1.1.0](docs/release-notes/RELEASE_NOTES_v1.1.0.md)** - What was new in v1.1.0
 - **⚡ [Genesis Block Authority](V1.1.0_GENESIS_BLOCK_AUTHORITY.md)** - Official genesis parameters
 
@@ -465,22 +465,22 @@ We acknowledge and thank the broader cryptocurrency development community for th
 - Comprehensive documentation
 - Migration guides and tools
 
-- v1.1.1 Proof-of-Stake hard fork (block 2,776) - upcoming
+- v1.1.1 Proof-of-Stake hard fork (block 2,776)
 
 ### In Progress 🔄
-- v1.1.1 release and network upgrade
+- Network upgrade to v1.1.1
 - v1.0 balance airdrop to the same addresses
 - Mobile wallet development
-- Additional exchange listings
 
 ### Planned 📋
 - Hardware wallet integration
 - Enhanced privacy features
 - Lightning network integration
-- Decentralized exchange (DEX)
+
+The project runs no exchange and seeks no listing. Any exchange listing could only come from an explicit masternode governance vote (DAO Command).
 
 ---
 
-**Current Version**: v1.1.0 (v1.1.1 upcoming - mandatory PoS hard fork at block 2,776)
-**Release Date**: v1.1.0 January 3, 2026; v1.1.1 not yet released
+**Current Version**: v1.1.1 (mandatory PoS hard fork at block 2,776)
+**Release Date**: v1.1.1 October 21, 2026; v1.1.0 January 3, 2026
 **Genesis Block**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`

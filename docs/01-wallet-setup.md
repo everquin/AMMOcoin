@@ -4,7 +4,7 @@ This comprehensive guide will help you download, install, and use your AMMOcoin 
 
 ## 📥 Download & Installation
 
-> ⚠️ **v1.1.1 (upcoming) is a mandatory hard fork.** From block 2,776 the network runs Proof-of-Stake and uses new network magic bytes, so v1.0 and v1.1.0 wallets can no longer connect. Install v1.1.1 when it is published on the official GitHub releases page. Download links and checksums will be added at release time - do not install binaries from any other source. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> ⚠️ **v1.1.1 is a mandatory hard fork.** From block 2,776 the network runs Proof-of-Stake and uses new network magic bytes, so v1.0 and v1.1.0 wallets can no longer connect. Install v1.1.1 from the official GitHub release (https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1), which has the download links and checksums - do not install binaries from any other source. See [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ### Windows Installation
 1. **Download** the v1.1.1 Windows release from the official GitHub releases page (once published)
@@ -73,7 +73,7 @@ When you first open your wallet:
 - Current balance breakdown
 - Recent transaction history
 - Network statistics
-- Staking rewards summary
+- Staking status summary
 
 #### 📤 Send Tab
 - **Recipient Address** - Where to send coins
@@ -94,7 +94,7 @@ When you first open your wallet:
 #### 🏛️ Masternodes Tab (Advanced)
 - View masternode status
 - Manage masternode keys
-- Monitor masternode rewards
+- Monitor masternode payments
 
 ## 💸 Sending AMMOcoin
 
@@ -273,4 +273,4 @@ staking=1
 
 ---
 
-*Next: Learn about [Staking](./02-staking-guide.md) to earn rewards with your AMMO coins.*
+*Next: Learn about [Staking](./02-staking-guide.md) to help run the network with your AMMO coins.*
