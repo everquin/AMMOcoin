@@ -232,6 +232,26 @@ Not legal advice. Counsel review status: **pending**.
 - **Enforcement / evidence:** governance commitment, not code. The masternode collateral outputs and IPs are to be listed here once they are confirmed.
 - **Owner approval:** the owner asked for masternodes on the spare Vultr nodes on 2026-10-24 ("run a few masternodes … through those"). The abstention rule is **proposed by Claude, pending owner approval** (approval is the merge).
 
+## AMMO-D-2026-10-24-04 Purpose wallets: one labelled, published pool per purpose; no random splitting
+
+- **Date:** 2026-10-24
+- **Principles:** AMMO-P-02, P-06, P-07, P-13
+- **Context:** before funding the reserves and the masternode collateral, the owner asked whether to split the project's AMMO across about 100 randomly funded v1.1.1 wallets and draw on them as needed. A read of the chain on 2026-10-24 showed the block-1 reserve already cold-staked: 4,996 x 50,000 AMMO, coin owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` (paper wallet), staker ammo-02, plus 200,245 AMMO of change in five addresses.
+- **Decision:** project AMMO is held in a small set of named pools, each with its addresses published in [RESERVES.md](RESERVES.md):
+  1. block-1 reserve;
+  2. v1.0 airdrop (paid to holders) plus its claim hold-back;
+  3. QuarterMaster tiers, 40,000,000;
+  4. contributor reserve, 50,000,000;
+  5. zerocoin set-aside, 41,700;
+  6. masternode collateral;
+  7. a capped GLiBz payout float.
+
+  A pool may hold many outputs for staking and batching (D-2026-10-18-13). Every movement between pools is logged in RESERVES.md section 4 within 7 days. Large pools stay cold (offline owner key, cold-staking delegation). Airdrop first (P-06) still applies.
+- **Alternatives rejected:** about 100 randomly funded wallets. They would make one project holding look like many independent holders, which misleads anyone reading the chain. They would also leave the reserves unauditable (G-06), and they multiply the backups, passphrases and files that can be lost or leaked.
+- **Open:** the funding source for pool 6 (masternode collateral) and pool 7 (GLiBz float). Taking either from pools 3–5 changes the published amounts, so it needs its own decision. Using the change addresses of pool 1 or the PoW mining rewards needs a recorded row in section 4.
+- **Enforcement / evidence:** [RESERVES.md](RESERVES.md) (chain data read from ammo-02 at height ~3556); owner's private ledger `LEDGER.md` on the encrypted wallets volume (no secrets). Not enforced in code.
+- **Owner approval:** owner asked for this draft on 2026-10-24 ("draft the purpose-wallet decision and reserve page"); approval is the merge. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
@@ -248,7 +268,7 @@ Open until fixed; record the fixing commit in the Status column.
 | G-03 | White paper 2nd Ed. line 357 (and website `whitepaper.html:1012`) | "AMMO has no intrinsic value as of right now. But, then again, Bitcoin had a value of zero on its release." implies expected appreciation. Line 305 frames supply in terms of what a bitcoin can "fetch". | P-03 | Fixed in `be2c0aad6` (D-2026-10-17-08); website copy `website 59883d1` |
 | G-04 | White paper 2nd Ed. line 155 | Sentence fragment: "Only what remains of the block-1 reserve after it funds the QuarterMaster reserve described in Section 12." The airdrop-first rule should read unambiguously. | P-06 | Fixed in `be2c0aad6` (D-2026-10-17-08) |
 | G-05 | `docs/10-faq.md:20-24` | "Where can I buy AMMOcoin? Exchanges: Check CoinMarketCap for current listings; DEX Trading; OTC Trading" contradicts "not on any exchange". | P-02, P-08 | Fixed in `be2c0aad6` (D-2026-10-17-08) |
-| G-06 | (missing) | No published QuarterMaster reserve addresses or airdrop distribution record (txids reconciled against the snapshot), so "airdrop first" and tier allocations cannot be audited on-chain. | P-06, P-07 | Open: what must be published is now defined in `AIRDROPS.md` (D-2026-10-17-10); values still TO BE PUBLISHED |
+| G-06 | (missing) | No published QuarterMaster reserve addresses or airdrop distribution record (txids reconciled against the snapshot), so "airdrop first" and tier allocations cannot be audited on-chain. | P-06, P-07 | Open: what must be published is now defined in `AIRDROPS.md` (D-2026-10-17-10); values still TO BE PUBLISHED. Pool addresses and the block-1 reserve's current outputs are in `RESERVES.md` (D-2026-10-24-04); pools 2–7 still TO BE CREATED |
 | G-07 | `payment-gateway/PAYOUTS.md:4,18,19,63`, `payment-gateway/src/app/api/payouts/route.ts:4`, `payment-gateway/src/types/payout.ts:5` | Describes the GLiBz swap as "sell Nuggets for AMMO", memo "GLiBz Nuggets sale", key `glibz_sell:`. Wording frames AMMO as being sold. The gateway cannot tell earned from purchased NUGGETS; the earned-only gate lives on GLiBz only. | P-02, P-09 | Wording fixed in `be2c0aad6` (D-2026-10-17-08); GLiBz-side memo/function name still say "sell"/"sale" (GLiBz repo); gate by design |
 | G-08 | `blockchain-explorer/src/types/blockchain.ts:100-101,160-166`; `blockchain-explorer/README.md:182`, `DEPLOYMENT_GUIDE.md:161`, `SECURITY_AUDIT_v1.1.0.md:390` | `price`, `marketCap`, `PriceData` types and a CoinMarketCap API key / "Add price data integration" to-do. No UI use found, but the plumbing for a price display exists. | P-03, P-08 | Fixed on `compliance-docs` (AMMO-D-2026-10-17-09); merge to `v1.1.1-pos-fork` pending |
 | G-09 | `docs/01-wallet-setup.md:180` | "Currency Display - USD, EUR, BTC equivalent" setting described. | P-03 | Fixed in `be2c0aad6` (D-2026-10-17-08) |
