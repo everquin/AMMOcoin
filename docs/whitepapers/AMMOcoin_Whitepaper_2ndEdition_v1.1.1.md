@@ -388,9 +388,6 @@ AMMO deployment is structured around several key vectors.
 #### AMMOcoin.org
 The informational home of the AMMO protocol. Visitors can find out all about AMMO, read and download this snazzy white paper, get the wallets, follow the migration and proposals, and learn about the sister sites. Software is published only through the official AMMOcoin GitHub releases, each with a SHA-256 checksums file.
 
-#### AMMO.capital
-A domain reserved by the founders. The 1st Edition imagined it as a future exchange platform. Whether it is used at all, and for what, is a DAO Command decision; nothing will launch there without proposals, discussion and a masternode vote. The project itself does not sell AMMO there or anywhere else.
-
 #### GLiBz (glibz.com)
 GLiBz replaces AMMO.chat. Old links to AMMO.chat now land on GLiBz. GLiBz (glibz.com), the community hub in the AMMOcoin ecosystem, is a western-themed social and community platform built on the open-source UNA community software.
 
