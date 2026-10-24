@@ -38,7 +38,7 @@ FOUNDING-50, SPARTAN-300 and PATRIOT-2000 positions (40,000,000 AMMO, 2,350 posi
 
 ## AMMO-P-08 Exchange listings only through a masternode governance vote
 
-The project does not list or seek to list AMMO on any exchange, and does not operate one, except through explicit approval in DAO Command (masternode vote). AMMO.capital is not live and offers no trading. No wallet, site or tool made by the project integrates an exchange, swap-to-fiat, on-ramp or off-ramp.
+The project does not list or seek to list AMMO on any exchange, and does not operate one, except through explicit approval in DAO Command (masternode vote). The project runs no exchange and seeks no listing. No wallet, site or tool made by the project integrates an exchange, swap-to-fiat, on-ramp or off-ramp.
 
 ## AMMO-P-09 The closed loop with GLiBz
 

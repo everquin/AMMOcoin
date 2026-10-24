@@ -1,9 +1,9 @@
-# AMMOcoin v1.1.1 (upcoming) Seed Node Deployment Guide
+# AMMOcoin v1.1.1 Seed Node Deployment Guide
 
 **For production seed nodes running Ubuntu Linux**
 
 > **v1.1.1 is a mandatory hard fork.** Proof-of-Stake starts at block 2,776 and there is no mining after it. v1.1.1 uses new network magic bytes (`c7 9a e3 b5`), so it does **not** connect to v1.0 or v1.1.0 nodes. Every seed node must run v1.1.1.
-> v1.1.1 is not released yet. Download links and checksums will be published on the official GitHub release page; do not use binaries from any other source.
+> v1.1.1 is released. Download links and checksums are on the official GitHub release page (https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1); do not use binaries from any other source.
 
 **Current seed nodes:**
 - seed1.ammocoin.org - `78.141.194.140:37020`
@@ -42,7 +42,7 @@ TASK:
 9. Verify the node is running, has peers and is past block 2775
 
 RELEASE INFORMATION:
-- GitHub Release: <v1.1.1 release URL - not published yet>
+- GitHub Release: https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1
 - Genesis Block Hash: 000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2
 
 SEED NODE CONFIGURATION REQUIREMENTS:
@@ -127,7 +127,7 @@ sudo mkdir -p /opt/ammocoin-v1.1.1/bin
 cd /tmp
 
 # Download the Linux x86_64 archive and the checksums file from the
-# official v1.1.1 GitHub release (not published yet):
+# official v1.1.1 GitHub release (https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1):
 #   <v1.1.1 release URL>
 ```
 
@@ -485,5 +485,5 @@ After successful setup, your seed node should show something like:
 ---
 
 **Last Updated:** October 16, 2026
-**Version:** v1.1.1 (upcoming)
+**Version:** v1.1.1
 **Target OS:** Ubuntu 22.04/24.04 (glibc 2.34+)

@@ -1,11 +1,12 @@
+**Mandatory upgrade.** v1.1.1 is a hard fork: Proof-of-Stake from block 2,776. Every node, wallet and masternode must upgrade.
+
 # AMMOcoin v1.1.1 - Proof-of-Stake Hard Fork
 
-**Status:** Release candidate. Not published yet. Download links and SHA256 checksums are added when the signed release is published on the official GitHub releases page (`github.com/everquin/AMMOcoin/releases`). Do not install binaries from any other source.
 **Release type:** Mandatory hard fork. Every node, wallet, staker, masternode and seed must upgrade.
 **Fork height:** block 2,776
 **Source branch:** `v1.1.1-pos-fork` (changes since the `v1.1.0` tag)
 
-> AMMOcoin is network software. These notes describe what the code does. They are not an offer, not investment advice and not a promise of any return, price or value. Rewards are described only in code terms: AMMO per block, to whom, and depending on network participation and uptime.
+> AMMOcoin is network software. These notes describe what the code does. They are not an offer, not investment advice and not a promise of any return, price or value. They state no block subsidy or payment amounts: those are set by the code (`GetBlockValue()` in `source/src/validation.cpp`), and what any node receives depends on network participation and uptime.
 
 ---
 
@@ -35,7 +36,7 @@ The v1.1 chain stopped at block 2,775 after its Proof-of-Work phase. v1.1.1 swit
 ### Consensus and node
 
 - **PoS activation at block 2,776** (`ade7fc983`). On mainnet every network upgrade through v5.6 (PoS, PoS v2, Zerocoin/ZC v2/ZC public, BIP65, v3.4, v4.0, v5.0-v5.6, which bring cold staking and Sapling) activates at the fork height; v6.0 stays off. Testnet activates at block 201, regtest at 251.
-- **Rewards keep the original schedule** (`0f7d10faf`). The reward code no longer follows the upgrade heights; it uses its own heights (`nRewardZCV2Height` 1,153,160 and `nRewardV55Height` 3,715,200 on mainnet), so activating every upgrade at block 2,776 does not change what blocks pay. Without this fix post-fork blocks would have paid 10 AMMO with 6 to masternodes. Covered by `source/src/test/budget_tests.cpp`.
+- **Block subsidy schedule unchanged by the fork** (`0f7d10faf`). The subsidy code no longer follows the upgrade heights; it uses its own heights (`nRewardZCV2Height` 1,153,160 and `nRewardV55Height` 3,715,200 on mainnet), so activating every upgrade at block 2,776 does not change the schedule. Without this fix, post-fork blocks would have used the stage the schedule sets for block 3,715,200. Covered by `source/src/test/budget_tests.cpp`.
 - **Restart crash after the fork fixed** (`ca41fe1b9`). The node asserted on every restart once the Zerocoin upgrade height was active (`invalid_out::LoadOutpoints` treated AMMOcoin's empty compiled-in list as a load failure).
 - **Testnet and regtest genesis fixed** (`afd323157`) for AMMOcoin's own genesis block.
 - **Pre-production hardening** (`116e04583`, no consensus change): OP_RETURN size check fixed in `sendopreturn` / `createrawtransaction` (oversized payloads no longer build scripts that fail to relay), `-datacarrier=0` honoured, per-IP RPC authentication lockout (`-rpcauthmaxfails`), HTTP body cap 8 MiB by default (`-rpcmaxbodysize`), RPC cookie file created with mode 0600.
@@ -53,9 +54,9 @@ The v1.1 chain stopped at block 2,775 after its Proof-of-Work phase. v1.1.1 swit
 | Block time (target spacing) | 3 minutes |
 | Stake maturity | **600 confirmations** (about 30 hours) before a UTXO can stake; minimum stake age 1 hour |
 | Masternode collateral | **10,000 AMMO** (15 confirmations) |
-| Block reward | Unchanged by the fork: **250 AMMO** per block up to block 86,400, then 225 AMMO, 45 AMMO from block 151,201, and the rest of the original schedule (`GetBlockValue()` in `source/src/validation.cpp`) |
-| Masternode payment | **3 AMMO** per paid block, taken out of the block reward; the staker receives the rest (247 AMMO while the block reward is 250). 6 AMMO only after block 3,715,200 |
-| Treasury (budget) | Superblocks every **43,200 blocks** (about 90 days). Up to 20% of the block reward x 43,200 (50 AMMO x 43,200 = 2,160,000 AMMO per cycle while the block reward is 250), paid only to proposals approved by masternode vote |
+| Block subsidy | Unchanged by the fork: the original declining schedule in `GetBlockValue()` (`source/src/validation.cpp`) |
+| Masternode payment | A fixed share of each block's subsidy (`nMNBlockReward`), paid to the masternode selected by the payment queue; the staker receives the rest. The share changes at block 3,715,200 (`nNewMNBlockReward`) |
+| Treasury (budget) | Superblocks every **43,200 blocks** (about 90 days), paid only to proposals approved by masternode vote, within the budget limit set in the code |
 | DNS seeds | seed1.ammocoin.org, seed2.ammocoin.org |
 | Fixed seeds | 78.141.194.140 (seed1), 104.238.165.56 (seed2), 207.246.95.210 / 45.76.116.97 / 144.202.79.114 (seed3.ammocoin.org) |
 
@@ -65,13 +66,13 @@ How often a given wallet stakes or a given masternode is paid depends on the tot
 
 ---
 
-## Masternode Payments
+## Masternode Payment Queue
 
-- Each block pays the masternode selected by the payment queue **3 AMMO** (`nMNBlockReward`); the staker receives the block reward minus that payment.
+- Each block pays the masternode selected by the payment queue its share of the block subsidy (`nMNBlockReward`); the staker receives the rest.
 - Collateral is **10,000 AMMO** (`nMNCollateralAmt`) kept in your own controller wallet with 15 confirmations. It is never sent to the project or locked by anyone else.
 - The masternode must have a **public, routable IPv4** on port **37020**. 127.0.0.1 and private ranges are rejected with `Invalid IP address`.
 - With N enabled masternodes, each one is paid about once every N blocks while it stays enabled.
-- From block 3,715,200 (`nRewardV55Height`) the masternode payment becomes 6 AMMO (`nNewMNBlockReward`), as in the original schedule.
+- From block 3,715,200 (`nRewardV55Height`) the masternode share changes to `nNewMNBlockReward`, as in the original schedule.
 
 Setup: [Masternode guide](../03-masternode-setup.md). Controller `masternode.conf` line: `mn1 YOUR_VPS_IP:37020 MASTERNODE_PRIVKEY COLLATERAL_TXID COLLATERAL_INDEX` (key from `createmasternodekey`, outputs from `getmasternodeoutputs`).
 
@@ -153,7 +154,7 @@ Build and packaging changes in this release: from-source macOS dependencies targ
 
 1. Download the package, `AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt` and, when present, `AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt.sig` from the **same** release.
 2. If the `.sig` is published, verify it with `scripts/release/verify-release.sh` from this repository at the `v1.1.1` tag ([SIGNING.md](../release/SIGNING.md)).
-3. Check the file: `sha256sum -c AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt --ignore-missing` (macOS: `shasum -a 256 -c AMMOcoin-v1.1.1-macOS-ARM64.SHA256`).
+3. Check the file: `sha256sum -c AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt --ignore-missing` (macOS: `shasum -a 256 -c --ignore-missing AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt`).
 
 If either check fails, do not run the file.
 

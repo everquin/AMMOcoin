@@ -2,7 +2,7 @@
 
 Set up your own AMMOcoin full node to contribute to network decentralization, improve privacy, and gain complete control over your transactions.
 
-> **v1.1.1 (upcoming):** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1.md).
+> **v1.1.1:** mandatory hard fork. Proof-of-Stake from block 2,776 (no mining after), new network magic so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, and a new default data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`). Linux binaries need glibc 2.34+ (Ubuntu 22.04 or newer). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ## 🤔 What is a Full Node?
 
@@ -21,7 +21,7 @@ A **full node** is a program that validates transactions and blocks on the AMMOc
 | **Validation** | SPV | Complete | Complete |
 | **Requirements** | Low | Medium | High |
 | **Collateral** | None | None | 10,000 AMMO |
-| **Rewards** | Staking only | Staking only | MN + Staking |
+| **Block role** | Staking only | Staking only | MN queue + Staking |
 | **Voting** | No | No | Yes |
 
 ## 🎯 Why Run a Full Node?
@@ -59,7 +59,7 @@ A **full node** is a program that validates transactions and blocks on the AMMOc
 
 ### Hardware Recommendations
 - **Desktop**: Any modern computer
-- **VPS**: $10-20/month cloud server
+- **VPS**: a small cloud server
 - **Raspberry Pi**: Pi 4 with 4GB+ RAM
 - **Mini PC**: Intel NUC or similar
 
@@ -95,7 +95,7 @@ mkdir ~/Library/Application\ Support/AMMOcoin11
 ldd --version
 
 # Download the v1.1.1 Linux release from https://github.com/everquin/AMMOcoin/releases
-# (v1.1.1 is upcoming - verify the published SHA256 checksum)
+# (verify the published SHA256 checksum)
 
 # Extract and install (file name depends on the release)
 tar -xzf AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
@@ -689,7 +689,7 @@ ammocoin-cli getmempoolinfo | jq .size
 - **Development** - Test applications against full node
 
 ### Business Applications
-- **Exchange Integration** - Validate deposits/withdrawals
+- **Payment Integration** - Validate deposits/withdrawals for your own service
 - **Merchant Services** - Accept payments with confidence
 - **Analytics** - Analyze blockchain data
 - **Service Providers** - Build services on reliable infrastructure

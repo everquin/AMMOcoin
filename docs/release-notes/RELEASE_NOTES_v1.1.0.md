@@ -1,6 +1,6 @@
 # AMMOcoin v1.1.0 - Option 2.5: Team Distribution Premine
 
-> **⚠️ Superseded by v1.1.1 (upcoming).** v1.1.0 nodes cannot follow the network after block 2,775 (Proof-of-Stake hard fork at block 2,776). The disposal-wallet migration described below is **no longer used**: v1.0 balances are airdropped to the same addresses - send nothing. See [v1.1.1 Release Notes](RELEASE_NOTES_v1.1.1.md) and [v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md).
+> **⚠️ Superseded by v1.1.1.** v1.1.0 nodes cannot follow the network after block 2,775 (Proof-of-Stake hard fork at block 2,776). The disposal-wallet migration described below is **no longer used**: v1.0 balances are airdropped to the same addresses - send nothing. See [v1.1.1 Release Notes](RELEASE_NOTES_v1.1.1.md) and [v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md).
 
 **Release Date:** December 31, 2025
 **Release Type:** Major Release - New Blockchain with 250M AMMO Team Distribution
