@@ -149,7 +149,7 @@ v1.0 balances from the official snapshot at **v1.0 block 434,881** are airdroppe
 - If an address is missed, a signed-message claim (`signmessage` with your v1.0 address) is the fallback. A signature proves ownership without revealing your key.
 - There is no deadline. Earlier instructions with a deadline or a disposal address are withdrawn.
 
-The airdrop is paid first. The QuarterMaster reserve described in Section 12 is funded from the block-1 reserve after the v1.0 airdrop, together with voluntary pledges from the early contributors who hold the largest v1.0 balances.
+The airdrop is paid first. The QuarterMaster reserve described in Section 12 is funded from the block-1 reserve after the v1.0 airdrop, together with voluntary pledges from the founding contributors who hold the largest v1.0 balances.
 
 ---
 
@@ -310,7 +310,7 @@ Issuance is a declining schedule set by `GetBlockValue()` in `src/validation.cpp
 At 480 blocks a day, block 3,715,200 is about 21 years after the fork. Real block times vary, so dates are estimates; heights are exact.
 
 ### Supply totals
-- **Block-1 reserve:** 250,000,000 AMMO (airdrop to v1.0 holders first; the QuarterMaster reserve, Section 12, is funded from the block-1 reserve after the airdrop, together with voluntary pledges from the early contributors who hold the largest v1.0 balances).
+- **Block-1 reserve:** 250,000,000 AMMO (airdrop to v1.0 holders first; the QuarterMaster reserve, Section 12, is funded from the block-1 reserve after the airdrop, together with voluntary pledges from the founding contributors who hold the largest v1.0 balances).
 - **Total supply through block 3,715,200:** 316,620,770 AMMO, the reserve included.
 - **Maximum possible supply through block 3,715,200:** about 329,170,370 AMMO, and only if every treasury cycle is fully allocated to approved proposals. Unallocated budget is never created.
 - **After block 3,715,200:** AMMO has no hard cap. Like PIVX, it keeps a small, fixed tail issuance set by the same code.
@@ -377,7 +377,7 @@ At GLiBz you can do all of these things in one place, with one login, while keep
 - **Coming to GLiBz** (built and being switched on): an Activity hub listing every way to take part, AMMO airdrops for ranking up and for referrals, and a bridge to the sister ecosystem everQUIN.
 
 ### The QuarterMaster reserve
-The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**, together with voluntary pledges from the early contributors who hold the largest v1.0 balances: v1.0 holders come first. The 61 largest v1.0 holders, early contributors, have agreed to pledge the same fixed share of their snapshot balances by signed message (listed in `docs/migration/data/quartermaster-pledges.csv`); their airdrop will be reduced by that amount (AMMO-D-2026-10-18-12).
+The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**, together with voluntary pledges from the founding contributors who hold the largest v1.0 balances: v1.0 holders come first. The 61 largest v1.0 holders, founding contributors, have agreed to pledge the same fixed share of their snapshot balances by signed message (listed in `docs/migration/data/quartermaster-pledges.csv`); their airdrop will be reduced by that amount (AMMO-D-2026-10-18-12).
 
 The tiers and the contributor reserve are an off-chain distribution programme run by the AMMOcoin project. They are not a consensus rule, and nothing in the code reserves them.
 
@@ -389,7 +389,7 @@ The tiers and the contributor reserve are an off-chain distribution programme ru
 | **SPARTAN-300** | 300 | Collateral for 3 masternodes | The first outside adopters: AMMOgeeks, AMMOfreaks and GLiBz members | Opens with the v1.1.1 launch. Redeemed on GLiBz with NUGGETS from activity, or by direct QuarterMaster award |
 | **PATRIOT-2000** | 2,000 | Exactly one masternode's collateral | Anyone who wants to help secure the AMMO blockchain as an AMMOmaster: the widest, most diverse tier | Opens after SPARTAN-300 is fully allocated. NUGGETS from activity or direct QuarterMaster award |
 
-Positions are redeemed or awarded, never sold. Cash and paid-for NUGGETS cannot be used. Rank and account-age requirements apply, and full terms are published on GLiBz. A position can include optional help setting up the masternode on your own Linux server or cloud VPS; you keep the keys and run the node. Masternodes are not sold as packages: anyone with 10,000 AMMO can run one.
+Positions are redeemed or awarded, never sold. Cash cannot be used, and only NUGGETS from your own activity on GLiBz count. Rank and account-age requirements apply, and full terms are published on GLiBz. A position can include optional help setting up the masternode on your own Linux server or cloud VPS; you keep the keys and run the node. Masternodes are not sold as packages: anyone with 10,000 AMMO can run one.
 
 **What a position does, in code terms:** a masternode with 10,000 AMMO collateral takes its turn in the payment queue, serves the network and casts one vote per masternode in DAO Command. AMMO you hold can also stake and help make new blocks. Nothing more is promised: how often a node takes part depends on how many masternodes and stakers are on the network and on keeping your node online.
 

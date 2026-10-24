@@ -23,7 +23,7 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 - **Staking**: the wallet that makes a block receives the staker share set by the code (there is no mining after the v1.1.1 fork)
 - **Masternodes**: enabled masternodes take their turn in the payment queue
 - **Contributions**: development and community work can receive awards from the contributor reserve or approved treasury proposals
-- **GLiBz**: NUGGETS from activity on GLiBz can be swapped for AMMO under the GLiBz swap rules; paid-for NUGGETS can never reach AMMO
+- **GLiBz**: NUGGETS from activity on GLiBz can be swapped for AMMO under the GLiBz swap rules; NUGGETS that were won, gifted or credited from AMMO can never reach AMMO
 
 Any exchange listing can only happen through an explicit masternode governance vote (DAO Command). The project publishes no price for AMMO.
 
