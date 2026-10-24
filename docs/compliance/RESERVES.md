@@ -24,8 +24,9 @@ The project sells no AMMO, publishes no price and runs no buy-backs (AMMO-P-02, 
 | 3 | **QuarterMaster tiers** | FOUNDING-50, SPARTAN-300, PATRIOT-2000 positions, earned or awarded, never sold (P-07) | 40,000,000 | **TO BE CREATED** | Offline key, cold-staked | After the airdrop |
 | 4 | **Contributor reserve** | AMMOgeek / AMMOfreak awards (P-07) | 50,000,000 | **TO BE CREATED** | Offline key, cold-staked | After the airdrop |
 | 5 | **Zerocoin set-aside** | v1.0 zerocoin that can't be claimed by address (D-2026-10-18-12) | 41,700 | **TO BE CREATED** | Offline key | After the airdrop |
-| 6 | **Masternode collateral** | Project masternodes mn1–mn3 (D-2026-10-24-03) | 3 × 10,000 | mn1 `ARqYH63neJkpgJKGDhKExAHqkNRXnpLwLR`, mn2 `AJ31JCS5LQe3YtKcxk5Ja4NK14RcbhE1JD`, mn3 `AXWeeRBjg5n539ZsytqaHoiCT1F2RMVmgQ` (tx `838a4b0e92050cf3…` vouts 1–3) | VM controller wallet | Funded 2026-10-24 from pool 1 change |
+| 6 | **Masternode collateral** | Project masternodes mn1–mn5 (D-2026-10-24-03, -05) | 5 × 10,000 | mn1 `ARqYH63neJkpgJKGDhKExAHqkNRXnpLwLR`, mn2 `AJ31JCS5LQe3YtKcxk5Ja4NK14RcbhE1JD`, mn3 `AXWeeRBjg5n539ZsytqaHoiCT1F2RMVmgQ` (tx `838a4b0e92050cf3…` vouts 1–3); mn4 `AUtumrzgLphzJPyVHPcGQ52L8HvUVsimai`, mn5 `AHMa6JPXUNYWk3EVqoSF2fip2mbrRwSZ6a` (tx `c27deb8bfe76dd02…` vouts 0–1) | VM controller wallet | Funded 2026-10-24 from pool 1 change |
 | 7 | **GLiBz payout float** | Pays earned-NUGGETS swaps from the GLiBz pouch (D-2026-10-17-03) | Capped; top-ups logged | **TO BE CREATED** | Hot wallet on the payout gateway | Funding source: owner decision pending |
+| 8 | **Project mining and staking rewards** | Block rewards paid to the project's own wallet: PoW blocks before the v1.1.1 fork and PoS blocks after it. Not part of the 250,000,000 | 990,644.99698543 total in the VM controller wallet on 2026-10-24 (includes pool 6 collateral and pool 1 change held there); about 790,400 of it in pieces under 1,000 | Several hundred reward addresses; list **TO BE PUBLISHED** | VM controller wallet | On chain; itemised list to follow |
 
 Arithmetic: block 1 paid 250,000,000 = pool 2 + pools 3–5 (159,958,300 + 40,000,000 + 50,000,000 + 41,700). The claim hold-back is part of pool 2. Pool 1 has since gained a 250 block reward from its own stake (section 3); that reward, less fees, is extra and stays in pool 1. It is reported in the reconciliation ([AIRDROPS.md](AIRDROPS.md) section 4).
 
@@ -41,7 +42,7 @@ Arithmetic: block 1 paid 250,000,000 = pool 2 + pools 3–5 (159,958,300 + 40,00
 | Cold staking | `2a3fb4e92c0dc76f240ed417751c04d7df78b3169a936e31875c58bf0a2ecfa8` | 1,145 × 50,000 cold-staked; change 41,722.95833327 to `AYFSs5Vmx6NtNpJLRiWBWt58yHnhwETnbn` |
 | Cold staking | `32bff5e2344e5fb4c53b107acb6876e0c180ec950d511b845db72b3784871db1` | 416 × 50,000 cold-staked; change 33,353.16666664 to `Ad9vGq9rdBHdFERwJG9bptNCoVb3BDkACY` |
 
-Totals: 4,996 outputs × 50,000 = 249,800,000 cold-staked, coin owner `AGkC8…`, staker `SUr6…`. The change, 200,245.00000003 in total across the five addresses, was unspent at the time of reading. The five change addresses are part of pool 1, held in the project's VM controller wallet (confirmed 2026-10-24). 30,000 of it funded pool 6 (section 4).
+Totals: 4,996 outputs × 50,000 = 249,800,000 cold-staked, coin owner `AGkC8…`, staker `SUr6…`. The change, 200,245.00000003 in total across the five addresses, was unspent at the time of reading. The five change addresses are part of pool 1, held in the project's VM controller wallet (confirmed 2026-10-24). 50,000 of it funded pool 6 (section 4).
 
 `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` was also the genesis output address. That output is unspendable; the address now also owns pool 1's cold-staked coins, as planned (wallets README, 2026-10-16).
 
@@ -54,3 +55,4 @@ Every transfer between pools, or out of a pool, gets a row here. The owner's pri
 | 2026-10-22 13:27 | 1 (block-1 output) | 1 (its own stake, same address) | 250,000,000 + 250 block reward | `3f723c58…` | internal to pool 1 |
 | 2026-10-22 21:35 | 1 | 1 (cold staking + change) | 249,800,000 + 200,245 | five txids in section 3 | internal to pool 1 |
 | 2026-10-24 | 1 (change `AMjFxfQRpw9UsGA7AcuzJYt4kq9dqeydgd`, `5bf32891…` vout 1145) | 6 (mn1–mn3, vouts 1–3); change 11,722.95830387 back to `AMjFx…` (vout 0) | 30,000 | `838a4b0e92050cf3961f6d58547f35b71a31a860e2d72c4e4ced6ce395a2f6f8` | D-2026-10-24-03, -04 |
+| 2026-10-24 | 1 (change `Adkh8D3TaHphLWTnQnf3WgdQpN4uvgVPLw`, `a9e73503…` vout 1145) | 6 (mn4 vout 0, mn5 vout 1); change 21,722.95830758 back to `Adkh8…` (vout 2) | 20,000 | `c27deb8bfe76dd02935a503e02f0414e478b3136a88a5531a5788f413d004825` | D-2026-10-24-05 |
