@@ -265,6 +265,23 @@ Not legal advice. Counsel review status: **pending**.
 - **Enforcement / evidence:** RESERVES.md pools 6 and 8 and section 4; owner's LEDGER.md.
 - **Owner approval:** owner choices in the 2026-10-24 session; approval is the merge. **Prepared by:** Claude.
 
+## AMMO-D-2026-10-25-01 Pledges held in custody, and a reply deadline (refines D-2026-10-18-12)
+
+- **Date:** 2026-10-25
+- **Principles:** AMMO-P-06, P-13, P-14
+- **Context:** The 61 pledge addresses fall into three groups: addresses the owner holds for himself, addresses whose keys he holds for other people, and addresses outside his control whose holders he can contact. D-2026-10-18-12 says each holder signs their own pledge, and no payout goes out until all 61 have signed. A signature proves who holds the key, not who agreed. And waiting for every outside holder could push the airdrop past the Nov 5 launch.
+- **Decision:**
+  1. **Own addresses:** the owner signs.
+  2. **Keys held for someone else:** the person the coins belong to agrees in writing first (email or message). The consent is kept privately in the owner's pledge tracker, then the owner signs with the key he holds. The public record gives the number of pledges signed by the project as custodian with the holder's written consent, and their total.
+  3. **Outside holders:** each is asked with the published signing request. Nobody is asked for keys, wallet files or coins.
+  4. **Deadline:** replies close on **November 1, 2026**. Any pledge address not signed by then, or declined, is paid its **full** snapshot balance (`build-payout-holders.py --full-pay`). The resulting shortfall in the QuarterMaster reserve is published with the airdrop record. Unsigned holders are never paid less.
+- **Alternatives rejected:**
+  - the custodian signing without consent, which would not prove agreement;
+  - handing every held key back first, which is slow and hands over wallet control;
+  - waiting for every reply, which would make the airdrop date depend on the slowest holder.
+- **Enforcement / evidence:** `scripts/migration/build-payout-holders.py` (`--full-pay`: refuses unknown addresses, refuses an address that is both signed and full-pay, and recomputes the expected total = 159,958,300 + the pledges paid in full); signing request text (owner's files); `verify-pledges.py`.
+- **Owner approval:** owner chose "their consent, you sign" and "deadline, then full pay" in the 2026-10-25 session. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)

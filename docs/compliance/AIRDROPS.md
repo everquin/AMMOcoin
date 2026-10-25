@@ -97,7 +97,7 @@ All of the following are published in this repository (and linked from ammocoin.
 | Snapshot totals | 10,080 addresses, 232,397,748.45021523 AMMO (file `snapshot_info.total_supply`). The file records `expected_supply` 232,439,448.45021522 and `supply_match: false` (difference 41,700 AMMO). **TO BE PUBLISHED:** explanation of the difference before payout |
 | Airdrop payout transactions | **TO BE PUBLISHED:** list of txids (one row per batch: txid, block height, number of outputs, total AMMO), plus the broadcast audit log |
 | Per-address reconciliation | **TO BE PUBLISHED:** CSV of snapshot address, snapshot balance, payout txid, v1.1 amount received, status (paid / claim pending / claim paid) |
-| Contributor pledges | `docs/migration/data/quartermaster-pledges.csv` (61 addresses, 72,439,448.45021523 AMMO). **TO BE PUBLISHED:** the 61 signatures and the `verify-pledges.py` result |
+| Contributor pledges | `docs/migration/data/quartermaster-pledges.csv` (61 addresses, 72,439,448.45021523 AMMO). **TO BE PUBLISHED:** the signatures and the `verify-pledges.py` result; the number and total signed by the project as custodian with written consent; the addresses paid in full after the November 1, 2026 deadline and the resulting reserve shortfall (D-2026-10-25-01) |
 | Signed-message claims | **TO BE PUBLISHED:** running list of v1.0 address, v1.1 address, amount, payout txid, date (signatures may be published too; they reveal nothing secret) |
 | Block-1 reserve address | `AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u` (block 1 output; `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` is only the unspendable genesis output) |
 | Reserve change / holding addresses used by the payout | **TO BE PUBLISHED** |
