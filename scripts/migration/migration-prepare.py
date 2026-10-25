@@ -154,6 +154,11 @@ def list_watch_utxos(binary: str) -> list[dict[str, Any]]:
     return json.loads(raw)
 
 
+def prevout(u: dict[str, Any]) -> dict[str, Any]:
+    """What the offline signer needs to sign this input without a copy of the chain."""
+    return {"txid": u["txid"], "vout": u["vout"], "scriptPubKey": u["scriptPubKey"], "amount": f"{Decimal(str(u['amount'])):.8f}"}
+
+
 def tx_fee(n_in: int, n_out: int) -> Decimal:
     size = 10 + n_in * INPUT_BYTES + n_out * OUTPUT_BYTES
     return Decimal(math.ceil(size / 1000)) * FEE_RATE_PER_KB
@@ -192,6 +197,7 @@ def build_fanout(binary: str, chunks: list[list[dict[str, Any]]], fanout_address
         if k == len(chunks):
             break
         inputs: list[dict[str, Any]] = []
+        prevouts: list[dict[str, Any]] = []
         outputs: dict[str, Decimal] = {}
         acc = Decimal(0)
         while k < len(chunks):
@@ -211,6 +217,7 @@ def build_fanout(binary: str, chunks: list[list[dict[str, Any]]], fanout_address
                 raise RuntimeError(f"Reserve UTXOs exhausted with {sum(remaining, Decimal(0))} AMMO still to fund.")
             u = reserve[pos]; pos += 1
             inputs.append({"txid": u["txid"], "vout": u["vout"]})
+            prevouts.append(prevout(u))
             acc += Decimal(str(u["amount"]))
         if not outputs:
             break
@@ -223,7 +230,7 @@ def build_fanout(binary: str, chunks: list[list[dict[str, Any]]], fanout_address
             out[change_address] = f"{change:.8f}"
         raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(out))
         txs.append({"batch_index": f"fanout-{len(txs)}", "recipients": [], "inputs": inputs,
-                    "outputs": out, "fee": f"{fee:.8f}", "unsigned_hex": raw_hex})
+                    "prevouts": prevouts, "outputs": out, "fee": f"{fee:.8f}", "unsigned_hex": raw_hex})
     return txs
 
 
@@ -251,6 +258,7 @@ def build_batches(
         u = min(free, key=lambda x: Decimal(str(x["amount"])))
         used.add((u["txid"], u["vout"]))
         inputs = [{"txid": u["txid"], "vout": u["vout"]}]
+        prevouts = [prevout(u)]
         outputs = {h["address"]: f"{Decimal(str(h['balance'])):.8f}" for h in chunk}
         change = Decimal(str(u["amount"])) - need
         if change > Decimal(str(DUST_TOLERANCE_AMMO)):
@@ -259,7 +267,7 @@ def build_batches(
             outputs[change_address] = f"{change:.8f}"
         raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
         batches.append({"batch_index": idx, "recipients": chunk, "inputs": inputs,
-                        "outputs": outputs, "unsigned_hex": raw_hex})
+                        "prevouts": prevouts, "outputs": outputs, "unsigned_hex": raw_hex})
     return batches
 
 
@@ -281,6 +289,7 @@ def build_batches_from_fanout(binary: str, chunks: list[list[dict[str, Any]]], c
             raise RuntimeError(f"Batch {idx}: funding address {a} has {have} confirmed, needs {need}. "
                                "Run --fan-out again (it funds only what is missing), wait for a confirmation, rerun.")
         inputs = [{"txid": u["txid"], "vout": u["vout"]} for u in us]
+        prevouts = [prevout(u) for u in us]
         outputs = {h["address"]: f"{Decimal(str(h['balance'])):.8f}" for h in chunk}
         if a in outputs or (change_address and change_address in outputs):
             raise RuntimeError(f"Batch {idx}: a recipient is a funding or change address; refusing.")
@@ -293,7 +302,7 @@ def build_batches_from_fanout(binary: str, chunks: list[list[dict[str, Any]]], c
             outputs[change_address] = f"{change:.8f}"
         raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
         batches.append({"batch_index": idx, "recipients": chunk, "inputs": inputs,
-                        "outputs": outputs, "unsigned_hex": raw_hex})
+                        "prevouts": prevouts, "outputs": outputs, "unsigned_hex": raw_hex})
     return batches
 
 

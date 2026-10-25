@@ -10,7 +10,7 @@ These scripts pay every v1.0 balance from the snapshot at v1.0 block 434,881 to 
 | 2 | `verify-pledges.py signatures.csv` | any node | Checks each pledge signature against its exact message (`verifymessage`). Exit 1 until all are SIGNED. |
 | 3 | `build-payout-holders.py signatures.csv [--full-pay file]` | any node | Writes the payout list: snapshot minus signed pledges. Addresses in `--full-pay` (declined or unsigned at the Nov 1 deadline, AMMO-D-2026-10-25-01) are paid in full. Refuses unless the total is exact. |
 | 4 | `migration-prepare.py --fan-out fanout.txt` | online, watch-only | Consolidation transactions (≤450 cold-stake inputs each) funding one address per batch. Rerun after any stale or rejected transaction; it funds only what is missing. |
-| 5 | `migration-sign-offline.py` | offline signer | Signs with the reserve owner key (paper wallet) on a machine with networking off and a synced chain copy. |
+| 5 | `migration-sign-offline.py --rpc-cookie …` | offline signer | Fan-outs: signs with the paper-wallet key, typed at a hidden prompt. Payout batches: signs from the signer's encrypted wallet. No chain copy needed; refuses if the node has a peer. Setup: [SIGNER.md](SIGNER.md). |
 | 6 | `migration-broadcast.py` | online | Checks every input is unspent, then sends, with an audit log. Stops at a STALE transaction. |
 | 7 | `migration-prepare.py --from-fan-out fanout.txt` | online, watch-only | The payout batches (≤50 recipients, ≤10M per output). Then repeat steps 5 and 6. |
 | 8 | `verify-migration.py` | online | Reconciles every snapshot address against the chain, for publication. |
@@ -22,7 +22,7 @@ ammocoin-cli importaddress 76a97b63d11452da7b2840e451a37d750ece77eb4a0d94cdea3f6
 ammocoin-cli importaddress <each fan-out / change address> "" false
 ```
 
-The fan-out and change addresses come from the signing wallet, and must not be in a wallet that stakes.
+The fan-out addresses come from the signer wallet (`signer-init.py` writes them to a text file). The change address is the paper-wallet address `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`. Neither may be in a wallet that stakes.
 
 **Tests:** `python3 scripts/migration/test_migration_prepare.py`. No node is needed.
 

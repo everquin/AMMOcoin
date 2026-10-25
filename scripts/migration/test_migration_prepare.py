@@ -41,7 +41,7 @@ for c in chunks:
     assert len(a) == len(set(a))
 
 # 2. Without a fan-out, one reserve UTXO can't serve every batch: refuse.
-prep.cli = fake_cli([{"txid": "r", "vout": 0, "amount": 250000000}])
+prep.cli = fake_cli([{"txid": "r", "vout": 0, "amount": 250000000, "scriptPubKey": "51"}])
 try:
     prep.build_batches("x", chunks, "Achange")
     raise SystemExit("expected refusal: one UTXO cannot fund several batches")
@@ -50,7 +50,7 @@ except RuntimeError as e:
 
 # 3. Fan-out from many cold-staked 50,000 outputs: <= MAX_INPUTS_PER_TX inputs per tx,
 #    every batch address funded exactly to its need, change only to the change address.
-reserve = [{"txid": f"r{i}", "vout": 0, "amount": 50000.0, "address": "Areserve"} for i in range(1200)]
+reserve = [{"txid": f"r{i}", "vout": 0, "amount": 50000.0, "address": "Areserve", "scriptPubKey": "51"} for i in range(1200)]
 def fake_cli2(state):
     def cli(binary, *args):
         if args[0] == "listunspent":
@@ -71,6 +71,9 @@ created.clear()
 txs = prep.build_fanout("x", bchunks, fan, "Achange")
 assert len(txs) >= 2, "45M+ from 50k pieces must need several txs"
 assert all(len(t["inputs"]) <= prep.MAX_INPUTS_PER_TX for t in txs)
+for t in txs:  # the offline signer needs each input's script and amount
+    assert [(p["txid"], p["vout"]) for p in t["prevouts"]] == [(i["txid"], i["vout"]) for i in t["inputs"]]
+    assert all(p["scriptPubKey"] and Decimal(p["amount"]) == 50000 for p in t["prevouts"])
 ins = [(i["txid"], i["vout"]) for t in txs for i in t["inputs"]]
 assert len(ins) == len(set(ins)), "a reserve output used twice"
 funded = {}
@@ -85,7 +88,7 @@ assert [funded.get(a, Decimal(0)) for a in fan] == [prep.chunk_need(c) for c in 
 
 # 4. Idempotent: rerun after the first tx was broadcast funds only what is missing.
 first = txs[0]
-state["mempool"] = [{"txid": "m", "vout": n, "amount": float(Decimal(v)), "address": a}
+state["mempool"] = [{"txid": "m", "vout": n, "amount": float(Decimal(v)), "address": a, "scriptPubKey": "51"}
                     for n, (a, v) in enumerate(first["outputs"].items()) if a != "Achange"]
 txs2 = prep.build_fanout("x", bchunks, fan, "Achange")
 assert len(txs2) == len(txs) - 1
@@ -102,7 +105,7 @@ conf = []
 for t in txs:
     for n, (a, v) in enumerate(t["outputs"].items()):
         if a != "Achange":
-            conf.append({"txid": t["batch_index"], "vout": n, "amount": float(Decimal(v)), "address": a})
+            conf.append({"txid": t["batch_index"], "vout": n, "amount": float(Decimal(v)), "address": a, "scriptPubKey": "51"})
 reserve[:] = conf
 created.clear()
 batches = prep.build_batches("x", bchunks, "Achange", fan)
