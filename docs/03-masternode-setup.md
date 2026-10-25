@@ -124,6 +124,19 @@ su - ammocoin
 
 ## 🔧 Step 3: Install AMMOcoin Daemon
 
+### Fast path: one-command installer
+
+On Ubuntu 22.04 or newer you can let the official installer do Steps 3 and 4 on the server. It installs the release, fetches the Sapling parameters, writes `ammocoin.conf`, sets up the systemd service and opens port 37020. The checksum is on the [release page](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1) (`AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt`).
+
+```bash
+curl -fsSLo install-node.sh https://raw.githubusercontent.com/everquin/AMMOcoin/v1.1.1-pos-fork/scripts/deployment/install-node.sh
+sudo bash install-node.sh --tarball https://github.com/everquin/AMMOcoin/releases/download/v1.1.1/AMMOcoin-v1.1.1-Linux-x86_64.tar.gz \
+  --sha256 <SHA-256 of AMMOcoin-v1.1.1-Linux-x86_64.tar.gz from the checksums file> \
+  --role masternode --mnkey <key from createmasternodekey> --ip <your server's public IPv4>
+```
+
+Add `--dry-run` first to see every step without changing anything. Then continue at Step 5. The manual steps below do the same thing by hand.
+
 ### Download and Install
 ```bash
 # Create working directory
@@ -383,6 +396,15 @@ tail -f ~/.ammocoin11/debug.log
 - **Backup** configuration files
 
 ### Troubleshooting Common Issues
+
+#### ℹ️ "MISSING" before you start it
+`listmasternodeconf` shows **MISSING** for a masternode the network hasn't heard of yet. That is normal until you run `startmasternode` and its broadcast spreads. After a successful start it shows **PRE_ENABLED**, then **ENABLED** after a few minutes of pings.
+
+#### ❌ "Sync in progress. Must wait until sync is complete to start Masternode"
+The controller wallet hasn't finished syncing the masternode list. This happens after every wallet restart. Wait, then run `ammocoin-cli mnsync status`; when `RequestedMasternodeAssets` is `999`, start the masternode again.
+
+#### ℹ️ Your controller wallet can go offline
+The masternode runs on your server and pings the network by itself. The controller wallet is only needed for `startmasternode`, and again if the server is down long enough for the network to drop it (about 2 hours). Keep the controller offline and encrypted the rest of the time; the collateral output is locked against spending while `masternode.conf` lists it.
 
 #### ❌ Masternode Not Starting
 **Symptoms**: Status shows "MISSING" or "EXPIRED"
