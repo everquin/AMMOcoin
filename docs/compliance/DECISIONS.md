@@ -269,10 +269,10 @@ Not legal advice. Counsel review status: **pending**.
 
 - **Date:** 2026-10-25
 - **Principles:** AMMO-P-06, P-13, P-14
-- **Context:** The 61 pledge addresses fall into three groups: addresses the owner holds for himself, addresses whose keys he holds for other people, and addresses outside his control whose holders he can contact. D-2026-10-18-12 says each holder signs their own pledge, and no payout goes out until all 61 have signed. A signature proves who holds the key, not who agreed. And waiting for every outside holder could push the airdrop past the Nov 5 launch.
+- **Context:** The 61 pledge addresses fall into three groups: addresses the owner holds for themselves, addresses whose keys the owner holds for other people, and addresses outside the owner's control whose holders the owner can contact. D-2026-10-18-12 says each holder signs their own pledge, and no payout goes out until all 61 have signed. A signature proves who holds the key, not who agreed. And waiting for every outside holder could push the airdrop past the Nov 5 launch.
 - **Decision:**
   1. **Own addresses:** the owner signs.
-  2. **Keys held for someone else:** the person the coins belong to agrees in writing first (email or message). The consent is kept privately in the owner's pledge tracker, then the owner signs with the key he holds. The public record gives the number of pledges signed by the project as custodian with the holder's written consent, and their total.
+  2. **Keys held for someone else:** the person the coins belong to agrees in writing first (email or message). The consent is kept privately in the owner's pledge tracker, then the owner signs with the key they hold. The public record gives the number of pledges signed by the project as custodian with the holder's written consent, and their total.
   3. **Outside holders:** each is asked with the published signing request. Nobody is asked for keys, wallet files or coins.
   4. **Deadline:** replies close on **November 1, 2026**. Any pledge address not signed by then, or declined, is paid its **full** snapshot balance (`build-payout-holders.py --full-pay`). The resulting shortfall in the QuarterMaster reserve is published with the airdrop record. Unsigned holders are never paid less.
 - **Alternatives rejected:**
