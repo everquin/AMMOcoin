@@ -83,8 +83,13 @@ For these, and only these, the holder proves ownership of the v1.0 address with 
    ```
    `V1.1_ADDRESS` is the same address where possible, otherwise a v1.1 address the holder controls. Naming the destination in the signed text stops a copied signature from being redirected.
 2. The holder submits the v1.0 address, the exact message and the signature through the channel announced on the AMMOcoin GitHub repository.
-3. The project verifies the signature with `verifymessage` against the v1.0 address, checks the snapshot balance for that address, and checks that the address has not already been paid (no double payment).
-4. The snapshot balance is paid to the named v1.1 address, from the block-1 reserve, and the txid is added to the published claim record (section 4).
+3. The project checks the claim with `scripts/migration/verify-claim.py`:
+   - the signature, with `verifymessage`, against the v1.0 address and that exact message;
+   - that the address is in the snapshot;
+   - what is still owed, from the reconciliation: expected minus paid, minus any claim already approved. No double payment.
+
+   The script never sends coins. It records the approved claim.
+4. The amount still owed is paid to the named v1.1 address from the block-1 reserve, the same way as the airdrop: watch-only build, offline signing, logged broadcast (`verify-claim.py --export` writes the payout list). The txid is added to the published claim record (section 4).
 
 What a claim never involves: sending coins, paying a fee, sharing a private key, seed phrase or wallet file, or a deadline. Anyone who asks for any of these is not the project.
 
@@ -108,7 +113,7 @@ All of the following are published in this repository (and linked from ammocoin.
 | Amount held back for signed-message claims, and its address | **TO BE PUBLISHED** |
 | QuarterMaster reserve address(es) | **TO BE PUBLISHED** (gap G-06) |
 | Contributor (AMMOgeek/AMMOfreak) reserve address(es) | **TO BE PUBLISHED** |
-| Disposal address (v1.1.0 process, withdrawn) | **TO BE PUBLISHED:** the address from `docs/migration/DISPOSAL_ADDRESS.md` and the balance it received, so that anyone who did send coins under the withdrawn process can be identified and made whole |
+| Disposal address (v1.1.0 process, withdrawn) | **None was ever published.** `verify-disposal-address.py` still holds the placeholder `PENDING-AMMO-CORE-PUBLICATION`, no publication tag exists, and no repository, website page or document names one (checked 2026-10-25). Anyone who sent v1.0 coins somewhere under the withdrawn instructions should come forward; coins moved before the snapshot are counted at the address that received them. |
 | Reconciliation statement | **TO BE PUBLISHED:** block-1 reserve 250,000,000 AMMO = airdrop paid + claims paid + claim hold-back + QuarterMaster reserve + contributor reserve + fees, with the addresses above |
 
 When a value is published, replace its **TO BE PUBLISHED** marker in a commit, add the commit SHA to AMMO-D-2026-10-17-10, and update gap G-06.
@@ -129,9 +134,11 @@ Copy about the airdrop (site, app, social posts, release notes) must follow sect
 
 ## 6. Known inconsistencies to fix before the payout
 
-- `scripts/migration/verify-claim.py` still describes the withdrawn disposal-address model as current and calls the signed-message claim deprecated (it refuses to run without `--i-accept-the-risk`). That is the reverse of AMMO-D-2026-10-16-01. Update it before any claim is processed. `scripts/migration/README.md` still describes the tools as v1.0 -> v1.1.0 and lists `distribute-to-top-holders.py` (the earlier "Option 2.5" plan).
-- `scripts/migration/migration-prepare.py` usage text refers to a `genesis-top-holders.json` holders file (from the earlier "Option 2.5" plan). The payout must be built from the published snapshot file (section 4), or from a file whose derivation from it is published.
-- The snapshot file records `supply_match: false` (section 4). Most likely explanation (not yet proven): 41,700 AMMO of zerocoin mints, which count in the v1.0 supply total but have no address. Confirm with the zerocoin supply (`getinfo`) on a v1.0 node at block 434,881. Either way the 41,700 is set aside as unclaimable (AMMO-D-2026-10-18-12).
+- The snapshot file records `supply_match: false`: its address balances total 232,397,748.45021523, against an `expected_supply` of 232,439,448.45021522, which is 41,699.99999999 less. **The zerocoin explanation is wrong** (checked 2026-10-25 on the v1.0 node ammo-13):
+  - The zerocoin supply has been frozen at 568,897 since at least block 300,000. That doesn't match 41,700.
+  - At block 409,459, the total of all unspent outputs (`gettxoutsetinfo`, 219,728,448.45021523) is the money supply minus 50. The same holds at block 434,881: `expected_supply` is the full unspent-output total.
+  - So the 41,700 is held by unspent outputs that the snapshot did not attribute to any address. That would be non-standard scripts, such as pay-to-pubkey or multisig. The snapshot counts 481,712 outputs, while the v1.0 coin set already held 1,254,670 at block 409,459.
+  - To settle it, scan the coin set at block 434,881 by script type. Only ammo-11 holds the v1.0 chain that far (tip 435,172; its daemon has been stopped since 2026-04-09). Until that scan is done, the 41,700 is set aside as unclaimable (AMMO-D-2026-10-18-12). If the scan finds pay-to-pubkey outputs, they belong to an address and should be added to the payout.
 - `scripts/migration/migration-prepare.py` takes its `--holders` file from `scripts/migration/build-payout-holders.py`, which pays `airdrop_after_pledge` to the 61 pledging addresses and refuses to write anything unless every pledge signature verifies (total 159,958,300.00000000 AMMO to 10,080 addresses). Decided (AMMO-D-2026-10-18-13): the 10,000,000 per-recipient cap stays; `ANj3fDwDYTjf1Mb7XvgjHLrs6aSKeKXakL` (24,713,345.21078793 after its pledge) is paid in three outputs of at most 10M, each in its own transaction.
 - Fixed 2026-10-25 (PR "Airdrop readiness 2/2"):
   - `migration-prepare.py` assumed the reserve was a few large plain outputs and built a single fan-out transaction. The reserve is now 4,996 cold-stake outputs of 50,000, so the fan-out became size-limited consolidation transactions (above).
@@ -139,4 +146,9 @@ Copy about the airdrop (site, app, social posts, release notes) must follow sect
   - Its flat 0.0001 fee was below the relay fee for a 50-output batch.
   - The broadcast and signing scripts crashed on the fan-out label.
   - Covered by `scripts/migration/test_migration_prepare.py`, and by a regtest run of the full flow with the v1.1.1 release binary: owner-signed cold-stake spends, a stake spending a fan-out input mid-run (caught as STALE, rerun built only the missing part), and 25 of 25 recipients paid exactly, including a balance split under the per-recipient cap.
-- The user guide's example claim message (`docs/migration/V1.0_BALANCE_AIRDROP.md`) does not name a destination address; align it with section 3.
+- Fixed 2026-10-25 (PR "Airdrop readiness 3"):
+  - `verify-claim.py` described the withdrawn disposal model and sent coins from a hot wallet. It now only verifies a section 3 claim and records it; payment goes through the offline-signed pipeline.
+  - `verify-migration.py` compared current balances with the raw snapshot, on PIVX's RPC port, with placeholder credentials. That would have flagged every pledging address and every holder who had moved their coins. It now reconciles from the signed payout transactions that confirmed, against the payout list.
+  - The user guide's example claim message now names the destination (section 3).
+  - All three were checked on regtest after the payout run: 25 of 25 reconciled; an address left out of the payout shows as UNPAID; its claim is approved; a repeat claim, a claim by a paid address and a signature over the old message are refused.
+  - Also fixed earlier: the migration README and the `migration-prepare.py` usage text now describe the current plan (PR "Airdrop readiness 2/2").
