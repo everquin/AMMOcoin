@@ -1,8 +1,10 @@
 # 🏛️ AMMOcoin Masternode Setup Guide
 
-Set up your own AMMOcoin masternode to provide network services, vote in governance and receive the masternode payment set by the code. This comprehensive guide covers everything from requirements to maintenance.
+Set up your own AMMOcoin masternode to run the network with your crew, vote on governance proposals and the treasury, and take your turn in the masternode payment queue set by the code. This comprehensive guide covers everything from requirements to maintenance.
 
-> **v1.1.1 (upcoming):** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoin11` (Linux), `~/Library/Application Support/AMMOcoin11` (macOS), `%APPDATA%\AMMOcoin11` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+> AMMOcoin is Proudly Worthless™: the project sells nothing, publishes no price and promises no return. A masternode is network duty and a governance vote, not an investment.
+
+> **v1.1.1:** v1.1.1 is a mandatory hard fork. The network runs Proof-of-Stake from block 2,776 and v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes, so every masternode (VPS and controller wallet) must upgrade. The default data folder is now `~/.ammocoin11` (Linux), `~/Library/Application Support/AMMOcoin11` (macOS), `%APPDATA%\AMMOcoin11` (Windows). See the [v1.1.1 release notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ## 🤔 What is a Masternode?
 
@@ -12,23 +14,23 @@ A **masternode** is a specially configured node that provides enhanced services 
 - 🔒 **InstantSend** - Near-instant transaction confirmations
 - 🛡️ **Enhanced Security** - Additional network protection layers
 - 🗳️ **Governance Voting** - Participate in DAO decisions
-- 💰 **Masternode Payment** - 3 AMMO per paid block (`GetMasternodePayment()`)
+- 🔁 **Payment Queue** - Takes its turn for the masternode share of a block (`GetMasternodePayment()`)
 - 🌐 **Network Stability** - Always-on full nodes
 
-### Benefits vs Regular Staking
+### Staking vs Masternode
 | Feature | Staking | Masternode |
 |---------|---------|------------|
 | **Minimum Coins** | Any amount (600 confirmations to stake) | 10,000 AMMO |
-| **Rewards** | 247 AMMO per staked block today (250 if no masternode is paid) | 3 AMMO per paid block |
+| **Block role** | Makes blocks when selected by stake weight | Takes its turn in the payment queue |
 | **Requirements** | Basic wallet | VPS + Technical setup |
 | **Voting Rights** | No | Yes |
 | **Network Services** | Basic | Enhanced |
 
 ## 💎 Masternode Requirements
 
-### Financial Requirements
-- **💰 Collateral**: Exactly 10,000 AMMO
-- **💸 Operating Costs**: $5-20/month (VPS hosting)
+### Collateral and Hosting
+- **🔒 Collateral**: Exactly 10,000 AMMO (`nMNCollateralAmt`), kept in your own wallet
+- **🖥️ Hosting**: a small VPS, paid by you to your hosting provider
 - **⚡ Network Costs**: Minimal bandwidth usage
 
 ### Technical Requirements
@@ -65,7 +67,7 @@ The setup involves **two main components**:
 ### Acquire Collateral
 ```
 Required: Exactly 10,000 AMMO
-Method: Purchase or stake to accumulate (there is no mining after block 2,776)
+Source: coins you already hold (the project sells no AMMO; there is no mining after block 2,776)
 Important: Must be a single 10,000 AMMO output (one transaction)
 ```
 
@@ -90,10 +92,10 @@ Important: Must be a single 10,000 AMMO output (one transaction)
 
 ### Choose VPS Provider
 **Recommended Providers**:
-- **Vultr** - $5-10/month, good performance
-- **DigitalOcean** - $5-10/month, reliable
-- **Linode** - $5-10/month, excellent support
-- **Contabo** - $4-8/month, budget option
+- **Vultr** - good performance
+- **DigitalOcean** - reliable
+- **Linode** - excellent support
+- **Contabo** - budget option
 
 ### Server Specifications
 ```
@@ -131,7 +133,7 @@ mkdir ~/ammocoin && cd ~/ammocoin
 ldd --version
 
 # Download the v1.1.1 Linux release from the official GitHub release page
-# (https://github.com/everquin/AMMOcoin/releases - v1.1.1 is upcoming; verify the SHA256 checksum)
+# (https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1 - verify the SHA256 checksum)
 
 # Extract files (file name depends on the release)
 tar -xzf AMMOcoin-v1.1.1-Linux-x86_64.tar.gz
@@ -329,29 +331,22 @@ ammocoin-cli getmasternodestatus
 ```
 
 ### GUI Monitoring
-- **Masternodes Tab** - Shows status and earnings
+- **Masternodes Tab** - Shows status and last payment
 - **Status Indicators**:
-  - 🟢 **ENABLED** - Active and earning
+  - 🟢 **ENABLED** - Active and in the payment queue
   - 🟡 **PRE_ENABLED** - Starting up
   - 🔴 **EXPIRED** - Needs restart
   - ⚫ **MISSING** - Connection issues
 
-## 💰 Masternode Rewards
+## 🔁 The Masternode Payment Queue
 
-### Reward Distribution
-- **Block Reward**: 250 AMMO per block today (3-minute blocks); the v1.1.1 fork keeps the original schedule (225 AMMO from block 86,401, 45 AMMO from 151,201, lower later)
-- **Masternode Payment**: Fixed 3 AMMO per paid block (the staker keeps the rest, 247 AMMO today); it becomes 6 AMMO only after block 3,715,200
+### How the queue works
+- **Issuance**: the original declining schedule in `GetBlockValue()`, unchanged by the v1.1.1 fork (3-minute blocks)
+- **Masternode share**: set by `nMNBlockReward` (`GetMasternodePayment()`); the staker that makes the block receives the rest. The share changes at block 3,715,200 (`nNewMNBlockReward`)
 - **Selection**: Deterministic based on queue order
-- **Frequency**: Depends on how many masternodes are active
+- **Frequency**: with N enabled masternodes, each takes its turn about once every N blocks (480 blocks a day at one block per 3 minutes)
 
-### Reward Calculation
-**Formula**: Daily Rewards ≈ (Daily Blocks × MN Payment) / Active Masternodes
-- Daily Blocks: 480 (1 block/3 minutes)
-- MN Payment per Block: 3 AMMO
-- Daily Pool: 480 × 3 = 1,440 AMMO
-- Your Share: 1,440 / Active MNs
-
-Example: with 100 active masternodes, each is paid about 14.4 AMMO/day on average (one 3 AMMO payment roughly every 100 blocks, about every 5 hours). Actual results vary with the active count and your uptime.
+This guide states no amounts and nothing is promised: what any node receives depends on how many masternodes are enabled and on keeping your node online.
 
 ## 🔧 Maintenance & Management
 
@@ -383,7 +378,7 @@ tail -f ~/.ammocoin11/debug.log
 
 #### Monthly Tasks
 - **Update** AMMOcoin software if new version available
-- **Review** earnings and performance
+- **Review** uptime and queue status
 - **Check** VPS billing and renewal dates
 - **Backup** configuration files
 
@@ -459,7 +454,7 @@ sudo ufw enable
 ### Multiple Masternodes
 - **Scale** with additional 10,000 AMMO collaterals
 - **Distribute** across different VPS providers
-- **Stagger** start times for better queue position
+- **Stagger** start times
 - **Monitor** performance across all nodes
 
 ### Automation Scripts
@@ -487,7 +482,7 @@ fi
 ### What the code does
 ```
 Collateral:        10,000 AMMO, locked in your own wallet (it is not spent or sent to anyone)
-Payment per block: 3 AMMO to the masternode at the front of the queue (GetMasternodePayment())
+Payment per block: the masternode share set by the code (GetMasternodePayment(), nMNBlockReward) to the masternode at the front of the queue
 Payment frequency: about once every N blocks, where N = number of enabled masternodes
 Running costs:     your own server (VPS) costs, paid by you to your hosting provider
 ```
@@ -496,7 +491,7 @@ What one masternode receives depends on how many others are enabled and on keepi
 
 ### Things that change payments
 - **Masternode Count** - More enabled masternodes means each one is paid less often
-- **Network Changes** - Consensus changes to the reward schedule (announced as such)
+- **Network Changes** - Consensus changes to the issuance schedule (announced as such)
 - **Downtime** - A masternode that drops off the list stops being paid until it is enabled again
 
 ### Keeping a Masternode Paid
@@ -512,9 +507,8 @@ What one masternode receives depends on how many others are enabled and on keepi
 - [Troubleshooting](./09-troubleshooting.md)
 
 ### Community Support
-- **Discord**: #masternode-support
-- **Telegram**: @AMMOcoinMasternodes
-- **Forum**: forum.ammocoin.org/masternodes
+- **GitHub Issues**: https://github.com/everquin/AMMOcoin/issues
+- **Community**: https://ammocoin.org/community (AMMOcoin has no official Discord or Telegram; ignore anyone claiming to be support there)
 
 ### Emergency Contacts
 - **Technical Issues**: support@ammocoin.org
@@ -525,8 +519,8 @@ What one masternode receives depends on how many others are enabled and on keepi
 ## ✅ Masternode Setup Checklist
 
 ### Preparation
-- [ ] 10,000 AMMO acquired and confirmed
-- [ ] VPS purchased and configured
+- [ ] 10,000 AMMO in your own wallet and confirmed
+- [ ] VPS set up and configured
 - [ ] Local wallet encrypted and backed up
 - [ ] SSH access to server confirmed
 
@@ -550,7 +544,7 @@ What one masternode receives depends on how many others are enabled and on keepi
 - [ ] Backup procedures documented
 - [ ] Emergency contacts saved
 
-**🎉 Congratulations! Your AMMOcoin masternode is now active and earning rewards.**
+**🎉 Congratulations! Your AMMOcoin masternode is now active: you are helping run the network and you have a vote in DAO Command.**
 
 ---
 

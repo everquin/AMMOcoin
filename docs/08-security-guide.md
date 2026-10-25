@@ -1,8 +1,8 @@
 # 🔒 AMMOcoin Security Best Practices
 
-Comprehensive security guide to protect your AMMOcoin investments and maintain operational security. Follow these practices to keep your funds safe.
+Comprehensive security guide to protect your AMMOcoin wallet and keys and maintain operational security. Follow these practices to keep your coins safe.
 
-> **v1.1.1 (upcoming) and v1.0 holders:** v1.0 balances are **airdropped to the same addresses** on v1.1. Keep your v1.0 `wallet.dat` and **send nothing anywhere**. Anyone who emails you a "disposal address" or asks for coins, keys or your wallet file is a scammer. See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md).
+> **v1.1.1 and v1.0 holders:** v1.0 balances are **airdropped to the same addresses** on v1.1. Keep your v1.0 `wallet.dat` and **send nothing anywhere**. Anyone who emails you a "disposal address" or asks for coins, keys or your wallet file is a scammer. See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md).
 
 ## 🎯 Security Fundamentals
 
@@ -440,7 +440,7 @@ ammocoin-cli addmultisigaddress 2 '["address1","address2","address3"]'
 - **🏢 Business funds** - Require multiple officers
 - **💑 Joint accounts** - Both partners must approve
 - **🏦 Escrow services** - Neutral third party
-- **🔒 High-value storage** - Enhanced security
+- **🔒 Long-term storage** - Enhanced security
 
 ### Air-Gapped Signing
 
@@ -463,7 +463,7 @@ ammocoin-cli sendrawtransaction "signed_hex"
 ### Hardware Security Modules (HSM)
 
 #### Professional HSM Options
-- **🏢 Enterprise HSMs** - For exchanges and businesses
+- **🏢 Enterprise HSMs** - For businesses
 - **☁️ Cloud HSMs** - AWS CloudHSM, Azure Dedicated HSM
 - **💾 USB HSMs** - YubiKey, SoftHSM
 - **🏠 DIY HSMs** - Raspberry Pi + secure storage

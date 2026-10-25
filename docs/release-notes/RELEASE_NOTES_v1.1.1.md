@@ -154,7 +154,7 @@ Build and packaging changes in this release: from-source macOS dependencies targ
 
 1. Download the package, `AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt` and, when present, `AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt.sig` from the **same** release.
 2. If the `.sig` is published, verify it with `scripts/release/verify-release.sh` from this repository at the `v1.1.1` tag ([SIGNING.md](https://github.com/everquin/AMMOcoin/blob/v1.1.1-pos-fork/docs/release/SIGNING.md)).
-3. Check the file: `sha256sum -c AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt --ignore-missing` (macOS: `shasum -a 256 -c AMMOcoin-v1.1.1-macOS-ARM64.SHA256`).
+3. Check the file: `sha256sum -c AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt --ignore-missing` (macOS: `shasum -a 256 -c --ignore-missing AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt`).
 
 If either check fails, do not run the file.
 

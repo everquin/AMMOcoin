@@ -5,10 +5,10 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 ## 🚀 Getting Started
 
 ### What is AMMOcoin?
-**AMMOcoin** is a decentralized cryptocurrency built on Proof of Stake consensus, featuring masternodes, governance voting, and staking rewards. It offers fast 3-minute block times and focuses on community-driven development.
+**AMMOcoin** is a decentralized cryptocurrency built on Proof of Stake consensus, featuring staking, masternodes and governance voting. It offers fast 3-minute block times and focuses on community-driven development. AMMOcoin is Proudly Worthless™: it is worth nothing in money, permanently. The project sells nothing, publishes no price and promises no return.
 
 ### Do I need to upgrade to v1.1.1?
-**Yes - everyone must upgrade.** v1.1.1 (upcoming) is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1_DRAFT.md).
+**Yes - everyone must upgrade.** v1.1.1 is a hard fork: Proof-of-Stake from block 2,776, no mining after. It uses new network magic bytes, so v1.1.1 nodes do not connect to v1.0 or v1.1.0 nodes. It also uses a new data folder (`~/.ammocoin11`, `~/Library/Application Support/AMMOcoin11`, `%APPDATA%\AMMOcoin11`) - copy your `wallet.dat` across. See the [v1.1.1 Release Notes](release-notes/RELEASE_NOTES_v1.1.1.md).
 
 ### How do I get started with AMMOcoin?
 1. **Download** the wallet from official sources
@@ -17,12 +17,13 @@ Quick answers to the most commonly asked questions about AMMOcoin. Find instant 
 4. **Backup** your wallet.dat file securely
 5. **Start staking** or consider running a masternode
 
-### Where can I buy AMMOcoin?
-**The AMMOcoin project does not sell AMMO**, has never held an ICO or token sale, and does not list AMMO on any exchange. AMMO is received, not bought from the project:
-- **Staking**: Stakers who create a block receive the staker share set by the code (there is no mining after the v1.1.1 fork)
-- **Masternodes**: Enabled masternodes receive the masternode payment when they reach the front of the queue
-- **Contributions**: Development and community work can be rewarded from the reserves or by approved treasury proposals
-- **GLiBz**: NUGGETS *earned* through activity on GLiBz can be swapped for AMMO; purchased NUGGETS can never reach AMMO
+### Can I get AMMO?
+**The AMMOcoin project sells nothing.** It has never held an ICO or token sale, does not list AMMO on any exchange and runs no exchange. AMMO reaches people through taking part, never through a sale by the project:
+- **v1.0 holders**: balances from the v1.0 snapshot are airdropped to the same addresses (send nothing)
+- **Staking**: the wallet that makes a block receives the staker share set by the code (there is no mining after the v1.1.1 fork)
+- **Masternodes**: enabled masternodes take their turn in the payment queue
+- **Contributions**: development and community work can receive awards from the contributor reserve or approved treasury proposals
+- **GLiBz**: NUGGETS from activity on GLiBz can be swapped for AMMO under the GLiBz swap rules; NUGGETS that were won, gifted or credited from AMMO can never reach AMMO
 
 Any exchange listing can only happen through an explicit masternode governance vote (DAO Command). The project publishes no price for AMMO.
 
@@ -77,19 +78,18 @@ Common causes:
 ## 🎯 Staking Questions
 
 ### What is staking?
-**Staking** is holding AMMO coins in your wallet to help secure the network and earn rewards. Your coins have a chance to create new blocks and earn block rewards.
+**Staking** is keeping AMMO coins in an online, unlocked-for-staking wallet so it helps secure the network. Your mature coins have a chance to make new blocks, which is how you and your crew run the network.
 
-### How much can I earn from staking?
-- **Block reward (v1.1.1)**: 250 AMMO per block today (the fork keeps the original schedule; 225 AMMO from block 86,401, 45 AMMO from 151,201); when a masternode is paid it gets 3 AMMO and the staker keeps 247 AMMO
-- **Network issuance**: ~480 blocks/day, so ~120,000 AMMO/day today is shared by all stakers and masternodes - how many blocks you stake depends on your share of the coins being staked (expected share of blocks = your weight / network weight)
+### What does a staked block pay?
+- **Code terms only**: each block pays the masternode selected by the payment queue its share (`nMNBlockReward`) and the staker the rest of the issuance set by `GetBlockValue()`. The docs state no amounts and nothing is promised.
+- **How often you stake**: ~480 blocks/day network-wide; your expected share of blocks = your weight / network weight
 - **Factors**: Your coin amount, network weight, uptime
 - **Frequency**: Small amounts may stake weekly/monthly
-- **Maturity**: Rewards are ordinary coins and add to your staking weight once they have 600 confirmations
+- **Maturity**: Staked coins are ordinary coins and add to your staking weight once they have 600 confirmations
 
 ### What's the minimum amount needed for staking?
-- **Technical minimum**: 1 AMMO
-- **Practical minimum**: 100+ AMMO for regular rewards
-- **Recommended**: 1,000+ AMMO for frequent rewards
+- **Technical minimum**: there is no minimum balance in the code; coins need 600 confirmations
+- **In practice**: the fewer coins you stake, the less often your wallet makes a block
 
 ### Why isn't my wallet staking?
 Check these common issues:
@@ -117,23 +117,23 @@ ammocoin-cli walletpassphrase "your_password" 0 true
 - **Small amounts** may take weeks or months to stake
 - **Network weight** affects frequency - more network stakes = longer waits
 - **Maturity** resets when you stake or move coins - each UTXO needs 600 confirmations again
-- **Consider** combining small amounts or getting more AMMO
+- **Consider** combining small UTXOs
 
 ## 🏛️ Masternode Questions
 
 ### What is a masternode?
-A **masternode** is a special type of node that provides enhanced services to the network (governance voting, budget finalization) and earns a fixed payment in return for maintaining 10,000 AMMO collateral.
+A **masternode** is a special type of node that provides enhanced services to the network (governance voting, budget finalization) and takes its turn in the masternode payment queue while it keeps 10,000 AMMO collateral in its owner's wallet.
 
-### How much does it cost to run a masternode?
-- **Collateral**: Exactly 10,000 AMMO
-- **VPS Costs**: $5-20/month for hosting
+### What do I need to run a masternode?
+- **Collateral**: Exactly 10,000 AMMO, kept in your own wallet
+- **Hosting**: a small VPS with a public IP, paid by you to your hosting provider
 - **Setup Time**: 2-4 hours initial setup
 - **Technical Knowledge**: Basic Linux command line skills
 
-### How are masternodes paid?
-- **Payment**: 3 AMMO per paid block (6 AMMO only after block 3,715,200)
-- **Network total**: ~480 blocks/day x 3 AMMO = ~1,440 AMMO/day shared by all enabled masternodes
-- **Payment Frequency**: depends on how many masternodes are enabled
+### How does the masternode payment queue work?
+- **Share**: the masternode share of a block is set by the code (`nMNBlockReward`, `GetMasternodePayment()`); it changes at block 3,715,200 (`nNewMNBlockReward`)
+- **Turns**: with N enabled masternodes, each one takes its turn about once every N blocks
+- **Nothing promised**: frequency depends on how many masternodes are enabled and on your uptime
 - **Requirements**: public, routable IP on port 37020 (127.0.0.1 or private IPs give "Invalid IP address")
 
 ### Can I stake without keeping my wallet online? (cold staking)
@@ -149,7 +149,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 ### What happens if my masternode goes offline?
 - **Short downtime** (<1 hour): Usually no penalty
 - **Extended downtime**: Status changes to EXPIRED
-- **Payment missed**: You lose that round's reward
+- **Turn missed**: A node that is not enabled skips its turn in the queue
 - **Restart**: Can restart anytime, returns to queue
 
 ### Can I spend my masternode collateral?
@@ -168,7 +168,7 @@ A **masternode** is a special type of node that provides enhanced services to th
 | **RPC Port** | 51473 |
 | **Protocol Version** | 70927 |
 | **Stake Maturity** | 600 confirmations |
-| **Block Reward** | 250 AMMO today (3 masternode / 247 staker); original schedule kept after the fork |
+| **Issuance** | Declining schedule in `GetBlockValue()`, unchanged by the fork |
 | **Seed Nodes** | seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56) |
 
 ### How do I check if I'm on the correct network?
@@ -218,7 +218,7 @@ Only **masternode operators** can vote. Each masternode gets exactly one vote, r
 ### What types of proposals are accepted?
 - **Development**: New features, bug fixes
 - **Marketing**: Promotion campaigns
-- **Integration**: Partnerships; any exchange listing is only possible through such a vote
+- **Integration**: Partnerships; any exchange listing is only possible through such a vote (the project itself runs no exchange and seeks no listing)
 - **Community**: Events, education
 - **Operations**: Infrastructure, legal
 
@@ -354,16 +354,16 @@ Common causes:
 4. **Provide** steps to reproduce
 5. **Submit** detailed bug report
 
-## 📈 Value Questions
+## 🪙 Proudly Worthless™
 
-### Is AMMOcoin a good investment?
-**AMMO is not an investment, and the AMMOcoin project makes no claims about its value.** The project assigns AMMO no value, publishes no price, and promises no return, yield, profit or price. Nothing in these documents is an offer to sell anything or investment advice. AMMO exists to be used: staking, masternodes, governance and the GLiBz closed loop.
+### Is AMMOcoin an investment?
+**No. AMMO is Proudly Worthless™: worth nothing in money, permanently.** The project assigns AMMO no value, publishes no price, and promises no return, yield, profit or price. Nothing in these documents is an offer to sell anything or investment advice. AMMO exists to be used: staking, masternodes, governance and the GLiBz closed loop.
 
-### What is AMMOcoin's price?
-The project publishes no price, target or valuation for AMMO and does not comment on what it might be worth. Member-to-member trades are the members' own business; the project sets no price and is not a party.
+### Does AMMO have a price?
+No. The project publishes no price, target or valuation for AMMO and does not comment on what it might be worth. Member-to-member trades are the members' own business; the project sets no price and is not a party.
 
 ### Do I have tax obligations on AMMO I receive?
-Possibly - rules differ by country. Keep a record of every reward (date, amount, transaction hash) and ask a tax professional. *AMMO is not a proponent of its network being used to circumvent or bypass an individual's local, state or federal tax or financial reporting obligations. Every individual is responsible for their own actions.*
+Possibly - rules differ by country. Keep a record of every stake and payment you receive (date, amount, transaction hash) and ask a tax professional. *AMMO is not a proponent of its network being used to circumvent or bypass an individual's local, state or federal tax or financial reporting obligations. Every individual is responsible for their own actions.*
 
 ### Should I stake or run a masternode?
 Depends on your situation:
@@ -383,17 +383,15 @@ Depends on your situation:
 
 ### Where can I get help?
 - **Documentation**: Read this FAQ and guides first
-- **Discord**: Join official server for community help
-- **Telegram**: Active support groups
-- **Forum**: forum.ammocoin.org for detailed discussions
-- **GitHub**: Technical issues and bug reports
+- **Community**: https://ammocoin.org/community
+- **GitHub**: Technical issues and bug reports (https://github.com/everquin/AMMOcoin/issues)
+
+AMMOcoin has no official Discord or Telegram. Anyone offering "support" there, or asking for coins, keys or wallet files, is not the project.
 
 ### How do I stay updated with AMMOcoin news?
 - **Official Website**: ammocoin.org
-- **Twitter**: @AMMOcoinOfficial
-- **Discord**: Official server announcements
-- **Reddit**: r/AMMOcoin
-- **Telegram**: Official channels
+- **X**: x.com/ammocoin
+- **GitHub Releases**: github.com/everquin/AMMOcoin/releases
 
 ### What should I include when asking for help?
 - **Operating system** and version
@@ -412,7 +410,7 @@ Check the official website and GitHub for current bug bounty programs. Serious s
 **You don't need to send anything.** v1.0 balances from the snapshot at **block 434,881** are **airdropped to the same addresses** on v1.1.
 
 1. **Back up** your v1.0 `wallet.dat` and keep it - the same keys control your v1.1 balance
-2. **Install v1.1.1 (upcoming)** when it is released
+2. **Install v1.1.1** from the official GitHub release
 3. **Copy** a backup of the v1.0 `wallet.dat` into the v1.1.1 data folder (`~/.ammocoin11` on Linux)
 4. **Start** the node and let it sync - your balance appears on your v1.0 addresses
 
@@ -431,7 +429,7 @@ Use the fallback **signed-message claim**: sign a message with your v1.0 address
 v1.0 masternode configurations do not carry over. Once your airdropped balance is on v1.1 (at least 10,000 AMMO), set up a **fresh masternode** on v1.1.1 - see the [Masternode Setup Guide](03-masternode-setup.md).
 
 ### Where can I download v1.1.1?
-v1.1.1 is **not released yet**. When it is, binaries will be published on the official [GitHub Releases page](https://github.com/everquin/AMMOcoin/releases). Do not install binaries from any other source.
+From the official [GitHub Releases page](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1), with SHA256 checksums and a signed checksums file. Do not install binaries from any other source.
 
 ---
 
