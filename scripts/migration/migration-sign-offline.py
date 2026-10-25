@@ -4,23 +4,34 @@ AMMOcoin v1.0 → v1.1 migration: step 2 of 3 — SIGN (OFFLINE).
 
 Run this on an AIR-GAPPED machine that holds the migration-fund private
 keys. It signs every unsigned tx in the input artifact and writes a
-signed-distribution.json. No daemon, no network, no RPC.
+signed-distribution.json. It needs a local ammocoind and no network.
 
-The machine MUST have a running ammocoind locally (or another isolated
-signing tool that understands `signrawtransaction`). The daemon should
-be started with `-disablewallet=0`, the migration-fund private keys
-imported via `importprivkey`, and the host's network interface disabled
-or air-gapped.
+Two ways to sign:
+
+  --rpc-cookie (recommended): a local ammocoind with no peers and no chain
+  (see SIGNER.md). Each input's script and amount come from the artifact
+  ("prevouts"), so the node needs no copy of the chain. The script talks to
+  the node over JSON-RPC on 127.0.0.1, so secrets never appear in a command
+  line or shell history, and it refuses to sign while the node has a peer.
+  Fan-out txs spend the reserve: the paper-wallet key is typed at a hidden
+  prompt and never stored. Payout batches spend the fan-out addresses, whose
+  keys live in the signer's own encrypted wallet (signer-init.py).
+
+  --cli (older): the keys are imported into the signing node's wallet and
+  the node needs a synced chain.
 
 Usage:
-    python3 migration-sign-offline.py \\
-        --input unsigned-distribution-YYYYMMDD.json \\
-        --output signed-distribution.json \\
-        --cli ammocoin-cli
+    python3 migration-sign-offline.py --input unsigned.json --output signed.json \\
+        --rpc-cookie /Volumes/AMMOcoin_Wallets/signer/data/.cookie
+    python3 migration-sign-offline.py --input unsigned.json --output signed.json --cli ammocoin-cli
 """
 
 import argparse
+import base64
+import getpass
 import json
+import urllib.error
+import urllib.request
 import subprocess
 import sys
 from datetime import datetime
@@ -34,9 +45,41 @@ def cli(binary: str, *args: str) -> str:
     return proc.stdout.strip()
 
 
-def sign_batch(binary: str, batch: dict, batch_idx: int) -> dict:
-    raw = cli(binary, "signrawtransaction", batch["unsigned_hex"])
-    parsed = json.loads(raw)
+class Rpc:
+    """JSON-RPC to a local node, so the key travels in a request body, not argv."""
+    def __init__(self, port: int, cookie: Path):
+        self.url = f"http://127.0.0.1:{port}/"
+        self.auth = base64.b64encode(cookie.read_text().strip().encode()).decode()
+
+    def __call__(self, method: str, *params):
+        req = urllib.request.Request(self.url, data=json.dumps({"id": 0, "method": method, "params": list(params)}).encode(),
+                                     headers={"Authorization": "Basic " + self.auth, "Content-Type": "application/json"})
+        try:
+            body = json.loads(urllib.request.urlopen(req, timeout=120).read())
+        except urllib.error.HTTPError as e:  # the node answers RPC errors with HTTP 500 + a JSON body
+            body = json.loads(e.read())
+        if body.get("error"):
+            raise RuntimeError(f"{method} failed: {body['error'].get('message')}")
+        return body["result"]
+
+
+def is_fanout(batch: dict) -> bool:
+    return str(batch["batch_index"]).startswith("fanout")
+
+
+def sign_batch(signer, batch: dict, batch_idx, key: str | None = None) -> dict:
+    """signer is a cli path (wallet keys, synced chain) or an Rpc (prevouts from
+    the artifact; `key` for the reserve inputs, else the unlocked signer wallet)."""
+    if not isinstance(signer, Rpc):
+        parsed = json.loads(cli(signer, "signrawtransaction", batch["unsigned_hex"]))
+        decode = lambda h: json.loads(cli(signer, "decoderawtransaction", h))
+    else:
+        prev = batch.get("prevouts")
+        if not prev or [(p["txid"], p["vout"]) for p in prev] != [(i["txid"], i["vout"]) for i in batch["inputs"]]:
+            raise RuntimeError(f"Batch {batch_idx}: no prevouts for its inputs. Rebuild it with the current migration-prepare.py. ABORT.")
+        prevtxs = [{**p, "amount": float(p["amount"])} for p in prev]
+        parsed = signer("signrawtransaction", batch["unsigned_hex"], prevtxs, *([[key]] if key else []))
+        decode = lambda h: signer("decoderawtransaction", h)
     if not parsed.get("complete"):
         errs = parsed.get("errors", [])
         raise RuntimeError(
@@ -45,7 +88,7 @@ def sign_batch(binary: str, batch: dict, batch_idx: int) -> dict:
         )
 
     # Sanity: decode the signed tx and confirm outputs match what we expected.
-    decoded = json.loads(cli(binary, "decoderawtransaction", parsed["hex"]))
+    decoded = decode(parsed["hex"])
     expected_outputs = {a: float(v) for a, v in batch["outputs"].items()}
     seen_outputs: dict[str, float] = {}
     for v in decoded.get("vout", []):
@@ -60,8 +103,13 @@ def sign_batch(binary: str, batch: dict, batch_idx: int) -> dict:
                 f"expected {amt:.8f}, signed tx sends {seen:.8f}. ABORT."
             )
 
+    size = len(parsed["hex"]) // 2
+    if size > 100_000:  # MAX_STANDARD_TX_SIZE: a node would refuse to relay it
+        raise RuntimeError(f"Batch {batch_idx}: signed tx is {size:,} bytes (> 100,000). Lower MAX_INPUTS_PER_TX. ABORT.")
+
     return {
         **batch,
+        "signed_bytes": size,
         "signed_hex": parsed["hex"],
         "signed_txid": decoded["txid"],
     }
@@ -72,7 +120,16 @@ def main() -> int:
     p.add_argument("--input", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
     p.add_argument("--cli", default="ammocoin-cli")
+    p.add_argument("--rpc-cookie", type=Path, help="sign on a local node over RPC (the signer node's .cookie)")
+    p.add_argument("--rpc-port", type=int, default=37029)
     args = p.parse_args()
+    signer = args.cli
+    if args.rpc_cookie:
+        signer = Rpc(args.rpc_port, args.rpc_cookie)
+        peers = signer("getconnectioncount")
+        if peers:
+            print(f"The signing node has {peers} peer(s). It must run with connect=0, and networking must be off. ABORT.")
+            return 1
 
     print("AMMOcoin v1.0→v1.1 distribution SIGN (step 2 of 3) — OFFLINE")
     print("=" * 64)
@@ -88,16 +145,33 @@ def main() -> int:
             f"Unknown schema_version {artifact.get('schema_version')!r}; expected '1'."
         )
 
+    batches = artifact["batches"]
+    key, unlocked = None, False
+    if isinstance(signer, Rpc):
+        if any(is_fanout(x) for x in batches):
+            key = getpass.getpass("Reserve owner key, from the paper wallet (hidden; never stored): ").strip()
+            if not key:
+                print("No key. Aborted.")
+                return 1
+        if not all(is_fanout(x) for x in batches):
+            signer("walletpassphrase", getpass.getpass("Signer wallet passphrase (hidden): "), 1800)
+            unlocked = True
     print(f"  Batches to sign: {len(artifact['batches'])}")
     print(f"  Total to sign:   {artifact['sum_of_balances_ammo']:,.8f} AMMO")
     print()
 
     signed_batches = []
-    for batch in artifact["batches"]:
-        idx = batch["batch_index"]
-        print(f"Signing batch {idx + 1}/{len(artifact['batches'])} "
-              f"({len(batch['recipients'])} recipients)...")
-        signed_batches.append(sign_batch(args.cli, batch, idx))
+    try:
+        for batch in batches:
+            idx = batch["batch_index"]
+            name = f"batch {idx + 1}" if isinstance(idx, int) else str(idx)
+            print(f"Signing {name} of {len(batches)} "
+                  f"({len(batch['recipients'])} recipients, {len(batch['inputs'])} inputs)...")
+            signed_batches.append(sign_batch(signer, batch, idx, key if is_fanout(batch) else None))
+    finally:
+        key = None
+        if unlocked:
+            signer("walletlock")
 
     signed_artifact = {
         **artifact,

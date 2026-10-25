@@ -59,6 +59,24 @@ def verify_signed_batch(binary: str, batch: dict) -> None:
             )
 
 
+def label(batch: dict) -> str:
+    i = batch["batch_index"]
+    return f"batch {i + 1}" if isinstance(i, int) else str(i)
+
+
+def stale_inputs(binary: str, batch: dict) -> list[str]:
+    """Inputs already spent (on chain or in the mempool). Fan-out inputs are
+    cold-staked reserve outputs, so a stake can spend one between build and
+    broadcast; rerun migration-prepare.py --fan-out, which funds only what is
+    still missing."""
+    decoded = json.loads(cli(binary, "decoderawtransaction", batch["signed_hex"]))
+    gone = []
+    for vin in decoded.get("vin", []):
+        if not cli(binary, "gettxout", vin["txid"], str(vin["vout"]), "true"):
+            gone.append(f"{vin['txid']}:{vin['vout']}")
+    return gone
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--input", required=True, type=Path)
@@ -88,7 +106,7 @@ def main() -> int:
     print("Verifying all signed batches before sending...")
     for batch in artifact["batches"]:
         verify_signed_batch(args.cli, batch)
-        print(f"  ✓ Batch {batch['batch_index'] + 1} verified ({batch['signed_txid']})")
+        print(f"  ✓ {label(batch)} verified ({batch['signed_txid']})")
     print()
 
     print("All batches verified. Type 'BROADCAST' to begin sending.")
@@ -100,7 +118,19 @@ def main() -> int:
     audit: list[dict] = []
     for batch in artifact["batches"]:
         idx = batch["batch_index"]
-        print(f"\nBroadcasting batch {idx + 1}/{len(artifact['batches'])} ({batch['signed_txid']})...")
+        print(f"\nBroadcasting {label(batch)} of {len(artifact['batches'])} ({batch['signed_txid']})...")
+        gone = stale_inputs(args.cli, batch)
+        if gone:
+            print(f"  ✗ STALE: {len(gone)} input(s) already spent (e.g. {gone[0]}). Not sent.")
+            audit.append({"batch_index": idx, "expected_txid": batch["signed_txid"], "status": "stale",
+                          "spent_inputs": gone, "broadcast_at": datetime.utcnow().isoformat() + "Z"})
+            log_path.write_text(json.dumps(audit, indent=2))
+            print(f"\nAudit log written to {log_path}.")
+            if not isinstance(idx, int):
+                print("A stake spent a reserve output. Rerun migration-prepare.py --fan-out: it builds only what is still missing.")
+            else:
+                print("A payout input is gone. Stop and investigate before anything else is sent.")
+            return 1
         try:
             txid = cli(args.cli, "sendrawtransaction", batch["signed_hex"])
             print(f"  ✓ Accepted: {txid}")
@@ -129,7 +159,7 @@ def main() -> int:
             print("Investigate the rejection and decide whether to resume manually.")
             return 1
 
-        if idx + 1 < len(artifact["batches"]):
+        if batch is not artifact["batches"][-1]:
             print(f"  Pausing {args.pause}s before next batch...")
             time.sleep(args.pause)
 
