@@ -1,71 +1,34 @@
-# AMMOcoin v1.0 → v1.1.0 Migration Scripts
+# AMMOcoin v1.0 → v1.1.1 airdrop scripts
 
-Python scripts for migrating balances from AMMOcoin v1.0 to v1.1.0.
+These scripts pay every v1.0 balance from the snapshot at v1.0 block 434,881 to the same address on v1.1.1. Payment comes from the block-1 reserve; the 61 signed contributor pledges are taken off first. The process, and what is published, is in [docs/compliance/AIRDROPS.md](../../docs/compliance/AIRDROPS.md). Where the money is held is in [RESERVES.md](../../docs/compliance/RESERVES.md).
 
-## Scripts
+## Payout, in order
 
-### Balance Snapshot Tools
+| Step | Script | Where | What it does |
+|---|---|---|---|
+| 1 | `build-pledges.py` | anywhere | Rebuilds `docs/migration/data/quartermaster-pledges.csv` from the snapshot (refuses a snapshot with a different SHA-256). |
+| 2 | `verify-pledges.py signatures.csv` | any node | Checks each pledge signature against its exact message (`verifymessage`). Exit 1 until all are SIGNED. |
+| 3 | `build-payout-holders.py signatures.csv [--full-pay file]` | any node | Writes the payout list: snapshot minus signed pledges. Addresses in `--full-pay` (declined or unsigned at the Nov 1 deadline, AMMO-D-2026-10-25-01) are paid in full. Refuses unless the total is exact. |
+| 4 | `migration-prepare.py --fan-out fanout.txt` | online, watch-only | Consolidation transactions (≤450 cold-stake inputs each) funding one address per batch. Rerun after any stale or rejected transaction; it funds only what is missing. |
+| 5 | `migration-sign-offline.py` | offline signer | Signs with the reserve owner key (paper wallet) on a machine with networking off and a synced chain copy. |
+| 6 | `migration-broadcast.py` | online | Checks every input is unspent, then sends, with an audit log. Stops at a STALE transaction. |
+| 7 | `migration-prepare.py --from-fan-out fanout.txt` | online, watch-only | The payout batches (≤50 recipients, ≤10M per output). Then repeat steps 5 and 6. |
+| 8 | `verify-migration.py` | online | Reconciles every snapshot address against the chain, for publication. |
 
-**v1.0-snapshot-tool.py** - Extract all balances from v1.0 blockchain
-- Connects to v1.0 RPC node
-- Scans entire blockchain for balances
-- Outputs: `v1.0-complete-balance-snapshot.json`
+**Watch-only setup for steps 4 and 7.** Import the reserve's cold-stake script (one script for all reserve outputs), plus every fan-out and change address:
 
-**scan-all-balances.py** - Alternative balance scanner
-- Similar to v1.0-snapshot-tool.py
-- Different scanning methodology
-
-**v1.0-blockchain-scanner.py** - Full blockchain scanner
-- Comprehensive blockchain analysis
-- Balance extraction and validation
-
-### Distribution Tools
-
-**distribute-to-top-holders.py** - Distribute genesis funds to top holders
-- Reads balance snapshot
-- Creates genesis premine distribution
-- Used for Option 2.5 (team distribution premine)
-
-### Verification Tools
-
-**verify-migration.py** - Verify migration accuracy
-```bash
-python3 scripts/migration/verify-migration.py docs/migration/data/v1.0-balance-snapshot-EXAMPLE.json
+```
+ammocoin-cli importaddress 76a97b63d11452da7b2840e451a37d750ece77eb4a0d94cdea3f67140aa6bab8b080064897a63eca2edbffb6aac514576888ac "" true false
+ammocoin-cli importaddress <each fan-out / change address> "" false
 ```
 
-**verify-claim.py** - Verify individual user claims
-- Validates user signatures
-- Confirms v1.0 ownership
-- Authorizes v1.1.0 distribution
+The fan-out and change addresses come from the signing wallet, and must not be in a wallet that stakes.
 
-## Data Files
+**Tests:** `python3 scripts/migration/test_migration_prepare.py`. No node is needed.
 
-Migration data files are located in `docs/migration/data/`:
-- `v1.0-complete-balance-snapshot.json` - Full production snapshot
-- `v1.0-balance-snapshot-EXAMPLE.json` - Example snapshot for testing
-- `DISTRIBUTION_TRACKING_TEMPLATE.csv` - Template for tracking claims
-- `migration-statistics.txt` - Migration statistics report
-- `v1.1.0-migration-summary.txt` - Migration summary
+## Other scripts
 
-## Usage
-
-v1.0 → v1.1 airdrop payout (AMMO-D-2026-10-18-12/-13; see docs/compliance/AIRDROPS.md):
-
-1. `build-pledges.py --check` — the pledge list matches the snapshot.
-2. `verify-pledges.py signatures.csv --cli "<ammocoin-cli -datadir=…>"` — all 61 signed.
-3. `build-payout-holders.py signatures.csv --cli … --output payout-holders.json`.
-4. `migration-prepare.py --holders payout-holders.json --fan-out fanout-addresses.txt --change-address <reserve change>` —
-   ONE transaction splitting the reserve into one UTXO per batch (fan-out addresses: one per batch, generated on the
-   offline signer and imported watch-only). Sign offline, broadcast, wait for confirmations.
-5. `migration-prepare.py --holders payout-holders.json --change-address <reserve change>` — the payout batches, each
-   spending its own fan-out UTXO; balances over 10M are split into ≤10M outputs in separate transactions.
-6. `migration-sign-offline.py`, then `migration-broadcast.py`, then `verify-migration.py`.
-
-Tests: `python3 scripts/migration/test_migration_prepare.py`.
-
-Older detail: `docs/MIGRATION_COMPLETE_SUMMARY.md`.
-
----
-
-**Status**: Migration tools complete and tested
-**Last Updated**: January 3, 2026
+- **Snapshot tools** (`v1.0-snapshot-tool.py`, `scan-all-balances.py`, `v1.0-blockchain-scanner.py`): how the published snapshot was made. They are not needed for the payout.
+- **`verify-claim.py`:** the signed-message claim fallback (AIRDROPS.md §3). Its text still describes the withdrawn disposal model; fix it before any claim is processed (AIRDROPS.md §6).
+- **`distribute-to-top-holders.py`, `verify-disposal-address.py`:** **superseded** (the earlier "Option 2.5" and disposal-address plans). Don't use them for the payout.
+- **`v110-blocks-to-v111-bootstrap.py`:** bootstrap conversion for node operators. Not part of the payout.

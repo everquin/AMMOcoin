@@ -60,8 +60,13 @@ def sign_batch(binary: str, batch: dict, batch_idx: int) -> dict:
                 f"expected {amt:.8f}, signed tx sends {seen:.8f}. ABORT."
             )
 
+    size = len(parsed["hex"]) // 2
+    if size > 100_000:  # MAX_STANDARD_TX_SIZE: a node would refuse to relay it
+        raise RuntimeError(f"Batch {batch_idx}: signed tx is {size:,} bytes (> 100,000). Lower MAX_INPUTS_PER_TX. ABORT.")
+
     return {
         **batch,
+        "signed_bytes": size,
         "signed_hex": parsed["hex"],
         "signed_txid": decoded["txid"],
     }
@@ -95,8 +100,9 @@ def main() -> int:
     signed_batches = []
     for batch in artifact["batches"]:
         idx = batch["batch_index"]
-        print(f"Signing batch {idx + 1}/{len(artifact['batches'])} "
-              f"({len(batch['recipients'])} recipients)...")
+        name = f"batch {idx + 1}" if isinstance(idx, int) else str(idx)
+        print(f"Signing {name} of {len(artifact['batches'])} "
+              f"({len(batch['recipients'])} recipients, {len(batch['inputs'])} inputs)...")
         signed_batches.append(sign_batch(args.cli, batch, idx))
 
     signed_artifact = {
