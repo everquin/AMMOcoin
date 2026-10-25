@@ -117,10 +117,10 @@ def split_oversize(holders: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
     return main, extras
 
 
-def enforce_bounds(holders: list[dict[str, Any]]) -> float:
-    total = 0.0
+def enforce_bounds(holders: list[dict[str, Any]]) -> Decimal:
+    total = Decimal(0)
     for h in holders:
-        amt = float(h["balance"])
+        amt = Decimal(str(h["balance"]))
         if amt > MAX_PER_RECIPIENT_AMMO:
             raise ValueError(
                 f"Holder {h['address']} balance {amt:,.8f} exceeds "
@@ -369,8 +369,8 @@ def main() -> int:
         "schema_version": "1",
         "created_at": datetime.utcnow().isoformat() + "Z",
         "holders_source": str(args.holders),
-        "sum_of_balances_ammo": total,
-        "fee_total_ammo": fee_total,
+        "sum_of_balances_ammo": f"{total:.8f}",
+        "fee_total_ammo": f"{Decimal(str(fee_total)):.8f}",
         "max_per_recipient_ammo": MAX_PER_RECIPIENT_AMMO,
         "batches": batches,
     }
