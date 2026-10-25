@@ -34,6 +34,7 @@ import urllib.error
 import urllib.request
 import subprocess
 import sys
+from decimal import Decimal
 from datetime import datetime
 from pathlib import Path
 
@@ -157,7 +158,7 @@ def main() -> int:
             signer("walletpassphrase", getpass.getpass("Signer wallet passphrase (hidden): "), 1800)
             unlocked = True
     print(f"  Batches to sign: {len(artifact['batches'])}")
-    print(f"  Total to sign:   {artifact['sum_of_balances_ammo']:,.8f} AMMO")
+    print(f"  Total to sign:   {Decimal(str(artifact['sum_of_balances_ammo'])):,.8f} AMMO")
     print()
 
     signed_batches = []

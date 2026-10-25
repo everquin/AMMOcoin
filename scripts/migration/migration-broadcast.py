@@ -26,6 +26,7 @@ import subprocess
 import sys
 import time
 from datetime import datetime
+from decimal import Decimal
 from pathlib import Path
 
 
@@ -96,7 +97,7 @@ def main() -> int:
     print("AMMOcoin v1.0→v1.1 distribution BROADCAST (step 3 of 3)")
     print("=" * 64)
     print(f"  Batches to broadcast: {len(artifact['batches'])}")
-    print(f"  Total to distribute:  {artifact['sum_of_balances_ammo']:,.8f} AMMO")
+    print(f"  Total to distribute:  {Decimal(str(artifact['sum_of_balances_ammo'])):,.8f} AMMO")
     print(f"  Pause between txs:    {args.pause}s")
     print(f"  Audit log:            {log_path}")
     print()
