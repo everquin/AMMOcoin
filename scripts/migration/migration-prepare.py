@@ -120,7 +120,9 @@ def chunk_need(chunk: list[dict[str, Any]]) -> Decimal:
 
 
 def list_watch_utxos(binary: str) -> list[dict[str, Any]]:
-    raw = cli(binary, "listunspent", "1", "9999999", "[]", "true", '{"include_unsafe": false}')
+    # AMMOcoin listunspent: (minconf maxconf addresses watchonly_config query_options include_unsafe);
+    # watchonly_config 2 = include watch-only, which is how the reserve is held while building.
+    raw = cli(binary, "listunspent", "1", "9999999", "[]", "2", "{}", "false")
     return json.loads(raw)
 
 
