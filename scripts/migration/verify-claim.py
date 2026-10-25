@@ -1,431 +1,130 @@
 #!/usr/bin/env python3
 """
-*** DEPRECATED — migration model changed (commit 74c6ff1e). ***
+AMMOcoin v1.0 -> v1.1.1 airdrop: check a signed-message claim (AIRDROPS.md section 3).
 
-The signed-message claim process documented below is no longer how the
-v1.0 → v1.1 migration works. The current model is:
-  1. v1.0 holder sends their v1.0 AMMO to the canonical disposal address
-     (see docs/migration/DISPOSAL_ADDRESS.md and
-     scripts/migration/verify-disposal-address.py).
-  2. AMMOcoin Core distributes equivalent v1.1 AMMO using the offline-
-     signing pipeline (migration-prepare.py / migration-sign-offline.py /
-     migration-broadcast.py).
+The fallback for a snapshot address the payout missed or paid short. The
+holder signs, with the key of the v1.0 address, exactly:
 
-Running this script against current users risks double-crediting
-(they may already have proved via the disposal-wallet transfer). It
-refuses to run unless invoked with --i-accept-the-risk.
+    AMMOcoin v1.1 airdrop claim: <V1.0_ADDRESS> pay <V1.1_ADDRESS>
 
-Original docstring follows:
+Naming the destination in the signed text stops a copied signature from
+being redirected. This script checks:
 
-AMMOcoin v1.1.0 - Migration Fund Claim Verification Script
+  1. the snapshot file is the published one (SHA-256);
+  2. the v1.0 address is in the reconciliation (verify-migration.py output)
+     and is still owed something: expected - paid - claims already approved;
+  3. the signature verifies against that exact message (`verifymessage`);
+  4. the v1.1 address is valid.
 
-Verifies that a user owns a v1.0 address and calculates the exact amount
-they're entitled to claim from the migration fund.
+It never sends coins. An approved claim is appended to the claims CSV; the
+claims are then paid from the reserve like the airdrop itself (watch-only
+build, offline signing, logged broadcast) using `--export` as the holders
+file for migration-prepare.py. After broadcast, fill in `paid_txid` for each
+row; --export skips rows that have one.
 
 Usage:
-    python3 verify-claim.py --i-accept-the-risk [other args]
+    python3 scripts/migration/verify-claim.py --v10 A... --v11 A... --signature "H...=" \\
+        --reconciliation reconciliation.csv --claims claims.csv --cli "ammocoin-cli -datadir=..."
+    python3 scripts/migration/verify-claim.py --claims claims.csv --export claims-payout.json
 """
+from __future__ import annotations
 
+import argparse
+import csv
+import hashlib
 import json
+import shlex
 import subprocess
 import sys
-
-
-def _refuse_if_unaccepted() -> None:
-    if "--i-accept-the-risk" not in sys.argv:
-        print("*" * 72)
-        print("verify-claim.py is DEPRECATED. The signed-message claim process")
-        print("was replaced by an on-chain disposal-wallet transfer (commit")
-        print("74c6ff1e). Running this script now can double-credit users who")
-        print("have already migrated via the disposal-wallet path.")
-        print("")
-        print("See:  docs/migration/DISPOSAL_ADDRESS.md")
-        print("      scripts/migration/migration-prepare.py")
-        print("")
-        print("To run anyway, pass --i-accept-the-risk.")
-        print("*" * 72)
-        sys.exit(2)
-    sys.argv = [a for a in sys.argv if a != "--i-accept-the-risk"]
-
-
-_refuse_if_unaccepted()
-from datetime import datetime
+from datetime import datetime, timezone
+from decimal import Decimal
 from pathlib import Path
-from typing import Dict, Optional, Tuple
 
-
-class ClaimVerifier:
-    """Verifies and processes migration fund claims"""
-
-    def __init__(self, cli_path: str = "./ammocoin-apps-from-ammocoin/src/ammocoin-cli"):
-        self.cli_path = Path(cli_path)
-        self.claims_file = Path("migration-fund-claims.json")
-        self.processed_claims_file = Path("processed-claims.json")
-        self.migration_fund_address = "Ae3MNUbjbwngiW5CvAN7i2eReEGmjd1EKs"
-
-        if not self.claims_file.exists():
-            raise FileNotFoundError("migration-fund-claims.json not found")
-
-        # Load claims data
-        with open(self.claims_file, 'r') as f:
-            self.claims_data = json.load(f)
-
-        self.balances = {item["address"]: float(item["balance"])
-                        for item in self.claims_data.get("claims", [])}
-
-        # Load processed claims
-        self.processed_claims = self._load_processed_claims()
-
-    def _load_processed_claims(self) -> Dict:
-        """Load record of already processed claims"""
-        if self.processed_claims_file.exists():
-            with open(self.processed_claims_file, 'r') as f:
-                return json.load(f)
-        return {"claims": []}
-
-    def _save_processed_claim(self, claim_record: Dict):
-        """Save a processed claim to the log"""
-        self.processed_claims["claims"].append(claim_record)
-
-        with open(self.processed_claims_file, 'w') as f:
-            json.dump(self.processed_claims, f, indent=2)
-
-    def run_cli(self, *args) -> Tuple[bool, str]:
-        """Run ammocoin-cli command and return (success, output)"""
-        try:
-            cmd = [str(self.cli_path)] + list(args)
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-
-            if result.returncode == 0:
-                return True, result.stdout.strip()
-            else:
-                return False, result.stderr.strip()
-
-        except subprocess.TimeoutExpired:
-            return False, "Command timed out"
-        except Exception as e:
-            return False, str(e)
-
-    def check_address_balance(self, address: str) -> Optional[float]:
-        """Check if address is in migration fund and return balance"""
-        balance = self.balances.get(address)
-
-        if balance is None:
-            return None
-
-        # Check if already claimed
-        for claim in self.processed_claims["claims"]:
-            if claim.get("v1_0_address") == address:
-                print(f"⚠️  This address has already claimed funds on {claim.get('timestamp')}")
-                print(f"   TXID: {claim.get('txid')}")
-                return None
-
-        return balance
-
-    def verify_message_signature(self, address: str, signature: str, message: str) -> bool:
-        """
-        Verify that a message was signed by the owner of an address
-
-        Note: This uses verifymessage which works the same in v1.0 and v1.1.0
-        since both use the same address format
-        """
-        success, output = self.run_cli("verifymessage", address, signature, message)
-
-        if success:
-            try:
-                result = output.strip().lower()
-                return result == "true"
-            except:
-                pass
-
-        return False
-
-    def send_claim_payment(self, v1_1_address: str, amount: float) -> Optional[str]:
-        """
-        Send claim payment from migration fund to user's v1.1.0 address
-        Returns txid on success, None on failure
-        """
-        # Validate v1.1.0 address
-        success, output = self.run_cli("validateaddress", v1_1_address)
-        if not success:
-            print(f"❌ Could not validate address: {output}")
-            return None
-
-        try:
-            validation = json.loads(output)
-            if not validation.get("isvalid"):
-                print(f"❌ Invalid v1.1.0 address: {v1_1_address}")
-                return None
-        except:
-            print("❌ Error parsing address validation")
-            return None
-
-        # Send payment
-        amount_str = f"{amount:.8f}"
-        success, output = self.run_cli("sendtoaddress", v1_1_address, amount_str)
-
-        if success:
-            txid = output.strip()
-            print(f"✅ Payment sent!")
-            print(f"   Amount: {amount:,.8f} AMMO")
-            print(f"   To: {v1_1_address}")
-            print(f"   TXID: {txid}")
-            return txid
-        else:
-            print(f"❌ Failed to send payment: {output}")
-            return None
-
-    def verify_and_process_claim(self, v1_0_address: str, signature: str,
-                                 message: str, v1_1_address: Optional[str] = None,
-                                 send: bool = False) -> Dict:
-        """
-        Verify a claim and optionally process payment
-
-        Returns:
-            Dict with verification results
-        """
-        result = {
-            "valid": False,
-            "v1_0_address": v1_0_address,
-            "balance": 0.0,
-            "error": None,
-            "txid": None
-        }
-
-        print("\n" + "=" * 60)
-        print("🔍 CLAIM VERIFICATION")
-        print("=" * 60)
-        print(f"v1.0 Address: {v1_0_address}")
-
-        # Step 1: Check if address is eligible
-        balance = self.check_address_balance(v1_0_address)
-
-        if balance is None:
-            result["error"] = "Address not found in migration fund or already claimed"
-            print(f"\n❌ {result['error']}")
-            return result
-
-        result["balance"] = balance
-        print(f"✅ Address found in migration fund")
-        print(f"   Claimable amount: {balance:,.8f} AMMO")
-
-        # Step 2: Verify signature
-        print(f"\n🔐 Verifying signature...")
-        print(f"   Message: '{message}'")
-
-        if not self.verify_message_signature(v1_0_address, signature, message):
-            result["error"] = "Invalid signature - user does not own this address"
-            print(f"\n❌ {result['error']}")
-            return result
-
-        print("✅ Signature verified - user owns this address")
-        result["valid"] = True
-
-        # Step 3: Send payment if requested
-        if send:
-            if not v1_1_address:
-                result["error"] = "No v1.1.0 address provided for payment"
-                print(f"\n❌ {result['error']}")
-                return result
-
-            print(f"\n💸 Processing payment...")
-            txid = self.send_claim_payment(v1_1_address, balance)
-
-            if txid:
-                result["txid"] = txid
-
-                # Record the claim
-                claim_record = {
-                    "v1_0_address": v1_0_address,
-                    "v1_1_address": v1_1_address,
-                    "amount": balance,
-                    "txid": txid,
-                    "timestamp": datetime.now().isoformat(),
-                    "message": message,
-                    "signature": signature
-                }
-
-                self._save_processed_claim(claim_record)
-                print(f"\n💾 Claim recorded in {self.processed_claims_file}")
-
-            else:
-                result["error"] = "Payment failed"
-                result["valid"] = False
-
-        else:
-            print("\n✅ Claim verified successfully")
-            print("   Use --send flag to process payment")
-
-        print("=" * 60 + "\n")
-        return result
-
-    def interactive_mode(self):
-        """Interactive claim verification"""
-        print("\n🎯 AMMOcoin Migration Fund - Interactive Claim Verification")
-        print("=" * 60)
-
-        # Get v1.0 address
-        v1_0_address = input("\nEnter v1.0 address: ").strip()
-
-        # Check balance
-        balance = self.check_address_balance(v1_0_address)
-
-        if balance is None:
-            print("\n❌ Address not eligible for migration fund claim")
-            return
-
-        print(f"\n✅ Address eligible for {balance:,.8f} AMMO")
-
-        # Explain signature process
-        print("\n📝 To verify ownership, you need to sign a message with this address.")
-        print("   In your v1.0 wallet, use: signmessage <address> <message>")
-        print("   Or in ammocoin-cli: ammocoin-cli signmessage <address> <message>")
-
-        # Get signature details
-        message = input("\nEnter the message you signed: ").strip()
-        signature = input("Enter the signature: ").strip()
-
-        # Verify
-        if not self.verify_message_signature(v1_0_address, signature, message):
-            print("\n❌ Invalid signature!")
-            return
-
-        print("\n✅ Signature verified!")
-
-        # Ask about payment
-        send_payment = input("\nProcess payment now? (y/n): ").strip().lower()
-
-        if send_payment == 'y':
-            v1_1_address = input("Enter your v1.1.0 address to receive funds: ").strip()
-
-            result = self.verify_and_process_claim(
-                v1_0_address,
-                signature,
-                message,
-                v1_1_address,
-                send=True
-            )
-
-            if result.get("txid"):
-                print("\n🎉 Claim processed successfully!")
-            else:
-                print(f"\n❌ Claim failed: {result.get('error')}")
-        else:
-            print("\n✅ Claim verified but not processed")
-
-    def show_statistics(self):
-        """Show migration fund statistics"""
-        total_claims = len(self.balances)
-        total_amount = sum(self.balances.values())
-        processed = len(self.processed_claims["claims"])
-        processed_amount = sum(c["amount"] for c in self.processed_claims["claims"])
-        remaining = total_claims - processed
-        remaining_amount = total_amount - processed_amount
-
-        print("\n📊 MIGRATION FUND STATISTICS")
-        print("=" * 60)
-        print(f"Migration fund address: {self.migration_fund_address}")
-        print(f"\nTotal eligible addresses: {total_claims:,}")
-        print(f"Total fund amount:        {total_amount:,.8f} AMMO")
-        print(f"\nProcessed claims:         {processed:,}")
-        print(f"Processed amount:         {processed_amount:,.8f} AMMO")
-        print(f"\nRemaining claims:         {remaining:,}")
-        print(f"Remaining amount:         {remaining_amount:,.8f} AMMO")
-        print("=" * 60 + "\n")
-
-
-def main():
-    """Main entry point"""
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="Verify and process AMMOcoin migration fund claims"
-    )
-    parser.add_argument(
-        "--address",
-        help="v1.0 address making the claim"
-    )
-    parser.add_argument(
-        "--signature",
-        help="Signature proving ownership of v1.0 address"
-    )
-    parser.add_argument(
-        "--message",
-        help="Message that was signed"
-    )
-    parser.add_argument(
-        "--v1.1-address",
-        dest="v1_1_address",
-        help="v1.1.0 address to receive funds"
-    )
-    parser.add_argument(
-        "--send",
-        action="store_true",
-        help="Actually send the payment (requires --v1.1-address)"
-    )
-    parser.add_argument(
-        "--stats",
-        action="store_true",
-        help="Show migration fund statistics"
-    )
-    parser.add_argument(
-        "--cli-path",
-        default="./ammocoin-apps-from-ammocoin/src/ammocoin-cli",
-        help="Path to ammocoin-cli binary"
-    )
-
-    args = parser.parse_args()
-
-    try:
-        verifier = ClaimVerifier(cli_path=args.cli_path)
-
-        # Show statistics if requested
-        if args.stats:
-            verifier.show_statistics()
-            return 0
-
-        # Command line mode
-        if args.address and args.signature and args.message:
-            result = verifier.verify_and_process_claim(
-                args.address,
-                args.signature,
-                args.message,
-                args.v1_1_address,
-                send=args.send
-            )
-
-            if result["valid"]:
-                if result.get("txid"):
-                    print(f"✅ Claim processed: {result['txid']}")
-                    return 0
-                else:
-                    print(f"✅ Claim verified: {result['balance']:,.8f} AMMO")
-                    return 0
-            else:
-                print(f"❌ Claim invalid: {result.get('error')}")
-                return 1
-
-        # Interactive mode
-        else:
-            verifier.interactive_mode()
-            return 0
-
-    except FileNotFoundError as e:
-        print(f"\n❌ Error: {e}")
+ROOT = Path(__file__).resolve().parents[2]
+SNAPSHOT = ROOT / "docs/migration/data/v1.0-complete-balance-snapshot.json"
+SNAPSHOT_SHA256 = "9da3c0d1c4b703d713a4f00c543e3e0db8f53c0c846b49499e218e9d8acf751c"
+FIELDS = ["v10_address", "v11_address", "amount", "message", "signature", "approved_at", "paid_txid"]
+
+
+def message_for(v10: str, v11: str) -> str:
+    return f"AMMOcoin v1.1 airdrop claim: {v10} pay {v11}"
+
+
+def run(cli: list[str], *args: str) -> tuple[bool, str]:
+    r = subprocess.run(cli + list(args), capture_output=True, text=True, timeout=30)
+    return r.returncode == 0, (r.stdout if r.returncode == 0 else r.stderr).strip()
+
+
+def load_claims(path: Path) -> list[dict]:
+    return list(csv.DictReader(path.open())) if path.exists() else []
+
+
+def export(claims_path: Path, out: Path) -> int:
+    unpaid = [c for c in load_claims(claims_path) if not c.get("paid_txid")]
+    out.write_text(json.dumps({"top_holders": [{"address": c["v11_address"], "balance": c["amount"]} for c in unpaid]}, indent=2))
+    total = sum((Decimal(c["amount"]) for c in unpaid), Decimal(0))
+    print(f"wrote {out}: {len(unpaid)} approved, unpaid claim(s), {total:,.8f} AMMO")
+    return 0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--v10", help="the v1.0 snapshot address")
+    ap.add_argument("--v11", help="the v1.1 address to pay (the same address where possible)")
+    ap.add_argument("--signature")
+    ap.add_argument("--reconciliation", type=Path, help="verify-migration.py output CSV")
+    ap.add_argument("--claims", required=True, type=Path, help="approved-claims CSV (created if missing)")
+    ap.add_argument("--cli", default="ammocoin-cli", help="ammocoin-cli command (quoted, with any -datadir)")
+    ap.add_argument("--export", type=Path, help="write the unpaid approved claims as a migration-prepare.py holders file")
+    a = ap.parse_args()
+    if a.export:
+        return export(a.claims, a.export)
+    if not (a.v10 and a.v11 and a.signature and a.reconciliation):
+        ap.error("--v10, --v11, --signature and --reconciliation are required")
+    cli = shlex.split(a.cli)
+    v10, v11, sig = a.v10.strip(), a.v11.strip(), a.signature.strip()
+
+    if hashlib.sha256(SNAPSHOT.read_bytes()).hexdigest() != SNAPSHOT_SHA256:
+        sys.exit("snapshot file is not the published one; refusing")
+    if v10 not in json.loads(SNAPSHOT.read_bytes())["balances"]:
+        print(f"REFUSED: {v10} is not in the v1.0 snapshot at block 434,881.")
         return 1
-    except KeyboardInterrupt:
-        print("\n\nAborted by user")
-        return 130
-    except Exception as e:
-        print(f"\n❌ Unexpected error: {e}")
-        import traceback
-        traceback.print_exc()
+
+    rec = {r["address"]: r for r in csv.DictReader(a.reconciliation.open())}
+    if v10 not in rec:
+        print(f"REFUSED: {v10} is not in the reconciliation. Run verify-migration.py over the full payout list first.")
         return 1
+    claims = load_claims(a.claims)
+    approved = sum((Decimal(c["amount"]) for c in claims if c["v10_address"] == v10), Decimal(0))
+    owed = Decimal(rec[v10]["expected"]) - Decimal(rec[v10]["paid"]) - approved
+    if owed <= 0:
+        print(f"REFUSED: nothing is owed to {v10} (expected {rec[v10]['expected']}, paid {rec[v10]['paid']}, "
+              f"claims already approved {approved:.8f}).")
+        return 1
+
+    msg = message_for(v10, v11)
+    ok, out = run(cli, "verifymessage", v10, sig, msg)
+    if not ok and "Malformed base64" not in out:
+        sys.exit(f"verifymessage failed: {out}")
+    if out != "true":
+        print("REFUSED: the signature does not match. It must be made with the v1.0 address's key, over exactly:")
+        print(f"  {msg}")
+        return 1
+    ok, out = run(cli, "validateaddress", v11)
+    if not ok or not json.loads(out).get("isvalid"):
+        print(f"REFUSED: {v11} is not a valid AMMOcoin address.")
+        return 1
+
+    new = not a.claims.exists()
+    with a.claims.open("a", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=FIELDS)
+        if new:
+            w.writeheader()
+        w.writerow({"v10_address": v10, "v11_address": v11, "amount": f"{owed:.8f}", "message": msg,
+                    "signature": sig, "approved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                    "paid_txid": ""})
+    print(f"APPROVED: {owed:,.8f} AMMO owed to {v10}, to be paid to {v11}. Recorded in {a.claims}.")
+    return 0
 
 
 if __name__ == "__main__":
