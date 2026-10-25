@@ -252,6 +252,19 @@ Not legal advice. Counsel review status: **pending**.
 - **Enforcement / evidence:** [RESERVES.md](RESERVES.md) (chain data read from ammo-02 at height ~3556); owner's private ledger `LEDGER.md` on the encrypted wallets volume (no secrets). Not enforced in code.
 - **Owner approval:** owner asked for this draft on 2026-10-24 ("draft the purpose-wallet decision and reserve page"); approval is the merge. **Prepared by:** Claude.
 
+## AMMO-D-2026-10-24-05 Five project masternodes and backup reserve stakers (extends D-2026-10-24-03); project rewards listed as pool 8
+
+- **Date:** 2026-10-24
+- **Principles:** AMMO-P-08, P-13
+- **Context:** the owner asked that the three masternodes not be the only always-on project nodes ("they can't be the only ones always running"). They chose more always-on stakers, more project masternodes, and room for independent operators.
+- **Decision:**
+  - **Two more project masternodes,** mn4 on ammo-04 (45.76.240.109) and mn5 on ammo-07 (217.69.14.126). Both servers moved from the October lab node to the official v1.1.1 release (`install-node.sh`, tarball SHA-256 `de51b2c2…`). Collateral is tx `c27deb8b…` (vouts 0–1), from pool 1 change. The listing-vote abstention of D-2026-10-24-03 covers all five.
+  - **Backup stakers:** ammo-09 (`SXezXcWrmkTNyQ6L7pL9XgxfX71HbmwkVT`) and ammo-12 (`Sgs5kVjmEbgV9wSbwmCyiJNQtG7taN4Qrs`) accept cold-stake delegations owned by the paper wallet `AGkC8…`, as ammo-02 does. Moving part of pool 1's delegation to them needs the paper-wallet key and is a separate owner step. Until then ammo-02 remains the only staker of pool 1.
+  - **All eight project servers whitelist each other** (see D-2026-10-24-03).
+  - **Pool 8:** the project's own block rewards in the VM controller wallet, about 990,645 AMMO on 2026-10-24, are listed in RESERVES.md as pool 8, so that all project AMMO is in a named pool (D-2026-10-24-04).
+- **Enforcement / evidence:** RESERVES.md pools 6 and 8 and section 4; owner's LEDGER.md.
+- **Owner approval:** owner choices in the 2026-10-24 session; approval is the merge. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
