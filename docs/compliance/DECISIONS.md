@@ -346,6 +346,7 @@ Not legal advice. Counsel review status: **pending**.
 - **Alternatives rejected:** counting pool 1's own stake rewards since 2026-10-22 (no node reading recorded, and it would leave the collateral's 50,000 unreplaced); releasing the collateral back to pool 1 (stops project masternodes before launch); making pool 3 or 4 smaller (changes published amounts); publishing the page now (its "after the top-up" figures would not be true yet).
 - **Enforcement / evidence:** RESERVES.md (rule 3, pool 1 and 8 rows, "After the top-up" arithmetic, section 4 Planned entry and template row); website `reserves.html` (website AMMO-D-2026-10-27-04 (site)). Off-chain commitment; not enforced in code.
 - **Owner approval:** owner chose option (a), accepted the page exception and set the publish-after-transfer condition in the 2026-10-27 session; approval is the merge. **Prepared by:** Claude.
+- **Later:** transfer sent by the owner 2026-10-27, txid `2ff7fd5f1c73f55b3685bda0e813a0e92624d43050eb58068bdfc2b61f42694f` (block 4755), fee 0.0014574 paid by pool 8; logged in RESERVES.md section 4 the same day, with the 2026-10-27 pool 1 reading. Item 6 (publishing `reserves.html`) is carried out on the website, see website AMMO-D-2026-10-27-04 (site), "Later" (pointer only; the entry above is unchanged).
 
 ## AMMO-D-2026-10-27-05 No v1.0 node remains; the 41,700 can't be scanned and stays set aside, claimable only by signed message
 
