@@ -114,7 +114,7 @@ All of the following are published in this repository (and linked from ammocoin.
 | QuarterMaster reserve address(es) | **TO BE PUBLISHED** (gap G-06) |
 | Contributor (AMMOgeek/AMMOfreak) reserve address(es) | **TO BE PUBLISHED** |
 | Disposal address (v1.1.0 process, withdrawn) | **None was ever published.** `verify-disposal-address.py` still holds the placeholder `PENDING-AMMO-CORE-PUBLICATION`, no publication tag exists, and no repository, website page or document names one (checked 2026-10-25). Anyone who sent v1.0 coins somewhere under the withdrawn instructions should come forward; coins moved before the snapshot are counted at the address that received them. |
-| Reconciliation statement | **TO BE PUBLISHED:** block-1 reserve 250,000,000 AMMO = airdrop paid + claims paid + claim hold-back + QuarterMaster reserve + contributor reserve + fees, with the addresses above |
+| Reconciliation statement | **TO BE PUBLISHED:** block-1 reserve 250,000,000 AMMO = airdrop paid + claims paid + claim hold-back + QuarterMaster reserve + contributor reserve + unattributed set-aside (41,700) + fees, with the addresses above. The masternode collateral taken from pool 1 before the airdrop, and pool 1's own stake rewards, are shown separately ([RESERVES.md](RESERVES.md), arithmetic under section 2; D-2026-10-27-01) |
 
 When a value is published, replace its **TO BE PUBLISHED** marker in a commit, add the commit SHA to AMMO-D-2026-10-17-10, and update gap G-06.
 

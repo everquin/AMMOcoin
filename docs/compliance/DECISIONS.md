@@ -282,6 +282,22 @@ Not legal advice. Counsel review status: **pending**.
 - **Enforcement / evidence:** `scripts/migration/build-payout-holders.py` (`--full-pay`: refuses unknown addresses, refuses an address that is both signed and full-pay, and recomputes the expected total = 159,958,300 + the pledges paid in full); signing request text (owner's files); `verify-pledges.py`.
 - **Owner approval:** owner chose "their consent, you sign" and "deadline, then full pay" in the 2026-10-25 session. **Prepared by:** Claude.
 
+## AMMO-D-2026-10-27-01 Reserve figures reconciled; the masternode collateral is the one recorded exception to airdrop-first
+
+- **Date:** 2026-10-27
+- **Principles:** AMMO-P-06, P-13
+- **Context:** the overnight audit of 2026-10-27 found that the draft Reserves page (website `reserves.html`) says "No other pool is funded before" the airdrop, yet shows the masternode collateral funded on 2026-10-24 while the airdrop is unpaid, and that its pools add up to 250,050,000 against a 250,000,000 reserve. The cause: pools 2–5 already account for all 250,000,000, and the 50,000 collateral (D-2026-10-24-03, -05) was taken from pool 1's change, which is part of the same 250,000,000 (plus 245.00000003 net from pool 1's own stake). D-2026-10-24-04 had left the collateral's funding source open.
+- **Decision:**
+  1. The chain record stands: pool 6 **was funded** on 2026-10-24 (`838a4b0e…` vouts 1–3, `c27deb8b…` vouts 0–1, RESERVES.md section 4). It is recorded as the one exception so far to "airdrop first" (RESERVES.md rule 3), not hidden and not shown as planned.
+  2. Pools 2–5 are the allocation of the block-1 output and add up to exactly 250,000,000: 159,958,300 + 40,000,000 + 50,000,000 + 41,700. Pool 6 is listed outside that sum.
+  3. What pool 1 held after 2026-10-24 is published with its arithmetic: 250,000,000 + 249.99999968 − 4.99999965 − 50,000 − 0.00005540 = 249,950,244.99994463, which is 49,755.00005537 short of what pools 2–5 need.
+  4. Pool 8 is corrected to 790,399.99704080 (990,644.99698543 in the VM wallet, less 50,000 of pool 6 and 150,244.99994463 of pool 1 change held in the same wallet). The old row counted pool 6 and pool 1 change twice.
+  5. **Open, for the owner:** how the 49,755.00005537 gap is closed (move 50,000 from pool 8 into pool 1; count pool 1's stake rewards since 2026-10-22 once read from a node; release the collateral back to pool 1 first; or make pool 3 or 4 smaller, which needs its own decision). Whatever is chosen is logged in RESERVES.md section 4 before pools 3–5 are funded.
+- **Discrepancies noted, not resolved here:** D-2026-10-24-04 still calls pool 5 the "zerocoin set-aside" (superseded by the 41,700 finding, AIRDROPS.md section 6; entries are not rewritten). RESERVES.md section 2 says pool 1 gained "a 250 block reward"; the chain values give 249.99999968 (0.00000032 lost when the stake split into 48 outputs).
+- **Alternatives rejected:** showing the collateral as "planned" (the chain says it is funded); keeping "No other pool is funded before it" (false); quietly shrinking pool 3 or 4 by 50,000 (changes published amounts without a decision).
+- **Enforcement / evidence:** RESERVES.md (arithmetic under section 2, rule 3, pools 2, 6 and 8); AIRDROPS.md section 4 reconciliation row; website `reserves.html` (website AMMO-D-2026-10-27-01 (site)). All values from RESERVES.md sections 3–4 (read from ammo-02 at height ~3556), `docs/migration/data/quartermaster-pledges.csv` and the snapshot file. Not enforced in code.
+- **Owner approval:** owner asked on 2026-10-27 to fix the Reserves page numbers so the pools add up and the sequencing follows P-06; approval is the merge. Item 5 is the owner's to decide. **Prepared by:** Claude.
+
 ---
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
