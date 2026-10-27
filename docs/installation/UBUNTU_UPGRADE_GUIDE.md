@@ -1,3 +1,5 @@
+> **Written for v1.1.0.** The current release is [v1.1.1](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1). Its Linux binaries need Ubuntu 22.04+ / Debian 12+ (glibc 2.34+), and its data folder and network differ from v1.1.0; see the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1.md) before following the steps below.
+
 # Ubuntu Server Upgrade Guide: AMMOcoin v1.0 → v1.1.0
 
 **Complete production upgrade guide from Ubuntu 18.04 + AMMOcoin v1.0 to Ubuntu 24.04 LTS + AMMOcoin v1.1.0**

@@ -1,3 +1,7 @@
+> ## ⛔ SUPERSEDED - DO NOT FOLLOW
+>
+> This guide covers v1.0 and **v1.1.0**, which v1.1.1 replaced. v1.1.1 needs Ubuntu 22.04+ / Debian 12+ (glibc 2.34+) and does not connect to v1.0 or v1.1.0 nodes. v1.0 balances are airdropped to the same addresses ([V1.0_BALANCE_AIRDROP.md](V1.0_BALANCE_AIRDROP.md)); you don't need to extract or move any keys. Never send a private key, recovery words or wallet file to anyone.
+
 # Running v1.0 and v1.1.0 Side-by-Side
 
 **Purpose:** Extract private keys from v1.0 wallet for use in v1.1.0
