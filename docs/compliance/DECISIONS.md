@@ -348,6 +348,15 @@ Not legal advice. Counsel review status: **pending**.
 - **Owner approval:** owner chose option (a), accepted the page exception and set the publish-after-transfer condition in the 2026-10-27 session; approval is the merge. **Prepared by:** Claude.
 - **Later:** transfer sent by the owner 2026-10-27, txid `2ff7fd5f1c73f55b3685bda0e813a0e92624d43050eb58068bdfc2b61f42694f` (block 4755), fee 0.0014574 paid by pool 8; logged in RESERVES.md section 4 the same day, with the 2026-10-27 pool 1 reading. Item 6 (publishing `reserves.html`) is carried out on the website, see website AMMO-D-2026-10-27-04 (site), "Later" (pointer only; the entry above is unchanged).
 
+## AMMO-D-2026-10-27-05 No v1.0 node remains; the 41,700 can't be scanned and stays set aside, claimable only by signed message
+
+- **Date:** 2026-10-27. Recorded by Claude from the owner's checks of the server accounts.
+- **What changed:** ammo-11 (155.138.196.142, the old piWallet host and the only machine holding the v1.0 chain past the snapshot, tip 435,172) is not in any of the project's server accounts (two Vultr, one DigitalOcean) and does not answer. ammo-13 (DigitalOcean, v1.0 tip 409,459) was destroyed by the owner on 2026-10-27; its wallet held no coins. ammo-01 (Vultr, idle v1.0) was destroyed the same day after its wallet matched the encrypted-volume backup. The piWallet wallet and database are kept on the encrypted wallets volume. The fleet is now eight v1.1.1 servers.
+- **Consequence:** the coin-set scan at block 434,881 proposed in AIRDROPS.md section 6 can't run from the project's own data. The 41,699.99999999 the snapshot didn't attribute to an address stays set aside as unclaimable from the snapshot (AMMO-D-2026-10-18-12, pool 5).
+- **Claim path:** a holder who believes their coins were in such an output (for example pay-to-pubkey) claims through claims@ammocoin.org with a message signed by the key (AMMO-D-2026-10-27-02). A claim is paid from pool 5 only if the output can be shown at the snapshot height from a public v1.0 explorer or another surviving v1.0 node. Each claim and outcome goes in CLAIMS_LOG.md.
+- **Principles:** P-06 (airdrop first), P-13.
+- **Evidence:** owner's account listings 2026-10-27; `~/ammo-fleet/hosts.txt` and FLEET_PLAN (private); AIRDROPS.md section 6.
+
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
 
 Open until fixed; record the fixing commit in the Status column.
