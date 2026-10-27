@@ -64,7 +64,7 @@ Every white paper, programme page and promotion states, where space allows, that
 
 ## AMMO-P-13 Safety in migrations and distributions
 
-The project never asks anyone to send coins, private keys, seed phrases or wallet files. Ownership claims use signed messages. There is no deadline that pressures holders.
+The project never asks anyone to send coins, private keys, seed phrases or wallet files. Ownership claims use signed messages. There is no deadline that pressures holders. (The Nov 1, 2026 reply date for contributor pledges, AMMO-D-2026-10-25-01, only closes pledging: an address that hasn't replied is paid in full.)
 
 ## AMMO-P-14 No skirting: substance over wording
 

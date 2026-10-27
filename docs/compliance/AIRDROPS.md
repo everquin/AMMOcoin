@@ -124,7 +124,7 @@ When a value is published, replace its **TO BE PUBLISHED** marker in a commit, a
 
 - **No payment.** Nobody pays anything, in any currency, coin or goods, to receive the airdrop or to make a claim. There is no fee.
 - **No purchase.** Nothing is offered for sale. The airdrop restores balances people already held on the v1.0 chain, to the same addresses, in the same amounts. No one can get more by paying, and no one is offered AMMO who did not already hold it at the snapshot.
-- **No solicitation.** Holders are not asked to send coins, register, sign up, or act by a deadline. The only action ever asked of anyone is a signature, and only when the automatic payout could not reach them.
+- **No solicitation.** Holders are not asked to send coins, register, sign up, or act by a deadline. The only action ever asked of anyone is a signature, and only when the automatic payout could not reach them. The 61 founding contributors are asked to reply to their pledge request by November 1, 2026 (AMMO-D-2026-10-25-01); that date can only stop a pledge being taken, never reduce what anyone is paid: no reply means the full snapshot balance.
 - **No promise of value.** The project assigns AMMO no value and publishes no price, exchange rate, market cap or fiat equivalent for it (AMMO-P-03). Airdrop records state AMMO amounts only, never a fiat value. The airdrop is not described as a gift of value, a reward, an opportunity or an investment.
 - **No raise.** The airdrop brings in no money and is not linked to any fundraising (AMMO-P-01). Reserve AMMO is never sold (AMMO-P-02).
 
