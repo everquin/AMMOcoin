@@ -33,8 +33,8 @@ Welcome to the AMMOcoin documentation. This directory contains all official docu
 - [macOS Installation](installation/INSTALL_MACOS.md) - Build on macOS
 
 ### Technical Documentation
-- [Comprehensive Whitepaper](whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md) - Complete technical specification
-- [Standard Whitepaper](whitepapers/AMMOcoin_Whitepaper_v1.1.0.md) - Concise whitepaper
+- [White Paper, 2nd Edition (v1.1.1)](whitepapers/AMMOcoin_Whitepaper_2ndEdition_v1.1.1.md) - current
+- Superseded (history only): [Comprehensive Whitepaper v1.1.0](whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md), [Standard Whitepaper v1.1.0](whitepapers/AMMOcoin_Whitepaper_v1.1.0.md)
 
 ### Release Information
 - [Release Notes v1.1.1](release-notes/RELEASE_NOTES_v1.1.1.md) - PoS hard fork at block 2,776
@@ -63,7 +63,6 @@ The definitive genesis block parameters are documented in the root directory:
 ## Getting Help
 
 - **GitHub Issues:** https://github.com/everquin/AMMOcoin/issues
-- **GitHub Discussions:** https://github.com/everquin/AMMOcoin/discussions
 
 ## Contributing
 

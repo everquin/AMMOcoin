@@ -104,3 +104,9 @@ releases/*.dmg
 source/.cargo/.configured-for-online
 source/.cargo/.configured-for-offline
 source/.cargo/config
+
+# Local junk
+__pycache__/
+*.pyc
+.DS_Store
+.!*!.DS_Store

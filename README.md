@@ -2,7 +2,7 @@
 
 **Privacy-Focused Cryptocurrency Platform with Multi-Platform Support**
 
-[![Release](https://img.shields.io/badge/release-v1.1.0-brightgreen)](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.0)
+[![Release](https://img.shields.io/badge/release-v1.1.1-brightgreen)](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue)](https://github.com/everquin/AMMOcoin/releases)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 
@@ -289,7 +289,7 @@ ammocoin-cli getstakingstatus
 - **Stake Maturity**: 600 confirmations
 - **Issuance**: the original declining schedule in `GetBlockValue()` (`source/src/validation.cpp`), unchanged by the fork; each block pays the masternode selected by the payment queue its share (`nMNBlockReward`) and the staker the rest
 - **Masternode Collateral**: 10,000 AMMO (15 confirmations)
-- **Seed Nodes**: seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56)
+- **Seed Nodes**: seed1.ammocoin.org (78.141.194.140), seed2.ammocoin.org (104.238.165.56), seed3.ammocoin.org (New York, Sydney and Dallas seeds)
 
 ### Genesis Block
 - **Hash**: `000000593410213331b5adcc6a79054a984bfc9999825e579171f81f2eccddd2`
@@ -331,12 +331,11 @@ See [V1.1.0_GENESIS_BLOCK_AUTHORITY.md](V1.1.0_GENESIS_BLOCK_AUTHORITY.md) for c
 
 ### Migration & Distribution
 - [v1.0 Balance Airdrop](docs/migration/V1.0_BALANCE_AIRDROP.md) - current process
-- [Side-by-Side Operation Guide](docs/migration/SIDE_BY_SIDE_OPERATION_GUIDE.md)
-- Superseded (history only): [User Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md), [Distribution Process Guide](docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
+- Superseded (history only): [Side-by-Side Operation Guide](docs/migration/SIDE_BY_SIDE_OPERATION_GUIDE.md), [User Migration Guide](docs/migration/USER_MIGRATION_GUIDE_v1.0_to_v1.1.0.md), [Distribution Process Guide](docs/migration/DISTRIBUTION_PROCESS_GUIDE.md)
 
 ### Technical Documentation
-- [Comprehensive Whitepaper](docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md)
-- [Standard Whitepaper](docs/whitepapers/AMMOcoin_Whitepaper_v1.1.0.md)
+- [White Paper, 2nd Edition (v1.1.1)](docs/whitepapers/AMMOcoin_Whitepaper_2ndEdition_v1.1.1.md) - current
+- Superseded (history only): [Comprehensive Whitepaper v1.1.0](docs/whitepapers/AMMOcoin_Comprehensive_Whitepaper_v1.1.0.md), [Standard Whitepaper v1.1.0](docs/whitepapers/AMMOcoin_Whitepaper_v1.1.0.md)
 
 ### User Guides (in docs/)
 - [Wallet Setup](docs/01-wallet-setup.md)
@@ -431,14 +430,13 @@ We welcome contributions! Here's how to get started:
 ## 📞 **Community & Support**
 
 - **GitHub Issues**: https://github.com/everquin/AMMOcoin/issues
-- **GitHub Discussions**: https://github.com/everquin/AMMOcoin/discussions
 - **Documentation**: https://github.com/everquin/AMMOcoin/tree/main/docs
 
 ---
 
 ## 📄 **License**
 
-AMMOcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more information or https://opensource.org/licenses/MIT
+AMMOcoin Core is released under the terms of the MIT license. See [COPYING](source/COPYING) for more information or https://opensource.org/licenses/MIT
 
 ---
 

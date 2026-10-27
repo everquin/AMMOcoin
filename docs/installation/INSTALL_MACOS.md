@@ -1,3 +1,5 @@
+> **Superseded for v1.1.1.** This guide was written for v1.1.0 (macOS 11+). v1.1.1 needs **macOS 13 Ventura or newer**; download the signed, notarized `.dmg` from the [v1.1.1 release](https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1) and check it against `AMMOcoin-v1.1.1-ALL-PLATFORMS-CHECKSUMS.txt`. File names, checksums and the data folder below are v1.1.0's; see the [v1.1.1 release notes](../release-notes/RELEASE_NOTES_v1.1.1.md) for the current details.
+
 # AMMOcoin v1.1.0 - Installation on macOS
 
 **Platform:** macOS 11+ (Big Sur or newer)
