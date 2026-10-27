@@ -299,6 +299,34 @@ Not legal advice. Counsel review status: **pending**.
 - **Owner approval:** owner asked on 2026-10-27 to fix the Reserves page numbers so the pools add up and the sequencing follows P-06; approval is the merge. Item 5 is the owner's to decide. **Prepared by:** Claude.
 - **Later:** item 5 decided 2026-10-27 in AMMO-D-2026-10-27-04 (pointer only; the entry above is unchanged).
 
+## AMMO-D-2026-10-27-02 Airdrop claims go to a dedicated email address, with a public anonymised claims log; GitHub Issues are for public technical bugs only
+
+- **Date:** 2026-10-27
+- **Principles:** AMMO-P-06, P-13, P-14
+- **Context:** AIRDROPS.md section 3 and the user guide said claims go "through the official channel announced on the AMMOcoin GitHub repository", but no channel was ever named and Discussions is off (overnight audit 2026-10-27). The owner asked for "dedicated email or GitHub Issues, whichever is better practice".
+- **Decision:**
+  1. Signed-message claims are sent by email to **claims@ammocoin.org**, a dedicated address on the project domain that forwards to the owner's inbox (Cloudflare Email Routing; ammocoin.org's MX records already point to Cloudflare). The owner's personal address is never published.
+  2. Each claim gets a number (`C-0001`, ...). Every claim received is listed in the public, anonymised [`docs/migration/CLAIMS_LOG.md`](../migration/CLAIMS_LOG.md): claim number, date received, status, outcome. It never holds names, emails, message text, addresses or signatures. A paid claim's outcome is its payout txid, and the paid claim also goes in the AIRDROPS.md section 4 record (chain data only). Unpaid or rejected claims never show an address. The log is updated within 7 days of any change.
+  3. GitHub Issues stay open for **public technical bugs only**. The issue chooser (`.github/ISSUE_TEMPLATE/config.yml`) sends claims to the email instructions and security reports to security@ammocoin.org.
+  4. What to send is fixed in [`docs/migration/CLAIM_TEMPLATE.md`](../migration/CLAIM_TEMPLATE.md): four lines (v1.0 address, v1.1 address, exact message, signature) and nothing else.
+- **Rationale:** a claim ties a v1.0 address and balance to a person and their email address. In a public issue that is exposed to everyone for good, along with the GitHub account. It also tells scammers exactly who is owed coins and invites lookalike replies, and people tend to paste wallet files or keys into issues. Email keeps the personal part private, and the anonymised log keeps the process checkable. The withdrawn v1.1.0 email registration (D-2026-10-16-01) is different: that was for everyone, came with a deadline and asked people to send coins. This is a fallback only for a balance that is missing after the automatic airdrop. It has no deadline, and holders send nothing but a non-secret signature.
+- **Alternatives rejected:** public GitHub Issues with a template (personal data public, scam targeting); Discussions (same exposure); a web form (needs hosting, storage and spam handling, and looks like the withdrawn `ammocoin.org/migrate` form); reusing support@ (mixes claims with general mail; not confirmed to be routed).
+- **Enforcement / evidence:** `docs/migration/V1.0_BALANCE_AIRDROP.md` step 3; AIRDROPS.md sections 3 and 4; `docs/10-faq.md`; `README.md` (Community & Support); `docs/installation/INSTALL_MACOS.md` (old web-form and support@ steps marked withdrawn); website `migration.html` (website AMMO-D-2026-10-27-02 (site)). **Not yet live:** the mailbox has to be created by the owner (Cloudflare Email Routing). Until it is, mail to claims@ammocoin.org is refused or lost, so it must be set up and tested before the airdrop payout.
+- **Owner approval:** owner, 2026-10-27: "dedicated email or GitHub Issues, whichever is better practice"; this choice and the log format are approved by the merge. **Prepared by:** Claude.
+
+## AMMO-D-2026-10-27-03 P-15 amended: the core code is public; the website and app repositories are private for now (supersedes the "front-facing code public" part of D-2026-10-17-05)
+
+- **Date:** 2026-10-27
+- **Principles:** AMMO-P-15 (amended), P-14
+- **Supersedes:** AMMO-D-2026-10-17-05, only its first sentence ("The wallet app and website front-facing code are public so anyone can check them"). "Nothing ships without review against this checklist" stands.
+- **Context:** P-15 and D-2026-10-17-05 said the app and website code are public. On 2026-10-27 `gh repo view` showed `everquin/AMMOcoin` PUBLIC and both `everquin/ammocoin_website` and `everquin/AMMOcoin_App` PRIVATE (overnight audit). The owner chose: "change principle for now".
+- **Decision:** P-15 now says what is true. The core chain code (`everquin/AMMOcoin` and its signed releases) is public. The website and app repositories are private for now. The project intends to make both public after a check for anything that must not be published and the owner's approval; no date is set. Copy may say "the code is open source on GitHub" only when it points at the core repository, and must not say all AMMOcoin code is public.
+- **Checked copy:** the site's public-code lines (`ammocoin-is-secure.html` "The code is open source on GitHub", `downloads.html` "Source code: open source", `whitepaper.html` / white paper source "The code is public on GitHub") all link to or describe `everquin/AMMOcoin`, so they stay true. Wording changes were needed only in the compliance records: this file, PRINCIPLES.md, the website's and the app's records.
+- **Gap:** G-12 (no technical "no deploy without review" control) is unchanged and still open.
+- **Owner approval:** owner, 2026-10-27: "change principle for now"; approval is the merge. **Prepared by:** Claude.
+
+---
+
 ## AMMO-D-2026-10-27-04 The reserve gap is closed from pool 8; the Reserves page is published only after the transfer is logged
 
 - **Date:** 2026-10-27
@@ -318,8 +346,6 @@ Not legal advice. Counsel review status: **pending**.
 - **Alternatives rejected:** counting pool 1's own stake rewards since 2026-10-22 (no node reading recorded, and it would leave the collateral's 50,000 unreplaced); releasing the collateral back to pool 1 (stops project masternodes before launch); making pool 3 or 4 smaller (changes published amounts); publishing the page now (its "after the top-up" figures would not be true yet).
 - **Enforcement / evidence:** RESERVES.md (rule 3, pool 1 and 8 rows, "After the top-up" arithmetic, section 4 Planned entry and template row); website `reserves.html` (website AMMO-D-2026-10-27-04 (site)). Off-chain commitment; not enforced in code.
 - **Owner approval:** owner chose option (a), accepted the page exception and set the publish-after-transfer condition in the 2026-10-27 session; approval is the merge. **Prepared by:** Claude.
-
----
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
 

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: v1.0 airdrop claim (missing balance)
+    url: https://github.com/everquin/AMMOcoin/blob/main/docs/migration/CLAIM_TEMPLATE.md
+    about: Claims go by email to claims@ammocoin.org, never in a public issue. Never post keys, seed phrases or wallet files anywhere.
+  - name: Security vulnerability
+    url: https://github.com/everquin/AMMOcoin/blob/main/README.md#reporting-vulnerabilities
+    about: Email security@ammocoin.org. Do not open a public issue.

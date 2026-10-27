@@ -429,7 +429,8 @@ We welcome contributions! Here's how to get started:
 
 ## 📞 **Community & Support**
 
-- **GitHub Issues**: https://github.com/everquin/AMMOcoin/issues
+- **GitHub Issues**: https://github.com/everquin/AMMOcoin/issues (public, for technical bugs only)
+- **v1.0 airdrop claims** (missing balance only): email **claims@ammocoin.org**, see [what to send](docs/migration/CLAIM_TEMPLATE.md). Never in a public issue. Status: [claims log](docs/migration/CLAIMS_LOG.md)
 - **Documentation**: https://github.com/everquin/AMMOcoin/tree/main/docs
 
 ---
