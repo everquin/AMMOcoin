@@ -70,6 +70,8 @@ The project never asks anyone to send coins, private keys, seed phrases or walle
 
 A change that achieves something these principles forbid by another route (renaming a sale as a "donation", "membership", "package", "bundle", "boost" or "gift"; pricing in NUGGETS that can be bought with cash; routing cash through a third party) violates the principle it routes around. When in doubt, record the question in DECISIONS.md and get owner and, when available, counsel sign-off before shipping.
 
-## AMMO-P-15 Review before release or deploy
+## AMMO-P-15 Review before release or deploy; the core code is public
 
-No release, deploy or public copy change that touches these principles ships without review against [REVIEW_CHECKLIST.md](REVIEW_CHECKLIST.md). The app and website front-facing code are public so that anyone can check them.
+No release, deploy or public copy change that touches these principles ships without review against [REVIEW_CHECKLIST.md](REVIEW_CHECKLIST.md).
+
+The core chain code is public so that anyone can check it: the `everquin/AMMOcoin` repository (node, consensus rules, Qt wallet, migration tools, these records) and its signed releases. The website repository (`everquin/ammocoin_website`) and the wallet app repository (`everquin/AMMOcoin_App`) are **private for now**. The website's pages are public because they are served as written, but its history and reviews are not. No build of the wallet app is published. The project intends to make both repositories public once each has been checked for anything that must not be published (credentials, internal notes, personal data) and the owner approves; no date is set. Until then, no copy says that all AMMOcoin code is public. (Amended 2026-10-27, AMMO-D-2026-10-27-03.)
