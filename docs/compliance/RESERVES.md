@@ -10,7 +10,7 @@ The project sells no AMMO, publishes no price and runs no buy-backs (AMMO-P-02, 
 
 1. **One labelled pool per purpose.** Each pool has a small, fixed set of addresses, all listed here. There are no unlabelled project wallets, and no splitting into addresses meant to look like independent holders.
 2. **Many coins inside a pool are fine.** A pool may hold its AMMO as many outputs (UTXOs) for staking and payout batches (D-2026-10-18-13), all at its listed addresses.
-3. **Airdrop first (P-06).** No AMMO leaves the block-1 reserve for another pool until the v1.0 airdrop payouts are broadcast, apart from the exceptions recorded in section 4. There is one so far: the masternode collateral (pool 6), 50,000 taken from pool 1's change on 2026-10-24 (D-2026-10-24-03, -05). It came out of the 250,000,000, so pool 1 now holds less than pools 2–5 need; see the arithmetic below section 2 (D-2026-10-27-01).
+3. **Airdrop first (P-06).** No AMMO leaves the block-1 reserve for another pool until the v1.0 airdrop payouts are broadcast, apart from the exceptions recorded in section 4. There is one so far: the masternode collateral (pool 6), 50,000 taken from pool 1's change on 2026-10-24 (D-2026-10-24-03, -05). It came out of the 250,000,000, so pool 1 now holds less than pools 2–5 need; see the arithmetic below section 2 (D-2026-10-27-01). The owner has decided to close that gap with 50,000 from pool 8 (D-2026-10-27-04); the transfer is **planned, not sent** (section 4).
 4. **Every movement between pools is logged** in section 4, with its txid, within 7 days, and before it's described anywhere as done.
 5. **Cold by default.** Large pools are owned by offline keys and stake through cold-staking delegation to project staking nodes. A staking node can stake the coins but can't spend them. Only the GLiBz payout float is a hot wallet, and it is capped.
 6. **Keys never leave their wallet.** No private key, passphrase or wallet file appears in this repository, a chat or a ticket.
@@ -19,14 +19,14 @@ The project sells no AMMO, publishes no price and runs no buy-backs (AMMO-P-02, 
 
 | # | Pool | Purpose | Amount | Address(es) | Custody | Status |
 |---|---|---|---|---|---|---|
-| 1 | **Block-1 reserve** | Pays the v1.0 airdrop first, then funds pools 3–5 | 250,000,000 at block 1; 249,950,244.99994463 after 2026-10-24 (249,800,000 in cold staking + 150,244.99994463 change; sections 3–4, arithmetic below) | Coin owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`, staker `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY` (ammo-02) | Paper wallet ("AMMOcoin v1.1.0 Distribution Wallet"), cold-staked | On chain |
+| 1 | **Block-1 reserve** | Pays the v1.0 airdrop first, then funds pools 3–5 | 250,000,000 at block 1; 249,950,244.99994463 after 2026-10-24 (249,800,000 in cold staking + 150,244.99994463 change; sections 3–4, arithmetic below). Top-up of 50,000 from pool 8 decided, **not yet sent** (D-2026-10-27-04, section 4) | Coin owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`, staker `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY` (ammo-02) | Paper wallet ("AMMOcoin v1.1.0 Distribution Wallet"), cold-staked | On chain |
 | 2 | **v1.0 airdrop** | v1.0 snapshot balances minus the signed pledges, to the same addresses ([AIRDROPS.md](AIRDROPS.md)) | 159,958,300 (232,397,748.45021523 − 72,439,448.45021523 pledged), if every pledge is signed. Each pledge paid in full instead (D-2026-10-25-01) adds its pledge here and takes it from pools 3–4 | Paid straight to the v1.0 holders' addresses; claim hold-back address **TO BE CREATED** | Paid from pool 1 | Not paid yet |
 | 3 | **QuarterMaster tiers** | FOUNDING-50, SPARTAN-300, PATRIOT-2000 positions, earned or awarded, never sold (P-07) | 40,000,000 | **TO BE CREATED** | Offline key, cold-staked | After the airdrop |
 | 4 | **Contributor reserve** | AMMOgeek / AMMOfreak awards (P-07) | 50,000,000 | **TO BE CREATED** | Offline key, cold-staked | After the airdrop |
 | 5 | **Unattributed v1.0 set-aside** | v1.0 coins the snapshot couldn't assign to an address (not zerocoin; see AIRDROPS.md section 6) (D-2026-10-18-12) | 41,700 | **TO BE CREATED** | Offline key | After the airdrop |
 | 6 | **Masternode collateral** | Project masternodes mn1–mn5 (D-2026-10-24-03, -05) | 5 × 10,000 | mn1 `ARqYH63neJkpgJKGDhKExAHqkNRXnpLwLR`, mn2 `AJ31JCS5LQe3YtKcxk5Ja4NK14RcbhE1JD`, mn3 `AXWeeRBjg5n539ZsytqaHoiCT1F2RMVmgQ` (tx `838a4b0e92050cf3…` vouts 1–3); mn4 `AUtumrzgLphzJPyVHPcGQ52L8HvUVsimai`, mn5 `AHMa6JPXUNYWk3EVqoSF2fip2mbrRwSZ6a` (tx `c27deb8bfe76dd02…` vouts 0–1) | VM controller wallet | Funded 2026-10-24 from pool 1 change, before the airdrop: the one exception to rule 3. Masternode payments to these addresses are project rewards (pool 8), not collateral |
 | 7 | **GLiBz payout float** | Pays earned-NUGGETS swaps from the GLiBz pouch (D-2026-10-17-03) | Capped; top-ups logged | **TO BE CREATED** | Hot wallet on the payout gateway | Funding source: owner decision pending |
-| 8 | **Project mining and staking rewards** | Block rewards paid to the project's own wallet: PoW blocks before the v1.1.1 fork and PoS blocks after it. Not part of the 250,000,000 | 790,399.99704080 on 2026-10-24: the VM controller wallet held 990,644.99698543, of which 50,000 is pool 6 collateral and 150,244.99994463 is pool 1 change (arithmetic below). Most of it is in pieces under 1,000 | Several hundred reward addresses; list **TO BE PUBLISHED** | VM controller wallet | On chain; itemised list to follow |
+| 8 | **Project mining and staking rewards** | Block rewards paid to the project's own wallet: PoW blocks before the v1.1.1 fork and PoS blocks after it. Not part of the 250,000,000 | 790,399.99704080 on 2026-10-24: the VM controller wallet held 990,644.99698543, of which 50,000 is pool 6 collateral and 150,244.99994463 is pool 1 change (arithmetic below). Most of it is in pieces under 1,000. 50,000 of it, plus the network fee, is to move to pool 1 (D-2026-10-27-04, **planned, not sent**) | Several hundred reward addresses; list **TO BE PUBLISHED** | VM controller wallet | On chain; itemised list to follow |
 
 ### Arithmetic
 
@@ -58,7 +58,26 @@ The claim hold-back is part of pool 2. A pledge paid in full moves its amount fr
 | − fees of those two transactions (0.00002940 + 0.00002600) | 0.00005540 |
 | **= 249,800,000 cold-staked + 150,244.99994463 change** | **249,950,244.99994463** |
 
-**The gap.** Pools 2–5 need 250,000,000.00000000; pool 1 held 249,950,244.99994463, which is **49,755.00005537 short** (the 50,000 collateral, plus 0.00005540 fees, less the 245.00000003 the stake added). Pool 1 has kept staking since 2026-10-24 and those rewards stay in pool 1, so later stakes may already cover the gap, but no reading after 2026-10-24 is recorded. **Open owner decision (D-2026-10-27-01):** how the gap is closed, recorded in section 4 before pools 3–5 are funded. The options are: move 50,000 from pool 8 (outside the 250,000,000, same wallet) into pool 1; count pool 1's own stake rewards since 2026-10-22, read from a node; release the collateral back to pool 1 first; or make pool 3 or 4 smaller, which changes published amounts and needs its own decision.
+**The gap.** Pools 2–5 need 250,000,000.00000000; pool 1 held 249,950,244.99994463, which is **49,755.00005537 short** (the 50,000 collateral, plus 0.00005540 fees, less the 245.00000003 the stake added). Pool 1 has kept staking since 2026-10-24 and those rewards stay in pool 1, so later stakes may already cover the gap, but no reading after 2026-10-24 is recorded. **Decided 2026-10-27 (D-2026-10-27-04), which closes the open point of D-2026-10-27-01:** the owner chose to move 50,000 from pool 8 (outside the 250,000,000, same wallet) into pool 1. The other options (counting pool 1's own stake rewards since 2026-10-22, releasing the collateral back to pool 1, making pool 3 or 4 smaller) were not chosen. The transfer is **planned, not sent**; until its txid is in section 4, pool 1 is still 49,755.00005537 short.
+
+**After the top-up (planned; the fee and the final figures are recorded with the txid).**
+
+| | AMMO |
+|---|---|
+| Pool 1 after 2026-10-24 | 249,950,244.99994463 |
+| + from pool 8 | 50,000.00000000 |
+| = pool 1 after the top-up, less the network fee if it is taken out of the 50,000 | 250,000,244.99994463 |
+| − needed for pools 2–5 | 250,000,000.00000000 |
+| **= to spare** (50,000 − 49,755.00005537) | **244.99994463** |
+
+| | AMMO |
+|---|---|
+| Pool 8 on 2026-10-24 | 790,399.99704080 |
+| − to pool 1 | 50,000.00000000 |
+| − network fee of the transfer (from the txid) | fee |
+| **= pool 8 after the top-up** | **740,399.99704080 − fee** |
+
+With `delegatestake` (and `sendtoaddress`) the sending wallet pays the fee on top of the amount, so pool 1 receives the full 50,000 and only pool 8 carries the fee; the row in section 4 records which happened. Pool 8 has also kept receiving block rewards since 2026-10-24, so its balance at the time of the transfer will be higher than 790,399.99704080; the after-figure above is the 2026-10-24 reading less the transfer.
 
 **Pool 8.** The VM controller wallet held 990,644.99698543 on 2026-10-24, and it also holds pool 6 and pool 1's change: 990,644.99698543 − 50,000 − 150,244.99994463 = 790,399.99704080 of project block rewards. This assumes the wallet was read after both collateral transactions, as the old pool 8 row said ("includes pool 6 collateral"); if it was read before them, pool 1 change was 200,245.00000003 and pool 8 was 790,399.99698540. Re-read the wallet to confirm.
 
@@ -88,3 +107,12 @@ Every transfer between pools, or out of a pool, gets a row here. The owner's pri
 | 2026-10-22 21:35 | 1 | 1 (cold staking + change) | 249,800,000 + 200,245 | five txids in section 3 | internal to pool 1 |
 | 2026-10-24 | 1 (change `AMjFxfQRpw9UsGA7AcuzJYt4kq9dqeydgd`, `5bf32891…` vout 1145) | 6 (mn1–mn3, vouts 1–3); change 11,722.95830387 back to `AMjFx…` (vout 0) | 30,000 | `838a4b0e92050cf3961f6d58547f35b71a31a860e2d72c4e4ced6ce395a2f6f8` | D-2026-10-24-03, -04 |
 | 2026-10-24 | 1 (change `Adkh8D3TaHphLWTnQnf3WgdQpN4uvgVPLw`, `a9e73503…` vout 1145) | 6 (mn4 vout 0, mn5 vout 1); change 21,722.95830758 back to `Adkh8…` (vout 2) | 20,000 | `c27deb8bfe76dd02935a503e02f0414e478b3136a88a5531a5788f413d004825` | D-2026-10-24-05 |
+| *template, owner fills within 7 days of sending* | 8 (VM controller wallet; inputs: pool 8 outputs only) | 1 (cold-staked: owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`, staker `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY`) | 50,000; fee __ (paid by pool 8 / taken from the 50,000) | `__` | D-2026-10-27-04 |
+
+### Planned
+
+Decided but not sent. A planned movement is never described as done anywhere until its txid is in the table above (rule 4).
+
+| Decided | From pool | To pool | Amount | How the docs say it is sent | Decision | Status |
+|---|---|---|---|---|---|---|
+| 2026-10-27 | 8 (project block rewards, VM controller wallet) | 1 (block-1 reserve, cold-staked: owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME`, staker `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY` on ammo-02) | 50,000, plus the network fee from pool 8 | Pool 1 is held as cold-staked coins owned by the paper wallet (rule 5, pool 1 row). Coins are added to a cold-staked holding with `delegatestake "<S staking address>" <amount> "<owner address>" true` from the sending wallet, `true` because the owner address is not in that wallet (docs/02-staking-guide.md, Cold staking step 2). `sendtoaddress` refuses an `S…` staking address (`source/src/wallet/rpcwallet.cpp:1187`). ammo-02 already accepts delegations owned by `AGkC8…` (D-2026-10-24-05). Delegated coins stake after 600 confirmations | D-2026-10-27-04 | **Planned, not sent.** Owner sends; txid logged in the table above within 7 days |

@@ -297,6 +297,7 @@ Not legal advice. Counsel review status: **pending**.
 - **Alternatives rejected:** showing the collateral as "planned" (the chain says it is funded); keeping "No other pool is funded before it" (false); quietly shrinking pool 3 or 4 by 50,000 (changes published amounts without a decision).
 - **Enforcement / evidence:** RESERVES.md (arithmetic under section 2, rule 3, pools 2, 6 and 8); AIRDROPS.md section 4 reconciliation row; website `reserves.html` (website AMMO-D-2026-10-27-01 (site)). All values from RESERVES.md sections 3–4 (read from ammo-02 at height ~3556), `docs/migration/data/quartermaster-pledges.csv` and the snapshot file. Not enforced in code.
 - **Owner approval:** owner asked on 2026-10-27 to fix the Reserves page numbers so the pools add up and the sequencing follows P-06; approval is the merge. Item 5 is the owner's to decide. **Prepared by:** Claude.
+- **Later:** item 5 decided 2026-10-27 in AMMO-D-2026-10-27-04 (pointer only; the entry above is unchanged).
 
 ## AMMO-D-2026-10-27-02 Airdrop claims go to a dedicated email address, with a public anonymised claims log; GitHub Issues are for public technical bugs only
 
@@ -325,6 +326,26 @@ Not legal advice. Counsel review status: **pending**.
 - **Owner approval:** owner, 2026-10-27: "change principle for now"; approval is the merge. **Prepared by:** Claude.
 
 ---
+
+## AMMO-D-2026-10-27-04 The reserve gap is closed from pool 8; the Reserves page is published only after the transfer is logged
+
+- **Date:** 2026-10-27
+- **Principles:** AMMO-P-06, P-13, P-14
+- **Resolves:** item 5 of AMMO-D-2026-10-27-01 (how the 49,755.00005537 gap is closed). Does not supersede it.
+- **Context:** D-2026-10-27-01 found that pool 1 held 249,950,244.99994463 after 2026-10-24, 49,755.00005537 short of the 250,000,000 that pools 2–5 need (159,958,300 + 40,000,000 + 50,000,000 + 41,700), because the 50,000 masternode collateral (pool 6) came out of pool 1. Pool 8, the project's own block rewards (790,399.99704080 on 2026-10-24), sits in the same VM controller wallet and is outside the 250,000,000. The draft Reserves page (website `reserves.html`) states pool sizes, which the site's launch wording sweep (website AMMO-D-2026-10-23-01) keeps off page copy; website AMMO-D-2026-10-27-01 (site) proposed a page-only exception and left it, and publishing, to the owner.
+- **Decision:**
+  1. **Option (a):** 50,000 AMMO moves from pool 8 to pool 1. Destination: pool 1 as it is held, cold-staked, coin owner `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` (paper wallet), staker `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY` (ammo-02) (RESERVES.md pool 1 row, rule 5). How the docs say coins are added to a cold-staked holding is in RESERVES.md section 4, "Planned".
+  2. **The owner makes the transfer.** No agent touches wallets, keys or nodes.
+  3. **Arithmetic after the transfer:**
+     - pool 1: 249,950,244.99994463 + 50,000.00000000 = 250,000,244.99994463, less the network fee, recorded with the txid (the fee only reduces pool 1 if it is taken out of the 50,000; `delegatestake` and `sendtoaddress` add it on top, paid by pool 8);
+     - cover: 250,000,244.99994463 − 250,000,000.00000000 = 244.99994463 to spare (= 50,000 − 49,755.00005537), less any fee taken from the 50,000;
+     - pool 8: 790,399.99704080 − 50,000.00000000 − fee = 740,399.99704080 − fee, against the 2026-10-24 reading (pool 8 has kept receiving block rewards since).
+  4. **Logging:** RESERVES.md section 4 gets a "Planned" entry now and a template row the owner fills with the txid, the fee and who paid it within 7 days of sending (rule 4). Until the txid is logged, the top-up is described everywhere as decided and pending, never as done, and pool 1 is still 49,755.00005537 short. Pools 3–5 are not funded before that row is filled.
+  5. **Reserves page:** the owner accepts the page-only exception to website AMMO-D-2026-10-23-01: `reserves.html` may state pool sizes. Every other page still follows D-2026-10-23-01.
+  6. **Publishing condition:** the page stays unlinked and `noindex` until the transfer is done and logged in RESERVES.md section 4, so the figures it shows are true. Then its figures are updated from the logged txid, `noindex` is removed and the page is linked.
+- **Alternatives rejected:** counting pool 1's own stake rewards since 2026-10-22 (no node reading recorded, and it would leave the collateral's 50,000 unreplaced); releasing the collateral back to pool 1 (stops project masternodes before launch); making pool 3 or 4 smaller (changes published amounts); publishing the page now (its "after the top-up" figures would not be true yet).
+- **Enforcement / evidence:** RESERVES.md (rule 3, pool 1 and 8 rows, "After the top-up" arithmetic, section 4 Planned entry and template row); website `reserves.html` (website AMMO-D-2026-10-27-04 (site)). Off-chain commitment; not enforced in code.
+- **Owner approval:** owner chose option (a), accepted the page exception and set the publish-after-transfer condition in the 2026-10-27 session; approval is the merge. **Prepared by:** Claude.
 
 ## Known gaps (code or copy that contradicts a principle, or a decision without enforcement)
 
