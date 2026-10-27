@@ -150,6 +150,8 @@ cp src/ammocoind src/ammocoin-cli src/ammocoin-tx ~/Applications/AMMOcoin/
 
 ## Migration from v1.0 to v1.1.0
 
+> **Withdrawn: don't use Steps 6–9 below.** There is no web form and nothing to email to support. v1.0 balances are airdropped to the same addresses on v1.1, so you only need your v1.0 `wallet.dat` ([v1.0 Balance Airdrop](../migration/V1.0_BALANCE_AIRDROP.md)). Only if your balance is missing after a full sync, sign the exact claim message in [CLAIM_TEMPLATE.md](../migration/CLAIM_TEMPLATE.md) and email it to **claims@ammocoin.org**. The message in Step 7 is the old one and will be refused.
+
 ### IMPORTANT: Backup First!
 
 ```bash
