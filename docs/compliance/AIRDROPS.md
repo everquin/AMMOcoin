@@ -45,9 +45,9 @@ The QuarterMaster reserve (40,000,000 tiers + 50,000,000 contributor reserve) is
 | **Left for the QuarterMaster and contributor reserves** | **90,000,000.00000000** |
 
 - Each pledge is a `signmessage` signature from the pledging address over the exact text in `docs/migration/data/quartermaster-pledges.csv` (built by `scripts/migration/build-pledges.py`; `--check` proves the file matches a fresh build). Signatures are checked with `scripts/migration/verify-pledges.py` and published.
-- The holder signs. Nobody signs for someone else, and no wallet or key is handed over: a pledge signed by anyone but the holder is not proof that the holder agreed.
+- The holder signs, and no wallet or key is collected from anyone. Where the project holds the key for coins that belong to someone else, it signs only after that person agrees in writing; the consent is kept in the owner's private pledge tracker, and the airdrop record publishes how many pledges were signed this way and their total (AMMO-D-2026-10-25-01).
 - Pledges are voluntary and nothing is given in return — no tier position, reward or payment.
-- No payout is built until every pledge is signed. A contributor who does not sign is paid their full snapshot balance like everyone else, and the pledge list is rebuilt and re-decided.
+- Replies close on **November 1, 2026** (AMMO-D-2026-10-25-01). A pledge address that has not signed by then, or declines, is paid its full snapshot balance (`build-payout-holders.py --full-pay`); unsigned holders are never paid less. The payout is built once every pledge is signed or listed as full-pay, and the resulting shortfall in the QuarterMaster reserve is published with the airdrop record.
 - Disclosure: these 61 early holders hold 94.1% of the v1.0 snapshot; after the pledges they receive 146,267,603.75 of the 159,958,300.00 AMMO paid out.
 
 ---
