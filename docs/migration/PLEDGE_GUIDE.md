@@ -66,9 +66,13 @@ That is all. The signature reveals nothing secret and will be published.
 
 ## 4. What happens next
 
-Every signature is checked with `scripts/migration/verify-pledges.py`. The
-airdrop is built only when all pledges are signed. The pledges, signatures
-and the airdrop reconciliation are published in
+Every signature is checked with `scripts/migration/verify-pledges.py`.
+
+**Reply by November 1, 2026** (decision AMMO-D-2026-10-25-01). Pledging is
+voluntary. If you decline, or haven't replied by then, your address is paid
+its **full** snapshot balance; nobody who doesn't sign is ever paid less. The
+airdrop is built once every pledge is either signed or paid in full. The
+pledges, signatures and the airdrop reconciliation are published in
 [`../compliance/AIRDROPS.md`](../compliance/AIRDROPS.md).
 
 If you can't find or open the key for your address, say so — don't hand the

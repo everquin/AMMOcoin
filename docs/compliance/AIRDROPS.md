@@ -41,13 +41,13 @@ The QuarterMaster reserve (40,000,000 tiers + 50,000,000 contributor reserve) is
 | Snapshot total (10,080 addresses) | 232,397,748.45021523 |
 | Pledged by the 61 contributors (holding 218,707,052.19975480) | 72,439,448.45021523 |
 | Airdrop actually paid (snapshot − pledges) | 159,958,300.00000000 |
-| Zerocoin set aside, unclaimable (section 4, supply difference) | 41,700.00000000 |
+| Set aside: unattributed v1.0 coins, unclaimable until the scan in section 6 (section 4, supply difference) | 41,700.00000000 |
 | **Left for the QuarterMaster and contributor reserves** | **90,000,000.00000000** |
 
 - Each pledge is a `signmessage` signature from the pledging address over the exact text in `docs/migration/data/quartermaster-pledges.csv` (built by `scripts/migration/build-pledges.py`; `--check` proves the file matches a fresh build). Signatures are checked with `scripts/migration/verify-pledges.py` and published.
-- The holder signs. Nobody signs for someone else, and no wallet or key is handed over: a pledge signed by anyone but the holder is not proof that the holder agreed.
+- The holder signs, and no wallet or key is collected from anyone. Where the project holds the key for coins that belong to someone else, it signs only after that person agrees in writing; the consent is kept in the owner's private pledge tracker, and the airdrop record publishes how many pledges were signed this way and their total (AMMO-D-2026-10-25-01).
 - Pledges are voluntary and nothing is given in return — no tier position, reward or payment.
-- No payout is built until every pledge is signed. A contributor who does not sign is paid their full snapshot balance like everyone else, and the pledge list is rebuilt and re-decided.
+- Replies close on **November 1, 2026** (AMMO-D-2026-10-25-01). A pledge address that has not signed by then, or declines, is paid its full snapshot balance (`build-payout-holders.py --full-pay`); unsigned holders are never paid less. The payout is built once every pledge is signed or listed as full-pay, and the resulting shortfall in the QuarterMaster reserve is published with the airdrop record.
 - Disclosure: these 61 early holders hold 94.1% of the v1.0 snapshot; after the pledges they receive 146,267,603.75 of the 159,958,300.00 AMMO paid out.
 
 ---
@@ -124,7 +124,7 @@ When a value is published, replace its **TO BE PUBLISHED** marker in a commit, a
 
 - **No payment.** Nobody pays anything, in any currency, coin or goods, to receive the airdrop or to make a claim. There is no fee.
 - **No purchase.** Nothing is offered for sale. The airdrop restores balances people already held on the v1.0 chain, to the same addresses, in the same amounts. No one can get more by paying, and no one is offered AMMO who did not already hold it at the snapshot.
-- **No solicitation.** Holders are not asked to send coins, register, sign up, or act by a deadline. The only action ever asked of anyone is a signature, and only when the automatic payout could not reach them.
+- **No solicitation.** Holders are not asked to send coins, register, sign up, or act by a deadline. The only action ever asked of anyone is a signature, and only when the automatic payout could not reach them. The 61 founding contributors are asked to reply to their pledge request by November 1, 2026 (AMMO-D-2026-10-25-01); that date can only stop a pledge being taken, never reduce what anyone is paid: no reply means the full snapshot balance.
 - **No promise of value.** The project assigns AMMO no value and publishes no price, exchange rate, market cap or fiat equivalent for it (AMMO-P-03). Airdrop records state AMMO amounts only, never a fiat value. The airdrop is not described as a gift of value, a reward, an opportunity or an investment.
 - **No raise.** The airdrop brings in no money and is not linked to any fundraising (AMMO-P-01). Reserve AMMO is never sold (AMMO-P-02).
 
@@ -139,7 +139,7 @@ Copy about the airdrop (site, app, social posts, release notes) must follow sect
   - At block 409,459, the total of all unspent outputs (`gettxoutsetinfo`, 219,728,448.45021523) is the money supply minus 50. The same holds at block 434,881: `expected_supply` is the full unspent-output total.
   - So the 41,700 is held by unspent outputs that the snapshot did not attribute to any address. That would be non-standard scripts, such as pay-to-pubkey or multisig. The snapshot counts 481,712 outputs, while the v1.0 coin set already held 1,254,670 at block 409,459.
   - To settle it, scan the coin set at block 434,881 by script type. Only ammo-11 holds the v1.0 chain that far (tip 435,172; its daemon has been stopped since 2026-04-09). Until that scan is done, the 41,700 is set aside as unclaimable (AMMO-D-2026-10-18-12). If the scan finds pay-to-pubkey outputs, they belong to an address and should be added to the payout.
-- `scripts/migration/migration-prepare.py` takes its `--holders` file from `scripts/migration/build-payout-holders.py`, which pays `airdrop_after_pledge` to the 61 pledging addresses and refuses to write anything unless every pledge signature verifies (total 159,958,300.00000000 AMMO to 10,080 addresses). Decided (AMMO-D-2026-10-18-13): the 10,000,000 per-recipient cap stays; `ANj3fDwDYTjf1Mb7XvgjHLrs6aSKeKXakL` (24,713,345.21078793 after its pledge) is paid in three outputs of at most 10M, each in its own transaction.
+- `scripts/migration/migration-prepare.py` takes its `--holders` file from `scripts/migration/build-payout-holders.py`, which pays `airdrop_after_pledge` to the pledging addresses that signed and the full snapshot balance to any listed with `--full-pay` (AMMO-D-2026-10-25-01), and refuses to write anything unless every pledge is either a verified signature or full-pay (total 159,958,300.00000000 AMMO to 10,080 addresses, plus any pledges paid in full). Decided (AMMO-D-2026-10-18-13): the 10,000,000 per-recipient cap stays; `ANj3fDwDYTjf1Mb7XvgjHLrs6aSKeKXakL` (24,713,345.21078793 after its pledge) is paid in three outputs of at most 10M, each in its own transaction.
 - Fixed 2026-10-25 (PR "Airdrop readiness 2/2"):
   - `migration-prepare.py` assumed the reserve was a few large plain outputs and built a single fan-out transaction. The reserve is now 4,996 cold-stake outputs of 50,000, so the fan-out became size-limited consolidation transactions (above).
   - Its `listunspent` call was rejected by a real node.
