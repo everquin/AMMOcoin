@@ -82,7 +82,7 @@ For these, and only these, the holder proves ownership of the v1.0 address with 
    ammocoin-cli signmessage "V1.0_ADDRESS" "AMMOcoin v1.1 airdrop claim: V1.0_ADDRESS pay V1.1_ADDRESS"
    ```
    `V1.1_ADDRESS` is the same address where possible, otherwise a v1.1 address the holder controls. Naming the destination in the signed text stops a copied signature from being redirected.
-2. The holder submits the v1.0 address, the exact message and the signature through the channel announced on the AMMOcoin GitHub repository.
+2. The holder emails the v1.0 address, the v1.1 address, the exact message and the signature to **claims@ammocoin.org** ([CLAIM_TEMPLATE.md](../migration/CLAIM_TEMPLATE.md)) and gets a claim number back. Every claim is listed, anonymised, in [CLAIMS_LOG.md](../migration/CLAIMS_LOG.md): claim number, date received, status and outcome, with no names, emails or addresses (AMMO-D-2026-10-27-02). Claims are never taken in public GitHub Issues.
 3. The project checks the claim with `scripts/migration/verify-claim.py`:
    - the signature, with `verifymessage`, against the v1.0 address and that exact message;
    - that the address is in the snapshot;
@@ -107,7 +107,7 @@ All of the following are published in this repository (and linked from ammocoin.
 | Airdrop payout transactions | **TO BE PUBLISHED:** list of txids (one row per batch: txid, block height, number of outputs, total AMMO), plus the broadcast audit log |
 | Per-address reconciliation | **TO BE PUBLISHED:** CSV of snapshot address, snapshot balance, payout txid, v1.1 amount received, status (paid / claim pending / claim paid) |
 | Contributor pledges | `docs/migration/data/quartermaster-pledges.csv` (61 addresses, 72,439,448.45021523 AMMO). **TO BE PUBLISHED:** the signatures and the `verify-pledges.py` result; the number and total signed by the project as custodian with written consent; the addresses paid in full after the November 1, 2026 deadline and the resulting reserve shortfall (D-2026-10-25-01) |
-| Signed-message claims | **TO BE PUBLISHED:** running list of v1.0 address, v1.1 address, amount, payout txid, date (signatures may be published too; they reveal nothing secret) |
+| Signed-message claims | Every claim received: [CLAIMS_LOG.md](../migration/CLAIMS_LOG.md) (anonymised: claim number, date, status, outcome; AMMO-D-2026-10-27-02). **TO BE PUBLISHED** for paid claims only: v1.0 address, v1.1 address, amount, payout txid, date. Unpaid or rejected claims never show an address. Who made a claim (name, email) is never published |
 | Block-1 reserve address | `AJSpvakMXqZDrqimNP7X8R26NzyNGtmA8u` (block 1 output; `AGkC8ydBWwyYE612V1Ag1mL4itp9Tv4KME` is only the unspendable genesis output) |
 | Reserve change / holding addresses used by the payout | **TO BE PUBLISHED** |
 | Amount held back for signed-message claims, and its address | **TO BE PUBLISHED** |

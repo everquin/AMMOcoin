@@ -420,7 +420,7 @@ See [v1.0 Balance Airdrop](migration/V1.0_BALANCE_AIRDROP.md) for details.
 **❌ No - it is a scam.** The old disposal-address / email process is superseded. Never send coins, private keys or your wallet file to anyone.
 
 ### What if my balance is missing after sync?
-Use the fallback **signed-message claim**: sign a message with your v1.0 address (`ammocoin-cli signmessage "V1.0_ADDRESS" "message"` on your v1.0 wallet) and submit it through the official channel announced on GitHub. A signature proves ownership without revealing your key.
+Use the fallback **signed-message claim**: sign a message with your v1.0 address (`ammocoin-cli signmessage "V1.0_ADDRESS" "message"` on your v1.0 wallet) and email it to **claims@ammocoin.org** as described in [what to send](migration/CLAIM_TEMPLATE.md). Never post a claim in a public GitHub Issue. A signature proves ownership without revealing your key.
 
 ### What is the migration deadline?
 **There is no deadline.**
