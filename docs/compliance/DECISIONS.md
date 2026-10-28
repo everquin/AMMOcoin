@@ -381,3 +381,18 @@ Open until fixed; record the fixing commit in the Status column.
 | G-13 | `docs/migration/MANUAL_MIGRATION_PLAN_v1.0_to_v1.1.0.md:306` | Still describes a 90-day migration period closing 2026-04-03 (superseded banner present). | P-13 | Mitigated (superseded) |
 | G-14 | `woocommerce-plugin/includes/class-wc-ammocoin-gateway.php` (uncommitted local folder, not on any branch) | "AMMO/USD Rate" setting ("How many USD one AMMO is worth") converts USD order totals to AMMO: a stated AMMO price and fiat-to-AMMO conversion. | P-03, P-02 | Decided D-2026-10-18-11: plugin retired, never committed or installed; GLiBz rate retired by the closed-loop release |
 | G-15 | `docs/migration/data/v1.0-complete-balance-snapshot.json` (`supply_match: false`), `scripts/migration/verify-claim.py:3-16`, `scripts/migration/migration-prepare.py:21-24`, `docs/migration/V1.0_BALANCE_AIRDROP.md` | Snapshot total does not match its expected supply (41,700 AMMO); claim tool and prepare script still follow withdrawn models; user-guide claim message names no destination. | P-06, P-13 | Open (see `AIRDROPS.md` section 6) |
+
+## AMMO-D-2026-10-27-07 Launch Season social posts may say "draw", "winners" and "bounty" (scoped exception to the SOCIAL_KIT_2026-11 word list)
+
+- **Context:** The owner directed GLiBz Launch Season (GLiBz GLZ-D-2026-10-27-08 and -09). It runs from Nov 5 2026 to Jan 4 2027 and includes free Bounty Board missions, provably fair milestone draws, a weekly skill contest and hunts. All AMMO comes from the AMMOgeek/AMMOfreak contributor reserve (P-07), and participation is on GLiBz only. The social kit rules in SOCIAL_KIT_2026-11.md (2026-10-22) say no airdrop or payout mentions, no "early" and no reward descriptions. AMMOcoin posts can't announce these programmes without some of those words.
+- **Decision:** This applies only to the posts in `ammocoin-launch-season-*.csv`, the AMMOcoin Publer files built 2026-10-27, and to later Launch Season posts:
+  - They may name the programmes and use the words "draw", "winners", "bounty", "Bounty Board", "contest" and "hunt".
+  - They still never say "prize", "reward", "airdrop", "payout", "giveaway", "earn", "early" or any price, value or return word.
+  - They never state an AMMO amount, and never use "like/share/tag/follow/comment to enter".
+  - Every post points to GLiBz, where people take part, or to ammocoin.org/uses.
+  - Amounts appear only on glibz.com/launch-season/terms.
+  - The rank-up bonus is not promoted on social media.
+  - The SOCIAL_KIT_2026-11 posts themselves are unchanged.
+- **Why this is not a skirt (P-14):** Nothing can be bought to take part. The project sells no AMMO and seeks no listing. Grants are 18+, capped per member and logged.
+- **Counsel:** a brief on free task-based distributions (In re Tomahawk Exploration LLC, SEC Rel. 33-10530, Aug 14 2018) and contest/sweepstakes rules is with the owner. The programmes go live on schedule unless counsel says otherwise.
+- **Owner approval:** "Switch launch on; yes to all you laid out" (2026-10-27 Claude Code session). **Prepared by:** Claude.
