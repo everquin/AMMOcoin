@@ -396,3 +396,19 @@ Open until fixed; record the fixing commit in the Status column.
 - **Why this is not a skirt (P-14):** Nothing can be bought to take part. The project sells no AMMO and seeks no listing. Grants are 18+, capped per member and logged.
 - **Counsel:** a brief on free task-based distributions (In re Tomahawk Exploration LLC, SEC Rel. 33-10530, Aug 14 2018) and contest/sweepstakes rules is with the owner. The programmes go live on schedule unless counsel says otherwise.
 - **Owner approval:** "Switch launch on; yes to all you laid out" (2026-10-27 Claude Code session). **Prepared by:** Claude.
+
+## AMMO-D-2026-10-27-08 Launch Season funding: pouch balances first; the contributor reserve and payout float come after the airdrop
+
+- **Context:** GLiBz Launch Season (GLZ-D-2026-10-27-08) opens Nov 5 2026 and grants AMMO from the contributor reserve (pool 4). Pool 4 can't exist until the v1.0 airdrop is paid, because rule 3 says the airdrop comes first (P-06). The GLiBz payout float (pool 7) and the payout gateway don't exist yet either.
+- **Decision:**
+  1. From Nov 5, Launch Season grants are GLiBz pouch balances only. Nothing moves on chain when a grant is made. The total owed is capped in code at the 2,000,000 season budget, and pool 4 covers it once it exists.
+  2. After the v1.0 airdrop is broadcast, pools 3, 4 and 5 are created with offline keys and cold-staked from pool 1. They are signed offline, the same way as the airdrop.
+  3. The payout gateway (`payment-gateway/`) runs on its own small VM, not on the explorer or a masternode. Its settings:
+     - the hot wallet is encrypted with `GATEWAY_WALLET_PASSPHRASE`;
+     - `MAX_PAYOUT_AMMO` is 2,500, the per-member season cap;
+     - GLiBz has its own API key;
+     - it is served at `pay.ammocoin.org`.
+  4. Pool 7 is an address in the gateway hot wallet. Pool 4 funds it with 100,000 to start. It is topped up when it drops below 25,000, and it never holds more than 250,000. Every top-up is logged in section 4 within 7 days.
+  5. GLiBz pouch withdrawals open (`glibz_pouch_allow_withdraw`) only after steps 2 to 4. Until then the GLiBz pages say withdrawals "open later".
+  6. Pool 8 does not bridge pool 7. That option was considered and not chosen.
+- **Owner approval:** "approve funding plan and hunts" (2026-10-27 Claude Code session). **Prepared by:** Claude.
