@@ -351,7 +351,7 @@ The AMMOcoin project runs a closed loop. These are its principles:
    - The **v1.0 airdrop**, which restores v1.0 balances
 4. **NUGGETS have no cash value.** NUGGETS are the GLiBz platform currency, not a cryptocurrency, and cannot be cashed out for money.
 5. **Only NUGGETS from activity convert to AMMO.** NUGGETS that come from activity on GLiBz can be swapped for AMMO at the current GLiBz swap rate, which GLiBz sets and which is tiered and capped per member each month. NUGGETS paid for with cash or with AMMO are spend-only: they stay inside GLiBz and can never be swapped for AMMO or used toward a tier position.
-6. **Dollar goods and the reward catalogue are kept apart.** The GLiBz store at shop.glibz.com prices its goods in dollars with an ordinary card checkout. The GLiBz reward catalogue in the Schwag'n Depot has its own redemption amounts in NUGGETS or AMMO, which are not converted from dollars. Neither sets a price for AMMO.
+6. **Dollar goods and the reward catalog are kept apart.** The GLiBz store at shop.glibz.com prices its goods in dollars with an ordinary card checkout. The GLiBz reward catalog in the Schwag'n Depot has its own redemption amounts in NUGGETS or AMMO, which are not converted from dollars. Neither sets a price for AMMO.
 
 ---
 
@@ -372,14 +372,14 @@ Much like the issues with traditional financial sources, traditional social medi
 
 At GLiBz you can do all of these things in one place, with one login, while keeping your god-given right to privacy, choice and self-control: post Squawks to The Feed, share photos in Troves, form Cahoots, send a Wire to yer pardners, holler on the Soapbox, and post Flix and Movin' Pictures.
 
-- **NUGGETS.** Members collect NUGGETS for taking part: logging in, posting, commenting, connecting, referring and more. NUGGETS rank you on the Good Nugget Wall, can be redeemed in the GLiBz reward catalogue, and (NUGGETS from activity only) can be swapped for AMMO or redeemed toward a tier position. NUGGETS have no cash value.
-- **The Schwag'n Depot.** The GLiBz marketplace: the Depot on glibz.com, with its reward catalogue, and the GLiBz store at **shop.glibz.com**, which sells goods in dollars.
+- **NUGGETS.** Members collect NUGGETS for taking part: logging in, posting, commenting, connecting, referring and more. NUGGETS rank you on the Good Nugget Wall, can be redeemed in the GLiBz reward catalog, and (NUGGETS from activity only) can be swapped for AMMO or redeemed toward a tier position. NUGGETS have no cash value.
+- **The Schwag'n Depot.** The GLiBz marketplace: the Depot on glibz.com, with its reward catalog, and the GLiBz store at **shop.glibz.com**, which sells goods in dollars.
 - **Coming to GLiBz** (built and being switched on): an Activity hub listing every way to take part, AMMO airdrops for ranking up and for referrals, and a bridge to the sister ecosystem everQUIN.
 
 ### The QuarterMaster reserve
 The AMMO for the structured release and the contributor reserve is held and controlled by the **QuarterMaster reserve**: the project's reserve wallets, named after QuarterMaster, the GLiBz and AMMOcoin host. It is funded from the 250,000,000 AMMO block-1 reserve **after the v1.0 balance airdrop is paid**, together with voluntary pledges from the founding contributors who hold the largest v1.0 balances: v1.0 holders come first. The 61 largest v1.0 holders, founding contributors, have agreed to pledge the same fixed share of their snapshot balances by signed message (listed in `docs/migration/data/quartermaster-pledges.csv`); their airdrop will be reduced by that amount (AMMO-D-2026-10-18-12).
 
-The tiers and the contributor reserve are an off-chain distribution programme run by the AMMOcoin project. They are not a consensus rule, and nothing in the code reserves them.
+The tiers and the contributor reserve are an off-chain distribution program run by the AMMOcoin project. They are not a consensus rule, and nothing in the code reserves them.
 
 ### Masternode tiers: 2,350 positions
 

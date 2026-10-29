@@ -19,7 +19,7 @@ Not legal advice. Counsel review status: **pending**.
 | Cadence | 1 post a day per network; 2 a day on X (a daily glossary card at 17:00); Nov 5: launch at 09:00 and 17:00, ecosystem cross-over at 13:00 |
 | Series | *Under the Hood* (Oct 24 -> Nov 4, 12 posts), launch day (3 posts), *How-to* (Nov 6 -> Nov 20, 15 posts), *AMMO Glossary* (X only, 26 posts) |
 | Networks | The five owner-confirmed accounts (2026-10-22), one Publer CSV each: X x.com/ammocoin, Facebook facebook.com/ammocoin, YouTube Shorts youtube.com/@ammocoin6637, Instagram instagram.com/ammocoin, TikTok tiktok.com/@ammocoin. Community page: glibz.com/ammocoin. AMMOcoin has **no Telegram and no Discord**. |
-| Audio | None. Videos carry a silent audio track; no music from any catalogue is used. |
+| Audio | None. Videos carry a silent audio track; no music from any catalog is used. |
 | Claims file | `claims.md` in the kit: every factual claim with its source |
 
 ## 2. Rules every post follows
@@ -29,7 +29,7 @@ Not legal advice. Counsel review status: **pending**.
 3. **No sale, no exchanges (P-01, P-02, P-08).** No "buy", no exchanges, listings, on-ramps or "where to get AMMO". AMMO is never offered.
 4. **No airdrop or payout promises (P-06, P-13).** (Launch Season posts: scoped exception for "draw", "winners", "bounty", see AMMO-D-2026-10-27-07.) The v1.0 balance airdrop and any payout are not mentioned.
 5. **No pressure (P-13, P-14).** No "join early", no FOMO countdowns. The launch date is stated neutrally ("AMMOcoin's public launch is Nov 5, 2026"); the only date card is a single neutral "Nov 5" post on X on Nov 4.
-6. **Links.** Announcements link only to the GitHub release (`https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1`). Education posts link to the source, the docs on `main`, or `explorer.ammocoin.org`. The Nov 5 cross-over names ammocoin.org, everquin.com and glibz.com with no rewards, NUGGETS or programmes mentioned. The Nov 19 help post names GitHub issues, the docs and the community page glibz.com/ammocoin. Captions close with "More at glibz.com/ammocoin" (on X, in the first reply). Instagram captions say "link in bio"; Instagram and TikTok captions carry no URLs, since links are not clickable there.
+6. **Links.** Announcements link only to the GitHub release (`https://github.com/everquin/AMMOcoin/releases/tag/v1.1.1`). Education posts link to the source, the docs on `main`, or `explorer.ammocoin.org`. The Nov 5 cross-over names ammocoin.org, everquin.com and glibz.com with no rewards, NUGGETS or programs mentioned. The Nov 19 help post names GitHub issues, the docs and the community page glibz.com/ammocoin. Captions close with "More at glibz.com/ammocoin" (on X, in the first reply). Instagram captions say "link in bio"; Instagram and TikTok captions carry no URLs, since links are not clickable there.
 7. **Honest privacy (P-10).** The only privacy statement says transactions are transparent by default, Sapling shielding is optional and the shield/unshield sides are visible.
 8. **Safety (P-13).** Security posts say AMMOcoin will never ask anyone to send coins, keys or wallet files, and that anyone who does is attempting a scam (release notes wording).
 9. **Not an offer (P-12).** Long captions (Facebook, Instagram, TikTok, YouTube) end with: *"AMMOcoin is open-source network software. This post is not an offer and not financial advice."* The wording avoids the words "investment" and "return" so the disclaimer itself cannot be quoted as a return claim.

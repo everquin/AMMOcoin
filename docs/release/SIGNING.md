@@ -119,7 +119,7 @@ If the release key is compromised or rotated:
 
 Users who track the repo by pulling tags pick up the new `allowed_signers`
 automatically; users running an older checkout will fail verification until
-they update — which is the desired behaviour.
+they update — which is the desired behavior.
 
 ## Why SSH-key signing (not GPG)?
 

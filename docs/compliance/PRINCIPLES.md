@@ -34,7 +34,7 @@ The 250,000,000 AMMO block-1 reserve exists to airdrop v1.0 balances (snapshot a
 
 ## AMMO-P-07 Structured-release tier positions are earned or awarded, never sold
 
-FOUNDING-50, SPARTAN-300 and PATRIOT-2000 positions (40,000,000 AMMO, 2,350 positions, held by the QuarterMaster reserve) and the 50,000,000 AMMO AMMOgeek/AMMOfreak contributor reserve are an **off-chain distribution programme**, not a consensus rule. Positions are earned (with *earned* GLiBz NUGGETS) or awarded directly; they are never sold. Cash, card, AMMO purchases and *purchased* NUGGETS can never be used toward a position. Rank and account-age requirements apply; availability may be limited by jurisdiction; full terms are published on GLiBz. Masternodes are not sold as packages.
+FOUNDING-50, SPARTAN-300 and PATRIOT-2000 positions (40,000,000 AMMO, 2,350 positions, held by the QuarterMaster reserve) and the 50,000,000 AMMO AMMOgeek/AMMOfreak contributor reserve are an **off-chain distribution program**, not a consensus rule. Positions are earned (with *earned* GLiBz NUGGETS) or awarded directly; they are never sold. Cash, card, AMMO purchases and *purchased* NUGGETS can never be used toward a position. Rank and account-age requirements apply; availability may be limited by jurisdiction; full terms are published on GLiBz. Masternodes are not sold as packages.
 
 ## AMMO-P-08 Exchange listings only through a masternode governance vote
 
@@ -45,7 +45,7 @@ The project does not list or seek to list AMMO on any exchange, and does not ope
 - NUGGETS are the GLiBz platform currency, not a cryptocurrency, and have no cash value.
 - Only NUGGETS **earned** through activity can be swapped for AMMO, at the GLiBz swap rate, tiered and capped per member each month. NUGGETS bought with cash or with AMMO are spend-only and can never reach AMMO or a tier position.
 - No fixed NUGGETS-to-AMMO ratio is quoted in copy.
-- Fiat goods (shop.glibz.com, priced in dollars) and the reward catalogue (redemption prices in NUGGETS or AMMO, set independently and not converted from dollars) are kept apart. Neither sets a price for AMMO.
+- Fiat goods (shop.glibz.com, priced in dollars) and the reward catalog (redemption prices in NUGGETS or AMMO, set independently and not converted from dollars) are kept apart. Neither sets a price for AMMO.
 - Member-to-member trades are the members' own business; the project sets no price and is not a party.
 
 The GLiBz repository is canonical for how GLiBz enforces this; this principle records what AMMOcoin's documents may say about it.
@@ -60,7 +60,7 @@ Privacy is never marketed as a way to avoid tax, financial reporting, sanctions 
 
 ## AMMO-P-12 Not an offer; no advice
 
-Every white paper, programme page and promotion states, where space allows, that it is not an offer to sell anything, not investment advice and not a promise of any return, yield, profit or price.
+Every white paper, program page and promotion states, where space allows, that it is not an offer to sell anything, not investment advice and not a promise of any return, yield, profit or price.
 
 ## AMMO-P-13 Safety in migrations and distributions
 

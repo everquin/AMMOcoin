@@ -4,7 +4,7 @@ This folder is the auditable record of how AMMOcoin is deliberately built and de
 
 > **Not legal advice.** This record was written by the project to document its own intent and the code and copy that carry it out. It is not a legal opinion and has not been reviewed by counsel.
 >
-> **Counsel review status: PENDING.** No lawyer has reviewed these principles, decisions or the programmes they describe. Until counsel has reviewed them, treat every programme that moves reserve AMMO to people (tier positions, contributor rewards, NUGGETS swaps) as needing review before it is switched on or widened.
+> **Counsel review status: PENDING.** No lawyer has reviewed these principles, decisions or the programs they describe. Until counsel has reviewed them, treat every program that moves reserve AMMO to people (tier positions, contributor rewards, NUGGETS swaps) as needing review before it is switched on or widened.
 
 ## Scope
 
@@ -13,7 +13,7 @@ This folder is the auditable record of how AMMOcoin is deliberately built and de
 | **everquin/AMMOcoin** (this repo) | Node source, consensus rules, release notes, white papers, payment gateway, explorer | `docs/compliance/` (**canonical** principles) |
 | everquin/ammocoin_website | ammocoin.org public copy | `docs/compliance/` (site-specific record, same principle IDs) |
 | everquin/AMMOcoin_App | Desktop wallet app | `docs/compliance/` (app-specific record, same principle IDs) |
-| GLiBz (glibz.com) | NUGGETS, swap, reward catalogue, tiers terms | The GLiBz repository keeps its own record for the NUGGETS economy |
+| GLiBz (glibz.com) | NUGGETS, swap, reward catalog, tiers terms | The GLiBz repository keeps its own record for the NUGGETS economy |
 
 Principle IDs (`AMMO-P-xx`) are the same in all three AMMOcoin repositories. This repository holds the canonical wording; the site and app records point back here.
 

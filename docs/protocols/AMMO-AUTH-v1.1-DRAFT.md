@@ -15,7 +15,7 @@ from meeting its "tamper-proof" claim:
 |-------------|-------------------|
 | **C1.** REGISTER has no proof the registrant ever held the chip — anyone who once scanned the chip can pre-empt the owner via first-seen. | Off-chain **chip proof-of-possession** committed via the existing `metadata_hash`. No change to on-chain message size. |
 | **C2.** TRANSFER has no nonce / prev-txid binding / recipient consent — replayable, intra-block ordering non-deterministic, push-without-consent. | On-chain **`prev_txid`** binds each transfer to a specific predecessor. Off-chain **recipient countersignature** committed via a new `transfer_metadata_hash`. |
-| **C3.** REVOKE is instant + single-sig + irreversible — brief wallet compromise bricks every item. | **Delayed effect**: REVOKE takes effect after 144 blocks (~6h) and can be cancelled by a subsequent REVOKE-CANCEL from the owner within that window. |
+| **C3.** REVOKE is instant + single-sig + irreversible — brief wallet compromise bricks every item. | **Delayed effect**: REVOKE takes effect after 144 blocks (~6h) and can be canceled by a subsequent REVOKE-CANCEL from the owner within that window. |
 
 v1.1 also clarifies the spec ambiguities flagged by the audit (sender
 definition for multi-input txs, intra-block ordering, endianness,
@@ -216,7 +216,7 @@ Offset  Size  Field              Description
 4       1     version            0x02
 5       1     type               0x13 (REVOKE-CANCEL)
 6       20    chip_pubkey_hash   HASH160 of the chip key
-26      32    revoke_txid        txid of the REVOKE being cancelled
+26      32    revoke_txid        txid of the REVOKE being canceled
 ```
 
 **Total: 58 bytes.**
@@ -232,7 +232,7 @@ takes effect immediately.
   implementations diverged on which input.)
 - **Intra-block ordering:** transaction index ascending; for the rare
   case of identical prev_txid bindings (an indexer bug or chain
-  reorganisation), txid lex order is the final tiebreak.
+  reorganization), txid lex order is the final tiebreak.
 - **Endianness:** all multi-byte integers in v1.1 messages are
   big-endian. Hashes and txids are stored in their natural display
   byte order. *(v1.0 was silent.)*
@@ -253,7 +253,7 @@ A v1.1-compliant indexer MUST:
    proof-of-possession before treating the chip as "authentic." Chips
    whose metadata is unreachable are flagged as "unverified" — never
    "authentic."
-3. Preserve raw bytes of any unrecognised AMMO-prefixed OP_RETURN
+3. Preserve raw bytes of any unrecognized AMMO-prefixed OP_RETURN
    (version > 0x02) so that future indexer versions can re-process the
    chain.
 4. Use deterministic per-block tiebreaking (tx index ascending) so two

@@ -35,7 +35,7 @@ Don't post claims in GitHub Issues: Issues are public, and anything posted there
 
 ## For the project: reply templates
 
-**Acknowledgement** (send from claims@ammocoin.org):
+**Acknowledgment** (send from claims@ammocoin.org):
 
 > Thanks, your AMMOcoin airdrop claim is received as **C-NNNN**. Its status will be listed under that number in the public claims log, https://github.com/everquin/AMMOcoin/blob/main/docs/migration/CLAIMS_LOG.md, without your email or addresses. We will never ask for your private key, seed phrase, wallet file or any coins.
 
