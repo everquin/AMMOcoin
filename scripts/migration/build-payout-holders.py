@@ -73,7 +73,7 @@ def main() -> None:
     signed_too = sorted(x for x in full_pay if sigs.get(x))
     if signed_too:
         sys.exit(f"{len(signed_too)} --full-pay address(es) also have a signature (e.g. {signed_too[0]}); "
-                 "a signed pledge is honoured, so remove it from one list. Nothing written.")
+                 "a signed pledge is honored, so remove it from one list. Nothing written.")
     bad = [addr for addr, p in pledges.items()
            if addr not in full_pay and (not sigs.get(addr) or not verify(cli, addr, sigs[addr], p["message"]))]
     if bad:
