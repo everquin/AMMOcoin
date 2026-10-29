@@ -428,3 +428,14 @@ Open until fixed; record the fixing commit in the Status column.
 - **Enforcement / evidence:** `scripts/migration/migration-broadcast.py` (`already_sent`, `--skip-sent` / `--no-skip-sent`), `scripts/migration/migration-prepare.py` (`cli_argv`, `resolve_timeout`, `p2cs_script`, `apply_cold_stake`, `check_cold_stake_decoded`), `scripts/migration/test_migration_prepare.py` (it rebuilds the reserve's published P2CS script from `AGkC8…` and `SUr6…`, and round-trips the Bitcoin-format legacy test vectors), and `scripts/migration/test_migration_broadcast.py`.
 - **Not verified offline:** how a live v1.1.1 node answers `getrawtransaction` / `gettransaction` for these txs, the node's own `decoderawtransaction` of a patched P2CS transaction, and the listunspent run time on the builder. Before anything is sent, the owner should run step 4 (prepare only) on the builder.
 - **Owner approval:** pending. **Prepared by:** Claude.
+
+## AMMO-D-2026-10-28-04: Airdrop shortfall split, claim hold-back and pool staking
+
+- **Date:** 2026-10-28
+- **Status:** Approved by the owner on the Launch Desk, 2026-10-29 ("Proceed as recommended" on the three airdrop decisions). Takes effect with the airdrop (after the Nov 1 pledge deadline).
+- **Decision:**
+  1. **Shortfall split (pledges not signed by Nov 1).** Pools 3 and 4 share the shortfall pro rata to their planned sizes (40,000,000 : 50,000,000 = 4 : 5). With the Oct 28 draft (47 signed, 14 paid in full) that is pool 3 = 31,052,139.91421180 and pool 4 = 38,815,174.89276473 (total 69,867,314.80697653). The exact figures are recomputed from the final payout list after Nov 1 and published with the airdrop record.
+  2. **Claim hold-back.** No separate hold-back address. Signed-message claims (AIRDROPS.md section 3) are paid from what stays in pool 1 after pools 2–5 are funded (pool 1's remaining stake rewards and any unpayable snapshot amounts), as AIRDROPS.md section 3 step 4 already says ("from the block-1 reserve").
+  3. **Pool staking.** Pools 3 and 4 are created cold-staked to the same staker as pool 1 (ammo-02, `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY`), owner key offline. Pool 5 (41,700 unattributed set-aside) is created as a plain offline-key output and does not stake.
+- **Why:** pro rata keeps the tiers and the contributor reserve in their planned proportion; using pool 1 for claims avoids a new hot or warm address; one staker keeps the network's stake weight where it is today.
+- **Related:** AMMO-D-2026-10-25-01 (deadline), AMMO-D-2026-10-27-08 (funding sequence), AMMO-D-2026-10-28-03 (script fixes).
