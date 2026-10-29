@@ -1,4 +1,4 @@
-# v1.0 airdrop claims log (public, anonymised)
+# v1.0 airdrop claims log (public, anonymized)
 
 This is the public list of every signed-message claim received for the v1.0 → v1.1 airdrop ([V1.0_BALANCE_AIRDROP.md](V1.0_BALANCE_AIRDROP.md), [AIRDROPS.md](../compliance/AIRDROPS.md) section 3). It lets anyone see that claims are answered and how, without exposing who made them (decision AMMO-D-2026-10-27-02).
 

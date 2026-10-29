@@ -84,11 +84,11 @@ Not legal advice. Counsel review status: **pending**.
 
 - **Date:** 2026-10-17
 - **Principles:** AMMO-P-02, AMMO-P-06, AMMO-P-07, AMMO-P-14
-- **Decision:** FOUNDING-50 (50 x 200,000 AMMO, invitation only), SPARTAN-300 (300 x 33,333.333 AMMO) and PATRIOT-2000 (2,000 x 10,000 AMMO, opens after SPARTAN-300 is fully allocated) continue as an off-chain programme. The AMMO is held by the QuarterMaster reserve, funded from what remains of the block-1 reserve after the airdrop. Positions are earned with earned NUGGETS or awarded directly by the QuarterMaster; never sold; cash and purchased NUGGETS cannot be used. Rank and account-age requirements; jurisdiction note.
+- **Decision:** FOUNDING-50 (50 x 200,000 AMMO, invitation only), SPARTAN-300 (300 x 33,333.333 AMMO) and PATRIOT-2000 (2,000 x 10,000 AMMO, opens after SPARTAN-300 is fully allocated) continue as an off-chain program. The AMMO is held by the QuarterMaster reserve, funded from what remains of the block-1 reserve after the airdrop. Positions are earned with earned NUGGETS or awarded directly by the QuarterMaster; never sold; cash and purchased NUGGETS cannot be used. Rank and account-age requirements; jurisdiction note.
 - **Context:** The tiers were removed from the site on 2026-10-16 while copy was corrected, then restored accurately. Earlier copy offered "AMMOmaster packages" for "earned/exchanged NUGGETS", which left room for a purchase path.
 - **Rationale:** Distributing masternode collateral to many independent hands without any sale.
-- **Alternatives rejected:** selling positions or packages; allowing purchased NUGGETS; dropping the programme.
-- **Enforcement / evidence:** white paper `docs/whitepapers/AMMOcoin_Whitepaper_2ndEdition_v1.1.1.md:405-420`; `website afb24a5`, `website 28c00e7`. The earned-only rule is enforced on GLiBz (see the GLiBz compliance record); nothing in this repository enforces it, by design (the programme is not a consensus rule).
+- **Alternatives rejected:** selling positions or packages; allowing purchased NUGGETS; dropping the program.
+- **Enforcement / evidence:** white paper `docs/whitepapers/AMMOcoin_Whitepaper_2ndEdition_v1.1.1.md:405-420`; `website afb24a5`, `website 28c00e7`. The earned-only rule is enforced on GLiBz (see the GLiBz compliance record); nothing in this repository enforces it, by design (the program is not a consensus rule).
 - **UNVERIFIED:** the QuarterMaster reserve wallet addresses are not published (G-06); positions allocated so far.
 - **Owner approval:** Owner decision 2026-10-17 ("tiers continue as earned/awarded positions held by the QuarterMaster reserve").
 
@@ -96,7 +96,7 @@ Not legal advice. Counsel review status: **pending**.
 
 - **Date:** 2026-10-17
 - **Principles:** AMMO-P-02, AMMO-P-03, AMMO-P-09
-- **Decision:** Only earned NUGGETS swap to AMMO (tiered, capped per member per month, no fixed ratio quoted); purchased NUGGETS are spend-only; the dollar-priced store and the reward catalogue are kept apart; catalogue prices are not converted from dollars.
+- **Decision:** Only earned NUGGETS swap to AMMO (tiered, capped per member per month, no fixed ratio quoted); purchased NUGGETS are spend-only; the dollar-priced store and the reward catalog are kept apart; catalog prices are not converted from dollars.
 - **Evidence:** white paper lines 362-377; `website 28c00e7` (drops "100 NUGGETS = 1 AMMO" everywhere). GLiBz implementation is recorded in the GLiBz repository.
 - **Related code here:** `payment-gateway/` sends AMMO for GLiBz swaps (`payment-gateway/src/app/api/payouts/route.ts`); it has no knowledge of earned vs purchased NUGGETS, so the gate must stay on GLiBz. Its wording calls the swap a "sale" (G-07).
 - **Owner approval:** Owner decision 2026-10-17 ("closed loop approved").
@@ -116,7 +116,7 @@ Not legal advice. Counsel review status: **pending**.
 - **Date:** 2026-10-17
 - **Principles:** AMMO-P-15
 - **Decision:** The wallet app and website front-facing code are public so anyone can check them. Nothing ships without review against this checklist.
-- **Evidence:** `app 61d5674` (MIT licence), `app a5d52e1` (internal notes moved to `docs/internal` and credentials redacted). This folder, the PR template and CODEOWNERS (added with this log).
+- **Evidence:** `app 61d5674` (MIT license), `app a5d52e1` (internal notes moved to `docs/internal` and credentials redacted). This folder, the PR template and CODEOWNERS (added with this log).
 - **Not enforced:** **UNVERIFIED** whether GitHub branch protection / required reviews are on for any of the three repositories. The rule is procedural until they are.
 - **Owner approval:** Owner decision 2026-10-17 ("app and website front-facing code public; no deploy without review").
 
@@ -132,7 +132,7 @@ Not legal advice. Counsel review status: **pending**.
 - **Principles:** AMMO-P-02, P-03, P-04, P-05, P-06, P-08, P-09, P-10, P-11, P-12
 - **Shared ID:** the same ID is used for the matching fixes in the website log (`website 59883d1`) and the app log (`app 49c0801`).
 - **Decision / change (`be2c0aad6`, branch `v1.1.1-pos-fork`):**
-  - G-02 `docs/02-staking-guide.md`: "passive income", "while you sleep", "Compound Growth", "Annual Percentage Yield", "Portfolio Allocation" and the "Annual Return ~17%" example removed. Reward estimation is now: expected share of blocks = your weight / network weight; expected stakes per day = share x 480 blocks/day; each staked block pays `GetBlockValue()` minus `GetMasternodePayment()` at that height. No percentage return, no annualised figure. Tax section keeps record-keeping and adds the `[^tax]` footnote; "USD value at receipt" dropped (the project publishes no price).
+  - G-02 `docs/02-staking-guide.md`: "passive income", "while you sleep", "Compound Growth", "Annual Percentage Yield", "Portfolio Allocation" and the "Annual Return ~17%" example removed. Reward estimation is now: expected share of blocks = your weight / network weight; expected stakes per day = share x 480 blocks/day; each staked block pays `GetBlockValue()` minus `GetMasternodePayment()` at that height. No percentage return, no annualized figure. Tax section keeps record-keeping and adds the `[^tax]` footnote; "USD value at receipt" dropped (the project publishes no price).
   - G-02b `docs/03-masternode-setup.md`: "Economics & ROI Analysis" / "Investment Breakdown" / "ROI Optimization" / "Price Volatility" replaced by "How Masternode Payments Work" (collateral locked in your own wallet, 3 AMMO per paid block, about one payment every N blocks with N = enabled masternodes, the project publishes no price). "Premium rewards / higher returns than staking" (also untrue: 3 vs 247 AMMO) replaced with the code's payment.
   - G-02c `README.md`, `source/README.md`: "Passive income" -> stakers who create a block receive the staker share set by `GetBlockValue()`.
   - G-02d, G-05 `docs/10-faq.md`: "Where can I buy" now says the project does not sell AMMO, held no ICO and lists it nowhere; AMMO is received via staking, masternodes, contributions and *earned* GLiBz NUGGETS; listings only via a masternode vote. "Investment Questions" -> "Value Questions": AMMO is not an investment; the project makes no value claims and publishes no price. Added a tax question with the footnote. "your return depends on" / "Compounding" reworded.
@@ -167,7 +167,7 @@ Not legal advice. Counsel review status: **pending**.
 - **Decision:** [AIRDROPS.md](AIRDROPS.md) is the compliance record for the v1.0 -> v1.1 airdrop. It fixes: snapshot at v1.0 block 434,881; payout of exactly the snapshot balance to the same address from the block-1 reserve, airdrop first; watch-only build, offline signing, logged broadcast, per-address reconciliation; a `signmessage` claim (message names the destination) only for addresses the payout cannot reach or that were missed; and the list of records that must be published (snapshot file hash, payout txids, reconciliation CSV, claims list, reserve / hold-back / QuarterMaster / contributor addresses, the withdrawn disposal address and what it received, and a reserve reconciliation statement). It states why the airdrop is not a sale: no payment, no purchase, no solicitation, no promise of value, no raise.
 - **Context:** D-2026-10-16-01 set the airdrop model but no document said what would be published, so "airdrop first" (P-06) could not be audited (G-06).
 - **Enforcement / evidence:** `docs/compliance/AIRDROPS.md` (this commit). Snapshot file `docs/migration/data/v1.0-complete-balance-snapshot.json` (committed `d25c53d39`), SHA256 `9da3c0d1c4b703d713a4f00c543e3e0db8f53c0c846b49499e218e9d8acf751c` (to be confirmed as canonical). Tooling `scripts/migration/migration-prepare.py`, `migration-sign-offline.py`, `migration-broadcast.py`, `verify-migration.py`.
-- **Not enforced in code:** the whole programme is off-chain. Every record in AIRDROPS.md section 4 marked **TO BE PUBLISHED** is still missing.
+- **Not enforced in code:** the whole program is off-chain. Every record in AIRDROPS.md section 4 marked **TO BE PUBLISHED** is still missing.
 - **Inconsistencies found (to fix before payout):** the snapshot file records `supply_match: false` (232,397,748.45021523 vs expected 232,439,448.45021522 AMMO, 41,700 AMMO apart); `scripts/migration/verify-claim.py` still calls the signed-message claim deprecated and the disposal model current (reverse of D-2026-10-16-01); `migration-prepare.py` usage refers to a `genesis-top-holders.json` from the earlier "Option 2.5" plan; the user guide's claim message names no destination. Tracked as G-15.
 - **Owner approval:** written at the owner's request in the 2026-10-17 session (relayed); commit under owner identity. The published values need the owner's own commit.
 
@@ -232,7 +232,7 @@ Not legal advice. Counsel review status: **pending**.
 - **Enforcement / evidence:** governance commitment, not code. The masternode collateral outputs and IPs are to be listed here once they are confirmed.
 - **Owner approval:** the owner asked for masternodes on the spare Vultr nodes on 2026-10-24 ("run a few masternodes … through those"). The abstention rule is **proposed by Claude, pending owner approval** (approval is the merge).
 
-## AMMO-D-2026-10-24-04 Purpose wallets: one labelled, published pool per purpose; no random splitting
+## AMMO-D-2026-10-24-04 Purpose wallets: one labeled, published pool per purpose; no random splitting
 
 - **Date:** 2026-10-24
 - **Principles:** AMMO-P-02, P-06, P-07, P-13
@@ -299,17 +299,17 @@ Not legal advice. Counsel review status: **pending**.
 - **Owner approval:** owner asked on 2026-10-27 to fix the Reserves page numbers so the pools add up and the sequencing follows P-06; approval is the merge. Item 5 is the owner's to decide. **Prepared by:** Claude.
 - **Later:** item 5 decided 2026-10-27 in AMMO-D-2026-10-27-04 (pointer only; the entry above is unchanged).
 
-## AMMO-D-2026-10-27-02 Airdrop claims go to a dedicated email address, with a public anonymised claims log; GitHub Issues are for public technical bugs only
+## AMMO-D-2026-10-27-02 Airdrop claims go to a dedicated email address, with a public anonymized claims log; GitHub Issues are for public technical bugs only
 
 - **Date:** 2026-10-27
 - **Principles:** AMMO-P-06, P-13, P-14
 - **Context:** AIRDROPS.md section 3 and the user guide said claims go "through the official channel announced on the AMMOcoin GitHub repository", but no channel was ever named and Discussions is off (overnight audit 2026-10-27). The owner asked for "dedicated email or GitHub Issues, whichever is better practice".
 - **Decision:**
   1. Signed-message claims are sent by email to **claims@ammocoin.org**, a dedicated address on the project domain that forwards to the owner's inbox (Cloudflare Email Routing; ammocoin.org's MX records already point to Cloudflare). The owner's personal address is never published.
-  2. Each claim gets a number (`C-0001`, ...). Every claim received is listed in the public, anonymised [`docs/migration/CLAIMS_LOG.md`](../migration/CLAIMS_LOG.md): claim number, date received, status, outcome. It never holds names, emails, message text, addresses or signatures. A paid claim's outcome is its payout txid, and the paid claim also goes in the AIRDROPS.md section 4 record (chain data only). Unpaid or rejected claims never show an address. The log is updated within 7 days of any change.
+  2. Each claim gets a number (`C-0001`, ...). Every claim received is listed in the public, anonymized [`docs/migration/CLAIMS_LOG.md`](../migration/CLAIMS_LOG.md): claim number, date received, status, outcome. It never holds names, emails, message text, addresses or signatures. A paid claim's outcome is its payout txid, and the paid claim also goes in the AIRDROPS.md section 4 record (chain data only). Unpaid or rejected claims never show an address. The log is updated within 7 days of any change.
   3. GitHub Issues stay open for **public technical bugs only**. The issue chooser (`.github/ISSUE_TEMPLATE/config.yml`) sends claims to the email instructions and security reports to security@ammocoin.org.
   4. What to send is fixed in [`docs/migration/CLAIM_TEMPLATE.md`](../migration/CLAIM_TEMPLATE.md): four lines (v1.0 address, v1.1 address, exact message, signature) and nothing else.
-- **Rationale:** a claim ties a v1.0 address and balance to a person and their email address. In a public issue that is exposed to everyone for good, along with the GitHub account. It also tells scammers exactly who is owed coins and invites lookalike replies, and people tend to paste wallet files or keys into issues. Email keeps the personal part private, and the anonymised log keeps the process checkable. The withdrawn v1.1.0 email registration (D-2026-10-16-01) is different: that was for everyone, came with a deadline and asked people to send coins. This is a fallback only for a balance that is missing after the automatic airdrop. It has no deadline, and holders send nothing but a non-secret signature.
+- **Rationale:** a claim ties a v1.0 address and balance to a person and their email address. In a public issue that is exposed to everyone for good, along with the GitHub account. It also tells scammers exactly who is owed coins and invites lookalike replies, and people tend to paste wallet files or keys into issues. Email keeps the personal part private, and the anonymized log keeps the process checkable. The withdrawn v1.1.0 email registration (D-2026-10-16-01) is different: that was for everyone, came with a deadline and asked people to send coins. This is a fallback only for a balance that is missing after the automatic airdrop. It has no deadline, and holders send nothing but a non-secret signature.
 - **Alternatives rejected:** public GitHub Issues with a template (personal data public, scam targeting); Discussions (same exposure); a web form (needs hosting, storage and spam handling, and looks like the withdrawn `ammocoin.org/migrate` form); reusing support@ (mixes claims with general mail; not confirmed to be routed).
 - **Enforcement / evidence:** `docs/migration/V1.0_BALANCE_AIRDROP.md` step 3; AIRDROPS.md sections 3 and 4; `docs/10-faq.md`; `README.md` (Community & Support); `docs/installation/INSTALL_MACOS.md` (old web-form and support@ steps marked withdrawn); website `migration.html` (website AMMO-D-2026-10-27-02 (site)). **Not yet live:** the mailbox has to be created by the owner (Cloudflare Email Routing). Until it is, mail to claims@ammocoin.org is refused or lost, so it must be set up and tested before the airdrop payout.
 - **Owner approval:** owner, 2026-10-27: "dedicated email or GitHub Issues, whichever is better practice"; this choice and the log format are approved by the merge. **Prepared by:** Claude.
@@ -384,9 +384,9 @@ Open until fixed; record the fixing commit in the Status column.
 
 ## AMMO-D-2026-10-27-07 Launch Season social posts may say "draw", "winners" and "bounty" (scoped exception to the SOCIAL_KIT_2026-11 word list)
 
-- **Context:** The owner directed GLiBz Launch Season (GLiBz GLZ-D-2026-10-27-08 and -09). It runs from Nov 5 2026 to Jan 4 2027 and includes free Bounty Board missions, provably fair milestone draws, a weekly skill contest and hunts. All AMMO comes from the AMMOgeek/AMMOfreak contributor reserve (P-07), and participation is on GLiBz only. The social kit rules in SOCIAL_KIT_2026-11.md (2026-10-22) say no airdrop or payout mentions, no "early" and no reward descriptions. AMMOcoin posts can't announce these programmes without some of those words.
+- **Context:** The owner directed GLiBz Launch Season (GLiBz GLZ-D-2026-10-27-08 and -09). It runs from Nov 5 2026 to Jan 4 2027 and includes free Bounty Board missions, provably fair milestone draws, a weekly skill contest and hunts. All AMMO comes from the AMMOgeek/AMMOfreak contributor reserve (P-07), and participation is on GLiBz only. The social kit rules in SOCIAL_KIT_2026-11.md (2026-10-22) say no airdrop or payout mentions, no "early" and no reward descriptions. AMMOcoin posts can't announce these programs without some of those words.
 - **Decision:** This applies only to the posts in `ammocoin-launch-season-*.csv`, the AMMOcoin Publer files built 2026-10-27, and to later Launch Season posts:
-  - They may name the programmes and use the words "draw", "winners", "bounty", "Bounty Board", "contest" and "hunt".
+  - They may name the programs and use the words "draw", "winners", "bounty", "Bounty Board", "contest" and "hunt".
   - They still never say "prize", "reward", "airdrop", "payout", "giveaway", "earn", "early" or any price, value or return word.
   - They never state an AMMO amount, and never use "like/share/tag/follow/comment to enter".
   - Every post points to GLiBz, where people take part, or to ammocoin.org/uses.
@@ -394,7 +394,7 @@ Open until fixed; record the fixing commit in the Status column.
   - The rank-up bonus is not promoted on social media.
   - The SOCIAL_KIT_2026-11 posts themselves are unchanged.
 - **Why this is not a skirt (P-14):** Nothing can be bought to take part. The project sells no AMMO and seeks no listing. Grants are 18+, capped per member and logged.
-- **Counsel:** a brief on free task-based distributions (In re Tomahawk Exploration LLC, SEC Rel. 33-10530, Aug 14 2018) and contest/sweepstakes rules is with the owner. The programmes go live on schedule unless counsel says otherwise.
+- **Counsel:** a brief on free task-based distributions (In re Tomahawk Exploration LLC, SEC Rel. 33-10530, Aug 14 2018) and contest/sweepstakes rules is with the owner. The programs go live on schedule unless counsel says otherwise.
 - **Owner approval:** "Switch launch on; yes to all you laid out" (2026-10-27 Claude Code session). **Prepared by:** Claude.
 
 ## AMMO-D-2026-10-27-08 Launch Season funding: pouch balances first; the contributor reserve and payout float come after the airdrop

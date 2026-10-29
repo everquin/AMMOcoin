@@ -39,7 +39,7 @@ Answer every question. A "yes" to a red-flag question blocks the merge until it 
 
 - [ ] Does copy say "anonymous", "untraceable" or "completely private", or omit the limits of shielding? (P-10)
 - [ ] Is privacy promoted as a way around tax, reporting, sanctions or law enforcement? Is the tax footnote present where privacy is promoted at length? (P-11)
-- [ ] Do programme pages carry "not an offer, not investment advice, no promise of return" and the jurisdiction note? (P-12, P-07)
+- [ ] Do program pages carry "not an offer, not investment advice, no promise of return" and the jurisdiction note? (P-12, P-07)
 
 ## G. Substance over wording
 
