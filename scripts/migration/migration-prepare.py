@@ -41,13 +41,26 @@ Usage:
         --watch-wallet ammocoin-cli --change-address <reserve change addr> \\
         --from-fan-out fanout-addresses.txt --output batches.json
 
+Options:
+  --watch-wallet "ammocoin-cli -datadir=/path": split with shlex, like the
+     other migration scripts (a path that exists as given is one program).
+  --cli-timeout SEC (or env AMMO_CLI_TIMEOUT): per-call node CLI timeout,
+     default 300 s; listunspent over 100k+ watched outputs can be slow.
+  Cold staking (opt-in, for pools 3-5): a holder with a "staker" field (an
+     S... staking address), or every holder with --cold-stake-staker S...,
+     is paid as a P2CS output: the holder address is the owner, the staker
+     only stakes. The script is the node's own (GetScriptForStakeDelegationLOF).
+
 payout-holders.json comes from build-payout-holders.py (published snapshot
 minus signed pledges, AMMO-D-2026-10-18-12 / -10-25-01).
 """
 
 import argparse
+import hashlib
 import json
 import math
+import os
+import shlex
 from decimal import ROUND_CEILING, ROUND_DOWN, Decimal
 import subprocess
 import sys
@@ -64,16 +77,239 @@ MAX_INPUTS_PER_TX = 450     # fan-out tx: 450 cold-stake inputs stays well under
 INPUT_BYTES = 180           # signed size estimate per input (cold-stake owner spend is the largest kind)
 OUTPUT_BYTES = 34
 MIN_PIECE_AMMO = Decimal("1")  # never create a fan-out piece smaller than this unless it completes a batch
+DEFAULT_CLI_TIMEOUT_SEC = 300  # listunspent over 100k+ watched outputs can take minutes
+CLI_TIMEOUT_SEC = DEFAULT_CLI_TIMEOUT_SEC  # set from --cli-timeout / AMMO_CLI_TIMEOUT in main()
+
+
+def cli_argv(binary: str) -> list[str]:
+    """The node CLI command as argv. Split like the other migration scripts
+    (shlex), so "ammocoin-cli -datadir=/x" works; a path that exists as given
+    (even with spaces) is used as one program, as before."""
+    if os.path.exists(binary):
+        return [binary]
+    argv = shlex.split(binary)
+    if not argv:
+        raise ValueError("empty node CLI command")
+    return argv
 
 
 def cli(binary: str, *args: str) -> str:
     """Run ammocoin-cli and return stdout, raising on failure."""
     proc = subprocess.run(
-        [binary, *args], capture_output=True, text=True, timeout=60
+        [*cli_argv(binary), *args], capture_output=True, text=True, timeout=CLI_TIMEOUT_SEC
     )
     if proc.returncode != 0:
         raise RuntimeError(f"ammocoin-cli {' '.join(args)} failed: {proc.stderr.strip()}")
     return proc.stdout.strip()
+
+
+def resolve_timeout(flag: int | None, env: dict[str, str] | None = None) -> int:
+    """--cli-timeout wins, then AMMO_CLI_TIMEOUT, then DEFAULT_CLI_TIMEOUT_SEC."""
+    env = os.environ if env is None else env
+    raw = flag if flag is not None else env.get("AMMO_CLI_TIMEOUT")
+    if raw is None or raw == "":
+        return DEFAULT_CLI_TIMEOUT_SEC
+    try:
+        val = int(raw)
+    except ValueError:
+        raise SystemExit(f"AMMO_CLI_TIMEOUT must be a whole number of seconds, got {raw!r}")
+    if val <= 0:
+        raise SystemExit(f"CLI timeout must be positive, got {val}")
+    return val
+
+
+# ---- Cold-stake (P2CS) outputs ---------------------------------------------
+# createrawtransaction only pays plain addresses, so a cold-stake recipient is
+# first paid to its owner address (P2PKH) and that one output's script is then
+# replaced with the P2CS script, exactly as the node builds it in
+# GetScriptForStakeDelegationLOF (source/src/script/standard.cpp):
+#   OP_DUP OP_HASH160 OP_ROT OP_IF OP_CHECKCOLDSTAKEVERIFY_LOF <staker> OP_ELSE <owner>
+#   OP_ENDIF OP_EQUALVERIFY OP_CHECKSIG
+# Mainnet never activates UPGRADE_V6_0 (chainparams.cpp: NO_ACTIVATION_HEIGHT), so
+# delegatestake uses the _LOF opcode (0xd1); the reserve's own script uses it too.
+
+B58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+PUBKEY_ADDRESS_PREFIX = 23   # chainparams.cpp mainnet base58Prefixes[PUBKEY_ADDRESS] ('A')
+STAKING_ADDRESS_PREFIX = 63  # chainparams.cpp mainnet base58Prefixes[STAKING_ADDRESS] ('S')
+OP_DUP, OP_HASH160, OP_ROT, OP_IF, OP_ELSE, OP_ENDIF = 0x76, 0xA9, 0x7B, 0x63, 0x67, 0x68
+OP_EQUALVERIFY, OP_CHECKSIG = 0x88, 0xAC
+OP_CHECKCOLDSTAKEVERIFY_LOF, OP_CHECKCOLDSTAKEVERIFY = 0xD1, 0xD2
+MIN_COLDSTAKING_AMMO = Decimal("1")  # consensus.h MIN_COLDSTAKING_AMOUNT
+
+
+def _dsha256(b: bytes) -> bytes:
+    return hashlib.sha256(hashlib.sha256(b).digest()).digest()
+
+
+def b58check_decode(addr: str) -> tuple[int, bytes]:
+    """(version byte, payload) of a base58check string; raises on a bad checksum."""
+    n = 0
+    for ch in addr:
+        i = B58_ALPHABET.find(ch)
+        if i < 0:
+            raise ValueError(f"{addr!r}: not base58")
+        n = n * 58 + i
+    raw = n.to_bytes((n.bit_length() + 7) // 8, "big") if n else b""
+    raw = b"\x00" * (len(addr) - len(addr.lstrip("1"))) + raw
+    if len(raw) < 5 or _dsha256(raw[:-4])[:4] != raw[-4:]:
+        raise ValueError(f"{addr!r}: bad base58check checksum")
+    return raw[0], raw[1:-4]
+
+
+def b58check_encode(version: int, payload: bytes) -> str:
+    raw = bytes([version]) + payload
+    raw += _dsha256(raw)[:4]
+    n = int.from_bytes(raw, "big")
+    out = ""
+    while n:
+        n, r = divmod(n, 58)
+        out = B58_ALPHABET[r] + out
+    return "1" * (len(raw) - len(raw.lstrip(b"\x00"))) + out
+
+
+def address_hash160(addr: str, prefix: int, what: str) -> bytes:
+    version, h = b58check_decode(addr)
+    if version != prefix or len(h) != 20:
+        raise ValueError(f"{what} {addr} is not a mainnet {'staking (S…)' if prefix == STAKING_ADDRESS_PREFIX else 'P2PKH (A…)'} address")
+    return h
+
+
+def p2pkh_script(owner_hash: bytes) -> bytes:
+    return bytes([OP_DUP, OP_HASH160, 0x14]) + owner_hash + bytes([OP_EQUALVERIFY, OP_CHECKSIG])
+
+
+def p2cs_script(staker_hash: bytes, owner_hash: bytes, lof: bool = True) -> bytes:
+    if len(staker_hash) != 20 or len(owner_hash) != 20:
+        raise ValueError("P2CS needs two 20-byte key hashes")
+    op = OP_CHECKCOLDSTAKEVERIFY_LOF if lof else OP_CHECKCOLDSTAKEVERIFY
+    return (bytes([OP_DUP, OP_HASH160, OP_ROT, OP_IF, op, 0x14]) + staker_hash
+            + bytes([OP_ELSE, 0x14]) + owner_hash + bytes([OP_ENDIF, OP_EQUALVERIFY, OP_CHECKSIG]))
+
+
+def parse_p2cs(script: bytes) -> tuple[bytes, bytes]:
+    """(staker hash, owner hash), with the same checks as CScript::IsPayToColdStaking."""
+    s = script
+    if not (len(s) == 51 and s[0] == OP_DUP and s[1] == OP_HASH160 and s[2] == OP_ROT and s[3] == OP_IF
+            and s[4] in (OP_CHECKCOLDSTAKEVERIFY, OP_CHECKCOLDSTAKEVERIFY_LOF) and s[5] == 0x14
+            and s[26] == OP_ELSE and s[27] == 0x14 and s[48] == OP_ENDIF and s[49] == OP_EQUALVERIFY
+            and s[50] == OP_CHECKSIG):
+        raise ValueError("not a P2CS script")
+    return s[6:26], s[28:48]
+
+
+def cold_stake_script_for(owner: str, staker: str) -> bytes:
+    return p2cs_script(address_hash160(staker, STAKING_ADDRESS_PREFIX, "staker"),
+                       address_hash160(owner, PUBKEY_ADDRESS_PREFIX, "owner"))
+
+
+def _read_varint(b: bytes, i: int) -> tuple[int, int]:
+    x = b[i]
+    if x < 0xFD:
+        return x, i + 1
+    w = {0xFD: 2, 0xFE: 4, 0xFF: 8}[x]
+    return int.from_bytes(b[i + 1 : i + 1 + w], "little"), i + 1 + w
+
+
+def _varint(n: int) -> bytes:
+    if n < 0xFD:
+        return bytes([n])
+    if n <= 0xFFFF:
+        return b"\xfd" + n.to_bytes(2, "little")
+    if n <= 0xFFFFFFFF:
+        return b"\xfe" + n.to_bytes(4, "little")
+    return b"\xff" + n.to_bytes(8, "little")
+
+
+def parse_tx(hex_tx: str) -> dict[str, Any]:
+    """Legacy (version 1, type 0) transaction, as createrawtransaction writes it.
+    Refuses Sapling or special transactions rather than guess their layout."""
+    b = bytes.fromhex(hex_tx)
+    version = int.from_bytes(b[0:2], "little", signed=True)
+    ntype = int.from_bytes(b[2:4], "little", signed=True)
+    if version != 1 or ntype != 0:
+        raise ValueError(f"unsupported transaction version {version} / type {ntype}")
+    i = 4
+    n_in, i = _read_varint(b, i)
+    vin = []
+    for _ in range(n_in):
+        prev = b[i : i + 36]; i += 36
+        ln, i = _read_varint(b, i)
+        sig = b[i : i + ln]; i += ln
+        seq = b[i : i + 4]; i += 4
+        vin.append((prev, sig, seq))
+    n_out, i = _read_varint(b, i)
+    vout = []
+    for _ in range(n_out):
+        value = int.from_bytes(b[i : i + 8], "little"); i += 8
+        ln, i = _read_varint(b, i)
+        vout.append([value, b[i : i + ln]]); i += ln
+    locktime = b[i : i + 4]; i += 4
+    if i != len(b):
+        raise ValueError("trailing bytes after transaction")
+    return {"head": b[0:4], "vin": vin, "vout": vout, "locktime": locktime}
+
+
+def serialize_tx(tx: dict[str, Any]) -> str:
+    out = bytearray(tx["head"])
+    out += _varint(len(tx["vin"]))
+    for prev, sig, seq in tx["vin"]:
+        out += prev + _varint(len(sig)) + sig + seq
+    out += _varint(len(tx["vout"]))
+    for value, spk in tx["vout"]:
+        out += value.to_bytes(8, "little") + _varint(len(spk)) + spk
+    out += tx["locktime"]
+    return out.hex()
+
+
+def to_sat(amount: Decimal | str) -> int:
+    return int((Decimal(str(amount)) * 100_000_000).to_integral_value())
+
+
+def apply_cold_stake(raw_hex: str, chunk: list[dict[str, Any]]) -> tuple[str, dict[str, dict[str, str]]]:
+    """Replace each cold-stake recipient's P2PKH output with its P2CS script.
+    Returns (patched hex, {owner address: {"staker", "script_hex", "amount"}})."""
+    cold = [h for h in chunk if h.get("staker")]
+    if not cold:
+        return raw_hex, {}
+    tx = parse_tx(raw_hex)
+    info: dict[str, dict[str, str]] = {}
+    for h in cold:
+        owner, staker = h["address"], h["staker"]
+        amt = Decimal(str(h["balance"]))
+        if amt < MIN_COLDSTAKING_AMMO:
+            raise RuntimeError(f"{owner}: cold-stake output {amt} is below the 1 AMMO consensus minimum; refusing.")
+        want = p2pkh_script(address_hash160(owner, PUBKEY_ADDRESS_PREFIX, "owner"))
+        hits = [o for o in tx["vout"] if o[1] == want]
+        if len(hits) != 1 or hits[0][0] != to_sat(amt):
+            raise RuntimeError(f"{owner}: expected exactly one {amt} output to patch, found {len(hits)}; refusing.")
+        script = cold_stake_script_for(owner, staker)
+        hits[0][1] = script
+        info[owner] = {"staker": staker, "script_hex": script.hex(), "amount": f"{amt:.8f}"}
+    return serialize_tx(tx), info
+
+
+def check_cold_stake_decoded(binary: str, raw_hex: str, info: dict[str, dict[str, str]], label: str) -> None:
+    """Ask the node to decode the patched tx: each cold-stake output must be its
+    'coldstake' script with addresses [staker, owner] and the right amount."""
+    if not info:
+        return
+    decoded = json.loads(cli(binary, "decoderawtransaction", raw_hex))
+    for owner, c in info.items():
+        ok = [v for v in decoded.get("vout", [])
+              if v.get("scriptPubKey", {}).get("hex") == c["script_hex"]
+              and v["scriptPubKey"].get("type") == "coldstake"
+              and v["scriptPubKey"].get("addresses") == [c["staker"], owner]
+              and to_sat(Decimal(str(v["value"]))) == to_sat(c["amount"])]
+        if len(ok) != 1:
+            raise RuntimeError(f"{label}: the node does not decode the cold-stake output for {owner} as expected; refusing.")
+
+
+def raw_payout(binary: str, inputs: list[dict[str, Any]], outputs: dict[str, str],
+               chunk: list[dict[str, Any]], label: str) -> tuple[str, dict[str, dict[str, str]]]:
+    raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
+    raw_hex, info = apply_cold_stake(raw_hex, chunk)
+    check_cold_stake_decoded(binary, raw_hex, info, label)
+    return raw_hex, info
 
 
 def load_holders(path: Path) -> list[dict[str, Any]]:
@@ -88,6 +324,21 @@ def load_holders(path: Path) -> list[dict[str, Any]]:
         if float(h["balance"]) <= 0:
             raise ValueError(f"Holder #{i} ({h['address']}) has non-positive balance")
     return holders
+
+
+def apply_staker(holders: list[dict[str, Any]], default_staker: str | None) -> int:
+    """Opt-in cold staking: a holder's own "staker" field, or --cold-stake-staker
+    for every holder without one. Validates both addresses. Returns the count."""
+    n = 0
+    for h in holders:
+        if default_staker and not h.get("staker"):
+            h["staker"] = default_staker
+        if h.get("staker"):
+            cold_stake_script_for(h["address"], h["staker"])  # raises on a bad owner or staker
+            if h["staker"] == h["address"]:
+                raise ValueError(f"{h['address']}: staker and owner must differ")
+            n += 1
+    return n
 
 
 def split_oversize(holders: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
@@ -265,9 +516,12 @@ def build_batches(
             if not change_address or change_address in outputs:
                 raise RuntimeError("Change address required (and must not be a recipient). Pass --change-address.")
             outputs[change_address] = f"{change:.8f}"
-        raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
-        batches.append({"batch_index": idx, "recipients": chunk, "inputs": inputs,
-                        "prevouts": prevouts, "outputs": outputs, "unsigned_hex": raw_hex})
+        raw_hex, cold = raw_payout(binary, inputs, outputs, chunk, f"Batch {idx}")
+        batch = {"batch_index": idx, "recipients": chunk, "inputs": inputs,
+                 "prevouts": prevouts, "outputs": outputs, "unsigned_hex": raw_hex}
+        if cold:
+            batch["cold_stake"] = cold
+        batches.append(batch)
     return batches
 
 
@@ -300,16 +554,20 @@ def build_batches_from_fanout(binary: str, chunks: list[list[dict[str, Any]]], c
             if not change_address:
                 raise RuntimeError("Change address required. Pass --change-address.")
             outputs[change_address] = f"{change:.8f}"
-        raw_hex = cli(binary, "createrawtransaction", json.dumps(inputs), json.dumps(outputs))
-        batches.append({"batch_index": idx, "recipients": chunk, "inputs": inputs,
-                        "prevouts": prevouts, "outputs": outputs, "unsigned_hex": raw_hex})
+        raw_hex, cold = raw_payout(binary, inputs, outputs, chunk, f"Batch {idx}")
+        batch = {"batch_index": idx, "recipients": chunk, "inputs": inputs,
+                 "prevouts": prevouts, "outputs": outputs, "unsigned_hex": raw_hex}
+        if cold:
+            batch["cold_stake"] = cold
+        batches.append(batch)
     return batches
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--holders", required=True, type=Path)
-    p.add_argument("--watch-wallet", default="ammocoin-cli", help="Path to ammocoin-cli")
+    p.add_argument("--watch-wallet", default="ammocoin-cli",
+                   help="ammocoin-cli command, quoted, with any -datadir/-conf (split like the other scripts)")
     p.add_argument("--change-address", default=None, help="Address to receive change (watch-only)")
     p.add_argument("--output", default=None, type=Path, help="Output JSON path")
     p.add_argument("--fan-out", default=None, type=Path, metavar="ADDRESSES_FILE",
@@ -318,7 +576,14 @@ def main() -> int:
     p.add_argument("--max-txs", type=int, default=None, help="With --fan-out: build at most N transactions")
     p.add_argument("--from-fan-out", default=None, type=Path, metavar="ADDRESSES_FILE",
                    help="Build the payout batches, each spending its own funding address")
+    p.add_argument("--cli-timeout", type=int, default=None, metavar="SEC",
+                   help=f"Seconds to wait for each ammocoin-cli call (env AMMO_CLI_TIMEOUT; default {DEFAULT_CLI_TIMEOUT_SEC})")
+    p.add_argument("--cold-stake-staker", default=None, metavar="S_ADDRESS",
+                   help="Pay every holder as a cold-stake (P2CS) output delegated to this staker; "
+                        "the holder address is the owner. A holder's own \"staker\" field overrides it.")
     args = p.parse_args()
+    global CLI_TIMEOUT_SEC
+    CLI_TIMEOUT_SEC = resolve_timeout(args.cli_timeout)
 
     out_path = args.output or Path(
         f"unsigned-distribution-{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"
@@ -328,6 +593,7 @@ def main() -> int:
     print("=" * 64)
 
     holders = load_holders(args.holders)
+    n_cold = apply_staker(holders, args.cold_stake_staker)
     main_holders, extras = split_oversize(holders)
     total = enforce_bounds(main_holders) + enforce_bounds(extras)
     chunks = plan_chunks(main_holders, extras)
@@ -341,6 +607,12 @@ def main() -> int:
     print(f"  Batches (txs):         {n_batches} (≤{MAX_RECIPIENTS_PER_TX} recipients each)")
     print(f"  Network fees:          {fee_total:,.8f} AMMO ({FEE_PER_TX_AMMO}/tx × {n_batches})")
     print(f"  Per-tx ceiling:        {MAX_PER_RECIPIENT_AMMO:,} AMMO (enforced)")
+    print(f"  Node CLI timeout:      {CLI_TIMEOUT_SEC}s per call")
+    if n_cold:
+        print(f"  Cold-stake (P2CS):     {n_cold} holder(s) paid as delegations (owner = holder address)")
+        for h in holders:
+            if h.get("staker"):
+                print(f"      owner {h['address']} → staker {h['staker']}")
     print()
     print("Type 'CONFIRM' to build the unsigned-distribution file.")
     print("Nothing has been signed or broadcast.")

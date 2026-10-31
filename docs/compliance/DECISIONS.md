@@ -412,3 +412,30 @@ Open until fixed; record the fixing commit in the Status column.
   5. GLiBz pouch withdrawals open (`glibz_pouch_allow_withdraw`) only after steps 2 to 4. Until then the GLiBz pages say withdrawals "open later".
   6. Pool 8 does not bridge pool 7. That option was considered and not chosen.
 - **Owner approval:** "approve funding plan and hunts" (2026-10-27 Claude Code session). **Prepared by:** Claude.
+
+## AMMO-D-2026-10-28-03 Airdrop script fixes before the Nov 2 payout: resumable broadcast, CLI arguments, listunspent timeout, cold-stake outputs for pools 3–5
+
+- **Status:** **proposed. Owner review needed.** These scripts move reserve funds (pool 1 → pool 2 airdrop, and pool 1 → pools 3–5). Nothing here has been run against a node; the changes are covered by offline tests only.
+- **Date:** 2026-10-28
+- **Principles:** AMMO-P-13 (safety in migrations and distributions)
+- **Context:** the 2026-10-28 dry run of the owner runbook found four gaps: a part-sent payout couldn't be resumed (the rerun reported the first already-sent batch as STALE); `migration-prepare.py --watch-wallet` and `migration-broadcast.py --cli` took only one program path; `listunspent` had a hard 60-second timeout; and pools 3–5 couldn't be created cold-staked (D-2026-10-27-08 step 2).
+- **Decision (proposed):**
+  1. `migration-broadcast.py` checks each batch's own txid first (`getrawtransaction`, then the watch-only `gettransaction`). If that exact transaction is in the mempool or in a block of the active chain, the batch is logged `already_sent` and skipped, not sent again. This is the default; `--skip-sent` names it, and `--no-skip-sent` restores the strict behavior. A batch whose input was spent by a **different** transaction is still STALE and stops the run. A real rejection still stops it. A node reply of "already in block chain" / "already in mempool" counts as sent only when the lookup confirms it. A txid from the node that differs from the signed txid stops the run.
+  2. Both scripts split the node CLI string with `shlex`, like `verify-pledges.py`, `build-payout-holders.py`, `verify-migration.py` and `verify-claim.py`. A path that exists as given, spaces included, still counts as one program, so the runbook's wrapper keeps working.
+  3. `migration-prepare.py` waits up to 300 seconds per node call by default. Set it with `--cli-timeout SEC` or `AMMO_CLI_TIMEOUT`.
+  4. `migration-prepare.py` can pay a cold-stake (P2CS) output. It's opt-in: a holders-file `"staker"` field, or `--cold-stake-staker S…` for every holder. The holder address is the owner. The script is built byte for byte like the node's `GetScriptForStakeDelegationLOF` (mainnet never activates V6, so delegations use `OP_CHECKCOLDSTAKEVERIFY_LOF`, 0xd1, the same as the reserve's own script). `createrawtransaction` pays the owner's P2PKH, and that one output's script is then replaced. The node must decode the result as `coldstake` with `[staker, owner]` before the file is written. Outputs below the 1 AMMO consensus minimum are refused. The broadcast step checks the signed P2CS script again. `migration-sign-offline.py` is **unchanged**, so the signer copies and their hashes stay valid.
+  5. American English in the script messages ("honored").
+- **Enforcement / evidence:** `scripts/migration/migration-broadcast.py` (`already_sent`, `--skip-sent` / `--no-skip-sent`), `scripts/migration/migration-prepare.py` (`cli_argv`, `resolve_timeout`, `p2cs_script`, `apply_cold_stake`, `check_cold_stake_decoded`), `scripts/migration/test_migration_prepare.py` (it rebuilds the reserve's published P2CS script from `AGkC8…` and `SUr6…`, and round-trips the Bitcoin-format legacy test vectors), and `scripts/migration/test_migration_broadcast.py`.
+- **Not verified offline:** how a live v1.1.1 node answers `getrawtransaction` / `gettransaction` for these txs, the node's own `decoderawtransaction` of a patched P2CS transaction, and the listunspent run time on the builder. Before anything is sent, the owner should run step 4 (prepare only) on the builder.
+- **Owner approval:** pending. **Prepared by:** Claude.
+
+## AMMO-D-2026-10-28-04: Airdrop shortfall split, claim hold-back and pool staking
+
+- **Date:** 2026-10-28
+- **Status:** Approved by the owner on the Launch Desk, 2026-10-29 ("Proceed as recommended" on the three airdrop decisions). Takes effect with the airdrop (after the Nov 1 pledge deadline).
+- **Decision:**
+  1. **Shortfall split (pledges not signed by Nov 1).** Pools 3 and 4 share the shortfall pro rata to their planned sizes (40,000,000 : 50,000,000 = 4 : 5). With the Oct 28 draft (47 signed, 14 paid in full) that is pool 3 = 31,052,139.91421180 and pool 4 = 38,815,174.89276473 (total 69,867,314.80697653). The exact figures are recomputed from the final payout list after Nov 1 and published with the airdrop record.
+  2. **Claim hold-back.** No separate hold-back address. Signed-message claims (AIRDROPS.md section 3) are paid from what stays in pool 1 after pools 2–5 are funded (pool 1's remaining stake rewards and any unpayable snapshot amounts), as AIRDROPS.md section 3 step 4 already says ("from the block-1 reserve").
+  3. **Pool staking.** Pools 3 and 4 are created cold-staked to the same staker as pool 1 (ammo-02, `SUr6AuNGxozrTP5jL94narQVJPfrLDSiqY`), owner key offline. Pool 5 (41,700 unattributed set-aside) is created as a plain offline-key output and does not stake.
+- **Why:** pro rata keeps the tiers and the contributor reserve in their planned proportion; using pool 1 for claims avoids a new hot or warm address; one staker keeps the network's stake weight where it is today.
+- **Related:** AMMO-D-2026-10-25-01 (deadline), AMMO-D-2026-10-27-08 (funding sequence), AMMO-D-2026-10-28-03 (script fixes).
